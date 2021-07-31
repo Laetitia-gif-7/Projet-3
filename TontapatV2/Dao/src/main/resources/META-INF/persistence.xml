@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+    xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+    http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+<persistence-unit name="PUTontapatV2" transaction-type="JTA">
+  <jta-data-source>java:jboss/datasources/tontapatv2</jta-data-source>
+  <class>fr.eql.ai109.projet3.entity.Utilisateur</class>
+  <!-- <jar-file>Entity-1.0.0</jar-file> -->
+
+  <properties>
+  <!-- equivalent to create in hibernate <jar-file>my-entities.jar</jar-file> -->
+     <property name="javax.persistence.schema-generation.database.action" value="none" />
+     <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+     <property name="hibernate.show_sql" value="true" />
+     <!-- taken from standalone.xml ? -->
+<!--      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" /> -->
+<!--      <property name="javax.persistence.jdbc.password" value="root" /> -->
+<!--      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/cat_db3" /> -->
+<!--      <property name="javax.persistence.user" value="root" /> -->
+     
+   </properties>
+ </persistence-unit>
+ </persistence>

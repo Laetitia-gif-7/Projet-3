@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
+
+	
+<h:head>
+	<ui:insert name="head"></ui:insert>
+</h:head>
+
+<h:body>
+	<b:form id="loginForm">
+		<h:outputText value="email" />
+		<b:inputText id="inpLogin"
+					 value="#{mbCompte.email}">
+		</b:inputText>
+		<h:outputText value="code secret" />
+		<b:inputText id="inpPass"
+					 value="#{mbCompte.motDePasse}">
+		</b:inputText>
+		<b:commandButton value="Mot de Passe oublié" action="#{mbCompte.connection()}" />
+	</b:form>
+</h:body>
+</html>
