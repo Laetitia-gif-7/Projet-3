@@ -5,11 +5,13 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+//import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -41,18 +43,18 @@ public class Utilisateur implements Serializable  {
 	@Column(name="date_desinscription")
 	private String dateDesinscription;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "id_motif_desinscription", referencedColumnName = "id_motif_desinscription")
 	private String motifDesinscription;
 	
 	@OneToOne
 	@JoinColumn(name= "id_metier", referencedColumnName = "id_metier")
 	private String metier;
-	
-	@OneToOne
-	@JoinColumn(name="insee_id", referencedColumnName = "insee_id")
-	private VilleCPRef ville;
 	*/
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(referencedColumnName = "insee_id")
+	private VilleCpRef ville;
 	
 	// Try with use of default constructor
 	
@@ -128,6 +130,14 @@ public class Utilisateur implements Serializable  {
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
+	
+	public VilleCpRef getVille() {
+		return ville;
+	}
+	public void setVille(VilleCpRef ville) {
+		this.ville = ville;
+	}
+	
 	
 	
 	

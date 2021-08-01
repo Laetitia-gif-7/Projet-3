@@ -7,7 +7,8 @@
 <persistence-unit name="PUTontapatV2" transaction-type="JTA">
   <jta-data-source>java:jboss/datasources/tontapatv2</jta-data-source>
   <class>fr.eql.ai109.projet3.entity.Utilisateur</class>
-  <!-- <jar-file>Entity-1.0.0</jar-file> -->
+  <class>fr.eql.ai109.projet3.entity.VilleCpRef</class>
+  <!--  <jar-file>lib/Entity-1.0.0.jar</jar-file> -->
 
   <properties>
   <!-- equivalent to create in hibernate <jar-file>my-entities.jar</jar-file> -->
