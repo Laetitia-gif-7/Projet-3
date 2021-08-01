@@ -33,7 +33,7 @@ public class VilleCpRef implements Serializable {
 	@Column(length=254)
 	private String departement;
 	
-	@OneToMany(mappedBy="ville", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="villeCp", fetch = FetchType.LAZY)
 	private List<Utilisateur> utilisateurs;
 	
 	public int getInseeId() {

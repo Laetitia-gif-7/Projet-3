@@ -53,8 +53,8 @@ public class Utilisateur implements Serializable  {
 	*/
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(referencedColumnName = "insee_id")
-	private VilleCpRef ville;
+	@JoinColumn(name="insee_id", nullable=false) //(referencedColumnName = "insee_id", nullable=false)
+	private VilleCpRef villeCp;
 	
 	// Try with use of default constructor
 	
@@ -131,11 +131,11 @@ public class Utilisateur implements Serializable  {
 		this.longitude = longitude;
 	}
 	
-	public VilleCpRef getVille() {
-		return ville;
+	public VilleCpRef getVilleCp() {
+		return villeCp;
 	}
-	public void setVille(VilleCpRef ville) {
-		this.ville = ville;
+	public void setVille(VilleCpRef villeCp) {
+		this.villeCp = villeCp;
 	}
 	
 	
