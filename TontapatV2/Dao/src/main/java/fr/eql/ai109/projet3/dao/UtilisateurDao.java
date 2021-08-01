@@ -8,8 +8,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import fr.eql.ai109.projet3.UtilisateurIDao;
 import fr.eql.ai109.projet3.entity.Utilisateur;
+import fr.eql.ai109.projet3.idao.UtilisateurIDao;
 
 @Remote(UtilisateurIDao.class)
 @Stateless

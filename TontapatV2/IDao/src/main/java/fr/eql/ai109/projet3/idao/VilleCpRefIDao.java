@@ -1,4 +1,4 @@
-package fr.eql.ai109.projet3;
+package fr.eql.ai109.projet3.idao;
 
 // import fr.eql.ai109.projet3.entity.Ut;
 

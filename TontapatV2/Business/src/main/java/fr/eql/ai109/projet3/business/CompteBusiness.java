@@ -4,12 +4,11 @@ import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 
-import fr.eql.ai109.projet3.UtilisateurIDao;
-
 //import javax.inject.Inject;
 
 import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.ibusiness.CompteIBusiness;
+import fr.eql.ai109.projet3.idao.UtilisateurIDao;
 
 @Remote(CompteIBusiness.class)
 @Stateless

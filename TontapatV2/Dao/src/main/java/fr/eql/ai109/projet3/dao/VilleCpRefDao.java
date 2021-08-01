@@ -8,9 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 //import javax.persistence.Query;
 
-//import fr.eql.ai109.projet3.UtilisateurIDao;
-import fr.eql.ai109.projet3.VilleCpRefIDao;
-//import fr.eql.ai109.projet3.entity.Utilisateur;
+import fr.eql.ai109.projet3.idao.VilleCpRefIDao;
 
 @Remote(VilleCpRefIDao.class)
 @Stateless
