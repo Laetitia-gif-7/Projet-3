@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -72,8 +73,8 @@ public class Terrain implements Serializable {
 	@JoinColumn(name="insee_id")
 	private VilleCpRef villeCp;
 	
-	@OneToMany( mappedBy="terrain",fetch = FetchType.LAZY)
-	List<Prestation> prestations;
+	@OneToMany( mappedBy="terrain",fetch = FetchType.EAGER)
+	Set<Prestation> prestations;
 	
 	/*
 	@ManyToOne(fetch  = FetchType.LAZY)
@@ -87,11 +88,11 @@ public class Terrain implements Serializable {
 	private EspeceRef especePreference;
 	*/
 	
-	public List<Prestation> getPrestations() {
+	public Set<Prestation> getPrestations() {
 		return prestations;
 	}
 
-	public void setPrestations(List<Prestation> prestations) {
+	public void setPrestations(Set<Prestation> prestations) {
 		this.prestations = prestations;
 	}
 

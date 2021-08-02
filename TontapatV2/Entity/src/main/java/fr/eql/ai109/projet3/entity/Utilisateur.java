@@ -68,6 +68,7 @@ public class Utilisateur implements Serializable  {
 	@OneToMany(mappedBy="initiateurPrestation", fetch = FetchType.LAZY)
 	private List<Prestation> prestationInitiees;
 	
+	// Relation Tables:  User<-> Prestation  ONLY for bergers, name maybe confusing
 	@OneToMany(mappedBy="berger", fetch = FetchType.LAZY)
 	private List<Prestation> bergers;
 	

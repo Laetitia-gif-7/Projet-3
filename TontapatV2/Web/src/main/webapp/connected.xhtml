@@ -19,8 +19,13 @@
 		<br />
 		Votre terrain : <h:outputText value="#{mbCompte.utilisateur.terrains.iterator().next().nomTerrain}" />	
 		<br />
-		Votre troupeau : <h:outputText value="#{mbCompte.utilisateur.troupeaux.iterator().next().nomTroupeau}" />	
-			
+		Votre troupeau : <h:outputText value="#{mbCompte.utilisateur.troupeaux.iterator().next().nomTroupeau}" />
+		<br />
+		L'utilisateur participe a une prestation :
+		<ul>
+			<li>No de prestation: <h:outputText value="#{mbCompte.utilisateur.terrains.iterator().next().prestations.iterator().next().numeroPrestation}"/></li>
+			<li>Date de début (LocalDateTime)<h:outputText value="#{mbCompte.utilisateur.terrains.iterator().next().prestations.iterator().next().debutPrestation}"/></li>
+		</ul>
 	</div>
 </h:body>
 </html>

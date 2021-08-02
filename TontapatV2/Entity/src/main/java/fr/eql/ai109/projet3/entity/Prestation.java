@@ -77,16 +77,19 @@ public class Prestation implements Serializable {
 	@Column(name="date_annullation_prestation")
 	private LocalDateTime annullationPrestation;
 	
-	@ManyToOne( fetch = FetchType.LAZY)
-	@JoinColumn(name="id_terrain", nullable=false)
-	private Terrain terrain;
-	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_utilisateur_initiateur")
 	private Utilisateur initiateurPrestation;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="id_utilisateur_berger")
+	private Utilisateur berger;
 	
+	@ManyToOne( fetch = FetchType.LAZY)
+	@JoinColumn(name="id_terrain", nullable=false)
+	private Terrain terrain;
 	
+	/* Troupeau to do, more complex with compo_troupeau_presta */
 	
 	public int getIdPrestation() {
 		return idPrestation;
@@ -255,9 +258,5 @@ public class Prestation implements Serializable {
 	public void setBerger(Utilisateur berger) {
 		this.berger = berger;
 	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_utilisateur_berger")
-	private Utilisateur berger;
 
 }

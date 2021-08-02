@@ -50,7 +50,7 @@ public class Troupeau implements Serializable {
 	private Utilisateur utilisateur;
 	
 	/*
-	DEMANDER A MICHAEL DE MODIFIER LA BDD
+	DEMANDER A MICHAEL DE MODIFIER LA BDD: MICHAEL DONE 
 	@ManyToOne(fetch  = FetchType.LAZY)
 	@JoinColumn(name="id_motif_retrait_troupeau")
 	private MotifRetraitTroupeau motifRetraitTroupeau;
@@ -128,7 +128,4 @@ public class Troupeau implements Serializable {
 		this.utilisateur = utilisateur;
 	}
 	
-	
-	
-
 }
