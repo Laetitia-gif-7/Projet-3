@@ -3,6 +3,7 @@ package fr.eql.ai109.projet3.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -70,6 +72,9 @@ public class Terrain implements Serializable {
 	@JoinColumn(name="insee_id")
 	private VilleCpRef villeCp;
 	
+	@OneToMany( mappedBy="terrain",fetch = FetchType.LAZY)
+	List<Prestation> prestations;
+	
 	/*
 	@ManyToOne(fetch  = FetchType.LAZY)
 	@JoinColumn(name="id_motif_retrait_terrain")
@@ -82,6 +87,14 @@ public class Terrain implements Serializable {
 	private EspeceRef especePreference;
 	*/
 	
+	public List<Prestation> getPrestations() {
+		return prestations;
+	}
+
+	public void setPrestations(List<Prestation> prestations) {
+		this.prestations = prestations;
+	}
+
 	public Utilisateur getUtilisateur() {
 		return utilisateur;
 	}
@@ -170,14 +183,11 @@ public class Terrain implements Serializable {
 		this.dateRetrait = dateRetrait;
 	}
 	
-	public VilleCpRef getVilleCpT() {
+	public VilleCpRef getVilleCp() {
 		return villeCp;
 	}
-	public void setVilleCpT(VilleCpRef villeCp) {
+	public void setVilleCp(VilleCpRef villeCp) {
 		this.villeCp = villeCp;
 	}
-	
-	
-	
-	
+
 }

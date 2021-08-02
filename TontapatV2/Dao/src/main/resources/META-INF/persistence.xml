@@ -9,6 +9,7 @@
   <class>fr.eql.ai109.projet3.entity.Utilisateur</class>
   <class>fr.eql.ai109.projet3.entity.VilleCpRef</class>
   <class>fr.eql.ai109.projet3.entity.Terrain</class>
+  <class>fr.eql.ai109.projet3.entity.Prestation</class>
   <!-- <jar-file>lib/Entity-1.0.0.jar</jar-file> -->
 
   <properties>

@@ -61,6 +61,12 @@ public class Utilisateur implements Serializable  {
 	@OneToMany(mappedBy="utilisateur", fetch = FetchType.EAGER)
 	private List<Terrain> terrains;
 	
+	@OneToMany(mappedBy="initiateurPrestation", fetch = FetchType.LAZY)
+	private List<Prestation> prestationInitiees;
+	
+	@OneToMany(mappedBy="berger", fetch = FetchType.LAZY)
+	private List<Prestation> bergers;
+	
 	// Try with use of default constructor
 	
 	public Integer getId() {
