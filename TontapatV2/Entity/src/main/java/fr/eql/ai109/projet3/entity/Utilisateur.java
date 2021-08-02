@@ -3,6 +3,7 @@ package fr.eql.ai109.projet3.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -57,9 +58,12 @@ public class Utilisateur implements Serializable  {
 	@JoinColumn(name="insee_id", nullable=false)
 	private VilleCpRef villeCp;
 	
-	// TODO: check if necessary
+	 //TODO: check if necessary
 	@OneToMany(mappedBy="utilisateur", fetch = FetchType.EAGER)
-	private List<Terrain> terrains;
+	private Set<Terrain> terrains;
+
+	@OneToMany(mappedBy="utilisateur", fetch = FetchType.EAGER)
+	private Set<Troupeau> troupeaux;
 	
 	// Try with use of default constructor
 	
@@ -144,11 +148,17 @@ public class Utilisateur implements Serializable  {
 		this.villeCp = villeCp;
 	}
 	
-	public List<Terrain> getTerrains() {
+	public Set<Terrain> getTerrains() {
 		return terrains;
 	}
-	public void setTerrains(List<Terrain> terrains) {
+	public void setTerrains(Set<Terrain> terrains) {
 		this.terrains = terrains;
+	}
+	public Set<Troupeau> getTroupeaux() {
+		return troupeaux;
+	}
+	public void setTroupeaux(Set<Troupeau> troupeaux) {
+		this.troupeaux = troupeaux;
 	}
 	
 	

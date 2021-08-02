@@ -17,7 +17,10 @@
 		<br/>
 		Vous habitez à :  <h:outputText value="#{mbCompte.utilisateur.villeCp.ville}" />
 		<br />
-		Votre terrain : <h:outputText value="#{mbCompte.utilisateur.terrains[0].nomTerrain}" />		
+		Votre terrain : <h:outputText value="#{mbCompte.utilisateur.terrains.iterator().next().nomTerrain}" />	
+		<br />
+		Votre troupeau : <h:outputText value="#{mbCompte.utilisateur.troupeaux.iterator().next().nomTroupeau}" />	
+			
 	</div>
 </h:body>
 </html>
