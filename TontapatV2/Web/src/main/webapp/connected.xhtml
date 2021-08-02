@@ -12,9 +12,12 @@
 
 <h:body>
 	<div>
+		<br />
 		Vous êtes connectés : <h:outputText value="#{mbCompte.utilisateur.nom}" />
 		<br/>
 		Vous habitez à :  <h:outputText value="#{mbCompte.utilisateur.villeCp.ville}" />
+		<br />
+		Votre terrain : <h:outputText value="#{mbCompte.utilisateur.terrains[0].nomTerrain}" />		
 	</div>
 </h:body>
 </html>

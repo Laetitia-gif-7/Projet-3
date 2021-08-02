@@ -57,7 +57,8 @@ public class Utilisateur implements Serializable  {
 	@JoinColumn(name="insee_id", nullable=false)
 	private VilleCpRef villeCp;
 	
-	@OneToMany(mappedBy="utilisateur", fetch = FetchType.LAZY)
+	// TODO: check if necessary
+	@OneToMany(mappedBy="utilisateur", fetch = FetchType.EAGER)
 	private List<Terrain> terrains;
 	
 	// Try with use of default constructor
@@ -143,14 +144,12 @@ public class Utilisateur implements Serializable  {
 		this.villeCp = villeCp;
 	}
 	
-	/*
 	public List<Terrain> getTerrains() {
 		return terrains;
 	}
 	public void setTerrains(List<Terrain> terrains) {
 		this.terrains = terrains;
 	}
-	*/
 	
 	
 	
