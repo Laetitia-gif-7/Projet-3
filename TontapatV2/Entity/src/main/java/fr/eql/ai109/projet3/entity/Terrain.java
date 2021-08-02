@@ -66,9 +66,9 @@ public class Terrain implements Serializable {
 	@JoinColumn(name="id_utilisateur", nullable=false)
 	private Utilisateur utilisateur;
 	
-	@ManyToOne(fetch  = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="insee_id")
-	private VilleCpRef villeCpRef;
+	private VilleCpRef villeCp;
 	
 	/*
 	@ManyToOne(fetch  = FetchType.LAZY)
@@ -81,4 +81,103 @@ public class Terrain implements Serializable {
 	@JoinColumn(name="espece_id")
 	private EspeceRef especePreference;
 	*/
+	
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+	
+	public int getIdTerrain() {
+		return idTerrain;
+	}
+	
+	public void setIdTerrain(int idTerrain) {
+		this.idTerrain = idTerrain;
+	}
+	public String getNomTerrain() {
+		return nomTerrain;
+	}
+	public void setNomTerrain(String nomTerrain) {
+		this.nomTerrain = nomTerrain;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public BigDecimal getSuperficie() {
+		return superficie;
+	}
+	public void setSuperficie(BigDecimal superficie) {
+		this.superficie = superficie;
+	}
+	public String getRue() {
+		return rue;
+	}
+	public void setRue(String rue) {
+		this.rue = rue;
+	}
+	public String getNoRue() {
+		return noRue;
+	}
+	public void setNoRue(String noRue) {
+		this.noRue = noRue;
+	}
+	public String getPhoto() {
+		return photo;
+	}
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+	public String getParcelle() {
+		return parcelle;
+	}
+	public void setParcelle(String parcelle) {
+		this.parcelle = parcelle;
+	}
+	public BigDecimal getLatitude() {
+		return latitude;
+	}
+	public void setLatitude(BigDecimal latitude) {
+		this.latitude = latitude;
+	}
+	public BigDecimal getLongitude() {
+		return longitude;
+	}
+	public void setLongitude(BigDecimal longitude) {
+		this.longitude = longitude;
+	}
+	public byte getClos() {
+		return clos;
+	}
+	public void setClos(byte clos) {
+		this.clos = clos;
+	}
+	public Date getDateCreation() {
+		return dateCreation;
+	}
+	public void setDateCreation(Date dateCreation) {
+		this.dateCreation = dateCreation;
+	}
+	public Date getDateRetrait() {
+		return dateRetrait;
+	}
+	public void setDateRetrait(Date dateRetrait) {
+		this.dateRetrait = dateRetrait;
+	}
+	
+	public VilleCpRef getVilleCpT() {
+		return villeCp;
+	}
+	public void setVilleCpT(VilleCpRef villeCp) {
+		this.villeCp = villeCp;
+	}
+	
+	
+	
+	
 }

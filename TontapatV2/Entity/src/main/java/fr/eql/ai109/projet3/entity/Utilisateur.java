@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-//import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -55,7 +54,7 @@ public class Utilisateur implements Serializable  {
 	*/
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="insee_id", nullable=false) //(referencedColumnName = "insee_id", nullable=false)
+	@JoinColumn(name="insee_id", nullable=false)
 	private VilleCpRef villeCp;
 	
 	@OneToMany(mappedBy="utilisateur", fetch = FetchType.LAZY)
@@ -144,12 +143,14 @@ public class Utilisateur implements Serializable  {
 		this.villeCp = villeCp;
 	}
 	
+	/*
 	public List<Terrain> getTerrains() {
 		return terrains;
 	}
 	public void setTerrains(List<Terrain> terrains) {
 		this.terrains = terrains;
 	}
+	*/
 	
 	
 	
