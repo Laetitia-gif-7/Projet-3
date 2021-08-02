@@ -36,6 +36,9 @@ public class VilleCpRef implements Serializable {
 	@OneToMany(mappedBy="villeCp", fetch = FetchType.LAZY)
 	private List<Utilisateur> utilisateurs;
 	
+	@OneToMany(mappedBy="villeCpRef", fetch = FetchType.LAZY)
+	private List<Terrain> terrains;
+	
 	public int getInseeId() {
 		return inseeId;
 	}

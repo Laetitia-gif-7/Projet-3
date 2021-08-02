@@ -2,6 +2,7 @@ package fr.eql.ai109.projet3.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 //import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -55,6 +57,9 @@ public class Utilisateur implements Serializable  {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="insee_id", nullable=false) //(referencedColumnName = "insee_id", nullable=false)
 	private VilleCpRef villeCp;
+	
+	@OneToMany(mappedBy="utilisateur", fetch = FetchType.LAZY)
+	private List<Terrain> terrains;
 	
 	// Try with use of default constructor
 	
@@ -134,9 +139,19 @@ public class Utilisateur implements Serializable  {
 	public VilleCpRef getVilleCp() {
 		return villeCp;
 	}
-	public void setVille(VilleCpRef villeCp) {
+	
+	public void setVilleCp(VilleCpRef villeCp) {
 		this.villeCp = villeCp;
 	}
+	
+	public List<Terrain> getTerrains() {
+		return terrains;
+	}
+	public void setTerrains(List<Terrain> terrains) {
+		this.terrains = terrains;
+	}
+	
+	
 	
 	
 	
