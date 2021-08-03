@@ -59,7 +59,7 @@ public class Utilisateur implements Serializable  {
 	private VilleCpRef villeCp;
 	
 	 //TODO: check if necessary
-	@OneToMany(mappedBy="utilisateur", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="utilisateur", fetch = FetchType.LAZY)
 	private Set<Terrain> terrains;
 
 	@OneToMany(mappedBy="utilisateur", fetch = FetchType.EAGER)

@@ -13,11 +13,9 @@ import fr.eql.ai109.projet3.idao.UtilisateurIDao;
 
 @Remote(UtilisateurIDao.class)
 @Stateless
-public class UtilisateurDao implements UtilisateurIDao {
+public class UtilisateurDao extends GenericDao<Utilisateur> implements UtilisateurIDao {
 
-	// To move into GenericDao<>
-	@PersistenceContext(unitName="PUTontapatV2")
-	protected EntityManager entityManager;
+	
 	
 	public Utilisateur authentifier(String login, String password) {
 		Utilisateur user = null;
