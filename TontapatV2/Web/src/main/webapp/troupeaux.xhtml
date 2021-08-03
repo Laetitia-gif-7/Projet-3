@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+<h:head>
+	<ui:insert name="head"></ui:insert>
+</h:head>
+
+<h:body>
+	<div>
+		<h4>Utilisateur en session : <h:outputLabel value="#{mbCompte.utilisateur.nom}" /><br /></h4>
+		<h4>Ses Troupeaux : 
+			<ui:repeat var="troupeau" value="#{mbTroupeau.troupeaux}">
+				<br />
+				<h:outputLabel value="#{troupeaux.nomTroupeau}" />
+				<br />
+				<h:outputLabel value="#{troupeaux.description}" />
+				<br />
+				<h:outputLabel value="#{troupeaux.coutParAnimal}" />
+				<br />
+				<h:outputLabel value="#{troupeaux.frequenceVisite}" />
+				<br />
+				<h:outputLabel value="#{troupeaux.dateCreation}" />
+				<br />
+				<h:outputLabel value="#{troupeaux.dateRetrait}" />
+			</ui:repeat>
+		</h4>
+	</div>
+</h:body>
+</html>
