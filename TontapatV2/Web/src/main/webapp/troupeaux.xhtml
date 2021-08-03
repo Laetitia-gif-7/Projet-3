@@ -15,17 +15,17 @@
 		<h4>Ses Troupeaux : 
 			<ui:repeat var="troupeau" value="#{mbTroupeau.troupeaux}">
 				<br />
-				<h:outputLabel value="#{troupeaux.nomTroupeau}" />
+				<h:outputLabel value="#{troupeau.nomTroupeau}" />
 				<br />
-				<h:outputLabel value="#{troupeaux.description}" />
+				<h:outputLabel value="#{troupeau.description}" />
 				<br />
-				<h:outputLabel value="#{troupeaux.coutParAnimal}" />
+				<h:outputLabel value="#{troupeau.coutParAnimal}" />
 				<br />
-				<h:outputLabel value="#{troupeaux.frequenceVisite}" />
+				<h:outputLabel value="#{troupeau.frequenceVisite}" />
 				<br />
-				<h:outputLabel value="#{troupeaux.dateCreation}" />
+				<h:outputLabel value="#{troupeau.dateCreation}" />
 				<br />
-				<h:outputLabel value="#{troupeaux.dateRetrait}" />
+				<h:outputLabel value="#{troupeau.dateRetrait}" />
 			</ui:repeat>
 		</h4>
 	</div>
