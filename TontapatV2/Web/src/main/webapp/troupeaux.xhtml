@@ -24,10 +24,19 @@
 				<h:outputLabel value="#{troupeau.frequenceVisite}" />
 				<br />
 				<h:outputLabel value="#{troupeau.dateCreation}" />
-				<br />
-				<h:outputLabel value="#{troupeau.dateRetrait}" />
 				
+				<ui:repeat var="race" value="#{troupeau.compositionTroupeau}">
+				<br />
+				<h:outputLabel value="#{race.raceRef.libelleRace}" />
+				<h:outputLabel value="#{race.nbAnimaux}" />
+				
+			
+				</ui:repeat>
 			</ui:repeat>
+			
+			
+		
+		
 		</h4>
 	</div>
 </h:body>
