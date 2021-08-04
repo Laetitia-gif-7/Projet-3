@@ -15,21 +15,24 @@
 		</f:metadata> -->
 	</ui:define>
 	<ui:define name="content">
-	<div>
-		<h4>Utilisateur en session : <h:outputLabel value="#{mbCompte.utilisateur.nom}" /><br /></h4>
-		<h4>Ses Terrains : 
-			<ui:repeat var="terrain" value="#{mbTerrain.terrains}">
-				<br />
-				<h:outputLabel value="#{terrain.nomTerrain}" />
-				<br />
-				<h:outputLabel value="#{terrain.superficie}" />
-				<br />
-				<h:outputLabel value="#{terrain.clos}" />
-				<br />
-				<h:outputLabel value="#{terrain.dateCreation}" />
+	<div class="terrainsTitre">
+			<h1>Vos Terrain, <h:outputLabel value="#{mbCompte.utilisateur.nom}" /> !</h1>
+		</div>
+		<button class="terrainsAjoutTroupeau">
+		<p>Ajouter un terrain</p>
+		<b:iconAwesome value="plus-circle" solid="true" size="3x"/>
+		</button>
+		<div class="terrainsDivs">
+			<ui:repeat class="terrainsBigDiv" var="terrain" value="#{mbTerrain.terrains}">
+				<div class="terrainsBigDiv">
+					<div class="terrainSmallDiv">
+						<p>Nom : <h:outputLabel value="#{terrain.nomTerrain}" /></p>
+						<p>Superficie : <h:outputLabel value="#{terrain.superficie}" /></p>
+						<p>Clos : <h:outputLabel value="#{terrain.clos}" /></p>
+					</div>
+				</div>
 			</ui:repeat>
-		</h4>
-	</div>
+		</div>
 
 	</ui:define>
 
