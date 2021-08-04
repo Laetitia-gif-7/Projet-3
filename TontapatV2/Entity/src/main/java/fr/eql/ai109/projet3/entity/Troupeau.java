@@ -2,6 +2,7 @@ package fr.eql.ai109.projet3.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -49,15 +51,27 @@ public class Troupeau implements Serializable {
 	@JoinColumn(name="id_utilisateur", nullable=false)
 	private Utilisateur utilisateur;
 	
+	@OneToMany(mappedBy="troupeau")
+	private List<CompositionTroupeau> compositionTroupeau;
+	
 	/*
 	DEMANDER A MICHAEL DE MODIFIER LA BDD: MICHAEL DONE 
 	@ManyToOne(fetch  = FetchType.LAZY)
 	@JoinColumn(name="id_motif_retrait_troupeau")
 	private MotifRetraitTroupeau motifRetraitTroupeau;
 	*/
-
+	
+	
 	public int getIdTroupeau() {
 		return idTroupeau;
+	}
+
+	public List<CompositionTroupeau> getCompositionTroupeau() {
+		return compositionTroupeau;
+	}
+
+	public void setCompositionTroupeau(List<CompositionTroupeau> compositionTroupeau) {
+		this.compositionTroupeau = compositionTroupeau;
 	}
 
 	public void setIdTroupeau(int idTroupeau) {
