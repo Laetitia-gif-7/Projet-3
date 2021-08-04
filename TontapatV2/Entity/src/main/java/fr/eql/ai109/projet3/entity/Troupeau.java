@@ -52,7 +52,7 @@ public class Troupeau implements Serializable {
 	private Utilisateur utilisateur;
 	
 	@OneToMany(mappedBy="troupeau")
-	private List<CompositionTroupeau> compositionTroupeaux;
+	private List<CompositionTroupeau> compositionTroupeau;
 	
 	/*
 	DEMANDER A MICHAEL DE MODIFIER LA BDD: MICHAEL DONE 
@@ -60,9 +60,18 @@ public class Troupeau implements Serializable {
 	@JoinColumn(name="id_motif_retrait_troupeau")
 	private MotifRetraitTroupeau motifRetraitTroupeau;
 	*/
-
+	
+	
 	public int getIdTroupeau() {
 		return idTroupeau;
+	}
+
+	public List<CompositionTroupeau> getCompositionTroupeau() {
+		return compositionTroupeau;
+	}
+
+	public void setCompositionTroupeau(List<CompositionTroupeau> compositionTroupeau) {
+		this.compositionTroupeau = compositionTroupeau;
 	}
 
 	public void setIdTroupeau(int idTroupeau) {

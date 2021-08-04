@@ -21,7 +21,16 @@ public class TroupeauBuisness implements TroupeauIBuisness{
 	@Override
 	public List<Troupeau> findTroupeauxByUtilisateur(Utilisateur utilisateur) {
 		
-		return troupeauIDao.getTroupeauxByUser(utilisateur);
+		//return 
+		List <Troupeau> troupeaux = troupeauIDao.getTroupeauxByUser(utilisateur);
+//		for (Troupeau troupeau : troupeaux) {
+//	        //prestation.getTerrain(); // ok terrain loaded .....
+//	        System.out.println(troupeau.getCompositionTroupeau().get(0).getNbAnimaux());
+//	         
+	  //  }
+		 return troupeaux;
 	}
+	
+	
 
 }

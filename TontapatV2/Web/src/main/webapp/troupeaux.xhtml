@@ -15,25 +15,31 @@
 		</f:metadata> -->
 	</ui:define>
 	<ui:define name="content">
-		<div>
-			<h4>Utilisateur en session : <h:outputLabel value="#{mbCompte.utilisateur.nom}" /><br /></h4>
-			<h4>Ses Troupeaux : 
-				<ui:repeat var="troupeau" value="#{mbTroupeau.troupeaux}">
-					<br />
-					<h:outputLabel value="#{troupeau.nomTroupeau}" />
-					<br />
-					<h:outputLabel value="#{troupeau.description}" />
-					<br />
-					<h:outputLabel value="#{troupeau.coutParAnimal}" />
-					<br />
-					<h:outputLabel value="#{troupeau.frequenceVisite}" />
-					<br />
-					<h:outputLabel value="#{troupeau.dateCreation}" />
-					<br />
-					<h:outputLabel value="#{troupeau.dateRetrait}" />
-				</ui:repeat>
-			</h4>
+		<div class="troupeauxTitre">
+			<h1>Vos Troupeaux, <h:outputLabel value="#{mbCompte.utilisateur.nom}" /> !</h1>
 		</div>
+		<button class="troupeauxAjoutTroupeau">
+		<p>Ajouter un troupeau</p>
+		<b:iconAwesome value="plus-circle" solid="true" size="3x"/>
+		</button>
+		<div class="troupeauxDivs">
+			<ui:repeat class="troupeauxBigDiv" var="troupeau" value="#{mbTroupeau.troupeaux}">
+				<div class="troupeauBigDiv">
+					<div class="troupeauSmallDiv">
+						<p>Nom : <h:outputLabel value="#{troupeau.nomTroupeau}" /></p>
+						<p>Description : <h:outputLabel value="#{troupeau.description}" /></p>
+						<p>Coût par animal : <h:outputLabel value="#{troupeau.coutParAnimal}" /></p>
+						<p>Fréquence de visite : <h:outputLabel value="#{troupeau.frequenceVisite}" /></p>
+						<ui:repeat var="race" value="#{troupeau.compositionTroupeau}">
+			                <p><h:outputLabel value="#{race.raceRef.libelleRace}" /></p>
+			                <p><h:outputLabel value="#{race.nbAnimaux}" /></p>
+			            </ui:repeat>
+					</div>
+				</div>
+			</ui:repeat>
+			
+		</div>
+		
 
 	</ui:define>
 	
