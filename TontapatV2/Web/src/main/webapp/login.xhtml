@@ -5,22 +5,80 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:b="http://bootsfaces.net/ui">
 
-	
-<h:head>
-	<ui:insert name="head"></ui:insert>
-</h:head>
+<ui:composition template="/arch.xhtml">
 
-<h:body>
-	<b:form id="loginForm">
-		<h:outputText value="email" />
-		<b:inputText id="inpLogin"
-					 value="#{mbCompte.email}">
-		</b:inputText>
-		<h:outputText value="code secret" />
-		<b:inputText id="inpPass"
-					 value="#{mbCompte.motDePasse}">
-		</b:inputText>
-		<b:commandButton value="Mot de Passe oublié" action="#{mbCompte.connection()}" />
-	</b:form>
-</h:body>
+	<ui:define name="head">
+		<title>Identification</title>
+		<!-- <f:metadata>
+			<f:event listener="#{mbAccount.disconnect()}" type="preRenderView"></f:event>
+		</f:metadata> -->
+	</ui:define>
+
+	<ui:define name="content">
+		<b:form id="loginForm">
+			<b:panel
+				style-class="cat-margin-top-3rem cat-margin-bottom-5rem 
+				col-sm-offset-1 col-md-offset-2 col-xs-12 col-sm-10 col-md-8">
+				<b:row>
+					<b:column
+						style-class="hidden-xs cat-top-1rem col-sm-offset-1 col-sm-2 col-md-2">
+						<h:outputText value="Identifiant" />
+					</b:column>
+					<b:column
+						style-class="hidden-sm hidden-md hidden-lg col-xs-offset-1 col-xs-10">
+						<h:outputText value="Identifiant" />
+					</b:column>
+					<b:column
+						style-class="col-xs-offset-1 col-sm-offset-0 col-xs-10 col-sm-8 col-md-8">
+						<b:inputText id="inpLogin"
+							placeholder="Veuillez entrer un identifiant"
+							value="#{mbCompte.email}">
+							<f:facet name="prepend">
+								<b:icon name="user" />
+							</f:facet>
+						</b:inputText>
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column
+						style-class="hidden-xs cat-top-1rem col-sm-offset-1 col-sm-2 col-md-2">
+						<h:outputText value="Mot de passe" />
+					</b:column>
+					<b:column
+						style-class="hidden-sm hidden-md hidden-lg col-xs-offset-1 col-xs-10">
+						<h:outputText value="Mot de passe" />
+					</b:column>
+					<b:column
+						style-class="col-xs-offset-1 col-sm-offset-0 col-xs-10 col-sm-8 col-md-8">
+						<b:inputSecret id="inpPass"
+							placeholder="Veuillez entrer un mot de passe"
+							value="#{mbCompte.motDePasse}">
+							<f:facet name="prepend">
+								<b:iconAwesome name="key" />
+							</f:facet>
+						</b:inputSecret>
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column>
+						<b:message for="inpPassword" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column
+						style-class="cat-padding-1rem col-xs-offset-1 col-sm-offset-1 col-xs-10 col-sm-10 col-md-4">
+						<b:commandButton style-class="cat-width-100" value="Connexion" action="#{mbCompte.connection()}" />
+					</b:column>
+					<b:column
+						style-class="cat-padding-1rem col-xs-offset-1 col-sm-offset-1 col-md-offset-2 col-xs-10 col-sm-10 col-md-4">
+						<b:commandButton style-class="cat-width-100"
+							value="Mot de Passe oublié" action="#{mbCompte.connect()}" />
+					</b:column>
+				</b:row>
+			</b:panel>
+		</b:form>
+	</ui:define>
+
+</ui:composition>
+
 </html>

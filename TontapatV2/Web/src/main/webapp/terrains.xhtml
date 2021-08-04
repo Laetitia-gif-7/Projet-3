@@ -2,14 +2,19 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:b="http://bootsfaces.net/ui">
 	
-<h:head>
-	<ui:insert name="head"></ui:insert>
-</h:head>
+<ui:composition template="/arch.xhtml">
 
-<h:body>
+	<ui:define name="head">
+		<title>Mes Terrains</title>
+		<!-- <f:metadata>
+			<f:event listener="#{mbAccount.disconnect()}" type="preRenderView"></f:event>
+		</f:metadata> -->
+	</ui:define>
+	<ui:define name="content">
 	<div>
 		<h4>Utilisateur en session : <h:outputLabel value="#{mbCompte.utilisateur.nom}" /><br /></h4>
 		<h4>Ses Terrains : 
@@ -25,5 +30,8 @@
 			</ui:repeat>
 		</h4>
 	</div>
-</h:body>
+
+	</ui:define>
+
+</ui:composition>
 </html>
