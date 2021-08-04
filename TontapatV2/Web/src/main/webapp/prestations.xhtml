@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+<h:head>
+	<ui:insert name="head"></ui:insert>
+</h:head>
+
+<h:body>
+	<div>
+		<h4>Utilisateur en session : <h:outputLabel value="#{mbCompte.utilisateur.nom}" /><br /></h4>
+		<h4>Mes prestation : 
+			<ui:repeat var="prestaExt" value="#{mbPresta.prestations}">
+				<h:outputLabel value="#{prestaExt.prestation.debutPrestation}" />
+				<br />
+				State: <h:outputLabel value="#{prestaExt.testString}" />
+				<br />
+			</ui:repeat>
+		</h4>
+	</div>
+</h:body>
+</html>

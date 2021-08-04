@@ -20,7 +20,6 @@ public class TerrainBusiness implements TerrainIBusiness {
 	
 	@Override
 	public List<Terrain> findTerrainsByUtilisateur(Utilisateur utilisateur) {
-		
 		return terrainIDao.getTerrainsByUser(utilisateur);
 	}
 

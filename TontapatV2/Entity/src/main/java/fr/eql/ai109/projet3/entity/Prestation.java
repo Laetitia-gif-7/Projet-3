@@ -85,11 +85,12 @@ public class Prestation implements Serializable {
 	@JoinColumn(name="id_utilisateur_berger")
 	private Utilisateur berger;
 	
-	@ManyToOne( fetch = FetchType.LAZY)
+	@ManyToOne //( fetch = FetchType.LAZY)  it is a simple object
 	@JoinColumn(name="id_terrain", nullable=false)
 	private Terrain terrain;
 	
 	/* Troupeau to do, more complex with compo_troupeau_presta */
+	
 	
 	public int getIdPrestation() {
 		return idPrestation;
