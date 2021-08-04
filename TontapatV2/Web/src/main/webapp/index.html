@@ -1,15 +1,25 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-Hello Tontapat le retour !!
-Connection : <a href="login.xhtml">Se connecter</a>
-<br/>
-Mes prestations : <a href="prestations.xhtml">Mes prestations</a>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
+	
+<ui:composition template="/arch.xhtml">
 
+	<ui:define name="head">
+		<title>Acceuil</title>
+		<!-- <f:metadata>
+			<f:event listener="#{mbAccount.disconnect()}" type="preRenderView"></f:event>
+		</f:metadata> -->
+	</ui:define>
+	
+	<ui:define name="content">
+	Hello Tontapat le retour !!
+	Connection : <a href="login.xhtml">Se connecter</a>
 
-</body>
+	</ui:define>
+
+</ui:composition>
 </html>

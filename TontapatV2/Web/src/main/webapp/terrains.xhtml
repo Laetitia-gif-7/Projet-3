@@ -2,28 +2,39 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:b="http://bootsfaces.net/ui">
 	
-<h:head>
-	<ui:insert name="head"></ui:insert>
-</h:head>
+<ui:composition template="/arch.xhtml">
 
-<h:body>
-	<div>
-		<h4>Utilisateur en session : <h:outputLabel value="#{mbCompte.utilisateur.nom}" /><br /></h4>
-		<h4>Ses Terrains : 
-			<ui:repeat var="terrain" value="#{mbTerrain.terrains}">
-				<br />
-				<h:outputLabel value="#{terrain.nomTerrain}" />
-				<br />
-				<h:outputLabel value="#{terrain.superficie}" />
-				<br />
-				<h:outputLabel value="#{terrain.clos}" />
-				<br />
-				<h:outputLabel value="#{terrain.dateCreation}" />
+	<ui:define name="head">
+		<title>Mes Terrains</title>
+		<!-- <f:metadata>
+			<f:event listener="#{mbAccount.disconnect()}" type="preRenderView"></f:event>
+		</f:metadata> -->
+	</ui:define>
+	<ui:define name="content">
+	<div class="terrainsTitre">
+			<h1>Vos Terrain, <h:outputLabel value="#{mbCompte.utilisateur.nom}" /> !</h1>
+		</div>
+		<button class="terrainsAjoutTroupeau">
+		<p>Ajouter un terrain</p>
+		<b:iconAwesome value="plus-circle" solid="true" size="3x"/>
+		</button>
+		<div class="terrainsDivs">
+			<ui:repeat class="terrainsBigDiv" var="terrain" value="#{mbTerrain.terrains}">
+				<div class="terrainsBigDiv">
+					<div class="terrainSmallDiv">
+						<p>Nom : <h:outputLabel value="#{terrain.nomTerrain}" /></p>
+						<p>Superficie : <h:outputLabel value="#{terrain.superficie}" /></p>
+						<p>Clos : <h:outputLabel value="#{terrain.clos}" /></p>
+					</div>
+				</div>
 			</ui:repeat>
-		</h4>
-	</div>
-</h:body>
+		</div>
+
+	</ui:define>
+
+</ui:composition>
 </html>
