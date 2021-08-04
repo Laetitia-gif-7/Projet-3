@@ -2,33 +2,40 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core">
-	
-<h:head>
-	<ui:insert name="head"></ui:insert>
-</h:head>
+	xmlns:b="http://bootsfaces.net/ui">
 
-<h:body>
-	<div>
-		<h4>Utilisateur en session : <h:outputLabel value="#{mbCompte.utilisateur.nom}" /><br /></h4>
-		<h4>Ses Troupeaux : 
-			<ui:repeat var="troupeau" value="#{mbTroupeau.troupeaux}">
-				<br />
-				<h:outputLabel value="#{troupeau.nomTroupeau}" />
-				<br />
-				<h:outputLabel value="#{troupeau.description}" />
-				<br />
-				<h:outputLabel value="#{troupeau.coutParAnimal}" />
-				<br />
-				<h:outputLabel value="#{troupeau.frequenceVisite}" />
-				<br />
-				<h:outputLabel value="#{troupeau.dateCreation}" />
-				<br />
-				<h:outputLabel value="#{troupeau.dateRetrait}" />
-				
-			</ui:repeat>
-		</h4>
-	</div>
-</h:body>
+<ui:composition template="/arch.xhtml">
+
+	<ui:define name="head">
+		<title>Mes Troupeaux</title>
+		<!-- <f:metadata>
+			<f:event listener="#{mbAccount.disconnect()}" type="preRenderView"></f:event>
+		</f:metadata> -->
+	</ui:define>
+	<ui:define name="content">
+		<div>
+			<h4>Utilisateur en session : <h:outputLabel value="#{mbCompte.utilisateur.nom}" /><br /></h4>
+			<h4>Ses Troupeaux : 
+				<ui:repeat var="troupeau" value="#{mbTroupeau.troupeaux}">
+					<br />
+					<h:outputLabel value="#{troupeau.nomTroupeau}" />
+					<br />
+					<h:outputLabel value="#{troupeau.description}" />
+					<br />
+					<h:outputLabel value="#{troupeau.coutParAnimal}" />
+					<br />
+					<h:outputLabel value="#{troupeau.frequenceVisite}" />
+					<br />
+					<h:outputLabel value="#{troupeau.dateCreation}" />
+					<br />
+					<h:outputLabel value="#{troupeau.dateRetrait}" />
+				</ui:repeat>
+			</h4>
+		</div>
+
+	</ui:define>
+	
+</ui:composition>
 </html>
