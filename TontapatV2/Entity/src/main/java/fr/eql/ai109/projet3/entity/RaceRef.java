@@ -36,32 +36,30 @@ public class RaceRef implements Serializable {
 	@JoinColumn(name="espece_id", nullable=false)
 	private EspeceRef especeRef;
 //
-//	//bi-directional many-to-many association to MorphologieRef
-//	@ManyToMany
-//	@JoinTable(
-//		name="association_race_morpho"
-//		, joinColumns={
-//			@JoinColumn(name="id_race", nullable=false)
-//			}
-//		, inverseJoinColumns={
-//			@JoinColumn(name="id_morphologie", nullable=false)
-//			}
-//		)
-//	private List<MorphologieRef> morphologieRefs;
+	@ManyToMany
+	@JoinTable(
+		name="association_race_morpho"
+		, joinColumns={
+			@JoinColumn(name="id_race", nullable=false)
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="id_morphologie", nullable=false)
+			}
+		)
+	private List<MorphologieRef> morphologieRefs;
 //	
-//	
-//		//bi-directional many-to-many association to VegetationRef
-//		@ManyToMany
-//		@JoinTable(
-//				name="association_race_vegetation"
-//				, joinColumns={
-//					@JoinColumn(name="id_vegetation", nullable=false)
-//					}
-//				, inverseJoinColumns={
-//					@JoinColumn(name="id_race", nullable=false)
-//					}
-//				)
-//		private List<VegetationRef> vegetationRefs;
+	@ManyToMany
+	@JoinTable(
+		name="association_race_vegetation"
+		, joinColumns={
+			@JoinColumn(name="id_race", nullable=false)
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="id_vegetation", nullable=false)
+			}
+		)
+	private List<VegetationRef> vegetationRef;
+	
 //		
 		@OneToMany(mappedBy="raceRef")
 		private List<CompositionTroupeau> compositionTroupeaux;

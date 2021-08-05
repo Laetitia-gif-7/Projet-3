@@ -76,11 +76,11 @@ public class Terrain implements Serializable {
 	@OneToMany( mappedBy="terrain",fetch = FetchType.EAGER)
 	Set<Prestation> prestations;
 	
-	/*
+	
 	@ManyToOne(fetch  = FetchType.LAZY)
 	@JoinColumn(name="id_motif_retrait_terrain")
 	private MotifRetraitTerrain motifRetraitTerrain;
-	*/
+	
 	
 	/*  Préférence d'espece pour le terrain, optionel !
 	@ManyToOne
