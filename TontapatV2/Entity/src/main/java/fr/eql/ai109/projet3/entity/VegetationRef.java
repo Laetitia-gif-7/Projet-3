@@ -26,12 +26,21 @@ public class VegetationRef implements Serializable {
 	@Column(name="libelle_vegetation", length=254)
 	private String libelleVegetation;
 	
+	
+	
+	
+	
 	@ManyToMany(mappedBy="vegetationRefs")
 	private List<RaceRef> raceRefs;
 	
+	
+	
+	
+	
+	
 	@OneToMany(mappedBy="vegetationRef")
 	private List<ProportionVegetation> proportionVegetations;
-
+	
 	public int getIdVegetation() {
 		return idVegetation;
 	}

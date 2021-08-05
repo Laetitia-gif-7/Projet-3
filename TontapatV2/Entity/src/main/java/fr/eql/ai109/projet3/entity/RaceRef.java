@@ -32,6 +32,36 @@ public class RaceRef implements Serializable {
 	
 	private float ugb;
 	
+	public List<MorphologieRef> getMorphologieRefs() {
+		return morphologieRefs;
+	}
+
+
+	public void setMorphologieRefs(List<MorphologieRef> morphologieRefs) {
+		this.morphologieRefs = morphologieRefs;
+	}
+
+
+	public List<VegetationRef> getVegetationRefs() {
+		return vegetationRefs;
+	}
+
+
+	public void setVegetationRefs(List<VegetationRef> vegetationRefs) {
+		this.vegetationRefs = vegetationRefs;
+	}
+
+
+	public List<CompositionTroupeau> getCompositionTroupeaux() {
+		return compositionTroupeaux;
+	}
+
+
+	public void setCompositionTroupeaux(List<CompositionTroupeau> compositionTroupeaux) {
+		this.compositionTroupeaux = compositionTroupeaux;
+	}
+
+
 	@ManyToOne
 	@JoinColumn(name="espece_id", nullable=false)
 	private EspeceRef especeRef;
