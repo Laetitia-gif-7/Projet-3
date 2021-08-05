@@ -33,7 +33,12 @@
 						<ui:repeat var="race" value="#{troupeau.compositionTroupeau}">
 			                <p><h:outputLabel value="#{race.raceRef.libelleRace}" /></p>
 			                <p><h:outputLabel value="#{race.nbAnimaux}" /></p>
+			                <p><h:outputLabel value="#{race.raceRef.especeRef.libelleEspece}" /></p>
 			            </ui:repeat>
+			            
+			           
+			            <p><h:outputLabel value="#{troupeau.motifRetraitTroupeau.libelleMotifRetraitTroupeau}" /></p>
+						
 					</div>
 				</div>
 			</ui:repeat>
