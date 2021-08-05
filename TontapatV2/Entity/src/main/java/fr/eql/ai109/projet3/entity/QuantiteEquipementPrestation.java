@@ -4,11 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity
+//@Entity
 @Table(name="quantite_equipement_prestation")
 public class QuantiteEquipementPrestation implements Serializable {
 
@@ -21,9 +22,9 @@ public class QuantiteEquipementPrestation implements Serializable {
 
 	private int quantite;
 	
-	@ManyToOne
-	@JoinColumn(name="id_equipement", nullable=false, insertable=false, updatable=false)
-	private Equipement equipement;
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name="id_equipement", nullable=false, insertable=false, updatable=false)
+//	private Equipement equipement;
 	
 	/*
 	@ManyToOne
@@ -55,13 +56,13 @@ public class QuantiteEquipementPrestation implements Serializable {
 		this.quantite = quantite;
 	}
 
-	public Equipement getEquipement() {
-		return equipement;
-	}
-
-	public void setEquipement(Equipement equipement) {
-		this.equipement = equipement;
-	}
+//	public Equipement getEquipement() {
+//		return equipement;
+//	}
+//
+//	public void setEquipement(Equipement equipement) {
+//		this.equipement = equipement;
+//	}
 
 	
 

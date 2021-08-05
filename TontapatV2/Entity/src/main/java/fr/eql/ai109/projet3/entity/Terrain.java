@@ -81,6 +81,9 @@ public class Terrain implements Serializable {
 	@JoinColumn(name="id_motif_retrait_terrain")
 	private MotifRetraitTerrain motifRetraitTerrain;
 	
+	@OneToMany(mappedBy="terrain")
+	private List<QuantiteEquipement> quantiteEquipement;
+	
 	
 	/*  Préférence d'espece pour le terrain, optionel !
 	@ManyToOne
@@ -88,6 +91,22 @@ public class Terrain implements Serializable {
 	private EspeceRef especePreference;
 	*/
 	
+	public MotifRetraitTerrain getMotifRetraitTerrain() {
+		return motifRetraitTerrain;
+	}
+
+	public void setMotifRetraitTerrain(MotifRetraitTerrain motifRetraitTerrain) {
+		this.motifRetraitTerrain = motifRetraitTerrain;
+	}
+
+	public List<QuantiteEquipement> getQuantiteEquipement() {
+		return quantiteEquipement;
+	}
+
+	public void setQuantiteEquipement(List<QuantiteEquipement> quantiteEquipement) {
+		this.quantiteEquipement = quantiteEquipement;
+	}
+
 	public Set<Prestation> getPrestations() {
 		return prestations;
 	}

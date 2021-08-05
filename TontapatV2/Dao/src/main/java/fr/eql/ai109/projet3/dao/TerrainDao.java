@@ -21,6 +21,7 @@ public class TerrainDao extends GenericDao<Terrain> implements TerrainIDao {
 		Query query = entityManager.createQuery("SELECT t FROM Terrain t WHERE t.utilisateur=:utilisateurParam");
 		query.setParameter("utilisateurParam", utilisateur);
 		terrains = query.getResultList();
+		entityManager.refresh(terrains.get(0).getQuantiteEquipement().get(0));
 		return terrains;
 	}
 	

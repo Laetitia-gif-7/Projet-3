@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -26,6 +27,14 @@ public class QuantiteEquipement implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_terrain", nullable=false, insertable=false, updatable=false)
 	private Terrain terrain;
+
+	public Equipement getEquipement() {
+		return equipement;
+	}
+
+	public void setEquipement(Equipement equipement) {
+		this.equipement = equipement;
+	}
 
 	public QuantiteEquipementPK getId() {
 		return id;

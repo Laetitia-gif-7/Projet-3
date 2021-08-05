@@ -47,7 +47,7 @@ public class RaceRef implements Serializable {
 			}
 		)
 	private List<MorphologieRef> morphologieRefs;
-//	
+
 	@ManyToMany
 	@JoinTable(
 		name="association_race_vegetation"
@@ -58,9 +58,9 @@ public class RaceRef implements Serializable {
 			@JoinColumn(name="id_vegetation", nullable=false)
 			}
 		)
-	private List<VegetationRef> vegetationRef;
+	private List<VegetationRef> vegetationRefs;
 	
-//		
+	
 		@OneToMany(mappedBy="raceRef")
 		private List<CompositionTroupeau> compositionTroupeaux;
 //
