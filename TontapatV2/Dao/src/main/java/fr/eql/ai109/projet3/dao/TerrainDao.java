@@ -22,9 +22,15 @@ public class TerrainDao extends GenericDao<Terrain> implements TerrainIDao {
 		query.setParameter("utilisateurParam", utilisateur);
 		terrains = query.getResultList();
 		for (int i=0; i<terrains.size(); i++) {
-			entityManager.refresh(terrains.get(i).getQuantiteEquipement().get(i));
-			entityManager.refresh(terrains.get(i).getProportionVegetations().get(i));
-			entityManager.refresh(terrains.get(i).getProportionMorphologies().get(i));
+			for (int j=0; j<terrains.get(i).getQuantiteEquipement().size(); j++) {
+				entityManager.refresh(terrains.get(i).getQuantiteEquipement().get(j));
+			}
+			for (int j=0; j<terrains.get(i).getProportionVegetations().size(); j++) {
+				entityManager.refresh(terrains.get(i).getProportionVegetations().get(j));
+			}
+			for (int j=0; j<terrains.get(i).getProportionMorphologies().size(); j++) {
+				entityManager.refresh(terrains.get(i).getProportionMorphologies().get(j));
+			}
 		}
 		return terrains;
 	}
