@@ -8,7 +8,13 @@
   <jta-data-source>java:jboss/datasources/tontapatv2</jta-data-source>
    <class>fr.eql.ai109.projet3.entity.CompositionTroupeau</class>
   <class>fr.eql.ai109.projet3.entity.CompositionTroupeauPK</class>
+<<<<<<< HEAD
   <class>fr.eql.ai109.projet3.entity.Equipement</class>
+=======
+  <class>fr.eql.ai109.projet3.entity.RaceRef</class>
+  <class>fr.eql.ai109.projet3.entity.CompositionTroupeauPrestation</class>
+  <class>fr.eql.ai109.projet3.entity.MotifRetraitTroupeau</class>
+>>>>>>> master
   <class>fr.eql.ai109.projet3.entity.EspeceRef</class>
   <class>fr.eql.ai109.projet3.entity.MorphologieRef</class>
   <class>fr.eql.ai109.projet3.entity.MotifRetraitTerrain</class>

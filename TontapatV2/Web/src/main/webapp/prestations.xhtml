@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<!-- To talk to Marc about header -->	
+<h:head>
+	<ui:insert name="head"></ui:insert>
+</h:head>
+
+<ui:composition template="/arch.xhtml">
+
+	<ui:define name="head">
+		<title>Mes Prestations</title>
+		<!-- <f:metadata>
+			<f:event listener="#{mbAccount.disconnect()}" type="preRenderView"></f:event>
+		</f:metadata> -->
+	</ui:define>
+	
+	<ui:define name="content">
+		<div class="terrainsTitre">
+			<h1>Vos Prestation, <h:outputLabel value="#{mbCompte.utilisateur.nom}" /> !</h1>
+		</div>
+		<div class="terrainsDivs">
+			<ui:repeat class="terrainsBigDiv" var="prestaBU" value="#{mbPresta.prestations}">
+				<div class="terrainsBigDiv">
+					<div class="terrainSmallDiv">
+						<p>State <h:outputLabel value="#{prestaBU.stateString}" /></p>
+						<p>Debut de prestation : <h:outputLabel value="#{prestaBU.prestation.debutPrestation}" /></p>
+						<p>Fin de prestation : <h:outputLabel value="#{prestaBU.prestation.finPrestation}" /></p>
+					</div>
+				</div>
+			</ui:repeat>
+		</div>
+	</ui:define>
+
+</ui:composition>
+</html>

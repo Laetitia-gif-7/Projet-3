@@ -73,7 +73,7 @@ public class Terrain implements Serializable {
 	@JoinColumn(name="insee_id")
 	private VilleCpRef villeCp;
 	
-	@OneToMany( mappedBy="terrain",fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="terrain", fetch = FetchType.LAZY)
 	Set<Prestation> prestations;
 	
 	
@@ -118,15 +118,12 @@ public class Terrain implements Serializable {
 	public Utilisateur getUtilisateur() {
 		return utilisateur;
 	}
-
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
 	}
-	
 	public int getIdTerrain() {
 		return idTerrain;
 	}
-	
 	public void setIdTerrain(int idTerrain) {
 		this.idTerrain = idTerrain;
 	}
@@ -202,7 +199,6 @@ public class Terrain implements Serializable {
 	public void setDateRetrait(Date dateRetrait) {
 		this.dateRetrait = dateRetrait;
 	}
-	
 	public VilleCpRef getVilleCp() {
 		return villeCp;
 	}

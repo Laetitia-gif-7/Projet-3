@@ -3,6 +3,7 @@ package fr.eql.ai109.projet3.entity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 //import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -85,11 +87,13 @@ public class Prestation implements Serializable {
 	@JoinColumn(name="id_utilisateur_berger")
 	private Utilisateur berger;
 	
-	@ManyToOne( fetch = FetchType.LAZY)
+	@ManyToOne //( fetch = FetchType.LAZY)  it is a simple object
 	@JoinColumn(name="id_terrain", nullable=false)
 	private Terrain terrain;
 	
-	/* Troupeau to do, more complex with compo_troupeau_presta */
+	/* Troupeau more complex with compo_troupeau_presta */
+	@OneToMany(mappedBy="prestation")
+	private List<CompositionTroupeauPrestation> compositionTroupeauPrestations;
 	
 	public int getIdPrestation() {
 		return idPrestation;
@@ -257,6 +261,14 @@ public class Prestation implements Serializable {
 
 	public void setBerger(Utilisateur berger) {
 		this.berger = berger;
+	}
+	
+	public List<CompositionTroupeauPrestation> getCompositionTroupeauPrestations() {
+		return compositionTroupeauPrestations;
+	}
+
+	public void setCompositionTroupeauPrestations(List<CompositionTroupeauPrestation> compositionTroupeauPrestations) {
+		this.compositionTroupeauPrestations = compositionTroupeauPrestations;
 	}
 
 }
