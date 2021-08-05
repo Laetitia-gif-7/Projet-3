@@ -54,7 +54,6 @@ public class PrestationBU implements Serializable {
 		this.stateString = str;
 	}
 
-
 	// or include getters and setters of prestation ?
 	public LocalDateTime getDebutPrestation() {
 		return prestation.getDebutPrestation();

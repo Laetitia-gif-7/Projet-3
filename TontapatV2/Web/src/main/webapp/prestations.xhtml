@@ -4,22 +4,37 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core">
-	
+
+<!-- To talk to Marc about header -->	
 <h:head>
 	<ui:insert name="head"></ui:insert>
 </h:head>
 
-<h:body>
-	<div>
-		<h4>Utilisateur en session : <h:outputLabel value="#{mbCompte.utilisateur.nom}" /><br /></h4>
-		<h4>Mes prestation : 
-			<ui:repeat var="prestaExt" value="#{mbPresta.prestations}">
-				<h:outputLabel value="#{prestaExt.prestation.debutPrestation}" />
-				<br />
-				State: <h:outputLabel value="#{prestaExt.stateString}" />
-				<br />
+<ui:composition template="/arch.xhtml">
+
+	<ui:define name="head">
+		<title>Mes Prestations</title>
+		<!-- <f:metadata>
+			<f:event listener="#{mbAccount.disconnect()}" type="preRenderView"></f:event>
+		</f:metadata> -->
+	</ui:define>
+	
+	<ui:define name="content">
+		<div class="terrainsTitre">
+			<h1>Vos Prestation, <h:outputLabel value="#{mbCompte.utilisateur.nom}" /> !</h1>
+		</div>
+		<div class="terrainsDivs">
+			<ui:repeat class="terrainsBigDiv" var="prestaBU" value="#{mbPresta.prestations}">
+				<div class="terrainsBigDiv">
+					<div class="terrainSmallDiv">
+						<p>State <h:outputLabel value="#{prestaBU.stateString}" /></p>
+						<p>Debut de prestation : <h:outputLabel value="#{prestaBU.prestation.debutPrestation}" /></p>
+						<p>Fin de prestation : <h:outputLabel value="#{prestaBU.prestation.finPrestation}" /></p>
+					</div>
+				</div>
 			</ui:repeat>
-		</h4>
-	</div>
-</h:body>
+		</div>
+	</ui:define>
+
+</ui:composition>
 </html>

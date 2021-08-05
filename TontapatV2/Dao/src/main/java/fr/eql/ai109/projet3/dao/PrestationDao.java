@@ -19,28 +19,14 @@ public class PrestationDao extends GenericDao<Prestation> implements PrestationI
 	@Override
 	public List<Prestation> getPrestationsByUser(Utilisateur utilisateur) {
 		List<Prestation> prestas = new ArrayList<Prestation>();
-		// p.terrain
-		/*
-		Query query = entityManager.createQuery("SELECT p FROM Prestation p "
-				// + "JOIN Terrain t ON t.idTerrain = p.terrain.idTerrain "
-				// + "JOIN Utilisateur u ON t.utilisateur = u "
-				//+ "WHERE t.utilisateur=:utilisateurParam");
-				+ "WHERE p.terrain.utilisateur = :utilisateurParam");
-		*/
-		/*
+
 		TypedQuery<Prestation> query = entityManager.createQuery(
-				  "SELECT p "
-				+ "FROM Prestation p "
-				+ "JOIN FETCH p.compositionTroupeauPrestations "
-				+ "WHERE p.terrain.utilisateur =:utilisateurParam ", Prestation.class);
-//				+ "OR ctp.troupeau.utilisateur =:utilisateurParam ", Prestation.class);
-		*/
-		Query query = entityManager.createQuery(
-				  "SELECT DISTINCT p "
+				"SELECT DISTINCT p "
 				+ "FROM Prestation p "
 				+ "JOIN FETCH p.compositionTroupeauPrestations ctp "
 				+ "WHERE p.terrain.utilisateur =:utilisateurParam "
-				+ "	  OR ctp.troupeau.utilisateur =:utilisateurParam2 ");
+				+ "	  OR ctp.troupeau.utilisateur =:utilisateurParam2 ",Prestation.class);
+		
 		query.setParameter("utilisateurParam", utilisateur);
 		query.setParameter("utilisateurParam2", utilisateur);
 		prestas = query.getResultList();
