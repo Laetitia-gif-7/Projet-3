@@ -30,6 +30,27 @@
 						<p>State <h:outputLabel value="#{prestaBU.stateString}" /></p>
 						<p>Debut de prestation : <h:outputLabel value="#{prestaBU.prestation.debutPrestation}" /></p>
 						<p>Fin de prestation : <h:outputLabel value="#{prestaBU.prestation.finPrestation}" /></p>
+						<p>Prix : <h:outputLabel value="#{prestaBU.prestation.coutPrestation}" /></p>
+						<p>Liste des animaux : <h:outputLabel value="Somme à calculer avec EL"/></p>
+						<ul>
+						<ui:repeat var="animaux" value="#{prestaBU.prestation.compositionTroupeauPrestations}">
+							<li>
+								<h:outputLabel value="#{animaux.nbAnimaux}"/>
+								<h:outputLabel value="#{animaux.raceRef.libelleRace}"/>
+								<h:outputLabel value="#{animaux.raceRef.ugb}"/>
+							</li>
+						</ui:repeat>
+						</ul>
+						<p>Liste des équipements commandés pour la prestation :</p>
+						<ul>
+						<ui:repeat var="equip" value="#{prestaBU.prestation.quantiteEquipementPrestations}" >
+							<li>
+								<h:outputLabel value="#{equip.equipement.libelleEquipement}"/> :
+								<h:outputLabel value="#{equip.quantite}"/>
+								<h:outputLabel value="#{equip.equipement.uniteRef.libelleUnite}"/>
+							</li>
+						</ui:repeat>
+						</ul>
 					</div>
 				</div>
 			</ui:repeat>
