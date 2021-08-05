@@ -14,6 +14,7 @@
   <class>fr.eql.ai109.projet3.entity.CompositionTroupeau</class>
   <class>fr.eql.ai109.projet3.entity.CompositionTroupeauPK</class>
   <class>fr.eql.ai109.projet3.entity.RaceRef</class>
+  <class>fr.eql.ai109.projet3.entity.CompositionTroupeauPrestation</class>
   <!-- <jar-file>lib/Entity-1.0.0.jar</jar-file> -->
 
   <properties>

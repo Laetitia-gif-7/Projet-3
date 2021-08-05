@@ -6,11 +6,11 @@ import fr.eql.ai109.projet3.entity.PrestationBU;
  * - le client peut annuler la réservation => PrestationAnnule
  * - l'éleveur peut confirmer la réservation => ConfirméParEleveur
  */
-public class ReserveParClient implements StatePrestation {
+public class ReserveParEleveur implements StatePrestation {
 
 	private static final long serialVersionUID = 1L;
 	
-	public static final ReserveParClient RESERVEPARCLIENT = new ReserveParClient();
+	public static final ReserveParEleveur RESERVEPARELEVEUR = new ReserveParEleveur();
 	
 	@Override
 	public void valide(PrestationBU p) {
@@ -25,7 +25,7 @@ public class ReserveParClient implements StatePrestation {
 
 	@Override
 	public void setStateName(PrestationBU p) {
-		p.setStateString("RESERVEPARCLIENT");
+		p.setStateString("RESERVEPARELEVEUR");
 	}
 	
 	

@@ -10,7 +10,7 @@ import fr.eql.ai109.projet3.entity.prestationstate.StatePrestation;
  * - State design pattern to deal with all different steps in a prestation 
  * - add convenient link (TerrainId)
  */
-public class PrestationExt implements Serializable {
+public class PrestationBU implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -24,16 +24,17 @@ public class PrestationExt implements Serializable {
 	//private Utilisateur eleveur;
 	//private Utilisateur berger;
 	
-	private String testString = "UNIMPLEMENTED";
+	//default, should be overriden
+	private String stateString = "UNIMPLEMENTED";
 	
-	public PrestationExt() {
+	public PrestationBU() {
 		System.out.println("Entry prestationExt constructor");
 	}
 	
-	public PrestationExt(Prestation prest) {
+	public PrestationBU(Prestation prest) {
 		this.prestation = prest;
 		// to deal with the setting of the State at construction
-		this.state = ReserveParClient.RESERVEPARCLIENT;
+		// done by factory at the moment
 	}
 	
 	// give direct access
@@ -44,14 +45,15 @@ public class PrestationExt implements Serializable {
 	public void setPrestation(Prestation prestation) {
 		this.prestation = prestation;
 	}
+
+	public String getStateString() {
+		return stateString;
+	}
 	
-	public String getTestString() {
-		return testString;
+	public void setStateString(String str) {
+		this.stateString = str;
 	}
 
-	public void setTestString(String testString) {
-		this.testString = testString;
-	}
 
 	// or include getters and setters of prestation ?
 	public LocalDateTime getDebutPrestation() {
@@ -67,16 +69,14 @@ public class PrestationExt implements Serializable {
 		state.annule(this);
 	}
 	
-	public void testPrint() {
-		state.testPrint(this);
-	}
-	
 	public StatePrestation getState() {
 		return state;
 	}
 
 	public void setState(StatePrestation state) {
 		this.state = state;
+		this.state.setStateName(this);
 	}
+	
 	
 }

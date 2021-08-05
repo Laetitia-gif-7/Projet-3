@@ -2,12 +2,12 @@ package fr.eql.ai109.projet3.entity.prestationstate;
 
 import java.io.Serializable;
 
-import fr.eql.ai109.projet3.entity.PrestationExt;
+import fr.eql.ai109.projet3.entity.PrestationBU;
 
 public interface StatePrestation extends Serializable {
 	
-	void valide(PrestationExt p);
-	void annule(PrestationExt p);
-	void testPrint(PrestationExt p);
+	void valide(PrestationBU p);
+	void annule(PrestationBU p);
+	void setStateName(PrestationBU p);
 	
 }

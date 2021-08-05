@@ -10,7 +10,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 //import javax.faces.bean.ViewScoped;
 
-import fr.eql.ai109.projet3.entity.PrestationExt;
+import fr.eql.ai109.projet3.entity.PrestationBU;
 import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.ibusiness.PrestationIBusiness;
 
@@ -26,7 +26,7 @@ public class PrestationManagedBean implements Serializable {
 	@ManagedProperty(value = "#{mbCompte.utilisateur}")
 	private Utilisateur utilisateurConnecte;
 	
-	private List<PrestationExt> prestations;
+	private List<PrestationBU> prestations;
 	
 	@EJB
 	private PrestationIBusiness prestaIBusiness;
@@ -35,8 +35,9 @@ public class PrestationManagedBean implements Serializable {
 	public void init() {
 		prestations = prestaIBusiness.findPrestationsByUtilisateur(utilisateurConnecte);
 		System.out.println("done");
-		for (PrestationExt prestationExt : prestations) {
+		for (PrestationBU prestationExt : prestations) {
 			System.out.println("prestExt :" + prestationExt.getPrestation().getDebutPrestation());
+			System.out.println("state string :"+ prestationExt.getStateString());
 		}
 	}
 	
@@ -55,11 +56,11 @@ public class PrestationManagedBean implements Serializable {
 		this.utilisateurConnecte = utilisateurConnecte;
 	}
 
-	public List<PrestationExt> getPrestations() {
+	public List<PrestationBU> getPrestations() {
 		return prestations;
 	}
 
-	public void setPrestations(List<PrestationExt> prestations) {
+	public void setPrestations(List<PrestationBU> prestations) {
 		this.prestations = prestations;
 	}
 

@@ -54,12 +54,9 @@ public class Troupeau implements Serializable {
 	@OneToMany(mappedBy="troupeau")
 	private List<CompositionTroupeau> compositionTroupeau;
 	
-	/*
-	DEMANDER A MICHAEL DE MODIFIER LA BDD: MICHAEL DONE 
-	@ManyToOne(fetch  = FetchType.LAZY)
-	@JoinColumn(name="id_motif_retrait_troupeau")
-	private MotifRetraitTroupeau motifRetraitTroupeau;
-	*/
+	//bi-directional many-to-one association to Compositiontroupeauprestation
+	@OneToMany(mappedBy="troupeau")
+	private List<CompositionTroupeauPrestation> compositionTroupeauPrestations;
 	
 	
 	public int getIdTroupeau() {
@@ -72,6 +69,14 @@ public class Troupeau implements Serializable {
 
 	public void setCompositionTroupeau(List<CompositionTroupeau> compositionTroupeau) {
 		this.compositionTroupeau = compositionTroupeau;
+	}
+	
+	public List<CompositionTroupeauPrestation> getCompositiontroupeauprestations() {
+		return compositionTroupeauPrestations;
+	}
+
+	public void setCompositiontroupeauprestations(List<CompositionTroupeauPrestation> compositiontroupeauprestations) {
+		this.compositionTroupeauPrestations = compositiontroupeauprestations;
 	}
 
 	public void setIdTroupeau(int idTroupeau) {

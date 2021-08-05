@@ -11,8 +11,12 @@ import javax.ejb.Remote;
 import javax.ejb.Stateless;
 
 import fr.eql.ai109.projet3.entity.Prestation;
-import fr.eql.ai109.projet3.entity.PrestationExt;
+import fr.eql.ai109.projet3.entity.PrestationBU;
 import fr.eql.ai109.projet3.entity.Utilisateur;
+import fr.eql.ai109.projet3.entity.prestationstate.Annule;
+import fr.eql.ai109.projet3.entity.prestationstate.ConfirmeParEleveur;
+import fr.eql.ai109.projet3.entity.prestationstate.ReserveParClient;
+import fr.eql.ai109.projet3.entity.prestationstate.ReserveParEleveur;
 import fr.eql.ai109.projet3.ibusiness.PrestationIBusiness;
 import fr.eql.ai109.projet3.idao.PrestationIDao;
 
@@ -23,7 +27,7 @@ import fr.eql.ai109.projet3.idao.PrestationIDao;
 public class PrestationBusiness implements PrestationIBusiness {
 	
 	// as attribute, 
-	List<PrestationExt> prestationsExt = new ArrayList<>();
+	List<PrestationBU> prestationsBU = new ArrayList<>();
 	
 	@EJB
 	PrestationIDao prestationIdao;
@@ -39,25 +43,28 @@ public class PrestationBusiness implements PrestationIBusiness {
 	}
 	
 	@Override
-	public List<PrestationExt> findPrestationsByUtilisateur(Utilisateur utilisateur) {
+	public List<PrestationBU> findPrestationsByUtilisateur(Utilisateur utilisateur) {
 		List<Prestation> prestations = prestationIdao.getPrestationsByUser(utilisateur);
-		List<PrestationExt> prestationsExt = new ArrayList<>();
+		List<PrestationBU> prestationsBu = new ArrayList<>();
 		
-		PrestationExt temp;
+		PrestationBU temp;
 		for (Prestation prestation : prestations) {
 			//prestation.getTerrain(); // ok terrain loaded .....
 			System.out.println("test: " + prestation.toString());
-			
+			/*
 			temp = new PrestationExt( prestation );
 			temp.testPrint();
 			prestationsExt.add( temp ); // new PrestationExt( prestation ) );
+			*/
+			prestationsBu.add( this.factoryMethod(prestation, utilisateur ));
 		}
 		//System.out.println("test: " + prestations.toString());
-		return prestationsExt;
+		return prestationsBu;
 	}
 
 	@Override
 	public void valide(int id) {
+		// findPrestationId_> PrestationExt.valide()
 		return;
 	}
 
@@ -65,5 +72,40 @@ public class PrestationBusiness implements PrestationIBusiness {
 	public void cancel(int id) {
 		// TODO Auto-generated method stub	
 	}
-
+	
+	// TODO Factory Class, ApplicatioScope              // Utilisateur not used
+	PrestationBU factoryMethod( Prestation prestation, Utilisateur utilisateur ) {
+		
+		PrestationBU proxy = new PrestationBU( prestation );
+		
+		int utilisateurInitiateurId = prestation.getInitiateurPrestation().getId();
+		// 
+		int clientId = prestation.getTerrain().getUtilisateur().getId();
+		//int eleveurId = prestation.getTroupeau().getUtilisateur().getId();
+		int eleveurId = prestation.getCompositionTroupeauPrestations().get(0).getTroupeau().getUtilisateur().getId();
+		
+		//if( prestation.getReservation() == null )
+		//	throw new Exception("Error in prestation Reservation is null");
+		
+		// ANNULATION
+		if( prestation.getAnnullationPrestation() != null ) {
+			proxy.setState( Annule.ANNULE );
+			return proxy;
+		}
+		
+		if( prestation.getConfirmation() == null ) { // en attente de confirmation
+			
+			if( utilisateurInitiateurId == clientId ) { // un client
+				proxy.setState(  ReserveParClient.RESERVEPARCLIENT );
+			}	else { // un eleveur
+				proxy.setState( ReserveParEleveur.RESERVEPARELEVEUR );
+			}
+			return proxy;
+		}
+		//proxy.setStateString();
+		return proxy;
+	}
 }
+		
+	
+
