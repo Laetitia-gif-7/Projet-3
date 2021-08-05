@@ -82,6 +82,12 @@ public class Terrain implements Serializable {
 	private MotifRetraitTerrain motifRetraitTerrain;
 	
 	@OneToMany(mappedBy="terrain")
+	private List<ProportionMorphologie> proportionMorphologies;
+	
+	@OneToMany(mappedBy="terrain")
+	private List<ProportionVegetation> proportionVegetations;
+	
+	@OneToMany(mappedBy="terrain")
 	private List<QuantiteEquipement> quantiteEquipement;
 	
 	
@@ -91,6 +97,23 @@ public class Terrain implements Serializable {
 	private EspeceRef especePreference;
 	*/
 	
+	public List<ProportionMorphologie> getProportionMorphologies() {
+		return proportionMorphologies;
+	}
+
+	public void setProportionMorphologies(List<ProportionMorphologie> proportionMorphologies) {
+		this.proportionMorphologies = proportionMorphologies;
+	}
+
+	public List<ProportionVegetation> getProportionVegetations() {
+		return proportionVegetations;
+	}
+	
+
+	public void setProportionVegetations(List<ProportionVegetation> proportionVegetations) {
+		this.proportionVegetations = proportionVegetations;
+	}
+
 	public MotifRetraitTerrain getMotifRetraitTerrain() {
 		return motifRetraitTerrain;
 	}
