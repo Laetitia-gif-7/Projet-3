@@ -58,7 +58,19 @@ public class Troupeau implements Serializable {
 	@OneToMany(mappedBy="troupeau")
 	private List<CompositionTroupeauPrestation> compositionTroupeauPrestations;
 	
+	@ManyToOne(fetch  = FetchType.EAGER)
+	@JoinColumn(name="id_motif_retrait")
+	private MotifRetraitTroupeau motifRetraitTroupeau;
 	
+	
+	public MotifRetraitTroupeau getMotifRetraitTroupeau() {
+		return motifRetraitTroupeau;
+	}
+
+	public void setMotifRetraitTroupeau(MotifRetraitTroupeau motifRetraitTroupeau) {
+		this.motifRetraitTroupeau = motifRetraitTroupeau;
+	}
+
 	public int getIdTroupeau() {
 		return idTroupeau;
 	}

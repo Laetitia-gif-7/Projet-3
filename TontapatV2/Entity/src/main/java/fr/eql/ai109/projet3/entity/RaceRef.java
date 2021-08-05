@@ -32,9 +32,9 @@ public class RaceRef implements Serializable {
 	
 	private float ugb;
 	
-//	@ManyToOne
-//	@JoinColumn(name="espece_id", nullable=false)
-//	private EspeceRef especeRef;
+	@ManyToOne
+	@JoinColumn(name="espece_id", nullable=false)
+	private EspeceRef especeRef;
 //
 //	//bi-directional many-to-many association to MorphologieRef
 //	@ManyToMany
@@ -101,14 +101,14 @@ public class RaceRef implements Serializable {
 		}
 
 
-//		public EspeceRef getEspeceRef() {
-//			return especeRef;
-//		}
-//
-//
-//		public void setEspeceRef(EspeceRef especeRef) {
-//			this.especeRef = especeRef;
-//		}
+		public EspeceRef getEspeceRef() {
+			return especeRef;
+		}
+
+
+		public void setEspeceRef(EspeceRef especeRef) {
+			this.especeRef = especeRef;
+		}
 //
 //
 //		public List<MorphologieRef> getMorphologieRefs() {
@@ -120,15 +120,15 @@ public class RaceRef implements Serializable {
 //			this.morphologieRefs = morphologieRefs;
 //		}
 //
-//
-//		public List<Compositiontroupeau> getCompositiontroupeaux() {
-//			return compositiontroupeaux;
-//		}
-//
-//
-//		public void setCompositiontroupeaux(List<Compositiontroupeau> compositiontroupeaux) {
-//			this.compositiontroupeaux = compositiontroupeaux;
-//		}
+
+		public List<CompositionTroupeau> getCompositiontroupeaux() {
+			return compositionTroupeaux;
+		}
+
+
+		public void setCompositiontroupeaux(List<CompositionTroupeau> compositionTroupeaux) {
+			this.compositionTroupeaux = compositionTroupeaux;
+		}
 //
 //
 //		public List<VegetationRef> getVegetationRefs() {
@@ -140,15 +140,6 @@ public class RaceRef implements Serializable {
 //			this.vegetationRefs = vegetationRefs;
 //		}
 //
-//
-//		public List<Compositiontroupeau> getCompositiontroupeaux() {
-//			return compositiontroupeaux;
-//		}
-//
-//
-//		public void setCompositiontroupeaux(List<Compositiontroupeau> compositiontroupeaux) {
-//			this.compositiontroupeaux = compositiontroupeaux;
-//		}
 //
 //
 //		public List<Compositiontroupeauprestation> getCompositiontroupeauprestations() {
