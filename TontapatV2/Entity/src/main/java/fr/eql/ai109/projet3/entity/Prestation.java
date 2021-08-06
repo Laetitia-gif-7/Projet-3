@@ -23,6 +23,14 @@ public class Prestation implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
+	public List<QuantiteEquipementPrestation> getQuantiteEquipementPrestations() {
+		return quantiteEquipementPrestations;
+	}
+
+	public void setQuantiteEquipementPrestations(List<QuantiteEquipementPrestation> quantiteEquipementPrestations) {
+		this.quantiteEquipementPrestations = quantiteEquipementPrestations;
+	}
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_prestation", unique=true, nullable=false)
@@ -94,6 +102,10 @@ public class Prestation implements Serializable {
 	/* Troupeau more complex with compo_troupeau_presta */
 	@OneToMany(mappedBy="prestation")
 	private List<CompositionTroupeauPrestation> compositionTroupeauPrestations;
+	
+	// Lazy by default, need only for compute price full details
+	@OneToMany(mappedBy="prestation")
+	private List<QuantiteEquipementPrestation> quantiteEquipementPrestations;
 	
 	public int getIdPrestation() {
 		return idPrestation;

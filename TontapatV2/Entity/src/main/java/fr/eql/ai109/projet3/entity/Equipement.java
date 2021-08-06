@@ -34,8 +34,8 @@ public class Equipement implements Serializable {
 	@OneToMany(mappedBy="equipement")
 	private List<QuantiteEquipement> quantiteEquipements;
 //
-//	@OneToMany(mappedBy="equipement")
-//	private List<QuantiteEquipementPrestation> quantiteEquipementPrestations;
+	@OneToMany(mappedBy="equipement")
+	private List<QuantiteEquipementPrestation> quantiteEquipementPrestations;
 
 	public int getIdEquipement() {
 		return idEquipement;
@@ -68,13 +68,13 @@ public class Equipement implements Serializable {
 	public void setQuantiteEquipements(List<QuantiteEquipement> quantiteEquipements) {
 		this.quantiteEquipements = quantiteEquipements;
 	}
-//
-//	public List<QuantiteEquipementPrestation> getQuantiteEquipementPrestations() {
-//		return quantiteEquipementPrestations;
-//	}
-//
-//	public void setQuantiteEquipementPrestations(List<QuantiteEquipementPrestation> quantiteEquipementPrestations) {
-//		this.quantiteEquipementPrestations = quantiteEquipementPrestations;
-//	}
+	
+	public List<QuantiteEquipementPrestation> getQuantiteEquipementPrestations() {
+		return quantiteEquipementPrestations;
+	}
+
+	public void setQuantiteEquipementPrestations(List<QuantiteEquipementPrestation> quantiteEquipementPrestations) {
+		this.quantiteEquipementPrestations = quantiteEquipementPrestations;
+	}
 
 }
