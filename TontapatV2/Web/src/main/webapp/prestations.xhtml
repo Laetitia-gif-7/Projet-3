@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 <!-- To talk to Marc about header -->	
 <h:head>
@@ -56,12 +57,23 @@
 			</ui:repeat>
 		</div>
 		
-		<!--  test State -->
-		<ui:repeat var="prestaBU" value="#{mbPresta.prestations}">
-			<ui:include src="reserveParClient.xhtml" />
-		</ui:repeat>
-		
-	</ui:define>
-
+		<!--  test State, out of loop ui:repeat it is ok, inside problem : maybe more to come-->
+<!-- https://stackoverflow.com/questions/3362487/dynamic-uiinclude-inside-uirepeat-is-there-a-simple-solution -->
+		Test : <h:outputLabel value="#{mbPresta.prestations.get(0).templateXhtml}"/>
+<!-- 	<ui:repeat var="prestaBU" value="#{mbPresta.prestations}" > -->
+	<div class="terrainsDivs">
+		<c:forEach var="prestaBU" items="#{mbPresta.prestations}" >
+		<div class="terrainsBigDiv">
+			<div class="terrainSmallDiv">
+				<ui:include src="#{prestaBU.templateXhtml}">
+					<ui:param name="prestaBuByMain" value="#{prestaBU}" />
+					<ui:param name="user" value="#{mbCompte}" />
+					<!-- no need to pass #mbPresta (include ?) -->
+				</ui:include>
+			</div>
+		</div>
+		</c:forEach>
+	</div>
+</ui:define>
 </ui:composition>
 </html>

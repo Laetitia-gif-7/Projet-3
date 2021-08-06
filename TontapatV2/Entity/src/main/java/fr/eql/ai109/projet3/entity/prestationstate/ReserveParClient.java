@@ -27,6 +27,11 @@ public class ReserveParClient implements StatePrestation {
 	public void setStateName(PrestationBU p) {
 		p.setStateString("RESERVEPARCLIENT");
 	}
+
+	@Override
+	public void setTemplateString(PrestationBU p) {
+		p.setTemplateXhtml("reserveParClient.xhtml");
+	}
 	
 	
 

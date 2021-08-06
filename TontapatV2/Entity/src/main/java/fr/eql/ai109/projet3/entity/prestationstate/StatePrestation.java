@@ -9,5 +9,5 @@ public interface StatePrestation extends Serializable {
 	void valide(PrestationBU p);
 	void annule(PrestationBU p);
 	void setStateName(PrestationBU p);
-	
+	void setTemplateString(PrestationBU p);
 }

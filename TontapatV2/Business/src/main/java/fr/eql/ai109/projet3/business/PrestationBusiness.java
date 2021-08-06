@@ -84,6 +84,10 @@ public class PrestationBusiness implements PrestationIBusiness {
 		//int eleveurId = prestation.getTroupeau().getUtilisateur().getId();
 		int eleveurId = prestation.getCompositionTroupeauPrestations().get(0).getTroupeau().getUtilisateur().getId();
 		
+		// insert into the object
+		proxy.setClient(prestation.getTerrain().getUtilisateur());
+		proxy.setEleveur(prestation.getCompositionTroupeauPrestations().get(0).getTroupeau().getUtilisateur());
+		
 		//if( prestation.getReservation() == null )
 		//	throw new Exception("Error in prestation Reservation is null");
 		
