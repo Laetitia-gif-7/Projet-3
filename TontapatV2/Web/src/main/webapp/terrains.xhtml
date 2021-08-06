@@ -5,7 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:b="http://bootsfaces.net/ui">
-	
+
 	<ui:composition template="/arch.xhtml">
 		<ui:define name="head">
 			<title>Mes Terrains</title>
@@ -29,42 +29,45 @@
 								<p>Description : <h:outputLabel value="#{terrain.description}" /></p>
 								<p>Superficie du terrain : <h:outputLabel value="#{terrain.superficie}" /> m2</p>
 								<p>Adresse : <h:outputLabel value="#{terrain.noRue}"/>  <h:outputLabel value="#{terrain.rue}"/> et rajouter ville</p>
+								<ui:repeat var="pd" value="#{terrain.periodeDisponibilites}">
+									<p>Date de Début : <h:outputLabel value="#{pd.debutPeriode}" /></p>
+									<p>Date de Fin : <h:outputLabel value="#{pd.finPeriode}" /></p>
+								</ui:repeat>
 							<b:button  class="terrainButtonDetail" value="Voir le détail du terrain" onclick="$('.modalPseudoClass${status.index}').modal()"/>	
 							</div>
+						
 					</div>
 					<b:modal id="amodal${status.index}" title="Détail du terrain : #{terrain.nomTerrain}" styleClass="modalPseudoClass${status.index}" closable="false"  close-on-escape="false" backdrop="false">
-									<div class="terrainSmallDiv" var="terrain" value="#{mbTerrain.terrains}">
-										<p>Nom : <h:outputLabel value="#{terrain.nomTerrain}"/></p>
-										<p>Description : <h:outputLabel value="#{terrain.description}" /></p>
-										<p>Superficie du terrain : <h:outputLabel value="#{terrain.superficie}" /> m2</p>
-										<p>Adresse : <h:outputLabel value="#{terrain.noRue}"/>  <h:outputLabel value="#{terrain.rue}"/> et rajouter ville</p>
-										<p>Terrain cloturé : <h:outputLabel value="#{terrain.clos}" /></p>
-										
-										<p>Equipement :</p>
-										<ul>
-											<ui:repeat class="terrainsBigDiv" var="qe" value="#{terrain.quantiteEquipement}">	
-												<li><h:outputLabel value="#{qe.quantite}" /><h:outputLabel value="#{qe.equipement.uniteRef.libelleUnite}" /> de <h:outputLabel value="#{qe.equipement.libelleEquipement}" /></li>
-											</ui:repeat>
-										</ul>
-										
-										<p>Race compatible pour le type de végétation :</p>
-										<ui:repeat class="terrainsBigDiv" var="pv" value="#{terrain.proportionVegetations}">
-											<ul><h:outputLabel value="#{pv.vegetationRef.libelleVegetation}" />
-											<ui:repeat class="terrainsBigDiv" var="vr" value="#{pv.vegetationRef.raceRefs}">
-												<li><h:outputLabel value="#{vr.libelleRace}" /> pour <h:outputLabel value="#{pv.proportionVege}" /> %</li> 
-											</ui:repeat>
-											</ul>
-										</ui:repeat>
-										
-										<p>Type de morphologie :</p>
-										<ul>
-											<ui:repeat class="terrainsBigDiv" var="pm" value="#{terrain.proportionMorphologies}">
-												<li>
-													<h:outputLabel value="#{pm.morphologieRef.libelleMorphologie}" /> pour <h:outputLabel value="#{pm.proportionMorphologie}" /> %
-												</li>
-											</ui:repeat>
-										</ul>
-								</div>
+						<p>Nom : <h:outputLabel value="#{terrain.nomTerrain}"/></p>
+						<p>Description : <h:outputLabel value="#{terrain.description}" /></p>
+						<p>Superficie du terrain : <h:outputLabel value="#{terrain.superficie}" /> m2</p>
+						<p>Adresse : <h:outputLabel value="#{terrain.noRue}"/>  <h:outputLabel value="#{terrain.rue}"/> et rajouter ville</p>
+						<p>Terrain cloturé : <h:outputLabel value="#{terrain.clos}" /></p>
+						
+						<p>Equipement :</p>
+						<ul>
+							<ui:repeat class="terrainsBigDiv" var="qe" value="#{terrain.quantiteEquipement}">	
+								<li><h:outputLabel value="#{qe.quantite}" /><h:outputLabel value="#{qe.equipement.uniteRef.libelleUnite}" /> de <h:outputLabel value="#{qe.equipement.libelleEquipement}" /></li>
+							</ui:repeat>
+						</ul>
+						
+						<p>Race compatible pour le type de végétation :</p>
+						<ui:repeat class="terrainsBigDiv" var="pv" value="#{terrain.proportionVegetations}">
+							<ul><h:outputLabel value="#{pv.vegetationRef.libelleVegetation}" />
+							<ui:repeat class="terrainsBigDiv" var="vr" value="#{pv.vegetationRef.raceRefs}">
+								<li><h:outputLabel value="#{vr.libelleRace}" /> pour <h:outputLabel value="#{pv.proportionVege}" /> %</li> 
+							</ui:repeat>
+							</ul>
+						</ui:repeat>
+						
+						<p>Type de morphologie :</p>
+						<ul>
+							<ui:repeat class="terrainsBigDiv" var="pm" value="#{terrain.proportionMorphologies}">
+								<li>
+									<h:outputLabel value="#{pm.morphologieRef.libelleMorphologie}" /> pour <h:outputLabel value="#{pm.proportionMorphologie}" /> %
+								</li>
+							</ui:repeat>
+						</ul>
 							
 						  <f:facet name="footer">
 						    <b:button value="Close" dismiss="modal" />

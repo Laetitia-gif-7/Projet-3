@@ -29,7 +29,9 @@ public class ConfirmeParEleveur implements StatePrestation, Serializable  {
 	public void setStateName(PrestationBU p) {
 		p.setStateString("CONFIRMEPARELEVEUR");
 	}
-	
-	
 
+	@Override
+	public void setTemplateString(PrestationBU p) {
+		p.setTemplateXhtml("confirmeParEleveur.xhtml");
+	}
 }

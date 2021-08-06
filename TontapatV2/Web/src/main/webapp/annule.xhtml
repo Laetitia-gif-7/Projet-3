@@ -1,0 +1,11 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui">
+	
+	<h:outputLabel value="#{prestaBuByMain.stateString}"/>
+	<!-- Annulation, on ne sait pas qui a annulé la prestation --> 
+	Prestation annulée le <h:outputText value="#{prestaBuByMain.prestation.annullationPrestation}"/>
+</ui:composition>

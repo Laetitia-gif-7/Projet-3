@@ -26,6 +26,12 @@ public class Annule implements StatePrestation {
 	public void setStateName(PrestationBU p) {
 		p.setStateString("ANNULER");
 	}
+
+	@Override
+	public void setTemplateString(PrestationBU p) {
+		p.setTemplateXhtml("annule.xhtml");
+		
+	}
 	
 	
 

@@ -38,9 +38,10 @@ public class PrestationDao extends GenericDao<Prestation> implements PrestationI
 		query.setParameter("utilisateurParam2", utilisateur);
 		prestas = query.getResultList();
 		// do not manage to load all data. to test an other SQL request all Equipements of  each prestations ??
-		for( Prestation presta : prestas)
+		for( Prestation presta : prestas) {
 			entityManager.refresh(presta.getQuantiteEquipementPrestations().get(0));
-		
+			entityManager.refresh(presta.getEvaluations().get(0));
+		}
 		return prestas;
 	}
 

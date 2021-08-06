@@ -30,28 +30,33 @@
 						<p>Description : <h:outputLabel value="#{troupeau.description}" /></p>
 						<p>Coût par animal : <h:outputLabel value="#{troupeau.coutParAnimal}" /></p>
 						<p>Fréquence de visite : <h:outputLabel value="#{troupeau.frequenceVisite}" /></p>
-			            <b:button  class="troupeauButtonDetail" value="Voir le détail du troupeau" onclick="$('.modalPseudoClass${status.index}').modal()"/>
-			            
-<!-- 			            <p><h:outputLabel value="#{troupeau.motifRetraitTroupeau.libelleMotifRetraitTroupeau}" /></p> -->
-						
+						<ui:repeat var="pd" value="#{troupeau.periodeDisponibilites}">
+							<p>Date de Création : <h:outputLabel value="#{pd.creationDispo}" /></p>
+							<p>Date de Début : <h:outputLabel value="#{pd.debutPeriode}" /></p>
+							<p>Date de Fin : <h:outputLabel value="#{pd.finPeriode}" /></p>
+						</ui:repeat>
+			            <b:button  class="troupeauButtonDetail" value="Voir le détail du troupeau" onclick="$('.modalPseudoClass${status.index}').modal()"/>						
 					</div>
 				</div>
 				<b:modal id="amodal${status.index}" title="Détail du troupeau : #{troupeau.nomTroupeau}" styleClass="modalPseudoClass${status.index}" closable="false"  close-on-escape="false" backdrop="false">
 						<p>Nom : <h:outputLabel value="#{troupeau.nomTroupeau}" /></p>
 						<p>Description : <h:outputLabel value="#{troupeau.description}" /></p>
-						<p>Coût par animal : <h:outputLabel value="#{troupeau.coutParAnimal}" /></p>
-						<p>Fréquence de visite : <h:outputLabel value="#{troupeau.frequenceVisite}" /></p>
-						<ui:repeat var="race" value="#{troupeau.compositionTroupeau}">
-			                <p><h:outputLabel value="#{race.raceRef.libelleRace}" /></p>
-			                <p><h:outputLabel value="#{race.nbAnimaux}" /></p>
-			                <p><h:outputLabel value="#{race.raceRef.especeRef.libelleEspece}" /></p>
-			            </ui:repeat>	
+						<p>Coût par animal : <h:outputLabel value="#{troupeau.coutParAnimal}" /> €</p>
+						<p>Fréquence de visite : <h:outputLabel value="#{troupeau.frequenceVisite}" /> jour(s) par semaine</p>
+						<p>Composition du troupeau : </p>
+						<ul>
+							<ui:repeat var="race" value="#{troupeau.compositionTroupeau}">
+				                <li><h:outputLabel value="#{race.nbAnimaux}" /> de <h:outputLabel value="#{race.raceRef.libelleRace}" />, race : <h:outputLabel value="#{race.raceRef.especeRef.libelleEspece}" /></li>
+			            	</ui:repeat>
+						</ul>
+						(Ajout d'une condition du motif retrait si il existe)
+						<p>Motif retrait : <h:outputLabel value="#{troupeau.motifRetraitTroupeau.libelleMotifRetraitTroupeau}" /></p>
 					  <f:facet name="footer">
 					    <b:button value="Close" dismiss="modal" />
 					    <b:button value="Proposer une prestation" look="primary" dismiss="modal" />
 					    <b:button value="Supprimer le troupeau" look="primary" dismiss="modal" />
 					  </f:facet>
-				</b:modal>
+				</b:modal> 
 			</ui:repeat>
 		</div>
 		

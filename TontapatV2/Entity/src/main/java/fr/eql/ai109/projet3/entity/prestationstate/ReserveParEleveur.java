@@ -27,6 +27,11 @@ public class ReserveParEleveur implements StatePrestation {
 	public void setStateName(PrestationBU p) {
 		p.setStateString("RESERVEPARELEVEUR");
 	}
+
+	@Override
+	public void setTemplateString(PrestationBU p) {
+		p.setTemplateXhtml("reserveParEleveur.xhtml");
+	}
 	
 	
 
