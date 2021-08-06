@@ -39,8 +39,9 @@ public class TroupeauDao extends GenericDao<Troupeau> implements TroupeauIDao {
 
 		//Merge : même résultat qu'avec le refresh
 		//entityManager.merge(troupeaux.get(0).getCompositionTroupeau().get(0));
-
-		entityManager.refresh(troupeaux.get(0).getCompositionTroupeau().get(0));
+		for(Troupeau troupeau : troupeaux) {
+			entityManager.refresh(troupeau.getCompositionTroupeau().get(0));
+		}
 		
 		return troupeaux;
 	

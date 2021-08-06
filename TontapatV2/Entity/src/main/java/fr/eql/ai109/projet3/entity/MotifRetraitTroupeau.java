@@ -19,21 +19,21 @@ public class MotifRetraitTroupeau implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_MotifRetraitTroupeau", unique=true, nullable=false)
-	private int id_MotifRetraitTroupeau;
+	@Column(name="id_motif_retrait_troupeau", unique=true, nullable=false)
+	private int idMotifRetraitTroupeau;
 
-	@Column(name="libelle_MotifRetraitTroupeau", length=254)
+	@Column(name="libelle_motif_retrait_troupeau", length=254)
 	private String libelleMotifRetraitTroupeau;
 
 	@OneToMany(mappedBy="motifRetraitTroupeau")
 	private List<Troupeau> troupeaux;
 
 	public int getId_MotifRetraitTroupeau() {
-		return id_MotifRetraitTroupeau;
+		return idMotifRetraitTroupeau;
 	}
 
-	public void setId_MotifRetraitTroupeau(int id_MotifRetraitTroupeau) {
-		this.id_MotifRetraitTroupeau = id_MotifRetraitTroupeau;
+	public void setId_MotifRetraitTroupeau(int idMotifRetraitTroupeau) {
+		this.idMotifRetraitTroupeau = idMotifRetraitTroupeau;
 	}
 
 	public String getLibelleMotifRetraitTroupeau() {
@@ -51,7 +51,4 @@ public class MotifRetraitTroupeau implements Serializable {
 	public void setTroupeaux(List<Troupeau> troupeaux) {
 		this.troupeaux = troupeaux;
 	}
-	
-	
-
 }
