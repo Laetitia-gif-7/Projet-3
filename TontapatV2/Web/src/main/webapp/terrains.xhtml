@@ -29,6 +29,7 @@
 						<p>Nom : <h:outputLabel value="#{terrain.nomTerrain}" /></p>
 						<p>Superficie : <h:outputLabel value="#{terrain.superficie}" /></p>
 						<p>Clos : <h:outputLabel value="#{terrain.clos}" /></p>
+						<p>Motif de retrait : <h:outputLabel value="#{terrain.motifRetraitTerrain.libelleMotifRetraitTerrain}" /></p>
 						
 						<ui:repeat class="terrainsBigDiv" var="qe" value="#{terrain.quantiteEquipement}">
 							<p>Quantité équipement : <h:outputLabel value="#{qe.quantite}" /></p>
