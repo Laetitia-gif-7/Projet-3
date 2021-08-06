@@ -36,9 +36,14 @@
 							<p>Unité équipement : <h:outputLabel value="#{qe.equipement.uniteRef.libelleUnite}" /></p>
 						</ui:repeat>
 						
+
+						
 						<ui:repeat class="terrainsBigDiv" var="pv" value="#{terrain.proportionVegetations}">
 							<p>Proportion végétation : <h:outputLabel value="#{pv.proportionVege}" /></p>
-							<p>Type végétation : <h:outputLabel value="#{pv.vegetationRef.libelleVegetation}" /></p>
+							<p>Type végétation : <h:outputLabel value="#{pv.vegetationRef.libelleVegetation}" /></p> 
+							<ui:repeat class="terrainsBigDiv" var="vr" value="#{pv.vegetationRef.raceRefs}">
+								<p>Race compatible végétation : <h:outputLabel value="#{vr.libelleRace}" /></p>
+							</ui:repeat>
 						</ui:repeat>
 						
 						<ui:repeat class="terrainsBigDiv" var="pm" value="#{terrain.proportionMorphologies}">
