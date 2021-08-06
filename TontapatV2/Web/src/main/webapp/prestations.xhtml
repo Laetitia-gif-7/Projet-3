@@ -55,6 +55,12 @@
 				</div>
 			</ui:repeat>
 		</div>
+		
+		<!--  test State -->
+		<ui:repeat var="prestaBU" value="#{mbPresta.prestations}">
+			<ui:include src="reserveParClient.xhtml" />
+		</ui:repeat>
+		
 	</ui:define>
 
 </ui:composition>
