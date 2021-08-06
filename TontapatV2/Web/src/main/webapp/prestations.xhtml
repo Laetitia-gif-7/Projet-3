@@ -52,6 +52,10 @@
 							</li>
 						</ui:repeat>
 						</ul>
+						<ui:repeat var="eval" value="#{prestaBU.prestation.evaluations}" >
+							<p>Note : <h:outputLabel value="#{eval.note}" /></p>
+							<p>Commentaire : <h:outputLabel value="#{eval.commentaire}" /></p>
+						</ui:repeat>
 					</div>
 				</div>
 			</ui:repeat>
