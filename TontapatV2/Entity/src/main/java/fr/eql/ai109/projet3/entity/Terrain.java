@@ -90,6 +90,15 @@ public class Terrain implements Serializable {
 	@OneToMany(mappedBy="terrain")
 	private List<QuantiteEquipement> quantiteEquipement;
 	
+	public List<Periodedisponibilite> getPeriodeDisponibilites() {
+		return periodeDisponibilites;
+	}
+
+	public void setPeriodeDisponibilites(List<Periodedisponibilite> periodeDisponibilites) {
+		this.periodeDisponibilites = periodeDisponibilites;
+	}
+	@OneToMany(mappedBy="terrain")
+	private List<Periodedisponibilite> periodeDisponibilites;
 	
 	/*  Préférence d'espece pour le terrain, optionel !
 	@ManyToOne

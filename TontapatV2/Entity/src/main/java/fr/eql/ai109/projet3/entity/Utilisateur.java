@@ -72,6 +72,37 @@ public class Utilisateur implements Serializable  {
 	@OneToMany(mappedBy="berger", fetch = FetchType.LAZY)
 	private List<Prestation> bergers;
 	
+	@OneToMany(mappedBy="utilisateur")
+	private List<Incident> incidentsEnCours;
+
+	public List<Prestation> getPrestationInitiees() {
+		return prestationInitiees;
+	}
+	public void setPrestationInitiees(List<Prestation> prestationInitiees) {
+		this.prestationInitiees = prestationInitiees;
+	}
+	public List<Prestation> getBergers() {
+		return bergers;
+	}
+	public void setBergers(List<Prestation> bergers) {
+		this.bergers = bergers;
+	}
+	public List<Incident> getIncidentsEnCours() {
+		return incidentsEnCours;
+	}
+	public void setIncidentsEnCours(List<Incident> incidentsEnCours) {
+		this.incidentsEnCours = incidentsEnCours;
+	}
+	public List<Incident> getIncidentsClotures() {
+		return incidentsClotures;
+	}
+	public void setIncidentsClotures(List<Incident> incidentsClotures) {
+		this.incidentsClotures = incidentsClotures;
+	}
+	//bi-directional many-to-one association to Incident
+	@OneToMany(mappedBy="utilisateur")
+	private List<Incident> incidentsClotures;
+	
 	// Try with use of default constructor
 	
 	public Integer getId() {
