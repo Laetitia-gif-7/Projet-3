@@ -23,7 +23,7 @@
 		<b:iconAwesome value="plus-circle" solid="true" size="3x"/>
 		</button>
 		<div class="troupeauxDivs">
-			<ui:repeat class="troupeauxBigDiv" var="troupeau" value="#{mbTroupeau.troupeaux}">
+			<ui:repeat class="troupeauBigDiv" var="troupeau" value="#{mbTroupeau.troupeaux}">
 				<div class="troupeauBigDiv">
 					<div class="troupeauSmallDiv">
 						<p>Nom : <h:outputLabel value="#{troupeau.nomTroupeau}" /></p>
@@ -36,7 +36,13 @@
 			                <p><h:outputLabel value="#{race.raceRef.especeRef.libelleEspece}" /></p>
 			            </ui:repeat>
 			            
-<!-- 			            <p><h:outputLabel value="#{troupeau.motifRetraitTroupeau.libelleMotifRetraitTroupeau}" /></p> -->
+			            <ui:repeat var="pd" value="#{troupeau.periodeDisponibilites}">
+							<p>Date de Création : <h:outputLabel value="#{pd.creationDispo}" /></p>
+							<p>Date de Début : <h:outputLabel value="#{pd.debutPeriode}" /></p>
+							<p>Date de Fin : <h:outputLabel value="#{pd.finPeriode}" /></p>
+						</ui:repeat>
+			            
+			            <p>Motif retrait : <h:outputLabel value="#{troupeau.motifRetraitTroupeau.libelleMotifRetraitTroupeau}" /></p>
 						
 					</div>
 				</div>

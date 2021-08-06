@@ -62,7 +62,26 @@ public class Troupeau implements Serializable {
 	@JoinColumn(name="id_motif_retrait")
 	private MotifRetraitTroupeau motifRetraitTroupeau;
 	
+	@OneToMany(mappedBy="troupeau")
+	private List<PeriodeDisponibilite> periodeDisponibilites;
 	
+	
+	public List<CompositionTroupeauPrestation> getCompositionTroupeauPrestations() {
+		return compositionTroupeauPrestations;
+	}
+
+	public void setCompositionTroupeauPrestations(List<CompositionTroupeauPrestation> compositionTroupeauPrestations) {
+		this.compositionTroupeauPrestations = compositionTroupeauPrestations;
+	}
+
+	public List<PeriodeDisponibilite> getPeriodeDisponibilites() {
+		return periodeDisponibilites;
+	}
+
+	public void setPeriodeDisponibilites(List<PeriodeDisponibilite> periodeDisponibilites) {
+		this.periodeDisponibilites = periodeDisponibilites;
+	}
+
 	public MotifRetraitTroupeau getMotifRetraitTroupeau() {
 		return motifRetraitTroupeau;
 	}
