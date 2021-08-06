@@ -8,4 +8,5 @@ import fr.eql.ai109.projet3.entity.Utilisateur;
 
 public interface PrestationIDao extends GenericIDao<Prestation> {
 	List<Prestation> getPrestationsByUser(Utilisateur utilisateur);
+	//Prestation addDate
 }

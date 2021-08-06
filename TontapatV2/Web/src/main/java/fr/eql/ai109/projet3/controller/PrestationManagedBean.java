@@ -11,6 +11,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import fr.eql.ai109.projet3.entity.PrestationBU;
+
 import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.ibusiness.PrestationIBusiness;
 
@@ -44,23 +45,26 @@ public class PrestationManagedBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		prestations = prestaIBusiness.findPrestationsByUtilisateur(utilisateurConnecte);
+		//List list = prestaIBusiness.findPrestationsByUtilisateur(utilisateurConnecte);
 		System.out.println("done");
 		for (PrestationBU prestationExt : prestations) {
 			System.out.println("prestExt :" + prestationExt.getPrestation().getDebutPrestation());
 			System.out.println("state string :"+ prestationExt.getStateString());
 		}
 	}
-	
+
 	// should make action on a specific prestation
 	public void valide(int idPrestation) {
 		//	PrestationExt prestations.valide();
 		System.out.println("Valider : " + idPrestation);
+		prestaIBusiness.valide(idPrestation);
 	}
 	
 	public void annule(int idPrestation) {
 		//	PrestationExt prestations.valide();
 		System.out.println("Annuler la prestation :" + idPrestation);
 	}
+
 	
 	public Utilisateur getUtilisateurConnecte() {
 		return utilisateurConnecte;

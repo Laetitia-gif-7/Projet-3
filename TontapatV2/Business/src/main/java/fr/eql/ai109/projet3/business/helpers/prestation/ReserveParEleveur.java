@@ -1,6 +1,8 @@
-package fr.eql.ai109.projet3.entity.prestationstate;
+package fr.eql.ai109.projet3.business.helpers.prestation;
 
 import fr.eql.ai109.projet3.entity.PrestationBU;
+import fr.eql.ai109.projet3.entity.StatePrestation;
+
 /*
  * Etat initial si le client a fait la réservation :
  * - le client peut annuler la réservation => PrestationAnnule
@@ -20,7 +22,6 @@ public class ReserveParEleveur implements StatePrestation {
 
 	@Override
 	public void annule(PrestationBU p) {
-		// p.
 	}
 
 	@Override
@@ -32,7 +33,4 @@ public class ReserveParEleveur implements StatePrestation {
 	public void setTemplateString(PrestationBU p) {
 		p.setTemplateXhtml("reserveParEleveur.xhtml");
 	}
-	
-	
-
 }

@@ -52,32 +52,33 @@
 							</li>
 						</ui:repeat>
 						</ul>
-						<ui:repeat var="eval" value="#{prestaBU.prestation.evaluations}" >
-							<p>Note : <h:outputLabel value="#{eval.note}" /></p>
-							<p>Commentaire : <h:outputLabel value="#{eval.commentaire}" /></p>
-						</ui:repeat>
+<!-- 						<ui:repeat var="eval" value="#{prestaBU.prestation.evaluations}" > -->
+<!-- 							<p>Note : <h:outputLabel value="#{eval.note}" /></p> -->
+<!-- 							<p>Commentaire : <h:outputLabel value="#{eval.commentaire}" /></p> -->
+<!-- 						</ui:repeat> -->
 					</div>
 				</div>
 			</ui:repeat>
 		</div>
 		
 		<!--  test State, out of loop ui:repeat it is ok, inside problem : maybe more to come-->
-<!-- https://stackoverflow.com/questions/3362487/dynamic-uiinclude-inside-uirepeat-is-there-a-simple-solution -->
-		Test : <h:outputLabel value="#{mbPresta.prestations.get(0).templateXhtml}"/>
+	<!-- https://stackoverflow.com/questions/3362487/dynamic-uiinclude-inside-uirepeat-is-there-a-simple-solution -->
+			Test : <h:outputLabel value="#{mbPresta.prestations.get(0).templateXhtml}"/>
 <!-- 	<ui:repeat var="prestaBU" value="#{mbPresta.prestations}" > -->
-	<div class="terrainsDivs">
-		<c:forEach var="prestaBU" items="#{mbPresta.prestations}" >
-		<div class="terrainsBigDiv">
-			<div class="terrainSmallDiv">
-				<ui:include src="#{prestaBU.templateXhtml}">
-					<ui:param name="prestaBuByMain" value="#{prestaBU}" />
-					<ui:param name="user" value="#{mbCompte}" />
-					<!-- no need to pass #mbPresta (include ?) -->
-				</ui:include>
+		<div class="terrainsDivs">
+			<c:forEach var="prestaBU" items="#{mbPresta.prestations}" >
+			<div class="terrainsBigDiv">
+				<div class="terrainSmallDiv">
+					<ui:include src="#{prestaBU.templateXhtml}">
+						<ui:param name="prestaBuByMain" value="#{prestaBU}" />
+						<ui:param name="user" value="#{mbCompte}" />
+						<!-- no need to pass #mbPresta (include ?) -->
+					</ui:include>
+				</div>
 			</div>
+			</c:forEach>
 		</div>
-		</c:forEach>
-	</div>
+		
 </ui:define>
 </ui:composition>
 </html>

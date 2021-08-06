@@ -13,10 +13,7 @@ import javax.ejb.Stateless;
 import fr.eql.ai109.projet3.entity.Prestation;
 import fr.eql.ai109.projet3.entity.PrestationBU;
 import fr.eql.ai109.projet3.entity.Utilisateur;
-import fr.eql.ai109.projet3.entity.prestationstate.Annule;
-import fr.eql.ai109.projet3.entity.prestationstate.ConfirmeParEleveur;
-import fr.eql.ai109.projet3.entity.prestationstate.ReserveParClient;
-import fr.eql.ai109.projet3.entity.prestationstate.ReserveParEleveur;
+import fr.eql.ai109.projet3.business.helpers.prestation.*;
 import fr.eql.ai109.projet3.ibusiness.PrestationIBusiness;
 import fr.eql.ai109.projet3.idao.PrestationIDao;
 
@@ -34,7 +31,7 @@ public class PrestationBusiness implements PrestationIBusiness {
 	
 	@PostConstruct
 	void init() {
-		System.out.println("init PrestationIBusiness");
+		System.out.println("init PrestationBusiness");
 	}
 	
 	@PreDestroy
@@ -47,7 +44,7 @@ public class PrestationBusiness implements PrestationIBusiness {
 		List<Prestation> prestations = prestationIdao.getPrestationsByUser(utilisateur);
 		List<PrestationBU> prestationsBu = new ArrayList<>();
 		
-		PrestationBU temp;
+		//PrestationBU temp;
 		for (Prestation prestation : prestations) {
 			//prestation.getTerrain(); // ok terrain loaded .....
 			System.out.println("test: " + prestation.toString());
@@ -63,14 +60,23 @@ public class PrestationBusiness implements PrestationIBusiness {
 	}
 
 	@Override
-	public void valide(int id) {
-		// findPrestationId_> PrestationExt.valide()
-		return;
+	public PrestationBU valide(int id) {
+		// findPrestationbyId_> PrestationExt.valide()
+		//PrestationBU temp = new PrestationBU();
+		Prestation presta = prestationIdao.getById(id);
+		
+		PrestationBU prestaBu = this.factoryMethod(presta, null);
+		System.out.println("etat de presta : " + prestaBu.getStateString());
+		prestaBu.valide();
+		
+		//Entity
+		return prestaBu;
 	}
 
 	@Override
-	public void cancel(int id) {
-		// TODO Auto-generated method stub	
+	public PrestationBU annule(int id) {
+		// TODO Auto-generated method stub
+		return new PrestationBU();
 	}
 	
 	// TODO Factory Class, ApplicatioScope              // Utilisateur not used
@@ -84,7 +90,7 @@ public class PrestationBusiness implements PrestationIBusiness {
 		//int eleveurId = prestation.getTroupeau().getUtilisateur().getId();
 		int eleveurId = prestation.getCompositionTroupeauPrestations().get(0).getTroupeau().getUtilisateur().getId();
 		
-		// insert into the object
+		// insert into the object for the view
 		proxy.setClient(prestation.getTerrain().getUtilisateur());
 		proxy.setEleveur(prestation.getCompositionTroupeauPrestations().get(0).getTroupeau().getUtilisateur());
 		

@@ -28,7 +28,9 @@ public abstract class GenericDao<T> implements GenericIDao<T> {
 
 	@Override
 	public T update(T t) {
+		System.out.println("contains: " + entityManager.contains(t));
 		entityManager.merge(t);
+		System.out.println("contains: " + entityManager.contains(t));
 		return t;
 	}
 

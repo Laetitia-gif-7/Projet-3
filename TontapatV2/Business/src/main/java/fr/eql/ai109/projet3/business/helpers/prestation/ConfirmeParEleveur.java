@@ -1,8 +1,9 @@
-package fr.eql.ai109.projet3.entity.prestationstate;
+package fr.eql.ai109.projet3.business.helpers.prestation;
 
 import java.io.Serializable;
 
 import fr.eql.ai109.projet3.entity.PrestationBU;
+import fr.eql.ai109.projet3.entity.StatePrestation;
 
 /*
  * Etat 2A si le client a fait la réservation, l'eleveur a confirmé :
@@ -22,7 +23,7 @@ public class ConfirmeParEleveur implements StatePrestation, Serializable  {
 
 	@Override
 	public void annule(PrestationBU p) {
-		// p.
+		//
 	}
 
 	@Override
