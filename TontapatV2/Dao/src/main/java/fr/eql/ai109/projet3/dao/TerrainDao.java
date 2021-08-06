@@ -7,6 +7,7 @@ import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 
+import fr.eql.ai109.projet3.entity.ProportionVegetation;
 import fr.eql.ai109.projet3.entity.Terrain;
 import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.idao.TerrainIDao;
@@ -27,6 +28,11 @@ public class TerrainDao extends GenericDao<Terrain> implements TerrainIDao {
 			}
 			for (int j=0; j<terrains.get(i).getProportionVegetations().size(); j++) {
 				entityManager.refresh(terrains.get(i).getProportionVegetations().get(j));
+				ProportionVegetation pv = terrains.get(i).getProportionVegetations().get(j);
+				
+				for (int k=0; k < pv.getVegetationRef().getRaceRefs().size() ; k++) {
+					entityManager.refresh(pv.getVegetationRef().getRaceRefs().get(k));	
+				}
 			}
 			for (int j=0; j<terrains.get(i).getProportionMorphologies().size(); j++) {
 				entityManager.refresh(terrains.get(i).getProportionMorphologies().get(j));
@@ -34,5 +40,6 @@ public class TerrainDao extends GenericDao<Terrain> implements TerrainIDao {
 		}
 		return terrains;
 	}
-	
+
+
 }
