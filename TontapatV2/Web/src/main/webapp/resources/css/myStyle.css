@@ -120,6 +120,10 @@ navBarLeft {
   transform: scale(1.1);
   box-shadow: 5px 5px 5px #B05656;
 }
+
+
+/* ------------------ MES TERRAINS */
+
 .terrainsTitre {
 	margin: auto;
 	text-align:center;
@@ -179,4 +183,5 @@ navBarLeft {
   transform: scale(1.1);
   box-shadow: 5px 5px 5px #B05656;
 }
+
 

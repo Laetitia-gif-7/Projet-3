@@ -23,9 +23,20 @@
 		<b:iconAwesome value="plus-circle" solid="true" size="3x"/>
 		</button>
 		<div class="troupeauxDivs">
-			<ui:repeat class="troupeauxBigDiv" var="troupeau" value="#{mbTroupeau.troupeaux}">
+			<ui:repeat class="troupeauxBigDiv" var="troupeau" value="#{mbTroupeau.troupeaux}" varStatus="status">
 				<div class="troupeauBigDiv">
 					<div class="troupeauSmallDiv">
+						<p>Nom : <h:outputLabel value="#{troupeau.nomTroupeau}" /></p>
+						<p>Description : <h:outputLabel value="#{troupeau.description}" /></p>
+						<p>Coût par animal : <h:outputLabel value="#{troupeau.coutParAnimal}" /></p>
+						<p>Fréquence de visite : <h:outputLabel value="#{troupeau.frequenceVisite}" /></p>
+			            <b:button  class="troupeauButtonDetail" value="Voir le détail du troupeau" onclick="$('.modalPseudoClass${status.index}').modal()"/>
+			            
+<!-- 			            <p><h:outputLabel value="#{troupeau.motifRetraitTroupeau.libelleMotifRetraitTroupeau}" /></p> -->
+						
+					</div>
+				</div>
+				<b:modal id="amodal${status.index}" title="Détail du troupeau : #{troupeau.nomTroupeau}" styleClass="modalPseudoClass${status.index}" closable="false"  close-on-escape="false" backdrop="false">
 						<p>Nom : <h:outputLabel value="#{troupeau.nomTroupeau}" /></p>
 						<p>Description : <h:outputLabel value="#{troupeau.description}" /></p>
 						<p>Coût par animal : <h:outputLabel value="#{troupeau.coutParAnimal}" /></p>
@@ -34,14 +45,14 @@
 			                <p><h:outputLabel value="#{race.raceRef.libelleRace}" /></p>
 			                <p><h:outputLabel value="#{race.nbAnimaux}" /></p>
 			                <p><h:outputLabel value="#{race.raceRef.especeRef.libelleEspece}" /></p>
-			            </ui:repeat>
-			            
-<!-- 			            <p><h:outputLabel value="#{troupeau.motifRetraitTroupeau.libelleMotifRetraitTroupeau}" /></p> -->
-						
-					</div>
-				</div>
+			            </ui:repeat>	
+					  <f:facet name="footer">
+					    <b:button value="Close" dismiss="modal" />
+					    <b:button value="Proposer une prestation" look="primary" dismiss="modal" />
+					    <b:button value="Supprimer le troupeau" look="primary" dismiss="modal" />
+					  </f:facet>
+				</b:modal>
 			</ui:repeat>
-			
 		</div>
 		
 
