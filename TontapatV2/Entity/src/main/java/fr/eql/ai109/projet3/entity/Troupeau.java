@@ -63,7 +63,7 @@ public class Troupeau implements Serializable {
 	private MotifRetraitTroupeau motifRetraitTroupeau;
 	
 	@OneToMany(mappedBy="troupeau")
-	private List<Periodedisponibilite> periodeDisponibilites;
+	private List<PeriodeDisponibilite> periodeDisponibilites;
 	
 	
 	public List<CompositionTroupeauPrestation> getCompositionTroupeauPrestations() {
@@ -74,11 +74,11 @@ public class Troupeau implements Serializable {
 		this.compositionTroupeauPrestations = compositionTroupeauPrestations;
 	}
 
-	public List<Periodedisponibilite> getPeriodeDisponibilites() {
+	public List<PeriodeDisponibilite> getPeriodeDisponibilites() {
 		return periodeDisponibilites;
 	}
 
-	public void setPeriodeDisponibilites(List<Periodedisponibilite> periodeDisponibilites) {
+	public void setPeriodeDisponibilites(List<PeriodeDisponibilite> periodeDisponibilites) {
 		this.periodeDisponibilites = periodeDisponibilites;
 	}
 

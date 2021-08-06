@@ -16,7 +16,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="periode_disponibilite")
-public class Periodedisponibilite implements Serializable{
+public class PeriodeDisponibilite implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	

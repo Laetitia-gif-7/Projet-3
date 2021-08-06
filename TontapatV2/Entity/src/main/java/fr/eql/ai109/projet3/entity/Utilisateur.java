@@ -72,8 +72,13 @@ public class Utilisateur implements Serializable  {
 	@OneToMany(mappedBy="berger", fetch = FetchType.LAZY)
 	private List<Prestation> bergers;
 	
-	@OneToMany(mappedBy="utilisateur")
+	@OneToMany(mappedBy="declarateur")
 	private List<Incident> incidentsEnCours;
+	
+	@OneToMany(mappedBy="finDeclarateur")
+	private List<Incident> incidentsClotures;
+	
+	
 
 	public List<Prestation> getPrestationInitiees() {
 		return prestationInitiees;
@@ -99,11 +104,6 @@ public class Utilisateur implements Serializable  {
 	public void setIncidentsClotures(List<Incident> incidentsClotures) {
 		this.incidentsClotures = incidentsClotures;
 	}
-	//bi-directional many-to-one association to Incident
-	@OneToMany(mappedBy="utilisateur")
-	private List<Incident> incidentsClotures;
-	
-	// Try with use of default constructor
 	
 	public Integer getId() {
 		return id;
