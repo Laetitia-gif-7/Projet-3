@@ -37,6 +37,9 @@ public class TerrainDao extends GenericDao<Terrain> implements TerrainIDao {
 			for (int j=0; j<terrains.get(i).getProportionMorphologies().size(); j++) {
 				entityManager.refresh(terrains.get(i).getProportionMorphologies().get(j));
 			}
+			for (int j=0; j<terrains.get(i).getPeriodeDisponibilites().size(); j++) {
+				entityManager.refresh(terrains.get(i).getPeriodeDisponibilites().get(j));
+			}
 		}
 		return terrains;
 	}
