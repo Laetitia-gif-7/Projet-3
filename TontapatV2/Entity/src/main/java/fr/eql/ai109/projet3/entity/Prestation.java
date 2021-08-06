@@ -107,6 +107,17 @@ public class Prestation implements Serializable {
 	@OneToMany(mappedBy="prestation")
 	private List<QuantiteEquipementPrestation> quantiteEquipementPrestations;
 	
+	@OneToMany(mappedBy="prestation")
+	private List<Incident> incidents;
+	
+	public List<Incident> getIncidents() {
+		return incidents;
+	}
+
+	public void setIncidents(List<Incident> incidents) {
+		this.incidents = incidents;
+	}
+
 	public int getIdPrestation() {
 		return idPrestation;
 	}
