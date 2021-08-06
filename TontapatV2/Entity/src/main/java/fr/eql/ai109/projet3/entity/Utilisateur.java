@@ -78,8 +78,16 @@ public class Utilisateur implements Serializable  {
 	@OneToMany(mappedBy="finDeclarateur")
 	private List<Incident> incidentsClotures;
 	
+	@OneToMany(mappedBy="utilisateur", fetch = FetchType.LAZY)
+	private List<Evaluation> evaluation;
 	
 
+	public List<Evaluation> getEvaluation() {
+		return evaluation;
+	}
+	public void setEvaluation(List<Evaluation> evaluation) {
+		this.evaluation = evaluation;
+	}
 	public List<Prestation> getPrestationInitiees() {
 		return prestationInitiees;
 	}
