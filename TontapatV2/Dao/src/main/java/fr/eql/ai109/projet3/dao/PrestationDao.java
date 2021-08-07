@@ -1,8 +1,11 @@
 package fr.eql.ai109.projet3.dao;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
@@ -15,7 +18,29 @@ import fr.eql.ai109.projet3.idao.PrestationIDao;
 @Remote(PrestationIDao.class)
 @Stateless
 public class PrestationDao extends GenericDao<Prestation> implements PrestationIDao {
-
+	
+	
+	@PostConstruct
+	void init() {
+		System.out.println("init PrestationDao");
+	}
+	
+	@PreDestroy
+	void destroy() {
+		System.out.println("destroy PrestationDao");
+	}
+	
+	
+	
+	@Override
+	public Prestation update(Prestation p) {
+		//Prestation ret = GenericDao<Prestation>
+		System.out.println("contains: " + entityManager.contains(p));
+		entityManager.merge(p);
+		System.out.println("contains: " + entityManager.contains(p));
+		return p;
+	}
+	
 	@Override
 	public List<Prestation> getPrestationsByUser(Utilisateur utilisateur) {
 		List<Prestation> prestas = new ArrayList<Prestation>();
@@ -38,10 +63,25 @@ public class PrestationDao extends GenericDao<Prestation> implements PrestationI
 		query.setParameter("utilisateurParam2", utilisateur);
 		prestas = query.getResultList();
 		// do not manage to load all data. to test an other SQL request all Equipements of  each prestations ??
-		for( Prestation presta : prestas)
-			entityManager.refresh(presta.getQuantiteEquipementPrestations().get(0));
-		
+		for( Prestation presta : prestas) {
+			for( int i=0; i<presta.getQuantiteEquipementPrestations().size(); i++) {
+				entityManager.refresh(presta.getQuantiteEquipementPrestations().get(i));
+			}
+			for( int i=0; i<presta.getEvaluations().size(); i++) {
+				entityManager.refresh(presta.getEvaluations().get(i));
+			}
+		}
 		return prestas;
 	}
 
+	@Override
+	public void myUpdate(Prestation p) {
+		// TODO Auto-generated method stub
+		System.out.println("contains: " + entityManager.contains(p));
+		entityManager.merge(p);
+		System.out.println("contains: " + entityManager.contains(p));
+	}
+
 }
+
+

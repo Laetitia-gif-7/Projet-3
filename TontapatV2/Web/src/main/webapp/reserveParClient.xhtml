@@ -1,0 +1,28 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui">
+	
+	Reserve par client.xhtml component<br/>
+	User connecté :<h:outputLabel value="#{user.utilisateur.id}"/> 
+	<hr/>
+	<h:outputLabel value="#{prestaBuByMain.stateString}"/>
+	
+	<!-- Vue Client --> 
+	<ui:fragment rendered="#{prestaBuByMain.client.id == user.utilisateur.id}">
+		Votre demande de réservation est toujours en attente
+	</ui:fragment>
+	
+	<!--  Vue Eleveur -->
+	<ui:fragment rendered="#{prestaBuByMain.eleveur.id == user.utilisateur.id}">
+		<h:form>
+		Vous avez reçu une demande de réservation<br/>
+		Confirmer ou Annuler
+		<!-- mbPresta accessible -->
+		<b:commandButton value="Confirmer" action="#{mbPresta.valide( prestaBuByMain.prestation.idPrestation )}" />
+		<b:commandButton value="Annuler" action="#{mbPresta.annule( prestaBuByMain.prestation.idPrestation ) }"/>
+		</h:form>
+	</ui:fragment>
+</ui:composition>
