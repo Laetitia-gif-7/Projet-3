@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui">
 
 <!-- To talk to Marc about header -->	
 <h:head>
@@ -23,6 +24,12 @@
 		<div class="terrainsTitre">
 			<h1>Vos Prestation, <h:outputLabel value="#{mbCompte.utilisateur.nom}" /> !</h1>
 		</div>
+		
+		<button class="terrainsAjoutTroupeau" >
+			<p>Déclarer un incident</p>
+			<b:iconAwesome value="plus-circle" solid="true" size="3x"/>
+		</button>
+
 		<div class="terrainsDivs">
 			<ui:repeat class="terrainsBigDiv" var="prestaBU" value="#{mbPresta.prestations}">
 				<div class="terrainsBigDiv">
