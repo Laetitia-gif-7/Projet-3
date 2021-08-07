@@ -4,6 +4,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 <!-- To talk to Marc about header -->	
@@ -24,6 +25,12 @@
 		<div class="terrainsTitre">
 			<h1>Vos Prestation, <h:outputLabel value="#{mbCompte.utilisateur.nom}" /> !</h1>
 		</div>
+		
+		<button class="terrainsAjoutTroupeau" >
+			<p>Déclarer un incident</p>
+			<b:iconAwesome value="plus-circle" solid="true" size="3x"/>
+		</button>
+
 		<div class="terrainsDivs">
 			<ui:repeat class="terrainsBigDiv" var="prestaBU" value="#{mbPresta.prestations}">
 				<div class="terrainsBigDiv">
@@ -52,10 +59,10 @@
 							</li>
 						</ui:repeat>
 						</ul>
-<!-- 						<ui:repeat var="eval" value="#{prestaBU.value.prestation.evaluations}" > -->
-<!-- 							<p>Note : <h:outputLabel value="#{eval.note}" /></p> -->
-<!-- 							<p>Commentaire : <h:outputLabel value="#{eval.commentaire}" /></p> -->
-<!-- 						</ui:repeat> -->
+						<ui:repeat var="eval" value="#{prestaBU.value.prestation.evaluations}" >
+							<p>Note : <h:outputLabel value="#{eval.note}" /></p>
+							<p>Commentaire : <h:outputLabel value="#{eval.commentaire}" /></p>
+						</ui:repeat>
 					</div>
 				</div>
 			</ui:repeat>
