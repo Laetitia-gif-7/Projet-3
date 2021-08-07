@@ -1,0 +1,24 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui">
+	
+	Confirmé par client.xhtml component<br/>
+	User connecté :<h:outputLabel value="#{user.utilisateur.id}"/> 
+	<hr/>
+	<h:outputLabel value="#{prestaBuByMain.stateString}"/>
+	
+	<!-- Vue Client -->
+	<ui:fragment rendered="#{prestaBuByMain.client.id == user.utilisateur.id}">
+		Votre demande de réservation a été confirmée par
+		<h:outputLabel value="#{prestaBuByMain.eleveur.nom}"/>, valider la prestation
+	</ui:fragment>
+	
+	<!--  Vue Eleveur -->
+	<ui:fragment rendered="#{prestaBuByMain.eleveur.id == user.utilisateur.id}">
+		En attente de la validation finale du client
+		<h:outputLabel value="#{prestaBuByMain.client.nom}"/>, valider la prestation
+	</ui:fragment>
+</ui:composition>

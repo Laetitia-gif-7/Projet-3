@@ -23,9 +23,9 @@ public class PrestationBU implements Serializable {
 	private Utilisateur eleveur;
 	//private Utilisateur berger;
 	
-	//default, should be overriden
+	//default, should be overwritten by each state
 	private String stateString = "UNIMPLEMENTED";
-	private String templateXhtml = ".xhtml";
+	private String templateXhtml = "error.xhtml";
 	
 	public String getTemplateXhtml() {
 		return templateXhtml;
@@ -36,7 +36,7 @@ public class PrestationBU implements Serializable {
 	}
 
 	public PrestationBU() {
-		System.out.println("Entry prestationExt constructor");
+		System.out.println("Entry prestationBu constructor");
 	}
 	
 	public PrestationBU(Prestation prest) {
@@ -82,11 +82,6 @@ public class PrestationBU implements Serializable {
 	public void setStateString(String str) {
 		this.stateString = str;
 	}
-
-	// or include getters and setters of prestation ?
-//	public LocalDateTime getDebutPrestation() {
-//		return prestation.getDebutPrestation();
-//	}
 	
 	// to implement  in each state
 	public void valide() {

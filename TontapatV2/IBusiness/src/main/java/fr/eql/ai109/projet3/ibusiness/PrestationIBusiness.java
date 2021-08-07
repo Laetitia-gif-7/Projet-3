@@ -8,7 +8,8 @@ import fr.eql.ai109.projet3.entity.Utilisateur;
 public interface PrestationIBusiness {
 	
 	List<PrestationBU> findPrestationsByUtilisateur(Utilisateur utilisateur);
-	PrestationBU valide(int idPrestation); // prestation Id or PrestationExt
+	// prestationbu contains everything
+	PrestationBU valide(PrestationBU pbu); // prestation Id
 	PrestationBU annule(int idPrestation);
 	// void valide( Date...)
 }

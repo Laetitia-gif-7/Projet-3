@@ -60,16 +60,10 @@ public class PrestationBusiness implements PrestationIBusiness {
 	}
 
 	@Override
-	public PrestationBU valide(int id) {
-		// findPrestationbyId_> PrestationExt.valide()
-		//PrestationBU temp = new PrestationBU();
-		Prestation presta = prestationIdao.getById(id);
-		
-		PrestationBU prestaBu = this.factoryMethod(presta, null);
+	public PrestationBU valide(PrestationBU prestaBu) {
 		System.out.println("etat de presta : " + prestaBu.getStateString());
 		prestaBu.valide();
-		
-		//Entity
+		// date included and changed
 		return prestaBu;
 	}
 
@@ -112,7 +106,19 @@ public class PrestationBusiness implements PrestationIBusiness {
 			}
 			return proxy;
 		}
-		//proxy.setStateString();
+		
+		// very bad name ?? Use it like a validation from the initiateur
+		if( prestation.getAcceptationEleveur() == null) {
+			
+			if( utilisateurInitiateurId == clientId ) {
+				proxy.setState( ConfirmeParEleveur.CONFIRMEPARELEVEUR );
+			// TODO continue the logic
+			} else {
+				proxy.setState(null);
+			}
+			return proxy;
+		}
+		
 		return proxy;
 	}
 }

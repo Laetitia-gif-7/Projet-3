@@ -55,13 +55,16 @@ public class PrestationManagedBean implements Serializable {
 
 	// should make action on a specific prestation
 	public void valide(int idPrestation) {
-		//	PrestationExt prestations.valide();
 		System.out.println("Valider : " + idPrestation);
-		prestaIBusiness.valide(idPrestation);
+		PrestationBU pbu = prestations.stream()
+				.filter(pr -> pr.getPrestation().getIdPrestation() == idPrestation).findFirst().orElse(null);
+		//prestaIBusiness.valide(idPrestation);
+		PrestationBU newPbu = prestaIBusiness.valide(pbu);
+		// to insert in prestations
+		System.out.println("state : " + newPbu.getStateString());
 	}
 	
 	public void annule(int idPrestation) {
-		//	PrestationExt prestations.valide();
 		System.out.println("Annuler la prestation :" + idPrestation);
 	}
 

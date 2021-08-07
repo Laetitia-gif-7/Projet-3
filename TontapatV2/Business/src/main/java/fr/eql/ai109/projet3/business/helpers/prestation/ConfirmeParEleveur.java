@@ -9,7 +9,7 @@ import fr.eql.ai109.projet3.entity.StatePrestation;
  * Etat 2A si le client a fait la réservation, l'eleveur a confirmé :
  * - le client peut valider la réservation => ValidePrestation
  * - le client peut annuler la réservation => PrestationAnnule
- * - l'éleveur peut rien faire... ?
+ * - l'éleveur peut rien faire de plus ... ?
  */
 public class ConfirmeParEleveur implements StatePrestation, Serializable  {
 
