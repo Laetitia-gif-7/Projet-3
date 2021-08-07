@@ -1,30 +1,29 @@
 package fr.eql.ai109.projet3.business;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
-//import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 
 import fr.eql.ai109.projet3.entity.Prestation;
 import fr.eql.ai109.projet3.entity.PrestationBU;
 import fr.eql.ai109.projet3.entity.Utilisateur;
-import fr.eql.ai109.projet3.business.helpers.prestation.*;
+// import fr.eql.ai109.projet3.business.helpers.prestation.*; not need anymore after Factory
+
 import fr.eql.ai109.projet3.ibusiness.PrestationIBusiness;
 import fr.eql.ai109.projet3.idao.PrestationIDao;
-
-// @Local(PrestationIBusiness.class)
 
 @Remote(PrestationIBusiness.class)
 @Stateless // Statefull maybe here
 public class PrestationBusiness implements PrestationIBusiness {
 	
-	// as attribute, 
-	List<PrestationBU> prestationsBU = new ArrayList<>();
+	Map<Integer, PrestationBU> prestationsBU = new HashMap<>();
 	
 	@EJB
     private FactoryPrestrestationBU factoryPrestaBu;
@@ -43,22 +42,16 @@ public class PrestationBusiness implements PrestationIBusiness {
 	}
 	
 	@Override
-	public List<PrestationBU> findPrestationsByUtilisateur(Utilisateur utilisateur) {
+	public Map<Integer,PrestationBU> findPrestationsByUtilisateur(Utilisateur utilisateur) {
 		List<Prestation> prestations = prestationIdao.getPrestationsByUser(utilisateur);
-		List<PrestationBU> prestationsBu = new ArrayList<>();
+		Map<Integer,PrestationBU> prestationsBu = new HashMap<>();
 		
-		//PrestationBU temp;
 		for (Prestation prestation : prestations) {
-			//prestation.getTerrain(); // ok terrain loaded .....
 			System.out.println("test: " + prestation.toString());
-			/*
-			temp = new PrestationExt( prestation );
-			temp.testPrint();
-			prestationsExt.add( temp ); // new PrestationExt( prestation ) );
-			*/
-			prestationsBu.add( factoryPrestaBu.createPrestationBU(prestation, utilisateur ) );
+			prestationsBu.put(
+					prestation.getIdPrestation(),
+					factoryPrestaBu.createPrestationBU(prestation, utilisateur ) );
 		}
-		//System.out.println("test: " + prestations.toString());
 		return prestationsBu;
 	}
 
@@ -72,7 +65,7 @@ public class PrestationBusiness implements PrestationIBusiness {
 
 	@Override
 	public PrestationBU annule(int id) {
-		// TODO Auto-generated method stub
+		// TODO To implement
 		return new PrestationBU();
 	}
 }

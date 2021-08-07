@@ -28,13 +28,13 @@
 			<ui:repeat class="terrainsBigDiv" var="prestaBU" value="#{mbPresta.prestations}">
 				<div class="terrainsBigDiv">
 					<div class="terrainSmallDiv">
-						<p>State <h:outputLabel value="#{prestaBU.stateString}" /></p>
-						<p>Debut de prestation : <h:outputLabel value="#{prestaBU.prestation.debutPrestation}" /></p>
-						<p>Fin de prestation : <h:outputLabel value="#{prestaBU.prestation.finPrestation}" /></p>
-						<p>Prix : <h:outputLabel value="#{prestaBU.prestation.coutPrestation}" /></p>
+						<p>State <h:outputLabel value="#{prestaBU.value.stateString}" /></p>
+						<p>Debut de prestation : <h:outputLabel value="#{prestaBU.value.prestation.debutPrestation}" /></p>
+						<p>Fin de prestation : <h:outputLabel value="#{prestaBU.value.prestation.finPrestation}" /></p>
+						<p>Prix : <h:outputLabel value="#{prestaBU.value.prestation.coutPrestation}" /></p>
 						<p>Liste des animaux : <h:outputLabel value="Somme à calculer avec EL"/></p>
 						<ul>
-						<ui:repeat var="animaux" value="#{prestaBU.prestation.compositionTroupeauPrestations}">
+						<ui:repeat var="animaux" value="#{prestaBU.value.prestation.compositionTroupeauPrestations}">
 							<li>
 								<h:outputLabel value="#{animaux.nbAnimaux}"/>
 								<h:outputLabel value="#{animaux.raceRef.libelleRace}"/>
@@ -44,7 +44,7 @@
 						</ul>
 						<p>Liste des équipements commandés pour la prestation :</p>
 						<ul>
-						<ui:repeat var="equip" value="#{prestaBU.prestation.quantiteEquipementPrestations}" >
+						<ui:repeat var="equip" value="#{prestaBU.value.prestation.quantiteEquipementPrestations}" >
 							<li>
 								<h:outputLabel value="#{equip.equipement.libelleEquipement}"/> :
 								<h:outputLabel value="#{equip.quantite}"/>
@@ -52,7 +52,7 @@
 							</li>
 						</ui:repeat>
 						</ul>
-<!-- 						<ui:repeat var="eval" value="#{prestaBU.prestation.evaluations}" > -->
+<!-- 						<ui:repeat var="eval" value="#{prestaBU.value.prestation.evaluations}" > -->
 <!-- 							<p>Note : <h:outputLabel value="#{eval.note}" /></p> -->
 <!-- 							<p>Commentaire : <h:outputLabel value="#{eval.commentaire}" /></p> -->
 <!-- 						</ui:repeat> -->
@@ -63,14 +63,14 @@
 		
 		<!--  test State, out of loop ui:repeat it is ok, inside problem : maybe more to come-->
 	<!-- https://stackoverflow.com/questions/3362487/dynamic-uiinclude-inside-uirepeat-is-there-a-simple-solution -->
-			Test : <h:outputLabel value="#{mbPresta.prestations.get(0).templateXhtml}"/>
+			Test : <h:outputLabel value="#{mbPresta.prestations[0].templateXhtml}"/>
 <!-- 	<ui:repeat var="prestaBU" value="#{mbPresta.prestations}" > -->
 		<div class="terrainsDivs">
 			<c:forEach var="prestaBU" items="#{mbPresta.prestations}" >
 			<div class="terrainsBigDiv">
 				<div class="terrainSmallDiv">
-					<ui:include src="#{prestaBU.templateXhtml}">
-						<ui:param name="prestaBuByMain" value="#{prestaBU}" />
+					<ui:include src="#{prestaBU.value.templateXhtml}">
+						<ui:param name="prestaBuByMain" value="#{prestaBU.value}" />
 						<ui:param name="user" value="#{mbCompte}" />
 						<!-- no need to pass #mbPresta (include ?) -->
 					</ui:include>
