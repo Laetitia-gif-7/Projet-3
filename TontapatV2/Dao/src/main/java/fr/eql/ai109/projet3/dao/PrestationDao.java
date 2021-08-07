@@ -30,17 +30,6 @@ public class PrestationDao extends GenericDao<Prestation> implements PrestationI
 		System.out.println("destroy PrestationDao");
 	}
 	
-	
-	
-	@Override
-	public Prestation update(Prestation p) {
-		//Prestation ret = GenericDao<Prestation>
-		System.out.println("contains: " + entityManager.contains(p));
-		entityManager.merge(p);
-		System.out.println("contains: " + entityManager.contains(p));
-		return p;
-	}
-	
 	@Override
 	public List<Prestation> getPrestationsByUser(Utilisateur utilisateur) {
 		List<Prestation> prestas = new ArrayList<Prestation>();
@@ -68,14 +57,6 @@ public class PrestationDao extends GenericDao<Prestation> implements PrestationI
 			entityManager.refresh(presta.getEvaluations().get(0));
 		}
 		return prestas;
-	}
-
-	@Override
-	public void myUpdate(Prestation p) {
-		// TODO Auto-generated method stub
-		System.out.println("contains: " + entityManager.contains(p));
-		entityManager.merge(p);
-		System.out.println("contains: " + entityManager.contains(p));
 	}
 
 }

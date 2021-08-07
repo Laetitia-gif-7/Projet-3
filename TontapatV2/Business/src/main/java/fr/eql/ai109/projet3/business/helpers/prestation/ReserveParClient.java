@@ -20,22 +20,22 @@ import fr.eql.ai109.projet3.idao.PrestationIDao;
  * - l'éleveur peut confirmer la réservation => ConfirméParEleveur
  */
 
-@Stateless
+// Stateless
 public class ReserveParClient implements StatePrestation {
 
 	private static final long serialVersionUID = 1L;
 	
 	public static final ReserveParClient RESERVEPARCLIENT = new ReserveParClient();
 	
-	@EJB
-	PrestationIDao prestationIdao;
+	//@EJB
+	//PrestationIDao prestationIdao;
 	
 	@Override
 	public void valide(PrestationBU p) {
-		
+		/*
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("PUTontapatV2");
 		EntityManager em = emf.createEntityManager();
-		
+		*/
 		
 		// must set the date confirmation in prestation entity => save db with update here 
 		// change state of the prestation here
@@ -48,7 +48,7 @@ public class ReserveParClient implements StatePrestation {
 		//Prestation prestation = prestationIdao.addDate( p.getPrestation().getIdPrestation(), "DATE_CONFIRMATION" );
 		prestation.setConfirmation(LocalDateTime.now());
 		//prestationIdao.update( prestation );
-		em.merge(prestation);
+		//em.merge(prestation);
 		//prestationIdao.myUpdate( prestation );
 		p.setState(ConfirmeParEleveur.CONFIRMEPARELEVEUR);
 	}

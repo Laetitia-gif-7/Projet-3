@@ -59,6 +59,9 @@ public class PrestationBusiness implements PrestationIBusiness {
 	public PrestationBU valide(PrestationBU prestaBu) {
 		System.out.println("etat de presta : " + prestaBu.getStateString());
 		prestaBu.valide();
+		// only way to save in db, it is from here
+		prestationIdao.update(prestaBu.getPrestation());
+		
 		// date have been included and state changed
 		return prestaBu;
 	}
