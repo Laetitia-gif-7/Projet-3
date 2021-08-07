@@ -1,10 +1,6 @@
 package fr.eql.ai109.projet3.entity;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-
-//import fr.eql.ai109.projet3.entity.prestationstate.ReserveParClient;
-//import fr.eql.ai109.projet3.entity.prestationstate.StatePrestation;
 
 /* Extends the prestation entity :
  * - State design pattern to deal with all different steps in a prestation 
