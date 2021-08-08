@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -28,7 +29,13 @@ public class TerrainManagedBean implements Serializable {
 	
 	@PostConstruct
 	public void init() {
+		System.out.println("creation mbTerrain");
 		terrains = terrainIBusiness.findTerrainsByUtilisateur(utilisateurConnecte);
+	}
+	
+	@PreDestroy
+	public void beforeDelete() {
+		System.out.println("destruction mbTerrain");
 	}
 
 	public Utilisateur getUtilisateurConnecte() {
@@ -45,6 +52,11 @@ public class TerrainManagedBean implements Serializable {
 
 	public void setTerrains(List<Terrain> terrains) {
 		this.terrains = terrains;
+	}
+	
+	public String goToReservationTest(int idTerrain) {
+		System.out.println("entry test goToReservation "+ idTerrain);
+		return "reservationPrestation.xhtml?faces-redirect=true&id="+Integer.toString(idTerrain);
 	}
 
 }

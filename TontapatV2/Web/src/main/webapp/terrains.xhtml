@@ -73,6 +73,9 @@
 						    <b:button value="Close" dismiss="modal" />
 						    <b:button value="Rechercher une prestation" look="primary" href="recherche.xhtml" />
 						    <b:button value="Supprimer le terrain" look="primary" dismiss="modal" />
+						    <h:form>
+						    	<b:commandButton value="Test =>reservation" look="primary" action="#{mbTerrain.goToReservationTest(terrain.idTerrain)}"/>
+						    </h:form>
 						  </f:facet>
 						</b:modal>
 				</ui:repeat>

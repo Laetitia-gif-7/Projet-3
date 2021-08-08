@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+	
+<h:head>
+	<ui:insert name="head"></ui:insert>
+<!-- 	ui insert javascript files -->
+</h:head>
+
+<ui:composition template="/arch.xhtml">
+<ui:define name="content">
+	Ajustez votre prestation !
+	Avec id Terrain: <h:outputText value="#{mbReservation.idTerrain}" /><br/>
+	Avec id Troupeau: <h:outputText value="#{mbReservation.idTroupeau}" />
+	<hr/>
+	Matériel enregistré sur votre terrain
+	<ul>
+	<ui:repeat var="equip" value="#{mbReservation.terrain.quantiteEquipement}">
+		<li>
+			<h:outputLabel value="#{qe.equipement.libelleEquipement}" /> :
+			<h:outputLabel value="#{equip.quantite}" />
+			<h:outputLabel value="#{equip.equipement.uniteRef.libelleUnite}" />
+		</li>
+	</ui:repeat>
+	</ul>
+	Matériel conseillé pour la prestation
+
+
+</ui:define>
+</ui:composition>
+</html>
