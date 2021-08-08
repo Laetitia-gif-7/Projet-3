@@ -1,6 +1,7 @@
 package fr.eql.ai109.projet3.controller;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -11,12 +12,14 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import fr.eql.ai109.projet3.entity.Terrain;
+import fr.eql.ai109.projet3.entity.Troupeau;
 import fr.eql.ai109.projet3.entity.Utilisateur;
+import fr.eql.ai109.projet3.ibusiness.CherchePrestationIBusiness;
 import fr.eql.ai109.projet3.ibusiness.TerrainIBusiness;
 
 @ManagedBean(name = "mbRecherche")
 @RequestScoped
-public class RechercheManagedBean implements Serializable {
+public class CherchePrestationManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -27,6 +30,9 @@ public class RechercheManagedBean implements Serializable {
 	
 	@EJB
 	TerrainIBusiness terrainIBusiness;
+	
+	@EJB
+	CherchePrestationIBusiness cherchePrestationIBusiness;
 
 	@PostConstruct
 	public void init() {
@@ -36,7 +42,9 @@ public class RechercheManagedBean implements Serializable {
         System.out.println("id terrain en entierString "+ idTerrainString);
         idTerrain =Integer.parseInt(idTerrainString);
         System.out.println("id terrain en entier "+ idTerrain);
-		terrain = terrainIBusiness.findTerrainByIdTerrainAndUtilisateur(idTerrain, utilisateurConnecte);
+		//terrain = terrainIBusiness.findTerrainByIdTerrainAndUtilisateur(idTerrain, utilisateurConnecte);
+		
+		List<Troupeau> troupeaux = cherchePrestationIBusiness.chercheTroupeauxCompatibles(idTerrain);
 	}
 	
 	public Utilisateur getUtilisateurConnecte() {

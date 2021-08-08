@@ -16,8 +16,8 @@ import fr.eql.ai109.projet3.entity.PrestationBU;
 import fr.eql.ai109.projet3.entity.Utilisateur;
 
 // full concurrent access
-@ConcurrencyManagement(ConcurrencyManagementType.BEAN) 
-@Startup
+// @ConcurrencyManagement(ConcurrencyManagementType.BEAN) 
+// @Startup
 @Singleton
 public class FactoryPrestrestationBU {
 
