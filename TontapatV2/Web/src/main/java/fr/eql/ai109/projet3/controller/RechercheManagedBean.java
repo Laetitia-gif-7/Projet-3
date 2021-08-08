@@ -1,40 +1,44 @@
 package fr.eql.ai109.projet3.controller;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 import fr.eql.ai109.projet3.entity.Terrain;
 import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.ibusiness.TerrainIBusiness;
 
-@ManagedBean(name = "mbTerrain")
+@ManagedBean(name = "mbRecherche")
 @RequestScoped
-public class TerrainManagedBean implements Serializable {
+public class RechercheManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@ManagedProperty(value = "#{mbCompte.utilisateur}")
 	private Utilisateur utilisateurConnecte;
-	private List<Terrain> terrains;
+	private Terrain terrain;
+	private int idTerrain;
 	
 	@EJB
 	TerrainIBusiness terrainIBusiness;
-	
+
 	@PostConstruct
 	public void init() {
-		terrains = terrainIBusiness.findTerrainsByUtilisateur(utilisateurConnecte);
+		FacesContext ctx = FacesContext.getCurrentInstance();
+        Map<String,String> params = ctx.getExternalContext().getRequestParameterMap();
+        String idTerrainString = params.get("id");
+        System.out.println("id terrain en entierString "+ idTerrainString);
+        idTerrain =Integer.parseInt(idTerrainString);
+        System.out.println("id terrain en entier "+ idTerrain);
+		terrain = terrainIBusiness.findTerrainByIdTerrainAndUtilisateur(idTerrain, utilisateurConnecte);
 	}
 	
-	public String lancerRecherche(int idTerrain) {
-		return "recherche.xhtml?faces-redirect=true&id=" + Integer.toString(idTerrain);
-	}
-
 	public Utilisateur getUtilisateurConnecte() {
 		return utilisateurConnecte;
 	}
@@ -43,12 +47,13 @@ public class TerrainManagedBean implements Serializable {
 		this.utilisateurConnecte = utilisateurConnecte;
 	}
 
-	public List<Terrain> getTerrains() {
-		return terrains;
+	public Terrain getTerrain() {
+		return terrain;
 	}
 
-	public void setTerrains(List<Terrain> terrains) {
-		this.terrains = terrains;
+	public void setTerrain(Terrain terrain) {
+		this.terrain = terrain;
 	}
+
 
 }

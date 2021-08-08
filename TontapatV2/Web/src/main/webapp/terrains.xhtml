@@ -70,9 +70,11 @@
 						</ul>
 							
 						  <f:facet name="footer">
-						    <b:button value="Close" dismiss="modal" />
-						    <b:button value="Rechercher une prestation" look="primary" href="recherche.xhtml" />
-						    <b:button value="Supprimer le terrain" look="primary" dismiss="modal" />
+						  	<h:form>
+							    <b:button value="Close" dismiss="modal" />
+							    <b:commandButton value="Rechercher une prestation" look="primary" action="#{mbTerrain.lancerRecherche(terrain.idTerrain)}" />
+							    <b:button value="Supprimer le terrain" look="primary" dismiss="modal" />
+						    </h:form>
 						  </f:facet>
 						</b:modal>
 				</ui:repeat>
