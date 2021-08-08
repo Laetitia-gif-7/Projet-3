@@ -1,6 +1,5 @@
 package fr.eql.ai109.projet3.business;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +19,7 @@ import fr.eql.ai109.projet3.ibusiness.PrestationIBusiness;
 import fr.eql.ai109.projet3.idao.PrestationIDao;
 
 @Remote(PrestationIBusiness.class)
-@Stateless // Statefull maybe here
+@Stateless // Statefull maybe here ??  
 public class PrestationBusiness implements PrestationIBusiness {
 	
 	Map<Integer, PrestationBU> prestationsBU = new HashMap<>();

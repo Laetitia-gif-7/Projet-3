@@ -19,7 +19,6 @@ import fr.eql.ai109.projet3.idao.PrestationIDao;
 @Stateless
 public class PrestationDao extends GenericDao<Prestation> implements PrestationIDao {
 	
-	
 	@PostConstruct
 	void init() {
 		System.out.println("init PrestationDao");
@@ -40,7 +39,7 @@ public class PrestationDao extends GenericDao<Prestation> implements PrestationI
 					+ "JOIN FETCH p.compositionTroupeauPrestations ctp "
 					+ "WHERE p.terrain.utilisateur =:utilisateurParam "
 					+ "	  OR ctp.troupeau.utilisateur =:utilisateurParam2 ",Prestation.class);
-			/*
+			/* not working as expected, keep to retest
 			"SELECT DISTINCT p "
 					+ "FROM Prestation p "
 					+ "JOIN p.compositionTroupeauPrestations ctp "
