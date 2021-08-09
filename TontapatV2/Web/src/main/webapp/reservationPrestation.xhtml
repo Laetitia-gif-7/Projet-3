@@ -28,7 +28,20 @@
 		</li>
 	</ui:repeat>
 	</ul>
-	Matériel conseillé pour la prestation
+	Prp :
+	<p> <h:outputLabel value="#{mbReservation.prp.cout}" /></p>
+	<p> <h:outputLabel value="#{mbReservation.prp.qualiteTonte}" /></p>
+	<p> slider, f:ajax pour appeler actualisePrixPrestation  <h:outputLabel value="#{mbReservation.prp.nbAnimaux}" /></p>
+	<p> date debut, utiliser bootsfaces datePicker : <h:outputLabel value="#{mbReservation.dateDebut}" /></p>
+	<ul>
+	<ui:repeat var="equip" value="#{mbReservation.prp.equipements}">
+		<li>
+			<h:outputLabel value="#{equip.equipement.libelleEquipement}" /> :
+			<h:outputLabel value="#{equip.quantite}" />
+			<h:outputLabel value="#{equip.equipement.uniteRef.libelleUnite}" />
+		</li>
+	</ui:repeat>
+	</ul>
 
 
 </ui:define>
