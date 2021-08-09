@@ -43,7 +43,19 @@
 				</b:row>
 			</b:panel>
 		</b:form>
-		
+			<b:column>
+				<div>
+					<br/>
+					<p>Terrain Selectionné : <h:outputLabel var="terrain"  value="#{mbRecherche.terrain.nomTerrain}"/></p>
+					<h:outputText value="Malheureusement aucun troupeau disponible" renderer="#{empty mbRecherche.troupeauxCompatiblesAvecDates}"/>
+					<ui:repeat var="troup" value="#{mbRecherche.troupeauxCompatiblesAvecDates}" >
+						<p>Nom : <h:outputLabel value="#{troup.troupeau.nomTroupeau}"/> </p>
+						<p>Description : <h:outputLabel value="#{troup.troupeau.description}"/></p>
+						<p>A partir du : <h:outputLabel value="#{troup.dateMin}"/>
+						   Jusqu'au : <h:outputLabel value="#{troup.dateMax}"/> </p>
+					</ui:repeat>
+				</div>
+			</b:column>
 	</ui:define>
 
 </ui:composition>

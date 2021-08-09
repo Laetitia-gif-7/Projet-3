@@ -8,5 +8,6 @@ import fr.eql.ai109.projet3.entity.Utilisateur;
 public interface TerrainIBusiness {
 
 	List<Terrain> findTerrainsByUtilisateur(Utilisateur utilisateur);
+	Terrain findTerrainByIdTerrainAndUtilisateur(int idTerrain, Utilisateur utilisateur);
 	
 }

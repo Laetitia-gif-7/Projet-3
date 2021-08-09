@@ -23,4 +23,9 @@ public class TerrainBusiness implements TerrainIBusiness {
 		return terrainIDao.getTerrainsByUser(utilisateur);
 	}
 
+	@Override
+	public Terrain findTerrainByIdTerrainAndUtilisateur(int idTerrain, Utilisateur utilisateur) {
+		return terrainIDao.getTerrainByIdTerrainAndUser(idTerrain, utilisateur);
+	}
+
 }

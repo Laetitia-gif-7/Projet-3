@@ -7,4 +7,5 @@ import fr.eql.ai109.projet3.entity.Utilisateur;
 
 public interface TerrainIDao extends GenericIDao<Terrain> {
 	List<Terrain> getTerrainsByUser(Utilisateur utilisateur);
+	Terrain getTerrainByIdTerrainAndUser(int idTerrain, Utilisateur utilisateur);
 }

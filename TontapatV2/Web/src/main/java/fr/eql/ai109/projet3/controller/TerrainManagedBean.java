@@ -36,6 +36,9 @@ public class TerrainManagedBean implements Serializable {
 	@PreDestroy
 	public void beforeDelete() {
 		System.out.println("destruction mbTerrain");
+
+	public String lancerRecherche(int idTerrain) {
+		return "recherche.xhtml?faces-redirect=true&id=" + Integer.toString(idTerrain);
 	}
 
 	public Utilisateur getUtilisateurConnecte() {
