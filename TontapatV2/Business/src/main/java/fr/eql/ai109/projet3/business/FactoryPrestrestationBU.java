@@ -19,8 +19,8 @@ import fr.eql.ai109.projet3.entity.Utilisateur;
 
 // Stateless
 // full concurrent access
-@ConcurrencyManagement(ConcurrencyManagementType.BEAN) 
-@Startup
+// @ConcurrencyManagement(ConcurrencyManagementType.BEAN) 
+// @Startup
 @Singleton
 public class FactoryPrestrestationBU {
 

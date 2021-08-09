@@ -76,7 +76,6 @@ public class Terrain implements Serializable {
 	@OneToMany(mappedBy="terrain", fetch = FetchType.LAZY)
 	Set<Prestation> prestations;
 	
-	
 	@ManyToOne(fetch  = FetchType.LAZY)
 	@JoinColumn(name="id_motif_retrait_terrain")
 	private MotifRetraitTerrain motifRetraitTerrain;

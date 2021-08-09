@@ -44,5 +44,56 @@ public class TerrainDao extends GenericDao<Terrain> implements TerrainIDao {
 		return terrains;
 	}
 
+	@Override
+	public Terrain getTerrainByIdTerrainAndUser(int idTerrain, Utilisateur utilisateur) {
+		Terrain terrain = new Terrain();
+		Query query = entityManager.createQuery("SELECT t FROM Terrain t "
+												+ "WHERE t.utilisateur=:utilisateurParam "
+												+ "AND t.idTerrain=:idTerrainParam");
+		query.setParameter("utilisateurParam", utilisateur);
+		query.setParameter("idTerrainParam", idTerrain);
+		terrain = (Terrain) query.getSingleResult();
+		for (int i=0; i<terrain.getPeriodeDisponibilites().size(); i++) {
+				entityManager.refresh(terrain.getPeriodeDisponibilites().get(i));
+		}
+		return terrain;
+	}
+
+//	cmd.CommandText = @"SELECT DISTINCT tr.troupeau_id, compte.nom, compte.prenom, espece.libelle, morpho.*, pm.*, vege.*, pv.*,
+//            CASE WHEN pd.debut_periode > pd2.debut_periode THEN pd.debut_periode
+//                ELSE pd2.debut_periode
+//            END AS 'MinDateService', 
+//            CASE WHEN pd.fin_periode > pd2.fin_periode THEN pd2.fin_periode
+//            ELSE pd.fin_periode
+//            END AS 'MaxDateService'
+//FROM terrain t
+//JOIN proportion_morpho pm ON t.terrain_id = pm.terrain_id
+//JOIN morphologie morpho ON pm.morphologie_id = morpho.morphologie_id
+//JOIN assoc_morpho_race amr ON morpho.morphologie_id = amr.morphologie_id
+//JOIN race race1 ON  amr.race_id = race1.race_id
+//-- Vegetation
+//JOIN proportion_vegetation pv ON t.terrain_id = pv.terrain_id
+//JOIN vegetation vege ON pv.vegetation_id = vege.vegetation_id
+//JOIN assoc_race_vegetation arv ON vege.vegetation_id = arv.vegetation_id
+//JOIN race race2 ON arv.race_id = race2.race_id
+//JOIN espece ON race2.espece_id = espece.espece_id 
+//--
+//JOIN comp_troupeau ON race1.race_id = comp_troupeau.race_id
+//JOIN troupeau tr ON comp_troupeau.troupeau_id = tr.troupeau_id
+//
+//JOIN ref_ville_cp ville ON ville.insee_id = t.insee_id
+//JOIN compte ON tr.compte_id = compte.compte_id
+//JOIN ref_ville_cp ville2 ON compte.insee_id = ville2.insee_id
+//
+//JOIN periodedisponibilite as pd ON t.terrain_id = pd.terrain_id
+//-- Range periode must overlap <=> not not overlapping , use of auto jointure
+//JOIN  periodedisponibilite as pd2 ON tr.troupeau_id = pd2.troupeau_id
+//--  ON not ( pd.fin_periode < pd2.debut_periode OR pd.debut_periode > pd2.fin_periode )
+//WHERE pd2.troupeau_id is not null
+//and ( not ( pd.fin_periode < pd2.debut_periode OR pd.debut_periode > pd2.fin_periode ) )
+//and race1.race_id = race2.race_id
+//and ville.departement = ville2.departement
+//and pd.terrain_id = @id_field
+//ORDER BY tr.troupeau_id, MinDateService";
 
 }

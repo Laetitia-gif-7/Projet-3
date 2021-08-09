@@ -30,6 +30,10 @@ public class TerrainManagedBean implements Serializable {
 	public void init() {
 		terrains = terrainIBusiness.findTerrainsByUtilisateur(utilisateurConnecte);
 	}
+	
+	public String lancerRecherche(int idTerrain) {
+		return "recherche.xhtml?faces-redirect=true&id=" + Integer.toString(idTerrain);
+	}
 
 	public Utilisateur getUtilisateurConnecte() {
 		return utilisateurConnecte;
