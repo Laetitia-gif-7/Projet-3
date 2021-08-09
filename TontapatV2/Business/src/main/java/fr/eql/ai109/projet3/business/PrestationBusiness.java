@@ -14,6 +14,7 @@ import fr.eql.ai109.projet3.entity.Prestation;
 import fr.eql.ai109.projet3.entity.PrestationBU;
 import fr.eql.ai109.projet3.entity.Utilisateur;
 // import fr.eql.ai109.projet3.business.helpers.prestation.*; not need anymore after Factory
+import fr.eql.ai109.projet3.business.factories.FactoryPrestrestationBU;
 
 import fr.eql.ai109.projet3.ibusiness.PrestationIBusiness;
 import fr.eql.ai109.projet3.idao.PrestationIDao;

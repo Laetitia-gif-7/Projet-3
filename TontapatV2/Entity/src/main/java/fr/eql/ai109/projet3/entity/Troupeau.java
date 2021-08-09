@@ -15,6 +15,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/* Added util functions : (good place ?)
+ * int getNbtotalAnimaux()
+ * double getUGBMoyen()
+ * 
+ */
 @Entity
 @Table(name="troupeau")
 public class Troupeau implements Serializable {
@@ -65,6 +70,22 @@ public class Troupeau implements Serializable {
 	@OneToMany(mappedBy="troupeau")
 	private List<PeriodeDisponibilite> periodeDisponibilites;
 	
+	/////////// utils fonction ////////////////
+	public int getNbTotalAnimaux() {
+		int total = 0;
+		for(CompositionTroupeau ct : compositionTroupeau)
+			total += ct.getNbAnimaux();
+		return total;
+	}
+	
+	public double  getUGBMoyen() {
+		double total =0;
+		for(CompositionTroupeau ct : compositionTroupeau)
+			total += ct.getRaceRef().getUgb();
+		return total / compositionTroupeau.size();
+	}
+	
+	////////// getters/setters ////////////////
 	
 	public List<CompositionTroupeauPrestation> getCompositionTroupeauPrestations() {
 		return compositionTroupeauPrestations;

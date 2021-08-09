@@ -33,6 +33,7 @@ public abstract class GenericDao<T> implements GenericIDao<T> {
 		System.out.println("contains: " + entityManager.contains(t));
 		return t;
 	}
+	
 
 	@Override
 	public T getById(int i) {
@@ -63,6 +64,11 @@ public abstract class GenericDao<T> implements GenericIDao<T> {
         	e.printStackTrace();
         }
 		return objects;
+	}
+	
+	@Override
+	public void refresh(T t) {
+		entityManager.refresh(t);
 	}
 
 }

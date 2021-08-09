@@ -17,6 +17,9 @@ public class ParametresReservationPrestation implements Serializable {
 	private float qualiteTonte; // around 1.
 	private float bienEtreAnimal; // surface/animal ou around 1.
 	
+	// intermediate variables, usefull for view
+	private int nbTotalAnimauxTroupeau;
+	
 	public float getCout() {
 		return cout;
 	}
@@ -47,4 +50,13 @@ public class ParametresReservationPrestation implements Serializable {
 	public void setBienEtreAnimal(float bienEtreAnimal) {
 		this.bienEtreAnimal = bienEtreAnimal;
 	}
+	
+	public int getNbTotalAnimauxTroupeau() {
+		return nbTotalAnimauxTroupeau;
+	}
+	public void setNbTotalAnimauxTroupeau(int nbTotalAnimauxTroupeau) {
+		this.nbTotalAnimauxTroupeau = nbTotalAnimauxTroupeau;
+	}
+	
+	
 }

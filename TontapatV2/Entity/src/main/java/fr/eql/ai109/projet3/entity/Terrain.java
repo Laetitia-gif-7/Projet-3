@@ -17,6 +17,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/* Added util function
+ * boolean isClos
+ */
 
 @Entity
 @Table(name="terrain")
@@ -91,6 +94,13 @@ public class Terrain implements Serializable {
 	
 	@OneToMany(mappedBy="terrain")
 	private List<PeriodeDisponibilite> periodeDisponibilites;
+	
+	///////////// utils function //////////////
+	public boolean isClos() {
+		return getClos() != 0;
+	}
+	
+	//////////// getters/setters 
 	
 	public List<PeriodeDisponibilite> getPeriodeDisponibilites() {
 		return periodeDisponibilites;
