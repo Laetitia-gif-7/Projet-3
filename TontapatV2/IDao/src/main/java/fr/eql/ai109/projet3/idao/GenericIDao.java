@@ -10,5 +10,7 @@ public interface GenericIDao<T> {
 	T getById(int i);
 	List<T> getAll();
 	// refresh, maybe convenient ?
+	void refresh(T t);
+	//void refresh(T t, Map<String, O>);
 	
 }

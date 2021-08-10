@@ -1,6 +1,8 @@
 package fr.eql.ai109.projet3.controller;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
@@ -80,13 +82,16 @@ public class ReservationPrestationManagedBean implements Serializable {
 		String idTerrainString = params.get("id");
 		idTerrain =Integer.parseInt(idTerrainString);
 		
-		
-		
-		System.out.println("id terrain en entier "+ idTerrainString);
-		System.out.println("id terrain en entier "+ idTerrain);
-		
-		dateDebut = new Date(2021,6,01);
-		dateFin = new Date(2021,9,01);
+		//dateDebut = new Date(2021,6,1); // strange output in debug !!
+		//dateFin = new Date(2021,9,1);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
+		try {
+			dateDebut = sdf.parse("01-6-2021");
+			dateFin = sdf.parse("01-9-2021");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		// retour attendu :
 		// - prix
@@ -112,6 +117,14 @@ public class ReservationPrestationManagedBean implements Serializable {
 	@PreDestroy
 	void destroy() {
 		System.out.println("destroy ReservationPrestationIBusiness");
+	}
+	
+	public Troupeau getTroupeau() {
+		return troupeau;
+	}
+
+	public void setTroupeau(Troupeau troupeau) {
+		this.troupeau = troupeau;
 	}
 	
 	public Date getDateDebut() {

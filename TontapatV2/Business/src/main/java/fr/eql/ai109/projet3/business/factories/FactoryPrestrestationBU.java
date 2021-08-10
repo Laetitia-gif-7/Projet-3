@@ -1,4 +1,4 @@
-package fr.eql.ai109.projet3.business;
+package fr.eql.ai109.projet3.business.factories;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -7,7 +7,7 @@ import javax.ejb.ConcurrencyManagement;
 import javax.ejb.ConcurrencyManagementType;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-//import javax.ejb.Stateless;
+
 
 import fr.eql.ai109.projet3.business.helpers.prestation.Annule;
 import fr.eql.ai109.projet3.business.helpers.prestation.ConfirmeParEleveur;
