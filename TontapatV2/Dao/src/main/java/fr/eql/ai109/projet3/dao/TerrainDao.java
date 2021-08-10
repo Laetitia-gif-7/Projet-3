@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import fr.eql.ai109.projet3.entity.Equipement;
 import fr.eql.ai109.projet3.entity.ProportionVegetation;
 import fr.eql.ai109.projet3.entity.QuantiteEquipement;
 import fr.eql.ai109.projet3.entity.Terrain;
@@ -57,7 +58,7 @@ public class TerrainDao extends GenericDao<Terrain> implements TerrainIDao {
 		query.setParameter("idTerrainParam", idTerrain);
 		terrain = (Terrain) query.getSingleResult();
 		for (int i=0; i<terrain.getPeriodeDisponibilites().size(); i++) {
-				entityManager.refresh(terrain.getPeriodeDisponibilites().get(i));
+			entityManager.refresh(terrain.getPeriodeDisponibilites().get(i));
 		}
 		return terrain;
 	}
@@ -90,6 +91,12 @@ public class TerrainDao extends GenericDao<Terrain> implements TerrainIDao {
 				.setParameter("paramIdTerrain", idTerrain);
 		
 		terrain = query.getSingleResult();
+		// strange ??, error in normal mode, all equipments in debug mode
+		Equipement eq;
+		for(QuantiteEquipement qe : terrain.getQuantiteEquipement()) {
+			eq = qe.getEquipement();
+		}
+		
 		return terrain;
 	}
 

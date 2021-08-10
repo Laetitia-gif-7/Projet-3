@@ -1,8 +1,8 @@
 package fr.eql.ai109.projet3.business;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -52,72 +52,39 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 		System.out.println("pre destroy ReservationPrestationBusiness");
 	}
 	
-	// Override
-	public ParametresReservationPrestation calculeDefautPrestation2(int idTerrain, int idTroupeau, Date dateDebut, Date dateFin) {
-		
-		ParametresReservationPrestation prp= new ParametresReservationPrestation();
-		prp.setCout(1199.90f);
-		prp.setNbAnimaux(50);
-		prp.setQualiteTonte( 1.0f );
-		prp.setBienEtreAnimal( 50.0f );
-		
-		List<QuantiteEquipement> equipements = new ArrayList<>();
-		// cloture == id == 1
-		Equipement equip = equipementIDao.getById(1);
-		QuantiteEquipement quantEquip = new QuantiteEquipement();
-		quantEquip.setEquipement(equip);
-		quantEquip.setQuantite( 100 ); // set the quantity
-		equipements.add(quantEquip);
-		// abreuvoir == id = 2
-		equip = equipementIDao.getById(2);
-		quantEquip = new QuantiteEquipement();
-		quantEquip.setEquipement(equip);
-		quantEquip.setQuantite( 200 ); // set the quantity
-		equipements.add(quantEquip);
-		// abri == id = 3
-		equip = equipementIDao.getById(3);
-		quantEquip = new QuantiteEquipement();
-		quantEquip.setEquipement(equip);
-		quantEquip.setQuantite( 50 ); // set quantity
-		equipements.add(quantEquip);
-		
-		prp.setEquipements(equipements);
-		return prp;	
-	}
-	
+	@Override
 	public ParametresReservationPrestation calculeDefautPrestation(int idTerrain, int idTroupeau, Date dateDebut, Date dateFin) {
-		
-		// can create at first and fill values along the algo
+		// initial call, all must be filled
 		ParametresReservationPrestation prp= new ParametresReservationPrestation();
 		
 		// periode de la prestation en jours
 		LocalDate debut = convertToLocalDateViaInstant(dateDebut);
 		LocalDate fin = convertToLocalDateViaInstant(dateFin);
-		Period nbJour = Period.between(debut, fin);
+		long nbJour = ChronoUnit.DAYS.between(debut, fin); 
 				
 		// besoin du terrain (surface, equipement disponible)
-		//Terrain terrain = terrainIDao.getById(idTerrain);
 		Terrain terrain = terrainIDao.getByIdWithEquipement(idTerrain);
 		double superficie = terrain.getSuperficie().doubleValue();
-		
-		//Troupeau troupeau = troupeauIDao.getById(idTroupeau);
-		// need compositionTroupeau as well
-		//Troupeau troupeau = troupeauIDao.getById(idTroupeau);
+		// need compositionTroupeau
 		Troupeau troupeau = troupeauIDao.getTroupeauByIdWithComposition(idTroupeau);
 		
 		// to improve, take into account the disponibility
 		int nbTotalAnimauxTroupeau = troupeau.getNbTotalAnimaux();
 		prp.setNbTotalAnimauxTroupeau(nbTotalAnimauxTroupeau);
 		double ugbMoyen = troupeau.getUGBMoyen();
-		// prp.setUgbMoyen
+		prp.setUgbMoyen(ugbMoyen);
 		
-		// compute le nombre d'animaux optimal, nbAnimaux recommandé
-		int nbAnimaux = initialGuessNbAnimal(nbJour, terrain, nbTotalAnimauxTroupeau, ugbMoyen);
+		// retourne le nombre d'animaux recommandé (size, period, ugb) : 
+		// nbAnimaux recommandé  + nbAnimaux vraiment disponible sur ce troupeau
+		List<Integer> listNbAnimaux = initialGuessNbAnimal(nbJour, terrain, nbTotalAnimauxTroupeau, ugbMoyen);
+		int nbAnimauxRecommande = listNbAnimaux.get(0);
+		int nbAnimaux = listNbAnimaux.get(1);
+		prp.setNbAnimauxRecommande(nbAnimauxRecommande);
 		prp.setNbAnimaux(nbAnimaux);
 		
 		// materiel dispo sur le terrain
 		List<QuantiteEquipement> equipSurTerrain = terrain.getQuantiteEquipement(); 
-				// terrainIDao.getEquipement(terrain.getIdTerrain());
+		prp.setEquipementSurTerrain(equipSurTerrain);
 		
 		// materiel necessaire pour la prestation
 		List<QuantiteEquipement> equipNecessaire = calculeEquipementNecessaire(nbAnimaux);
@@ -125,35 +92,39 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 		// materiel à payer equipNecessaire - equipSurTerrain
 		List<QuantiteEquipement> equipSupplementaire = soustraitEquipement(equipNecessaire, equipSurTerrain);
 		
+		prp.setEquipementSupplementaire(equipSupplementaire);
+		int longueurTmp = prp.getLongueurClotureSupplementaire();
+		prp.setLongueurCloture(longueurTmp);
 		// check availability of the missing materials by REST webservice
 		
 		// prix à payer              
 		double coutTotal=0; // = calculePrixPrestation(prp); (for refactorisation)
-		/*
 		coutTotal += calculePrixAnimaux(troupeau, nbAnimaux, nbJour);
 		coutTotal += calculePrixMateriel(equipSupplementaire);
 		coutTotal += calculePrixTransport( nbAnimaux );
 		prp.setCout(coutTotal);
-		*/
-		prp.setCout(1000);
 		
-		// util function,  need to be much better
-		//int longueurCloture = getLongueurCloture(equipNecessaire);
-		int longueurCloture = 100;
+		// util function,  need to be much better, 
+		// wrong total cloture doit etre calculée !!
+		int longueurCloture = getLongueurCloture(equipNecessaire);
 		
 		prp.setBienEtreAnimal(
 				calculeBienEtreAnimal(nbAnimaux, longueurCloture, terrain.getSuperficie().intValue(),
 						terrain.isClos()));
 		
-		//prp.setQualiteTonte();
-		// can be simple as nbAnimaux / nbAnimauxRecommande or recompute everything
-		// here nbAniamux is ok, during init phase (nbAniamux == nbaniamux Recommande
-		// no need to compute 1/1 !! calculeQualiteTonte( nbAnimaux, nbAnimauxRecommande )
-		prp.setQualiteTonte( 1 );
-		
+		prp.setQualiteTonte( (double)nbAnimaux / nbAnimauxRecommande );
 		return prp;
+		
 	}
 	
+	@Override
+	public ParametresReservationPrestation actualisePrixPrestation(int idTerrain, int idTroupeau, Date dateDebut,
+			Date dateFin, int nbAnimaux, int longueurCloture) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	//////// Private methods
 	private List<QuantiteEquipement> calculeEquipementNecessaire(int nbAnimaux) {
 		
 		List<QuantiteEquipement> listEquipement= new ArrayList<>();
@@ -176,29 +147,29 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 		return listEquipement;
 	}
 
-	@Override
-	public ParametresReservationPrestation actualisePrixPrestation(int idTerrain, int idTroupeau, Date dateDebut,
-			Date dateFin, int nbAnimaux, int longueurCloture) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 	// first estimation of the number of animals for the prestation
-	private int initialGuessNbAnimal(Period nbJour, Terrain terrain, int nbTotalAnimauxTroupeau, double ugbMoyen) {
+	private List<Integer> initialGuessNbAnimal(long nbJour, Terrain terrain, int nbTotalAnimauxTroupeau, double ugbMoyen) {
 		int nbAnimaux;
+		int nbAnimauxRecommande;
 		
-		nbAnimaux = (int) (( terrain.getSuperficie().floatValue() / ugbMoyen) * ( 365f / nbJour.getDays() ));
-		System.out.println("nbAniamux " + nbAnimaux );
+		nbAnimauxRecommande = (int) (
+				// ugb definition over 1 year
+				( terrain.getSuperficie().doubleValue() / (ugbMoyen * ConstantVariable.HA_EN_METRE2) )
+				// adjust to the period
+				* ( 365f / nbJour ) );
 		
-		if( nbTotalAnimauxTroupeau < nbAnimaux )
+		// must be available in the troupeau
+		if( nbTotalAnimauxTroupeau < nbAnimauxRecommande )
 			nbAnimaux = nbTotalAnimauxTroupeau;
+		else
+			nbAnimaux = nbAnimauxRecommande;
 		
-		return nbAnimaux;
+		return Arrays.asList(nbAnimauxRecommande, nbAnimaux);
 	}
 	
 	////////////////// Calcul du prix
 	// to keep for refactorisation
-	public double calculePrixPrestation(Troupeau troupeau, int nbAnimaux, Period nbJours) {
+	private double calculePrixPrestation(Troupeau troupeau, int nbAnimaux, long nbJours) {
 		double coutTotal = 0;
 		
 		coutTotal += calculePrixAnimaux(troupeau, nbAnimaux, nbJours);
@@ -207,14 +178,13 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 		return coutTotal;
 	}
 
-	private double calculePrixAnimaux( Troupeau troupeau, int nbAnimaux, Period nbJours) {
-		return nbAnimaux * nbJours.getDays() * troupeau.getCoutParAnimal();
+	private double calculePrixAnimaux( Troupeau troupeau, int nbAnimaux, long nbJours) {
+		return nbAnimaux * nbJours * troupeau.getCoutParAnimal();
 	}
 	
-	public double calculePrixMateriel( List<QuantiteEquipement> equipSupplementaire) {
+	private double calculePrixMateriel( List<QuantiteEquipement> equipSupplementaire) {
 		
 		double cout = 0;
-		
 		for(QuantiteEquipement equip : equipSupplementaire ) {
 			
 			switch( equip.getEquipement().getLibelleEquipement() ) {
@@ -248,7 +218,6 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 			bea = surface / nbAnimaux / ConstantVariable.SEUIL_BIEN_ETRE_ANIMAL_CONFORTABLE;
 		} else
 			bea = superficie / nbAnimaux / ConstantVariable.SEUIL_BIEN_ETRE_ANIMAL_CONFORTABLE;
-		
 		return bea; 
 	}
 	
@@ -272,7 +241,7 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 			equipement = new Equipement();
 			equipement.setLibelleEquipement(str);
 			qteEquipement = new QuantiteEquipement();
-			/*
+			
 			for(QuantiteEquipement necess : equipNecessaire )
 				if( necess.getEquipement().getLibelleEquipement().equals(str) )
 					qteNecess = necess.getQuantite();
@@ -286,18 +255,15 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 				qteEquipement.setQuantite(qteNecess);
 			else 
 				qteEquipement.setQuantite(0);
-			*/
 			
-			qteEquipement.setQuantite(20);
-			//qteEquipement.setEquipement(equipement);
+			qteEquipement.setEquipement(equipement);
 			soustraction.add(qteEquipement );
 		}
-		
 		return soustraction;
 	}
 	
 	// extract longueur cloture for the list, bad implemenentation / structure => Map !!
-	public int getLongueurCloture(List<QuantiteEquipement> equipNecessaire) {
+	private int getLongueurCloture(List<QuantiteEquipement> equipNecessaire) {
 		for( QuantiteEquipement qe : equipNecessaire )
 			if( qe.getEquipement().getLibelleEquipement() == "clôture" )
 				return qe.getQuantite();
@@ -309,4 +275,37 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 	      .atZone(ZoneId.systemDefault())
 	      .toLocalDate();
 	}
+	
+	/* to delete, send a fixed prp
+	public ParametresReservationPrestation calculeDefautPrestation2(int idTerrain, int idTroupeau, Date dateDebut, Date dateFin) {
+		
+		ParametresReservationPrestation prp= new ParametresReservationPrestation();
+		prp.setCout(1199.90f);
+		prp.setNbAnimaux(50);
+		prp.setQualiteTonte( 1.0f );
+		prp.setBienEtreAnimal( 50.0f );
+		
+		List<QuantiteEquipement> equipements = new ArrayList<>();
+		// cloture == id == 1
+		Equipement equip = equipementIDao.getById(1);
+		QuantiteEquipement quantEquip = new QuantiteEquipement();
+		quantEquip.setEquipement(equip);
+		quantEquip.setQuantite( 100 ); // set the quantity
+		equipements.add(quantEquip);
+		// abreuvoir == id = 2
+		equip = equipementIDao.getById(2);
+		quantEquip = new QuantiteEquipement();
+		quantEquip.setEquipement(equip);
+		quantEquip.setQuantite( 200 ); // set the quantity
+		equipements.add(quantEquip);
+		// abri == id = 3
+		equip = equipementIDao.getById(3);
+		quantEquip = new QuantiteEquipement();
+		quantEquip.setEquipement(equip);
+		quantEquip.setQuantite( 50 ); // set quantity
+		equipements.add(quantEquip);
+		
+		prp.setEquipements(equipements);
+		return prp;	
+	}*/
 }

@@ -19,4 +19,6 @@ public final class ConstantVariable {
 	// prix du transport
 	public static double PRIX_TRANSPORT_ANIMAL = 1.;
 	
+	public static int HA_EN_METRE2 = 10000;
+	
 }
