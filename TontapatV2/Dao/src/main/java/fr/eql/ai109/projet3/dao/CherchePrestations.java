@@ -12,8 +12,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import fr.eql.ai109.projet3.entity.CompositionTroupeau;
+import fr.eql.ai109.projet3.entity.MorphologieRef;
 import fr.eql.ai109.projet3.entity.Terrain;
 import fr.eql.ai109.projet3.entity.Troupeau;
+import fr.eql.ai109.projet3.entity.VegetationRef;
 import fr.eql.ai109.projet3.entity.dto.TroupeauTrouveApresRechercheDTO;
 import fr.eql.ai109.projet3.idao.CherchePrestationIDao;
 
@@ -28,6 +31,8 @@ public class CherchePrestations implements CherchePrestationIDao {
 		List<TroupeauTrouveApresRechercheDTO> correspondances = new ArrayList<>();
 		
 		List<Object[]> temp_correspondances;
+		
+		
 		
 		Query query = entityManager.createQuery(
 				"SELECT tr,  "
@@ -49,7 +54,11 @@ public class CherchePrestations implements CherchePrestationIDao {
 		query.setParameter("paramTerrain", terrain);
 		
 		temp_correspondances = query.getResultList();
+		
 		for(int i= 0; i< temp_correspondances.size(); i++) {
+			
+			int matchMorpho = 0;
+			int matchVege = 0;
 			
 			TroupeauTrouveApresRechercheDTO oneTroupeau = new TroupeauTrouveApresRechercheDTO();
 			Object[] temp = temp_correspondances.get(i);
@@ -58,6 +67,49 @@ public class CherchePrestations implements CherchePrestationIDao {
 			oneTroupeau.setDateMin( (Date) temp[1]);
 			oneTroupeau.setDateMax( (Date) temp[2]);
 			correspondances.add(oneTroupeau);
+			
+			for (int k=0; k<correspondances.get(i).getTroupeau().getCompositionTroupeau().size(); k++) {
+				CompositionTroupeau compteTroup = correspondances.get(i).getTroupeau().getCompositionTroupeau().get(k);
+				for(int j=0; j<compteTroup.getRaceRef().getMorphologieRefs().size(); j++) {
+					MorphologieRef morphoRef = compteTroup.getRaceRef().getMorphologieRefs().get(j);
+					if (morphoRef.getProportionMorphologies().size() > 0) {
+						for(int m=0; m<morphoRef.getProportionMorphologies().get(0).getTerrain().getProportionMorphologies().size(); m++) {
+							if (morphoRef.getLibelleMorphologie()
+									.equals(morphoRef.getProportionMorphologies()
+									.get(0).getTerrain().getProportionMorphologies()
+									.get(m).getMorphologieRef().getLibelleMorphologie())
+									&& terrain.getIdTerrain()==morphoRef.getProportionMorphologies()
+									.get(0).getTerrain().getIdTerrain()) {
+								
+								matchMorpho += (morphoRef.getProportionMorphologies().get(0)
+										.getProportionMorphologie());
+							}
+						}
+					}
+				}
+				
+				for(int j=0; j<compteTroup.getRaceRef().getVegetationRefs().size(); j++) {
+					VegetationRef vegeRef = compteTroup.getRaceRef().getVegetationRefs().get(j);
+					if (vegeRef.getProportionVegetations().size() > 0) {
+						for(int m=0; m<vegeRef.getProportionVegetations().get(0).getTerrain().getProportionMorphologies().size(); m++) {
+							if (vegeRef.getLibelleVegetation()
+									.equals(vegeRef.getProportionVegetations()
+									.get(0).getTerrain().getProportionVegetations()
+									.get(m).getVegetationRef().getLibelleVegetation())
+									&& terrain.getIdTerrain()==vegeRef.getProportionVegetations()
+															.get(0).getTerrain().getIdTerrain()) {
+								
+								matchVege += (vegeRef.getProportionVegetations().get(0)
+										.getProportionVege());
+							}
+						}
+					}
+				}
+				
+			}
+			oneTroupeau.setPourcentagePropoMorpho(matchMorpho/(correspondances.get(i).getTroupeau().getCompositionTroupeau().size()));
+			oneTroupeau.setPourcentagePropoVege(matchVege/(correspondances.get(i).getTroupeau().getCompositionTroupeau().size()));
+			
 		}
 		return correspondances;
 	}

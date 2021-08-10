@@ -53,6 +53,14 @@
 						<p>Description : <h:outputLabel value="#{troup.troupeau.description}"/></p>
 						<p>A partir du : <h:outputLabel value="#{troup.dateMin}"/>
 						   Jusqu'au : <h:outputLabel value="#{troup.dateMax}"/> </p>
+						<ui:repeat var="match" value="#{troup.troupeau.compositionTroupeau}" >
+							<p>Race : <h:outputLabel value="#{match.raceRef.libelleRace}"/></p>
+							<ui:repeat var="matchMorpho" value="#{match.raceRef.morphologieRefs}" >
+								<p>Morphologie : <h:outputLabel value="#{matchMorpho.libelleMorphologie}"/></p>
+							</ui:repeat>
+						</ui:repeat>
+						<p>Match Morphologie totale : <h:outputLabel value="#{troup.pourcentagePropoMorpho}"/></p>
+						<p>Match Végétation totale : <h:outputLabel value="#{troup.pourcentagePropoVege}"/></p>
 					</ui:repeat>
 				</div>
 			</b:column>
