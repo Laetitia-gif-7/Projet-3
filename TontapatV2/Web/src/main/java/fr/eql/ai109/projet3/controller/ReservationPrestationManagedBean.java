@@ -21,6 +21,7 @@ import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.entity.dto.ParametresReservationPrestation;
 import fr.eql.ai109.projet3.ibusiness.ReservationPrestationIBusiness;
 import fr.eql.ai109.projet3.ibusiness.TerrainIBusiness;
+import fr.eql.ai109.projet3.ibusiness.TroupeauIBuisness;
 
 /*
  Request Scope should be enought, with only ajax calls ?  
@@ -41,8 +42,8 @@ public class ReservationPrestationManagedBean implements Serializable {
 	@EJB
 	private TerrainIBusiness terrainIBusiness;
 	
-	// @EJB
-	// TroupeauIBusiness troupeauIBusiness;
+	@EJB
+	private TroupeauIBuisness troupeauIBusiness;
 	
 	// pour avoir access de xhtml
 	private Terrain terrain; // peut contenir du matériel
@@ -53,7 +54,7 @@ public class ReservationPrestationManagedBean implements Serializable {
 	// variable from the formulaire of reservation
 	
 	//private int nbAnimaux;
-	private Date dateDebut, dateFin;
+	private Date dateDebutLimit, dateFinLimit;
 	/*
 	private int longueurCloture;
 	*/
@@ -82,12 +83,16 @@ public class ReservationPrestationManagedBean implements Serializable {
 		String idTerrainString = params.get("id");
 		idTerrain =Integer.parseInt(idTerrainString);
 		
+		
+		terrain = terrainIBusiness.findTerrainByIdTerrainAndUtilisateur(idTerrain, utilisateurConnecte);
+		//troupeau = troupeauIBusiness.findTroupeauxByUtilisateur(utilisateurConnecte)
+		
 		//dateDebut = new Date(2021,6,1); // strange output in debug !!
 		//dateFin = new Date(2021,9,1);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
 		try {
-			dateDebut = sdf.parse("01-6-2021");
-			dateFin = sdf.parse("01-9-2021");
+			dateDebutLimit = sdf.parse("01-6-2021");
+			dateFinLimit = sdf.parse("01-9-2021");
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -99,19 +104,18 @@ public class ReservationPrestationManagedBean implements Serializable {
 		// - longueurCloture, abri, abreuvoir (QuantiteEquipementPrestation)
 		// - qualiteTonte
 		// - bienEtreAnimal
-		prp = resaPrestaIBusiness.calculeDefautPrestation(idTerrain, idTroupeau, dateDebut, dateFin);
+		prp = resaPrestaIBusiness.calculeDefautPrestation(idTerrain, idTroupeau, dateDebutLimit, dateFinLimit);
 	}
 	
 	/* Quand on bouge les curseurs, appel ajax from xhtml
 	 - prix
 	 - abri, abreuvoir
 	 - qualitetonte, bienEtreAnimal
-	*/
-	public ParametresReservationPrestation actualisePrixPrestation(int idTerrain, int idTroupeau, 
+	*/	                                                            // prp 
+	public void actualisePrixPrestation(int idTerrain, int idTroupeau, 
 			Date dateDebut, Date dateFin, int nbAnimaux, int longueurCloture) {
-		//resaPrestaIBusiness.
-		return null;
-		
+		// prp = resaPrestaIBusiness.actualise(....)
+		//return null;
 	}
 	
 	@PreDestroy
@@ -127,20 +131,20 @@ public class ReservationPrestationManagedBean implements Serializable {
 		this.troupeau = troupeau;
 	}
 	
-	public Date getDateDebut() {
-		return dateDebut;
+	public Date getDateDebutLimit() {
+		return dateDebutLimit;
 	}
 
 	public void setDateDebut(Date dateDebut) {
-		this.dateDebut = dateDebut;
+		this.dateDebutLimit = dateDebut;
 	}
 
 	public Date getDateFin() {
-		return dateFin;
+		return dateFinLimit;
 	}
 
 	public void setDateFin(Date dateFin) {
-		this.dateFin = dateFin;
+		this.dateFinLimit = dateFin;
 	}
 
 	public ParametresReservationPrestation getPrp() {
