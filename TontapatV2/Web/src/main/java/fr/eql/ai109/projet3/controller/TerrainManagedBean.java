@@ -62,5 +62,9 @@ public class TerrainManagedBean implements Serializable {
 		System.out.println("entry test goToReservation "+ idTerrain);
 		return "reservationPrestation.xhtml?faces-redirect=true&id="+Integer.toString(idTerrain);
 	}
+	public String goToReservationTest2(int idTerrain) {
+		System.out.println("entry test goToReservation "+ idTerrain);
+		return "reservationPrestation2.xhtml?faces-redirect=true&id="+Integer.toString(idTerrain);
+	}
 
 }
