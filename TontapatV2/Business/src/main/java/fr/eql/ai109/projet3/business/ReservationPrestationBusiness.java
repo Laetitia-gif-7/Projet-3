@@ -129,14 +129,17 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 		
 		// prix à payer              
 		double coutTotal=0; // = calculePrixPrestation(prp); (for refactorisation)
-		
+		/*
 		coutTotal += calculePrixAnimaux(troupeau, nbAnimaux, nbJour);
 		coutTotal += calculePrixMateriel(equipSupplementaire);
 		coutTotal += calculePrixTransport( nbAnimaux );
 		prp.setCout(coutTotal);
+		*/
+		prp.setCout(1000);
 		
 		// util function,  need to be much better
-		int longueurCloture = getLongueurCloture(equipNecessaire);
+		//int longueurCloture = getLongueurCloture(equipNecessaire);
+		int longueurCloture = 100;
 		
 		prp.setBienEtreAnimal(
 				calculeBienEtreAnimal(nbAnimaux, longueurCloture, terrain.getSuperficie().intValue(),
@@ -269,7 +272,7 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 			equipement = new Equipement();
 			equipement.setLibelleEquipement(str);
 			qteEquipement = new QuantiteEquipement();
-			
+			/*
 			for(QuantiteEquipement necess : equipNecessaire )
 				if( necess.getEquipement().getLibelleEquipement().equals(str) )
 					qteNecess = necess.getQuantite();
@@ -283,10 +286,13 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 				qteEquipement.setQuantite(qteNecess);
 			else 
 				qteEquipement.setQuantite(0);
+			*/
 			
-			qteEquipement.setEquipement(equipement);
+			qteEquipement.setQuantite(20);
+			//qteEquipement.setEquipement(equipement);
 			soustraction.add(qteEquipement );
 		}
+		
 		return soustraction;
 	}
 	
