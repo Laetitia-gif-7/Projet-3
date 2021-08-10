@@ -47,7 +47,7 @@
 				<div>
 					<br/>
 					<p>Terrain Selectionné : <h:outputLabel var="terrain"  value="#{mbRecherche.terrain.nomTerrain}"/></p>
-					<h:outputText value="Malheureusement aucun troupeau disponible" renderer="#{empty mbRecherche.troupeauxCompatiblesAvecDates}"/>
+					<h:outputText value="Malheureusement aucun troupeau disponible" rendered="#{empty mbRecherche.troupeauxCompatiblesAvecDates}"/>
 					<ui:repeat var="troup" value="#{mbRecherche.troupeauxCompatiblesAvecDates}" >
 						<p>Nom : <h:outputLabel value="#{troup.troupeau.nomTroupeau}"/> </p>
 						<p>Description : <h:outputLabel value="#{troup.troupeau.description}"/></p>

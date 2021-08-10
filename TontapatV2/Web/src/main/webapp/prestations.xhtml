@@ -23,50 +23,52 @@
 	
 	<ui:define name="content">
 		<div class="terrainsTitre">
-			<h1>Vos Prestation, <h:outputLabel value="#{mbCompte.utilisateur.nom}" /> !</h1>
-		</div>
-		
-		<button class="terrainsAjoutTroupeau" >
-			<p>Déclarer un incident</p>
-			<b:iconAwesome value="plus-circle" solid="true" size="3x"/>
-		</button>
+			<h1>Vos Prestations, <h:outputText value="#{mbCompte.utilisateur.nom}" /> !</h1>
+		</div>		
 
-		<div class="terrainsDivs">
+		<b:tabView activeIndex="2">
+		  <b:tab title="En Cours">
+		    <div class="terrainsDivs">
 			<ui:repeat class="terrainsBigDiv" var="prestaBU" value="#{mbPresta.prestations}">
-				<div class="terrainsBigDiv">
-					<div class="terrainSmallDiv">
-						<p>State <h:outputLabel value="#{prestaBU.value.stateString}" /></p>
-						<p>Debut de prestation : <h:outputLabel value="#{prestaBU.value.prestation.debutPrestation}" /></p>
-						<p>Fin de prestation : <h:outputLabel value="#{prestaBU.value.prestation.finPrestation}" /></p>
-						<p>Prix : <h:outputLabel value="#{prestaBU.value.prestation.coutPrestation}" /></p>
-						<p>Liste des animaux : <h:outputLabel value="Somme à calculer avec EL"/></p>
-						<ul>
-						<ui:repeat var="animaux" value="#{prestaBU.value.prestation.compositionTroupeauPrestations}">
-							<li>
-								<h:outputLabel value="#{animaux.nbAnimaux}"/>
-								<h:outputLabel value="#{animaux.raceRef.libelleRace}"/>
-								<h:outputLabel value="#{animaux.raceRef.ugb}"/>
-							</li>
-						</ui:repeat>
-						</ul>
-						<p>Liste des équipements commandés pour la prestation :</p>
-						<ul>
-						<ui:repeat var="equip" value="#{prestaBU.value.prestation.quantiteEquipementPrestations}" >
-							<li>
-								<h:outputLabel value="#{equip.equipement.libelleEquipement}"/> :
-								<h:outputLabel value="#{equip.quantite}"/>
-								<h:outputLabel value="#{equip.equipement.uniteRef.libelleUnite}"/>
-							</li>
-						</ui:repeat>
-						</ul>
-						<ui:repeat var="eval" value="#{prestaBU.value.prestation.evaluations}" >
-							<p>Note : <h:outputLabel value="#{eval.note}" /></p>
-							<p>Commentaire : <h:outputLabel value="#{eval.commentaire}" /></p>
-						</ui:repeat>
-					</div>
-				</div>
+				<h:panelGroup rendered="#{prestaBU.value.stateString == 'CONFIRMEPARELEVEUR' || prestaBU.value.stateString == 'RESERVEPARCLIENT' || prestaBU.value.stateString == 'RESERVEPARELEVEUR'}">
+						
+				</h:panelGroup>
+			</ui:repeat>
+			
+		</div>
+	  </b:tab>
+	  <b:tab title="En Attentes">
+	  <f:facet name="anchor"><b:iconAwesome name="cog" spin="true" /></f:facet>
+	    <div class="terrainsDivs">
+			<ui:repeat class="terrainsBigDiv" var="prestaBU" value="#{mbPresta.prestations}">
+			<h:panelGroup rendered="#{prestaBU.value.stateString == 'CONFIRMEPARELEVEUR' || prestaBU.value.stateString == 'RESERVEPARCLIENT' || prestaBU.value.stateString == 'RESERVEPARELEVEUR'}">
+				
+			
+			</h:panelGroup>
 			</ui:repeat>
 		</div>
+	  </b:tab>
+	  <!-- The next tab shows tabs aren't limited to text. You can put anything in a tab. -->
+	  <b:tab title="Terminées">
+		<div class="terrainsDivs">
+			<c:forEach var="prestaBU" items="#{mbPresta.prestations}" >
+				<div class="terrainsBigDiv">
+					<div class="terrainSmallDiv">
+						<ui:include src="#{prestaBU.value.templateXhtml}">
+							<ui:param name="prestaBuByMain" value="#{prestaBU.value}" />
+							<ui:param name="user" value="#{mbCompte}" />
+							<!-- no need to pass #mbPresta (include ?) -->
+						</ui:include>
+					</div>
+				</div>
+			</c:forEach>
+		</div>
+	  </b:tab>
+	  <b:tab title="Annulées">
+	    <p>This is fancy tab with a spinning image.</p>
+	  </b:tab>
+		 
+		</b:tabView>
 		
 		<!--  test State, out of loop ui:repeat it is ok, inside problem : maybe more to come-->
 	<!-- https://stackoverflow.com/questions/3362487/dynamic-uiinclude-inside-uirepeat-is-there-a-simple-solution -->
