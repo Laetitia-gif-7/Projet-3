@@ -76,8 +76,10 @@ public class ReservationPrestationManagedBean implements Serializable {
 		FacesContext ctx = FacesContext.getCurrentInstance();
 		Map<String,String> params = ctx.getExternalContext().getRequestParameterMap();
 		// idTerrain, idTroupeau, date debut et fin to extract from the url
-		String idTerrainString = params.get("id");
+		String idTerrainString = params.get("idTerrain");
 		idTerrain =Integer.parseInt(idTerrainString);
+		String idTroupeauString = params.get("idTroupeau");
+		idTerrain =Integer.parseInt(idTroupeauString);
 		
 		terrain = terrainIBusiness.findTerrainByIdTerrainAndUtilisateur(idTerrain, utilisateurConnecte);
 		//troupeau = troupeauIBusiness.findTroupeauxByUtilisateur(utilisateurConnecte)
