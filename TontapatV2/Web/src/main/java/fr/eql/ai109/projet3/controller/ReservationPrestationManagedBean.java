@@ -105,6 +105,8 @@ public class ReservationPrestationManagedBean implements Serializable {
 		// - qualiteTonte
 		// - bienEtreAnimal
 		prp = resaPrestaIBusiness.calculeDefautPrestation(idTerrain, idTroupeau, dateDebutLimit, dateFinLimit);
+		// 
+		// prp.setQualiteTonte(1.5);
 	}
 	
 	/* Quand on bouge les curseurs, appel ajax from xhtml
