@@ -109,7 +109,8 @@ public class CherchePrestations implements CherchePrestationIDao {
 			}
 			oneTroupeau.setPourcentagePropoMorpho(matchMorpho/(correspondances.get(i).getTroupeau().getCompositionTroupeau().size()));
 			oneTroupeau.setPourcentagePropoVege(matchVege/(correspondances.get(i).getTroupeau().getCompositionTroupeau().size()));
-			
+			oneTroupeau.setPourcentageTotal((oneTroupeau.getPourcentagePropoMorpho()
+											+ oneTroupeau.getPourcentagePropoVege())/2);
 		}
 		return correspondances;
 	}

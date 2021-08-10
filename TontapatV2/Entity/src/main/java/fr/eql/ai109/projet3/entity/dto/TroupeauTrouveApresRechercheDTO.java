@@ -15,11 +15,18 @@ public class TroupeauTrouveApresRechercheDTO implements Serializable {
 	private Date dateMax;
 	private float pourcentagePropoMorpho;
 	private float pourcentagePropoVege;
+	private float pourcentageTotal;
 	
 	// pourcentage match sera calculé dans business
 	// proportion morpho and proportion vegetation extrait de la bd
 	
 	
+	public float getPourcentageTotal() {
+		return pourcentageTotal;
+	}
+	public void setPourcentageTotal(float pourcentageTotal) {
+		this.pourcentageTotal = pourcentageTotal;
+	}
 	public float getPourcentagePropoVege() {
 		return pourcentagePropoVege;
 	}
