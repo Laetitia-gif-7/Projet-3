@@ -4,9 +4,9 @@ import fr.eql.ai109.projet3.entity.PrestationBU;
 import fr.eql.ai109.projet3.entity.StatePrestation;
 
 /*
- * Etat initial si le client a fait la réservation :
+ * Etat initial si l'éleveur fait la réservation :
  * - le client peut annuler la réservation => PrestationAnnule
- * - l'éleveur peut confirmer la réservation => ConfirméParEleveur
+ * - le client peut confirmer la réservation => ConfirmParclient
  */
 public class ReserveParEleveur implements StatePrestation {
 
@@ -16,8 +16,6 @@ public class ReserveParEleveur implements StatePrestation {
 	
 	@Override
 	public void valide(PrestationBU p) {
-		// must set the date confirmation in prestation entity => save db with update here ?
-		// change state of the prestation, here or in PrestationExt ?
 	}
 
 	@Override

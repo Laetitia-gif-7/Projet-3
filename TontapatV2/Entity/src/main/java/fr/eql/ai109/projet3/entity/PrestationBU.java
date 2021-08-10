@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /* Extends the prestation entity :
  * - State design pattern to deal with all different steps in a prestation 
- * - add convenient link (TerrainId)
+ * - add convenient link (Eleveur, Client..). but could be given by getFunction also ?
  */
 public class PrestationBU implements Serializable {
 	
@@ -14,7 +14,6 @@ public class PrestationBU implements Serializable {
 	// owns an entity prestation
 	private Prestation prestation;
 	// extends entity attributes to ease treatment ? 
-	// or include in prestation  ?
 	private Utilisateur client;
 	private Utilisateur eleveur;
 	//private Utilisateur berger;

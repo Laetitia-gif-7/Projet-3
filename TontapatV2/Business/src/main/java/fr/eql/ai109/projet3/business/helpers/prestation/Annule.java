@@ -3,9 +3,7 @@ package fr.eql.ai109.projet3.business.helpers.prestation;
 import fr.eql.ai109.projet3.entity.PrestationBU;
 import fr.eql.ai109.projet3.entity.StatePrestation;
 /*
- * Etat initial si le client a fait la réservation :
- * - le client peut annuler la réservation => PrestationAnnule
- * - l'éleveur peut confirmer la réservation => ConfirméParEleveur
+ * Etat final, soit annulation prématurée, soit fin normale d'une prestation
  */
 public class Annule implements StatePrestation {
 

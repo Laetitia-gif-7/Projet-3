@@ -19,7 +19,6 @@ import fr.eql.ai109.projet3.idao.PrestationIDao;
 @Stateless
 public class PrestationDao extends GenericDao<Prestation> implements PrestationIDao {
 	
-	
 	@PostConstruct
 	void init() {
 		System.out.println("init PrestationDao");
@@ -28,17 +27,6 @@ public class PrestationDao extends GenericDao<Prestation> implements PrestationI
 	@PreDestroy
 	void destroy() {
 		System.out.println("destroy PrestationDao");
-	}
-	
-	
-	
-	@Override
-	public Prestation update(Prestation p) {
-		//Prestation ret = GenericDao<Prestation>
-		System.out.println("contains: " + entityManager.contains(p));
-		entityManager.merge(p);
-		System.out.println("contains: " + entityManager.contains(p));
-		return p;
 	}
 	
 	@Override
@@ -51,7 +39,7 @@ public class PrestationDao extends GenericDao<Prestation> implements PrestationI
 					+ "JOIN FETCH p.compositionTroupeauPrestations ctp "
 					+ "WHERE p.terrain.utilisateur =:utilisateurParam "
 					+ "	  OR ctp.troupeau.utilisateur =:utilisateurParam2 ",Prestation.class);
-			/*
+			/* not working as expected, keep to retest
 			"SELECT DISTINCT p "
 					+ "FROM Prestation p "
 					+ "JOIN p.compositionTroupeauPrestations ctp "
@@ -72,14 +60,6 @@ public class PrestationDao extends GenericDao<Prestation> implements PrestationI
 			}
 		}
 		return prestas;
-	}
-
-	@Override
-	public void myUpdate(Prestation p) {
-		// TODO Auto-generated method stub
-		System.out.println("contains: " + entityManager.contains(p));
-		entityManager.merge(p);
-		System.out.println("contains: " + entityManager.contains(p));
 	}
 
 }

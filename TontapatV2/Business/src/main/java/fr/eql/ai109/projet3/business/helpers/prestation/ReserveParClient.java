@@ -2,54 +2,39 @@ package fr.eql.ai109.projet3.business.helpers.prestation;
 
 import java.time.LocalDateTime;
 
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.faces.bean.RequestScoped;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
 import fr.eql.ai109.projet3.entity.Prestation;
 import fr.eql.ai109.projet3.entity.PrestationBU;
 import fr.eql.ai109.projet3.entity.StatePrestation;
 
-import fr.eql.ai109.projet3.idao.PrestationIDao;
 /*
  * Etat initial si le client a fait la réservation :
  * - le client peut annuler la réservation => PrestationAnnule
  * - l'éleveur peut confirmer la réservation => ConfirméParEleveur
  */
 
-@Stateless
 public class ReserveParClient implements StatePrestation {
 
 	private static final long serialVersionUID = 1L;
 	
 	public static final ReserveParClient RESERVEPARCLIENT = new ReserveParClient();
 	
-	@EJB
-	PrestationIDao prestationIdao;
+	//@EJB
+	//PrestationIDao prestationIdao;
 	
 	@Override
 	public void valide(PrestationBU p) {
-		
+		/* keep tests for reminder
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("PUTontapatV2");
 		EntityManager em = emf.createEntityManager();
-		
-		
-		// must set the date confirmation in prestation entity => save db with update here 
-		// change state of the prestation here
-		Prestation prestation = p.getPrestation();
-		//Prestation prestation = p.getPrestation();
-		//Prestation presta = prestationIdao.getById( p.getPrestation().getIdPrestation() );
-		//prestationIdao.valideDateConfirmation( p.getPrestation().getIdPrestation(), "")
-		//prestationIdao.update(presta);
-		
-		//Prestation prestation = prestationIdao.addDate( p.getPrestation().getIdPrestation(), "DATE_CONFIRMATION" );
-		prestation.setConfirmation(LocalDateTime.now());
-		//prestationIdao.update( prestation );
+		prestationIdao.update( prestation );
 		em.merge(prestation);
-		//prestationIdao.myUpdate( prestation );
+		prestationIdao.myUpdate( prestation );
+		*/
+		
+		//  set the confirmation date in prestation entity => save db with update here or in business 
+		// entity will be updated in PrestationBusiness, not need dao access here (and can move later to Entity)
+		Prestation prestation = p.getPrestation();
+		prestation.setConfirmation(LocalDateTime.now());
 		p.setState(ConfirmeParEleveur.CONFIRMEPARELEVEUR);
 	}
 

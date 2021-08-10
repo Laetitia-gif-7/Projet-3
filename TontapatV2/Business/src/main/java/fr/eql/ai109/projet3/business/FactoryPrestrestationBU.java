@@ -2,10 +2,12 @@ package fr.eql.ai109.projet3.business;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+
 import javax.ejb.ConcurrencyManagement;
 import javax.ejb.ConcurrencyManagementType;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+//import javax.ejb.Stateless;
 
 import fr.eql.ai109.projet3.business.helpers.prestation.Annule;
 import fr.eql.ai109.projet3.business.helpers.prestation.ConfirmeParEleveur;
@@ -15,6 +17,7 @@ import fr.eql.ai109.projet3.entity.Prestation;
 import fr.eql.ai109.projet3.entity.PrestationBU;
 import fr.eql.ai109.projet3.entity.Utilisateur;
 
+// Stateless
 // full concurrent access
 // @ConcurrencyManagement(ConcurrencyManagementType.BEAN) 
 // @Startup
@@ -39,7 +42,8 @@ public class FactoryPrestrestationBU {
 		int utilisateurInitiateurId = prestation.getInitiateurPrestation().getId();
 		// 
 		int clientId = prestation.getTerrain().getUtilisateur().getId();
-		//int eleveurId = prestation.getTroupeau().getUtilisateur().getId();
+		// One composition troupeau should always be available
+		// assert here to retest
 		int eleveurId = prestation.getCompositionTroupeauPrestations().get(0).getTroupeau().getUtilisateur().getId();
 		
 		// insert into the object for the view
@@ -55,6 +59,7 @@ public class FactoryPrestrestationBU {
 			return proxy;
 		}
 		
+		// RESERVATION
 		if( prestation.getConfirmation() == null ) { // en attente de confirmation
 			
 			if( utilisateurInitiateurId == clientId ) { // un client
@@ -65,7 +70,7 @@ public class FactoryPrestrestationBU {
 			return proxy;
 		}
 		
-		// very bad name ?? Use it like a validation from the initiateur
+		// ACCEPTATION DATE d'état des lieux par l'éleveur
 		if( prestation.getAcceptationEleveur() == null) {
 			
 			if( utilisateurInitiateurId == clientId ) {
@@ -76,7 +81,7 @@ public class FactoryPrestrestationBU {
 			}
 			return proxy;
 		}
-		
+		// return default should be an error
 		return proxy;
 	}
 }

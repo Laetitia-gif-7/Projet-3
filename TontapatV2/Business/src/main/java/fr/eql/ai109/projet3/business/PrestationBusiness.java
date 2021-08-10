@@ -1,6 +1,5 @@
 package fr.eql.ai109.projet3.business;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +19,7 @@ import fr.eql.ai109.projet3.ibusiness.PrestationIBusiness;
 import fr.eql.ai109.projet3.idao.PrestationIDao;
 
 @Remote(PrestationIBusiness.class)
-@Stateless // Statefull maybe here
+@Stateless // Statefull maybe here ??  
 public class PrestationBusiness implements PrestationIBusiness {
 	
 	Map<Integer, PrestationBU> prestationsBU = new HashMap<>();
@@ -59,6 +58,9 @@ public class PrestationBusiness implements PrestationIBusiness {
 	public PrestationBU valide(PrestationBU prestaBu) {
 		System.out.println("etat de presta : " + prestaBu.getStateString());
 		prestaBu.valide();
+		// only way to save in db, it is from here
+		prestationIdao.update(prestaBu.getPrestation());
+		
 		// date have been included and state changed
 		return prestaBu;
 	}

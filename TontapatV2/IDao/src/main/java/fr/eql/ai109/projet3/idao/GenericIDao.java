@@ -9,5 +9,6 @@ public interface GenericIDao<T> {
 	T update(T t);
 	T getById(int i);
 	List<T> getAll();
+	// refresh, maybe convenient ?
 	
 }
