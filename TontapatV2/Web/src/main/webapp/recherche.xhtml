@@ -15,47 +15,143 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<h1>Recherchez des disponibilités pour une prestation</h1>
-		
-		<b:form >
-			<b:panel
-				style-class="cat-margin-top-3rem cat-margin-bottom-5rem 
-				col-sm-offset-1 col-md-offset-2 col-xs-12 col-sm-10 col-md-8">
-				<b:row>
-					<b:column >
-						<b:datepicker id="cdate1" mode="toggle-icon" showWeek="true"
-						              firstDay="1" value="#{dateBean.cdate}" required="true"
-						              label="Date Début:" label-col-sm="5" col-sm="6"  />
-					</b:column>
-				</b:row>
-				<b:row>
-					<b:column >
-						<b:datepicker id="cdate2" mode="toggle-icon" showWeek="true"
-						              firstDay="1" value="#{dateBean.cdate}" required="true"
-						              label="Date Fin:" label-col-sm="5" col-sm="6"  />
-					</b:column>
-				</b:row>
-				<b:row>
-				    <b:column col-sm="6">
-				      <b:commandButton value="Rechercher" update="@form" col-sm="6"
-				                       look="success" onclick="ajax:dateBean.onSubmitDate3()" />
-				    </b:column>
-				</b:row>
-			</b:panel>
-		</b:form>
-			<b:column>
+		<h1>Résultats de la recherche</h1>
+
+<!-- 		<b:form> -->
+<!-- 			<b:panel -->
+<!-- 				style-class="cat-margin-top-3rem cat-margin-bottom-5rem  -->
+<!-- 				col-sm-offset-1 col-md-offset-2 col-xs-12 col-sm-10 col-md-8"> -->
+<!-- 				<b:row> -->
+<!-- 					<b:column> -->
+<!-- 						<b:datepicker id="cdate1" mode="toggle-icon" showWeek="true" -->
+<!-- 							firstDay="1" value="#{dateBean.cdate}" required="true" -->
+<!-- 							label="Date Début:" label-col-sm="5" col-sm="6" /> -->
+<!-- 					</b:column> -->
+<!-- 				</b:row> -->
+<!-- 				<b:row> -->
+<!-- 					<b:column> -->
+<!-- 						<b:datepicker id="cdate2" mode="toggle-icon" showWeek="true" -->
+<!-- 							firstDay="1" value="#{dateBean.cdate}" required="true" -->
+<!-- 							label="Date Fin:" label-col-sm="5" col-sm="6" /> -->
+<!-- 					</b:column> -->
+<!-- 				</b:row> -->
+<!-- 				<b:row> -->
+<!-- 					<b:column col-sm="6"> -->
+<!-- 						<b:commandButton value="Rechercher" update="@form" col-sm="6" -->
+<!-- 							look="success" onclick="ajax:dateBean.onSubmitDate3()" /> -->
+<!-- 					</b:column> -->
+<!-- 				</b:row> -->
+<!-- 			</b:panel> -->
+<!-- 		</b:form> -->
+		<b:column>
+			<div>
+				<br />
 				<div>
-					<br/>
-					<p>Terrain Selectionné : <h:outputLabel var="terrain"  value="#{mbRecherche.terrain.nomTerrain}"/></p>
-					<h:outputText value="Malheureusement aucun troupeau disponible" renderer="#{empty mbRecherche.troupeauxCompatiblesAvecDates}"/>
-					<ui:repeat var="troup" value="#{mbRecherche.troupeauxCompatiblesAvecDates}" >
-						<p>Nom : <h:outputLabel value="#{troup.troupeau.nomTroupeau}"/> </p>
-						<p>Description : <h:outputLabel value="#{troup.troupeau.description}"/></p>
-						<p>A partir du : <h:outputLabel value="#{troup.dateMin}"/>
-						   Jusqu'au : <h:outputLabel value="#{troup.dateMax}"/> </p>
+					<h2>
+						Terrain Selectionné :
+						<h:outputLabel var="terrain"
+							value="#{mbRecherche.terrain.nomTerrain}" />
+					</h2>
+				</div>
+				<h:outputText value="Malheureusement aucun troupeau disponible"
+					rendered="#{empty mbRecherche.troupeauxCompatiblesAvecDates}" />
+				<div class="troupeauxDivs">
+					<ui:repeat class="troupeauxBigDiv" var="troup"
+						value="#{mbRecherche.troupeauxCompatiblesAvecDates}"
+						varStatus="status">
+						<div class="troupeauBigDiv">
+							<div class="troupeauSmallDiv">
+								<p>
+									Nom :
+									<h:outputLabel value="#{troup.troupeau.nomTroupeau}" />
+								</p>
+								<p>
+									Description :
+									<h:outputLabel value="#{troup.troupeau.description}" />
+								</p>
+								<p>
+									A partir du :
+									<h:outputLabel value="#{troup.dateMin}" />
+									Jusqu'au :
+									<h:outputLabel value="#{troup.dateMax}" />
+								</p>
+								<ul>
+									Race :
+									<ui:repeat var="match"
+										value="#{troup.troupeau.compositionTroupeau}">
+										<li><h:outputLabel value="#{match.raceRef.libelleRace}" /></li>
+									</ui:repeat>
+								</ul>
+								<b:button class="troupeauButtonDetail"
+									value="Voir le détail du troupeau"
+									onclick="$('.modalPseudoClass${status.index}').modal()" />
+							</div>
+							</div>
+							<b:modal id="amodal${status.index}"
+								title="Détail du troupeau : #{troupeau.nomTroupeau}"
+								styleClass="modalPseudoClass${status.index}" closable="false"
+								close-on-escape="false" backdrop="false">
+								<p>
+									Nom :
+									<h:outputLabel value="#{troup.troupeau.nomTroupeau}" />
+								</p>
+								<p>
+									Description :
+									<h:outputLabel value="#{troup.troupeau.description}" />
+								</p>
+								<p>
+									Coût par animal :
+									<h:outputLabel value="#{troup.troupeau.coutParAnimal}" />
+									€
+								</p>
+								<p>
+									Fréquence de visite :
+									<h:outputLabel value="#{troup.troupeau.frequenceVisite}" />
+									jour(s) par semaine
+								</p>
+								<p>Composition du troupeau :</p>
+								<ul>
+									<ui:repeat var="race" value="#{troupeau.compositionTroupeau}">
+										<li><h:outputLabel value="#{race.nbAnimaux}" /> de <h:outputLabel
+												value="#{race.raceRef.libelleRace}" />, race : <h:outputLabel
+												value="#{race.raceRef.especeRef.libelleEspece}" /></li>
+									</ui:repeat>
+								</ul>
+								<ui:repeat var="match"
+									value="#{troup.troupeau.compositionTroupeau}">
+									<p>
+										Race :
+										<h:outputLabel value="#{match.raceRef.libelleRace}" />
+									</p>
+									<ui:repeat var="matchMorpho"
+										value="#{match.raceRef.morphologieRefs}">
+										<p>
+											Morphologie :
+											<h:outputLabel value="#{matchMorpho.libelleMorphologie}" />
+										</p>
+									</ui:repeat>
+								</ui:repeat>
+								<p>
+									Match Morphologie :
+									<h:outputLabel value="#{troup.pourcentagePropoMorpho}" />
+								</p>
+								<p>
+									Match Végétation :
+									<h:outputLabel value="#{troup.pourcentagePropoVege}" />
+								</p>
+								<p>
+									Match Moyen Total :
+									<h:outputLabel value="#{troup.pourcentageTotal}" />
+								</p>
+					<f:facet name="footer">
+						<b:button value="Close" dismiss="modal" />
+						<b:button value="Reserver" look="primary" href="reservation.xhtml" />
+					</f:facet>
+					</b:modal>
 					</ui:repeat>
 				</div>
-			</b:column>
+			</div>
+		</b:column>
 	</ui:define>
 
 </ui:composition>
