@@ -10,4 +10,5 @@ public interface TerrainIDao extends GenericIDao<Terrain> {
 	List<Terrain> getTerrainsByUser(Utilisateur utilisateur);
 	Terrain getTerrainByIdTerrainAndUser(int idTerrain, Utilisateur utilisateur);
 	List<QuantiteEquipement> getEquipement(int idTerrain);
+	Terrain getByIdWithEquipement(int idTerrain);
 }

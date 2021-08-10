@@ -11,6 +11,7 @@ import javax.persistence.TypedQuery;
 import fr.eql.ai109.projet3.entity.ProportionVegetation;
 import fr.eql.ai109.projet3.entity.QuantiteEquipement;
 import fr.eql.ai109.projet3.entity.Terrain;
+import fr.eql.ai109.projet3.entity.Troupeau;
 import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.idao.TerrainIDao;
 
@@ -73,6 +74,23 @@ public class TerrainDao extends GenericDao<Terrain> implements TerrainIDao {
 						QuantiteEquipement.class).setParameter("paramTerrainId",idTerrain);
 		List<QuantiteEquipement> qes = query.getResultList();
 		return qes;
+	}
+	
+	@Override
+	public Terrain getByIdWithEquipement(int idTerrain) {
+		Terrain terrain;
+		
+		TypedQuery<Terrain> query = entityManager.createQuery(
+				  "SELECT t "
+				+ "FROM Terrain t "
+				+ "JOIN t.quantiteEquipement qe "
+				+ "JOIN qe.equipement qee "
+				+ "WHERE t.idTerrain = :paramIdTerrain ",
+				Terrain.class)
+				.setParameter("paramIdTerrain", idTerrain);
+		
+		terrain = query.getSingleResult();
+		return terrain;
 	}
 
 //	cmd.CommandText = @"SELECT DISTINCT tr.troupeau_id, compte.nom, compte.prenom, espece.libelle, morpho.*, pm.*, vege.*, pv.*,

@@ -1,5 +1,8 @@
 package fr.eql.ai109.projet3.business.factories;
 
+import java.util.Arrays;
+import java.util.List;
+
 import fr.eql.ai109.projet3.entity.Equipement;
 
 public enum FactoryEquipement {
@@ -8,10 +11,10 @@ public enum FactoryEquipement {
 		@Override
 		Equipement createEquipement() {
 			Equipement equip = new Equipement();
-			//equip.setIdEquipement(1);
 			equip.setLibelleEquipement("clôture");
-			//equip.setUniteRef(null);
 			return equip;
+			//equip.setIdEquipement(1);
+			//equip.setUniteRef(null);
 		}
 	},
 	Abri {
@@ -32,4 +35,8 @@ public enum FactoryEquipement {
 	};
 	
 	abstract Equipement createEquipement();
+	
+	public static List<String >getListOfLibelle() {
+		return Arrays.asList("clôture","abri", "abreuvoir");
+	}
 }
