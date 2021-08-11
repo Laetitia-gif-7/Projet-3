@@ -13,12 +13,16 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.swing.JFrame;
 
+import fr.eql.ai109.projet3.entity.Equipement;
+import fr.eql.ai109.projet3.entity.QuantiteEquipement;
 import fr.eql.ai109.projet3.entity.QuantiteEquipementPrestation;
 import fr.eql.ai109.projet3.entity.Terrain;
 import fr.eql.ai109.projet3.entity.Troupeau;
 import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.entity.dto.ParametresReservationPrestation;
+import fr.eql.ai109.projet3.ibusiness.QuantiteEquipementIBuisness;
 import fr.eql.ai109.projet3.ibusiness.ReservationPrestationIBusiness;
 import fr.eql.ai109.projet3.ibusiness.TerrainIBusiness;
 import fr.eql.ai109.projet3.ibusiness.TroupeauIBuisness;
@@ -50,6 +54,7 @@ public class ReservationPrestationManagedBean implements Serializable {
 	private int idTerrain;
 	private Troupeau troupeau;
 	private int idTroupeau = 1;
+	private Equipement equipement;
 	
 	// variable from the formulaire of reservation
 	
@@ -85,7 +90,8 @@ public class ReservationPrestationManagedBean implements Serializable {
 		
 		
 		terrain = terrainIBusiness.findTerrainByIdTerrainAndUtilisateur(idTerrain, utilisateurConnecte);
-		//troupeau = troupeauIBusiness.findTroupeauxByUtilisateur(utilisateurConnecte)
+		troupeau = troupeauIBusiness.findTroupeauByIdTroupeauAndUtilisateur(idTroupeau, utilisateurConnecte);
+		
 		
 		//dateDebut = new Date(2021,6,1); // strange output in debug !!
 		//dateFin = new Date(2021,9,1);
@@ -190,3 +196,4 @@ public class ReservationPrestationManagedBean implements Serializable {
 	}
 	
 }
+
