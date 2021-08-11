@@ -27,21 +27,23 @@
 	</ul>
 	<hr/>
 	<p>Nb d'animaux du troupeau : <h:outputText value="#{mbReservation.prp.nbTotalAnimauxTroupeau}"/></p>
+	<p>On pourrait mettre ses dates de fin prestation,  pour pouvoir reserver plus d'animaux</p>
 	Variable<br/>
 	<h:form id="prpFrom">
-		<b:panel style-class="cat-margin-top-3rem cat-margin-bottom-5rem 
-				col-sm-offset-1 col-md-offset-2 col-xs-12 col-sm-10 col-md-8">
+		<b:panel >
+<!-- 		style-class="cat-margin-top-3rem cat-margin-bottom-5rem  -->
+<!-- 		col-sm-offset-1 col-md-offset-2 col-xs-12 col-sm-10 col-md-8"> -->
 			<b:row>
 				<b:column>
 					<b:datepicker id="cdate1" mode="toggle-icon" showWeek="true"
-						firstDay="1" value="#{mbReservation.dateDebut}" required="true"
+						firstDay="1" value="#{mbReservation.prp.dateDebut}" required="true"
 						label="Date Début:" label-col-sm="5" col-sm="6" />
 				</b:column>
 			</b:row>
 			<b:row>
 				<b:column>
 					<b:datepicker id="cdate2" mode="toggle-icon" showWeek="true"
-							firstDay="1" value="#{mbReservation.dateFin}" required="true"
+							firstDay="1" value="#{mbReservation.prp.dateFin}" required="true"
 							label="Date Fin:" label-col-sm="5" col-sm="6" />
 				</b:column>
 			</b:row>

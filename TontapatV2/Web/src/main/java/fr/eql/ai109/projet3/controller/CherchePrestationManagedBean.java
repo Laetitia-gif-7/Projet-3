@@ -1,6 +1,7 @@
 package fr.eql.ai109.projet3.controller;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +61,11 @@ public class CherchePrestationManagedBean implements Serializable {
         	idTroupeau =Integer.parseInt(idTroupeauString);
     		terrainsCompatiblesAvecDates = cherchePrestationIBusiness.chercheTerrainsCompatibles(idTroupeau);
         }
+	}
+	
+	public String getMyDateString(Date date){
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		return sdf.format(date);
 	}
 	
 	public Utilisateur getUtilisateurConnecte() {
