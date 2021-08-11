@@ -106,6 +106,12 @@ public class ReservationPrestationManagedBean implements Serializable {
 		
 	}
 	
+	public void updateView() {
+		System.out.println("entry update view");
+		System.out.println("longueur cloture : "+ prp.getLongueurCloture());
+		System.out.println("must call business ");
+	}
+	
 	/* Quand on bouge les curseurs, appel ajax from xhtml
 	 - prix
 	 - abri, abreuvoir
