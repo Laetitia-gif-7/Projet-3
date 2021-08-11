@@ -28,9 +28,27 @@
 	<hr/>
 	<p>Nb d'animaux du troupeau : <h:outputText value="#{mbReservation.prp.nbTotalAnimauxTroupeau}"/></p>
 	Variable<br/>
-	<h:form>
+	<h:form id="prpFrom">
+		<b:panel style-class="cat-margin-top-3rem cat-margin-bottom-5rem 
+				col-sm-offset-1 col-md-offset-2 col-xs-12 col-sm-10 col-md-8">
+			<b:row>
+				<b:column>
+					<b:datepicker id="cdate1" mode="toggle-icon" showWeek="true"
+						firstDay="1" value="#{mbReservation.dateDebut}" required="true"
+						label="Date Début:" label-col-sm="5" col-sm="6" />
+				</b:column>
+			</b:row>
+			<b:row>
+				<b:column>
+					<b:datepicker id="cdate2" mode="toggle-icon" showWeek="true"
+							firstDay="1" value="#{mbReservation.dateFin}" required="true"
+							label="Date Fin:" label-col-sm="5" col-sm="6" />
+				</b:column>
+			</b:row>
+		</b:panel>
 		<p>Prix : <h:outputText value="#{mbReservation.prp.cout}" /></p>
 		<p>Qualité Tonte : <h:outputText value="#{mbReservation.prp.qualiteTonte}" /></p>
+		<p>Bien être animal : <h:outputText value="#{mbReservation.prp.bienEtreAnimal}" /></p>
 		<p>Nbre d'animaux : <h:outputText value="#{mbReservation.prp.nbAnimaux}" /></p>
 		<p>Nbre d'animaux recommandés: <h:outputText value="#{mbReservation.prp.nbAnimauxRecommande}" /></p>
 		<p>Longueur cloture: <h:outputText value="#{mbReservation.prp.longueurCloture}" /></p>
@@ -40,6 +58,9 @@
   		<b:column>
     		<b:slider2 mode="basic" min="1" max="200" span="10" value="#{mbReservation.prp.longueurCloture}" label="Longueur clôture" />
   		</b:column>
+  		<h:commandButton value="Submit" action="#{mbReservation.updateView}">
+  			<f:ajax execute="@form" render="@form" />
+  		</h:commandButton>
   	</h:form>
 	
 </ui:define>

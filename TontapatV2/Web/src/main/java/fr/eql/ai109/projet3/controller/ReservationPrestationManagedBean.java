@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
+//import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -12,7 +12,8 @@ import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+//import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import fr.eql.ai109.projet3.entity.Terrain;
@@ -28,7 +29,7 @@ import fr.eql.ai109.projet3.ibusiness.TroupeauIBuisness;
 */
 
 @ManagedBean(name="mbReservation")
-@RequestScoped
+@ViewScoped
 public class ReservationPrestationManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -51,9 +52,7 @@ public class ReservationPrestationManagedBean implements Serializable {
 	private Troupeau troupeau;
 	private int idTroupeau = 1;
 	
-	// variable from the formulaire of reservation
-	
-	//private int nbAnimaux;
+	// variable from the formulaire of
 	private Date dateDebutLimit, dateFinLimit;
 	/*
 	private int longueurCloture;
@@ -82,7 +81,6 @@ public class ReservationPrestationManagedBean implements Serializable {
 		idTerrain =Integer.parseInt(idTroupeauString);
 		
 		terrain = terrainIBusiness.findTerrainByIdTerrainAndUtilisateur(idTerrain, utilisateurConnecte);
-		//troupeau = troupeauIBusiness.findTroupeauxByUtilisateur(utilisateurConnecte)
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
 		try {
@@ -92,6 +90,7 @@ public class ReservationPrestationManagedBean implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		//prp.set = dateDebutLimit;
 		
 		// retour attendu :
 		// - prix
@@ -117,11 +116,36 @@ public class ReservationPrestationManagedBean implements Serializable {
 		//return null;
 	}
 	
-	@PreDestroy
-	void destroy() {
-		System.out.println("destroy ReservationPrestationMB");
+	public void updateView() {
+		System.out.println("entryUpdateView");
+		System.out.println("value of prpr.nb aniamux :" + prp.getNbAnimaux());
+		System.out.println("value of prpr.nb cloture :" + prp.getLongueurCloture());
+		System.out.println("value of prpr.nb cloture supplementaitre :" + prp.getLongueurClotureSupplementaire());
+		
+		System.out.println("set cloture to 100");
+		prp.setLongueurCloture(100);
+		System.out.println("set animaux to 75");
+		prp.setNbAnimaux(75);
+		prp.setCout(1000.0);
 	}
 	
+	@PreDestroy
+	void destroy() {
+		System.out.println("destroy ReservationPrestationMB really ??");
+	}
+	
+	public Date getDateFinLimit() {
+		return dateFinLimit;
+	}
+
+	public void setDateFinLimit(Date dateFinLimit) {
+		this.dateFinLimit = dateFinLimit;
+	}
+
+	public void setDateDebutLimit(Date dateDebutLimit) {
+		this.dateDebutLimit = dateDebutLimit;
+	}
+
 	public Troupeau getTroupeau() {
 		return troupeau;
 	}
