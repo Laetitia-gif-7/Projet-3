@@ -1,18 +1,23 @@
 package fr.eql.ai109.projet3.business;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 
+import fr.eql.ai109.projet3.entity.CompositionTroupeau;
+import fr.eql.ai109.projet3.entity.CompositionTroupeauPrestation;
+import fr.eql.ai109.projet3.entity.Prestation;
 import fr.eql.ai109.projet3.entity.Terrain;
 import fr.eql.ai109.projet3.entity.Troupeau;
 import fr.eql.ai109.projet3.entity.dto.TerrainTrouveApresRechercheDTO;
 import fr.eql.ai109.projet3.entity.dto.TroupeauTrouveApresRechercheDTO;
 import fr.eql.ai109.projet3.ibusiness.CherchePrestationIBusiness;
 import fr.eql.ai109.projet3.idao.CherchePrestationIDao;
+import fr.eql.ai109.projet3.idao.PrestationIDao;
 import fr.eql.ai109.projet3.idao.TerrainIDao;
 import fr.eql.ai109.projet3.idao.TroupeauIDao;
 
@@ -27,6 +32,8 @@ public class CherchePrestationBusiness implements CherchePrestationIBusiness {
 	TerrainIDao terrainIDao;
 	@EJB
 	TroupeauIDao troupeauIDao;
+	@EJB
+	PrestationIDao prestationIDao;
 	
 	@Override
 	public List<TroupeauTrouveApresRechercheDTO> chercheTroupeauxCompatibles(int idTerrain) {
@@ -43,6 +50,11 @@ public class CherchePrestationBusiness implements CherchePrestationIBusiness {
 				}
 			}
 		}
+		
+		for(TroupeauTrouveApresRechercheDTO dto : troupeaux)
+			System.out.println("Animaux disponibles pour prestation : " 
+					+ nbAnimauxDisponiblePourPrestation( dto.getTroupeau(), dto.getDateMin(), dto.getDateMax()));
+		
 		return troupeaux;
 	}
 
@@ -61,6 +73,22 @@ public class CherchePrestationBusiness implements CherchePrestationIBusiness {
 			}
 		}
 		return terrains;
+	}
+	
+	public int nbAnimauxDisponiblePourPrestation( Troupeau troupeau, Date dateDebut, Date dateFin) {
+		
+		int nbAnimauxDansTroupeau = troupeau.getNbTotalAnimaux();
+		List<Prestation> prestationsEnCours = 
+				prestationIDao.prestationsEnCoursPourTroupeauId(troupeau.getIdTroupeau(), dateDebut, dateFin);
+		
+		int nbAnimauxOccupes = 0;
+		for(Prestation prestation : prestationsEnCours)
+			for(CompositionTroupeauPrestation cp : prestation.getCompositionTroupeauPrestations() )
+			nbAnimauxOccupes += cp.getNbAnimaux();
+
+		int directTotal = prestationIDao.nbAnimauxEnPrestationPourTroupeauId(troupeau.getIdTroupeau(), dateDebut, dateFin);
+		
+		return nbAnimauxDansTroupeau - nbAnimauxOccupes;
 	}
 	
 	

@@ -26,7 +26,7 @@ import fr.eql.ai109.projet3.idao.CherchePrestationIDao;
 
 @Remote(CherchePrestationIDao.class)
 @Stateless
-public class CherchePrestations implements CherchePrestationIDao {
+public class CherchePrestationDao implements CherchePrestationIDao {
 
 	@PersistenceContext(unitName = "PUTontapatV2")
 	protected EntityManager entityManager;
