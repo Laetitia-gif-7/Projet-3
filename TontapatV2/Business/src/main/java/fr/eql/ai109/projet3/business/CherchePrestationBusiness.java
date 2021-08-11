@@ -35,8 +35,12 @@ public class CherchePrestationBusiness implements CherchePrestationIBusiness {
 		List<TroupeauTrouveApresRechercheDTO> tmpTroupeaux = cherchePrestationIDao.chercheTroupeauxCompatibles(terrain);
 		List<TroupeauTrouveApresRechercheDTO> troupeaux = new ArrayList<TroupeauTrouveApresRechercheDTO>();
 		for (int i=0; i<tmpTroupeaux.size(); i++) {
-			if (tmpTroupeaux.get(i).getPourcentagePropoMorpho()!=0 && tmpTroupeaux.get(i).getPourcentagePropoVege()!=0) {
-				troupeaux.add(tmpTroupeaux.get(i));
+			if(terrainIDao.getById(idTerrain).getVilleCp().getDepartement()
+					.equals(tmpTroupeaux.get(i).getTroupeau().getUtilisateur().getVilleCp().getDepartement())) {
+				
+				if (tmpTroupeaux.get(i).getPourcentagePropoMorpho()!=0 && tmpTroupeaux.get(i).getPourcentagePropoVege()!=0) {
+					troupeaux.add(tmpTroupeaux.get(i));
+				}
 			}
 		}
 		return troupeaux;
@@ -48,8 +52,12 @@ public class CherchePrestationBusiness implements CherchePrestationIBusiness {
 		List<TerrainTrouveApresRechercheDTO> tmpTerrains = cherchePrestationIDao.chercheTerrainsCompatibles(troupeau);
 		List<TerrainTrouveApresRechercheDTO> terrains = new ArrayList<TerrainTrouveApresRechercheDTO>();
 		for (int i=0; i<tmpTerrains.size(); i++) {
-			if (tmpTerrains.get(i).getPourcentagePropoMorpho()!=0 && tmpTerrains.get(i).getPourcentagePropoVege()!=0) {
-				terrains.add(tmpTerrains.get(i));
+			if(troupeauIDao.getById(idTroupeau).getUtilisateur().getVilleCp().getDepartement()
+					.equals(tmpTerrains.get(i).getTerrain().getVilleCp().getDepartement())) {
+				
+				if (tmpTerrains.get(i).getPourcentagePropoMorpho()!=0 && tmpTerrains.get(i).getPourcentagePropoVege()!=0) {
+					terrains.add(tmpTerrains.get(i));
+				}
 			}
 		}
 		return terrains;

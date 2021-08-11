@@ -84,15 +84,15 @@
 						<h:outputLabel value="#{terr.terrain.clos}" />
 					</p>
 
-<!-- 					<p>Equipement :</p> -->
-<!-- 					<ul> -->
-<!-- 						<ui:repeat class="terrainsBigDiv" var="qe" -->
-<!-- 							value="#{terr.terrain.quantiteEquipement}"> -->
-<!-- 							<li><h:outputLabel value="#{qe.quantite}" /> -->
-<!-- 								<h:outputLabel value="#{qe.equipement.uniteRef.libelleUnite}" /> -->
-<!-- 								de <h:outputLabel value="#{qe.equipement.libelleEquipement}" /></li> -->
-<!-- 						</ui:repeat> -->
-<!-- 					</ul> -->
+					<p>Equipement :</p>
+					<ul>
+						<ui:repeat class="terrainsBigDiv" var="qe"
+							value="#{terr.terrain.quantiteEquipement}">
+							<li><h:outputLabel value="#{qe.quantite}" />
+								<h:outputLabel value="#{qe.equipement.uniteRef.libelleUnite}" />
+								de <h:outputLabel value="#{qe.equipement.libelleEquipement}" /></li>
+						</ui:repeat>
+					</ul>
 
 					<p>Race compatible pour le type de végétation :</p>
 					<ui:repeat class="terrainsBigDiv" var="pv"
