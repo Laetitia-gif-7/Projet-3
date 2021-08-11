@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import fr.eql.ai109.projet3.entity.QuantiteEquipement;
 import fr.eql.ai109.projet3.entity.Troupeau;
 import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.idao.TroupeauIDao;
@@ -68,6 +69,24 @@ public class TroupeauDao extends GenericDao<Troupeau> implements TroupeauIDao {
 		
 		troupeau = query.getSingleResult();
 		return troupeau;
+	}
+
+	@Override
+	public Troupeau getTroupeauByIdTroupeauAndUser(int idTroupeau, Utilisateur utilisateur) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<QuantiteEquipement> getEquipement(int idTroupeau) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Troupeau getByIdWithEquipement(int idTroupeau) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

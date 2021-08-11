@@ -30,6 +30,12 @@ public class TroupeauBuisness implements TroupeauIBuisness{
 	  //  }
 		 return troupeaux;
 	}
+
+	@Override
+	public Troupeau findTroupeauByIdTroupeauAndUtilisateur(int idTroupeau, Utilisateur utilisateur) {
+		
+		return troupeauIDao.getById(idTroupeau);
+	}
 	
 	
 
