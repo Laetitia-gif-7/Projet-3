@@ -148,15 +148,15 @@ public class RaceRef implements Serializable {
 //			this.morphologieRefs = morphologieRefs;
 //		}
 //
-
-		public List<CompositionTroupeau> getCompositiontroupeaux() {
-			return compositionTroupeaux;
-		}
-
-
-		public void setCompositiontroupeaux(List<CompositionTroupeau> compositionTroupeaux) {
-			this.compositionTroupeaux = compositionTroupeaux;
-		}
+//
+//		public List<CompositionTroupeau> getCompositiontroupeaux() {
+//			return compositionTroupeaux;
+//		}
+//
+//
+//		public void setCompositiontroupeaux(List<CompositionTroupeau> compositionTroupeaux) {
+//			this.compositionTroupeaux = compositionTroupeaux;
+//		}
 //
 //
 //		public List<VegetationRef> getVegetationRefs() {

@@ -39,7 +39,7 @@ public class TerrainManagedBean implements Serializable {
 	}
 
 	public String lancerRecherche(int idTerrain) {
-		return "recherche.xhtml?faces-redirect=true&id=" + Integer.toString(idTerrain);
+		return "recherche.xhtml?faces-redirect=true&idTerrain=" + Integer.toString(idTerrain);
 	}
 
 	public Utilisateur getUtilisateurConnecte() {
