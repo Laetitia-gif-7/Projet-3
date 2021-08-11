@@ -44,6 +44,10 @@ public class TroupeauManagedBean implements Serializable {
 		//nbAnimaux = troupeaux.get(0).getCompositionTroupeau().get(0).getNbAnimaux();
 		//System.out.println("hello");
 	}
+	
+	public String lancerRecherche(int idTroupeau) {
+		return "rechercheTroupeau.xhtml?faces-redirect=true&idTroupeau=" + Integer.toString(idTroupeau);
+	}
 
 	public Utilisateur getUtilisateurConnecte() {
 		return utilisateurConnecte;
