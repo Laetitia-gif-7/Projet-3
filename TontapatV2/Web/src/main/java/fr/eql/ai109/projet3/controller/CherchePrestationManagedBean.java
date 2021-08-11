@@ -52,7 +52,8 @@ public class CherchePrestationManagedBean implements Serializable {
         if(idTerrainString != null) {
         	idTerrain =Integer.parseInt(idTerrainString);
         	System.out.println("id terrain en entier "+ idTerrain);
-    		terrain = terrainIBusiness.findTerrainByIdTerrainAndUtilisateur(idTerrain, utilisateurConnecte);
+    		//terrain = terrainIBusiness.findTerrainByIdTerrainAndUtilisateur(idTerrain, utilisateurConnecte);
+    		terrain = terrainIBusiness.findByIdWithEquipement(idTerrain);
     		troupeauxCompatiblesAvecDates = cherchePrestationIBusiness.chercheTroupeauxCompatibles(idTerrain);
         }
         if(idTroupeauString != null) {

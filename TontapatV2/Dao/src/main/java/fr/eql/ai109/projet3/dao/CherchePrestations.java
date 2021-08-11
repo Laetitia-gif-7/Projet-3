@@ -158,7 +158,7 @@ public class CherchePrestations implements CherchePrestationIDao {
 			oneTerrain.setDateMin( (Date) temp[1]);
 			oneTerrain.setDateMax( (Date) temp[2]);
 			correspondances.add(oneTerrain);
-
+			
 			for (int k=0; k<correspondances.get(i).getTerrain().getProportionVegetations().size(); k++) {
 				ProportionVegetation propoVege = correspondances.get(i).getTerrain().getProportionVegetations().get(k);
 				for(int j=0; j<propoVege.getVegetationRef().getRaceRefs().size(); j++) {
@@ -203,6 +203,10 @@ public class CherchePrestations implements CherchePrestationIDao {
 			oneTerrain.setPourcentagePropoVege(matchVege/(correspondances.get(i).getTerrain().getProportionVegetations().size()));
 			oneTerrain.setPourcentageTotal((oneTerrain.getPourcentagePropoMorpho()
 											+ oneTerrain.getPourcentagePropoVege())/2);
+			for (int j=0; j<oneTerrain.getTerrain().getQuantiteEquipement().size(); j++) {
+				entityManager.refresh(oneTerrain.getTerrain()
+						.getQuantiteEquipement().get(j));
+			}
 		}
 		return correspondances;
 	}
