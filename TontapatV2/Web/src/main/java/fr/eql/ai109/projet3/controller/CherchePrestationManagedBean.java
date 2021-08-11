@@ -15,6 +15,7 @@ import javax.faces.context.FacesContext;
 import fr.eql.ai109.projet3.entity.Terrain;
 import fr.eql.ai109.projet3.entity.Troupeau;
 import fr.eql.ai109.projet3.entity.Utilisateur;
+import fr.eql.ai109.projet3.entity.dto.TerrainTrouveApresRechercheDTO;
 import fr.eql.ai109.projet3.entity.dto.TroupeauTrouveApresRechercheDTO;
 import fr.eql.ai109.projet3.ibusiness.CherchePrestationIBusiness;
 import fr.eql.ai109.projet3.ibusiness.TerrainIBusiness;
@@ -32,6 +33,9 @@ public class CherchePrestationManagedBean implements Serializable {
 	private List<TroupeauTrouveApresRechercheDTO> troupeauxCompatiblesAvecDates;
 	private int idTerrain;
 	
+	private List<TerrainTrouveApresRechercheDTO> terrainsCompatiblesAvecDates;
+	private int idTroupeau;
+	
 	@EJB
 	TerrainIBusiness terrainIBusiness;
 	
@@ -42,13 +46,20 @@ public class CherchePrestationManagedBean implements Serializable {
 	public void init() {
 		FacesContext ctx = FacesContext.getCurrentInstance();
         Map<String,String> params = ctx.getExternalContext().getRequestParameterMap();
-        String idTerrainString = params.get("id");
+        String idTerrainString = params.get("idTerrain");
+        String idTroupeauString = params.get("idTroupeau");
         System.out.println("id terrain en entierString "+ idTerrainString);
-        idTerrain =Integer.parseInt(idTerrainString);
-        System.out.println("id terrain en entier "+ idTerrain);
-		terrain = terrainIBusiness.findTerrainByIdTerrainAndUtilisateur(idTerrain, utilisateurConnecte);
-		
-		troupeauxCompatiblesAvecDates = cherchePrestationIBusiness.chercheTroupeauxCompatibles(idTerrain);
+        if(idTerrainString != null) {
+        	idTerrain =Integer.parseInt(idTerrainString);
+        	System.out.println("id terrain en entier "+ idTerrain);
+    		//terrain = terrainIBusiness.findTerrainByIdTerrainAndUtilisateur(idTerrain, utilisateurConnecte);
+    		terrain = terrainIBusiness.findByIdWithEquipement(idTerrain);
+    		troupeauxCompatiblesAvecDates = cherchePrestationIBusiness.chercheTroupeauxCompatibles(idTerrain);
+        }
+        if(idTroupeauString != null) {
+        	idTroupeau =Integer.parseInt(idTroupeauString);
+    		terrainsCompatiblesAvecDates = cherchePrestationIBusiness.chercheTerrainsCompatibles(idTroupeau);
+        }
 	}
 	
 	public Utilisateur getUtilisateurConnecte() {
@@ -61,6 +72,14 @@ public class CherchePrestationManagedBean implements Serializable {
 
 	public Terrain getTerrain() {
 		return terrain;
+	}
+
+	public List<TerrainTrouveApresRechercheDTO> getTerrainsCompatiblesAvecDates() {
+		return terrainsCompatiblesAvecDates;
+	}
+
+	public void setTerrainsCompatiblesAvecDates(List<TerrainTrouveApresRechercheDTO> terrainsCompatiblesAvecDates) {
+		this.terrainsCompatiblesAvecDates = terrainsCompatiblesAvecDates;
 	}
 
 	public void setTerrain(Terrain terrain) {

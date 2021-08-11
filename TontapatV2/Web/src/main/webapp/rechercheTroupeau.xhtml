@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<ui:composition template="/arch.xhtml">
+
+	<ui:define name="head">
+		<title>Recherche</title>
+	</ui:define>
+
+	<ui:define name="content">
+		<h1>Résultats de la recherche</h1>
+			<div>
+				<br />
+				<div>
+					<h2>
+						Troupeau Selectionné :
+<!-- 						<h:outputLabel value="#{mbRecherche.terrainsCompatiblesAvecDates.troupeau.nomTroupeau}" /> -->
+					</h2>
+				</div>
+				<h:outputText value="Malheureusement aucun terrain disponible"
+					rendered="#{empty mbRecherche.terrainsCompatiblesAvecDates}" />
+				<div class="troupeauxDivs">
+					<ui:repeat class="troupeauxBigDiv" var="terr"
+						value="#{mbRecherche.terrainsCompatiblesAvecDates}"
+						varStatus="status">
+						<div class="troupeauBigDiv">
+							<div class="troupeauSmallDiv">
+								<p>
+									Nom :
+									<h:outputLabel value="#{terr.terrain.nomTerrain}" />
+								</p>
+								<p>
+									Description :
+									<h:outputLabel value="#{terr.terrain.description}" />
+								</p>
+								<p>
+									A partir du :
+									<h:outputLabel value="#{terr.dateMin}" />
+									Jusqu'au :
+									<h:outputLabel value="#{terr.dateMax}" />
+								</p>
+								<ul>
+									Race :
+									<ui:repeat var="pm" value="#{terr.terrain.proportionMorphologies}">
+										<ui:repeat var="match" value="#{pm.morphologieRef.raceRefs}">
+											<li><h:outputLabel value="#{match.libelleRace}" /></li>
+										</ui:repeat>
+									</ui:repeat>
+								</ul>
+								<b:button class="troupeauButtonDetail"
+									value="Voir le détail du terrain"
+									onclick="$('.modalPseudoClass${status.index}').modal()" />
+							</div>
+							</div>
+ 							<b:modal id="amodal${status.index}"
+					title="Détail du terrain : #{terrain.nomTerrain}"
+					styleClass="modalPseudoClass${status.index}" closable="false"
+					close-on-escape="false" backdrop="false">
+					<p>
+						Nom :
+						<h:outputLabel value="#{terr.terrain.nomTerrain}" />
+					</p>
+					<p>
+						Description :
+						<h:outputLabel value="#{terr.terrain.description}" />
+					</p>
+					<p>
+						Superficie du terrain :
+						<h:outputLabel value="#{terr.terrain.superficie}" />
+						m2
+					</p>
+					<p>
+						Adresse :
+						<h:outputLabel value="#{terr.terrain.noRue}" />
+						<h:outputLabel value="#{terr.terrain.rue}" />
+						et rajouter ville
+					</p>
+					<p>
+						Terrain cloturé :
+						<h:outputLabel value="#{terr.terrain.clos}" />
+					</p>
+
+					<p>Equipement :</p>
+					<ul>
+						<ui:repeat class="terrainsBigDiv" var="qe"
+							value="#{terr.terrain.quantiteEquipement}">
+							<li><h:outputLabel value="#{qe.quantite}" />
+								<h:outputLabel value="#{qe.equipement.uniteRef.libelleUnite}" />
+								de <h:outputLabel value="#{qe.equipement.libelleEquipement}" /></li>
+						</ui:repeat>
+					</ul>
+
+					<p>Race compatible pour le type de végétation :</p>
+					<ui:repeat class="terrainsBigDiv" var="pv"
+						value="#{terr.terrain.proportionVegetations}">
+						<ul>
+							<h:outputLabel value="#{pv.vegetationRef.libelleVegetation}" />
+							<ui:repeat class="terrainsBigDiv" var="vr"
+								value="#{pv.vegetationRef.raceRefs}">
+								<li><h:outputLabel value="#{vr.libelleRace}" /> pour <h:outputLabel
+										value="#{pv.proportionVege}" /> %</li>
+							</ui:repeat>
+						</ul>
+					</ui:repeat>
+
+					<p>Type de morphologie :</p>
+					<ul>
+						<ui:repeat class="terrainsBigDiv" var="pm"
+							value="#{terr.terrain.proportionMorphologies}">
+							<li><h:outputLabel
+									value="#{pm.morphologieRef.libelleMorphologie}" /> pour <h:outputLabel
+									value="#{pm.proportionMorphologie}" /> %</li>
+						</ui:repeat>
+					</ul>
+					<f:facet name="footer">
+						<b:button value="Close" dismiss="modal" />
+						<b:button value="Reserver" look="primary" href="prestations.xhtml" />
+					</f:facet>
+					</b:modal>
+					</ui:repeat>
+				</div>
+			</div>
+	</ui:define>
+
+</ui:composition>
+
+</html>
