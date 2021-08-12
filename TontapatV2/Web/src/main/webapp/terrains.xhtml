@@ -6,81 +6,137 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:b="http://bootsfaces.net/ui">
 
-	<ui:composition template="/arch.xhtml">
-		<ui:define name="head">
-			<title>Mes Terrains</title>
-			<!-- <f:metadata>
+<ui:composition template="/arch.xhtml">
+	<ui:define name="head">
+		<title>Mes Terrains</title>
+		<!-- <f:metadata>
 				<f:event listener="#{mbAccount.disconnect()}" type="preRenderView"></f:event>
 			</f:metadata> -->
-		</ui:define>
-		<ui:define name="content">
+	</ui:define>
+	<ui:define name="content">
 		<div class="terrainsTitre">
-				<h1>Vos Terrains, <h:outputLabel value="#{mbCompte.utilisateur.nom}" /> !</h1>
-			</div>
-			<button class="terrainsAjoutTroupeau">
+			<h1>
+				Vos Terrains,
+				<h:outputLabel value="#{mbCompte.utilisateur.nom}" />
+				!
+			</h1>
+		</div>
+		<button class="terrainsAjoutTroupeau">
 			<p>Ajouter un terrain</p>
-			<b:iconAwesome value="plus-circle" solid="true" size="3x"/>
-			</button >
-			<div class="terrainsDivs">
-				<ui:repeat class="terrainsBigDiv" var="terrain" value="#{mbTerrain.terrains}" varStatus="status">
-					<div class="terrainsBigDiv">
-							<div class="terrainsSmallDiv">
-								<p>Nom : <h:outputLabel value="#{terrain.nomTerrain}"/></p>
-								<p>Description : <h:outputLabel value="#{terrain.description}" /></p>
-								<p>Superficie du terrain : <h:outputLabel value="#{terrain.superficie}" /> m2</p>
-								<p>Adresse : <h:outputLabel value="#{terrain.noRue}"/>  <h:outputLabel value="#{terrain.rue}"/> et rajouter ville</p>
-								<ui:repeat var="pd" value="#{terrain.periodeDisponibilites}">
-									<p>Date de Début : <h:outputLabel value="#{pd.debutPeriode}" /></p>
-									<p>Date de Fin : <h:outputLabel value="#{pd.finPeriode}" /></p>
-								</ui:repeat>
-							<b:button  class="terrainButtonDetail" value="Voir le détail du terrain" onclick="$('.modalPseudoClass${status.index}').modal()"/>	
-							</div>
-						
-					</div>
-					<b:modal id="amodal${status.index}" title="Détail du terrain : #{terrain.nomTerrain}" styleClass="modalPseudoClass${status.index}" closable="false"  close-on-escape="false" backdrop="false">
-						<p>Nom : <h:outputLabel value="#{terrain.nomTerrain}"/></p>
-						<p>Description : <h:outputLabel value="#{terrain.description}" /></p>
-						<p>Superficie du terrain : <h:outputLabel value="#{terrain.superficie}" /> m2</p>
-						<p>Adresse : <h:outputLabel value="#{terrain.noRue}"/>  <h:outputLabel value="#{terrain.rue}"/> et rajouter ville</p>
-						<p>Terrain cloturé : <h:outputLabel value="#{terrain.clos}" /></p>
-						
-						<p>Equipement :</p>
-						<ul>
-							<ui:repeat class="terrainsBigDiv" var="qe" value="#{terrain.quantiteEquipement}">	
-								<li><h:outputLabel value="#{qe.quantite}" /><h:outputLabel value="#{qe.equipement.uniteRef.libelleUnite}" /> de <h:outputLabel value="#{qe.equipement.libelleEquipement}" /></li>
-							</ui:repeat>
-						</ul>
-						
-						<p>Race compatible pour le type de végétation :</p>
-						<ui:repeat class="terrainsBigDiv" var="pv" value="#{terrain.proportionVegetations}">
-							<ul><h:outputLabel value="#{pv.vegetationRef.libelleVegetation}" />
-							<ui:repeat class="terrainsBigDiv" var="vr" value="#{pv.vegetationRef.raceRefs}">
-								<li><h:outputLabel value="#{vr.libelleRace}" /> pour <h:outputLabel value="#{pv.proportionVege}" /> %</li> 
-							</ui:repeat>
-							</ul>
+			<b:iconAwesome value="plus-circle" solid="true" size="3x" />
+		</button>
+		<div class="terrainsDivs">
+			<ui:repeat class="terrainsBigDiv" var="terrain"
+				value="#{mbTerrain.terrains}" varStatus="status">
+				<div class="terrainsBigDiv">
+					<div class="terrainsSmallDiv">
+						<p>
+							Nom :
+							<h:outputLabel value="#{terrain.nomTerrain}" />
+						</p>
+						<p>
+							Description :
+							<h:outputLabel value="#{terrain.description}" />
+						</p>
+						<p>
+							Superficie du terrain :
+							<h:outputLabel value="#{terrain.superficie}" />
+							m2
+						</p>
+						<p>
+							Adresse :
+							<h:outputLabel value="#{terrain.noRue}" />
+							<h:outputLabel value="#{terrain.rue}" />
+							et rajouter ville
+						</p>
+						<ui:repeat var="pd" value="#{terrain.periodeDisponibilites}">
+							<p>
+								Date de Début :
+								<h:outputLabel value="#{pd.debutPeriode}" />
+							</p>
+							<p>
+								Date de Fin :
+								<h:outputLabel value="#{pd.finPeriode}" />
+							</p>
 						</ui:repeat>
-						
-						<p>Type de morphologie :</p>
+						<b:button class="terrainButtonDetail"
+							value="Voir le détail du terrain"
+							onclick="$('.modalPseudoClass${status.index}').modal()" />
+					</div>
+
+				</div>
+				<b:modal id="amodal${status.index}"
+					title="Détail du terrain : #{terrain.nomTerrain}"
+					styleClass="modalPseudoClass${status.index}" closable="false"
+					close-on-escape="false" backdrop="false">
+					<p>
+						Nom :
+						<h:outputLabel value="#{terrain.nomTerrain}" />
+					</p>
+					<p>
+						Description :
+						<h:outputLabel value="#{terrain.description}" />
+					</p>
+					<p>
+						Superficie du terrain :
+						<h:outputLabel value="#{terrain.superficie}" />
+						m2
+					</p>
+					<p>
+						Adresse :
+						<h:outputLabel value="#{terrain.noRue}" />
+						<h:outputLabel value="#{terrain.rue}" />
+						et rajouter ville
+					</p>
+					<p>
+						Terrain cloturé :
+						<h:outputLabel value="#{terrain.clos}" />
+					</p>
+
+					<p>Equipement :</p>
+					<ul>
+						<ui:repeat class="terrainsBigDiv" var="qe"
+							value="#{terrain.quantiteEquipement}">
+							<li><h:outputLabel value="#{qe.quantite}" />
+								<h:outputLabel value="#{qe.equipement.uniteRef.libelleUnite}" />
+								de <h:outputLabel value="#{qe.equipement.libelleEquipement}" /></li>
+						</ui:repeat>
+					</ul>
+
+					<p>Race compatible pour le type de végétation :</p>
+					<ui:repeat class="terrainsBigDiv" var="pv"
+						value="#{terrain.proportionVegetations}">
 						<ul>
-							<ui:repeat class="terrainsBigDiv" var="pm" value="#{terrain.proportionMorphologies}">
-								<li>
-									<h:outputLabel value="#{pm.morphologieRef.libelleMorphologie}" /> pour <h:outputLabel value="#{pm.proportionMorphologie}" /> %
-								</li>
+							<h:outputLabel value="#{pv.vegetationRef.libelleVegetation}" />
+							<ui:repeat class="terrainsBigDiv" var="vr"
+								value="#{pv.vegetationRef.raceRefs}">
+								<li><h:outputLabel value="#{vr.libelleRace}" /> pour <h:outputLabel
+										value="#{pv.proportionVege}" /> %</li>
 							</ui:repeat>
 						</ul>
-							
-						  <f:facet name="footer">
-						    <b:button value="Close" dismiss="modal" />
-						    <b:button value="Rechercher une prestation" look="primary" href="recherche.xhtml" />
-						    <b:button value="Supprimer le terrain" look="primary" dismiss="modal" />
-						    <h:form>
-						    	<b:commandButton value="Test =>reservation" look="primary" action="#{mbTerrain.goToReservationTest(terrain.idTerrain)}"/>
-						    </h:form>
-						  </f:facet>
-						</b:modal>
-				</ui:repeat>
-				
-			</div>
-		</ui:define>
-	</ui:composition>
+					</ui:repeat>
+					<p>Type de morphologie :</p>
+					<ul>
+						<ui:repeat class="terrainsBigDiv" var="pm"
+							value="#{terrain.proportionMorphologies}">
+							<li><h:outputLabel
+									value="#{pm.morphologieRef.libelleMorphologie}" /> pour <h:outputLabel
+									value="#{pm.proportionMorphologie}" /> %</li>
+						</ui:repeat>
+					</ul>
+
+					<f:facet name="footer">
+						<h:form>
+							<b:button value="Close" dismiss="modal" />
+							<b:commandButton value="Rechercher une prestation" look="primary"
+								action="#{mbTerrain.lancerRecherche(terrain.idTerrain)}" />
+							<b:button value="Supprimer le terrain" look="primary"
+								dismiss="modal" />
+						</h:form>
+					</f:facet>
+				</b:modal>
+			</ui:repeat>
+		</div>
+	</ui:define>
+</ui:composition>
 </html>

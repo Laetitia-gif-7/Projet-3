@@ -13,21 +13,31 @@
 
 <ui:composition template="/arch.xhtml">
 <ui:define name="content">
-	Ajustez votre prestation !
-	Avec Terrain:  <h:outputText value="#{mbReservation.terrain.nomTerrain}" />
-	Avec id Terrain: <h:outputText value="#{mbReservation.idTerrain}" /><br/>
-	Avec id Troupeau: <h:outputText value="#{mbReservation.idTroupeau}" />
-	<hr/>
+	<h1>Ajustez votre prestation!</h1>
+			<h2>Prestation entre 
+			<h:outputText value="#{mbReservation.terrain.nomTerrain}" /> et 
+			<h:outputText value="#{mbReservation.troupeau.nomTroupeau}" /></h2><br/>
+			<hr/>
 	Matériel enregistré sur votre terrain :
+	<ul>
+		<ui:repeat var="qe" value="#{mbReservation.prp.equipementSurTerrain}" >
+			<li><h:outputLabel value="#{qe.quantite}" /><h:outputLabel value="#{qe.equipement.uniteRef.libelleUnite}" /> de <h:outputLabel value="#{qe.equipement.libelleEquipement}" /></li>
+		</ui:repeat>
+	</ul>
 	<hr/>
+	<p>Nb d'animaux du troupeau : <h:outputText value="#{mbReservation.prp.nbTotalAnimauxTroupeau}"/></p>
 	Variable<br/>
-	<p>Nbre : <h:outputText value="#{mbReservation.prp.qualiteTonte}" /></p>
-	<p>Nbre d'animaux : <h:outputText value="#{mbReservation.prp.nbAnimaux}" /></p>
 	<h:form>
-		<h:inputText value="#{mbReservation.prp.nbAnimaux}" />
+		<p>Prix : <h:outputText value="#{mbReservation.prp.cout}" /></p>
+		<p>Qualité Tonte : <h:outputText value="#{mbReservation.prp.qualiteTonte}" /></p>
+		<p>Nbre d'animaux : <h:outputText value="#{mbReservation.prp.nbAnimaux}" /></p>
+		<p>Nbre d'animaux recommandés: <h:outputText value="#{mbReservation.prp.nbAnimauxRecommande}" /></p>
+		<p>Longueur cloture: <h:outputText value="#{mbReservation.prp.longueurCloture}" /></p>
 		<b:column>
-    		<b:slider2 mode="basic" min="10" max="#{mbReservation.prp.nbTotalAnimauxTroupeau}" span="7" value="#{mbReservation.prp.nbAnimaux}" 
-    			label="Nb Animaux" />
+    		<b:slider2 mode="basic" min="1" max="#{mbReservation.prp.nbTotalAnimauxTroupeau}" span="10" value="#{mbReservation.prp.nbAnimaux}" label="Nb Animaux" />
+  		</b:column>
+  		<b:column>
+    		<b:slider2 mode="basic" min="1" max="200" span="10" value="#{mbReservation.prp.longueurCloture}" label="Longueur clôture" />
   		</b:column>
   	</h:form>
 	

@@ -25,12 +25,12 @@
 		<div class="terrainsTitre">
 			<h1>Vos Prestation, <h:outputLabel value="#{mbCompte.utilisateur.nom}" /> !</h1>
 		</div>
-		
+		<forme>
 		<button class="terrainsAjoutTroupeau" >
 			<p>Déclarer un incident</p>
 			<b:iconAwesome value="plus-circle" solid="true" size="3x"/>
 		</button>
-
+</forme>
 		<div class="terrainsDivs">
 			<ui:repeat class="terrainsBigDiv" var="prestaBU" value="#{mbPresta.prestations}">
 				<div class="terrainsBigDiv">
@@ -85,6 +85,16 @@
 			</div>
 			</c:forEach>
 		</div>
+		<h:form>
+			<ui:repeat var="prestaBU" value="#{mbPresta.prestations}" >
+<!-- 		<b:commandButton value="Déclarer un incident" look="primary" -->
+<!-- 								action="#{mbPresta.declarerIncident(prestaBU.value.prestation.idPrestation)}" /> -->
+				<b:button value="declarer un incident" outcome="incidents">
+					<f:param name="idprestation" value="#{prestaBU.value.prestation.idPrestation}"/>
+				</b:button>
+			</ui:repeat>
+		</h:form>
+		HelloWorld<h:outputLabel value="#{mbPresta.incidentRefSelectionne.libelleIncident}"/>
 		
 </ui:define>
 </ui:composition>

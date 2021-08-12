@@ -77,17 +77,7 @@ public class TroupeauDao extends GenericDao<Troupeau> implements TroupeauIDao {
 		return null;
 	}
 
-	@Override
-	public List<QuantiteEquipement> getEquipement(int idTroupeau) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public Troupeau getByIdWithEquipement(int idTroupeau) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 }
 	

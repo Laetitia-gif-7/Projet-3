@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -15,14 +16,16 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.swing.JFrame;
 
+
 import fr.eql.ai109.projet3.entity.Equipement;
 import fr.eql.ai109.projet3.entity.QuantiteEquipement;
 import fr.eql.ai109.projet3.entity.QuantiteEquipementPrestation;
+
 import fr.eql.ai109.projet3.entity.Terrain;
 import fr.eql.ai109.projet3.entity.Troupeau;
 import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.entity.dto.ParametresReservationPrestation;
-import fr.eql.ai109.projet3.ibusiness.QuantiteEquipementIBuisness;
+
 import fr.eql.ai109.projet3.ibusiness.ReservationPrestationIBusiness;
 import fr.eql.ai109.projet3.ibusiness.TerrainIBusiness;
 import fr.eql.ai109.projet3.ibusiness.TroupeauIBuisness;
@@ -71,33 +74,28 @@ public class ReservationPrestationManagedBean implements Serializable {
 	*/
 	
 	private ParametresReservationPrestation prp;
-	
 	// equipement à commander au prestataire extérieur
 	//QuantiteEquipementPrestation equipementPayant;
-	// 
 	//QuantiteEquipementPrestation equipementConseille; 
 	
-	
-
 	@PostConstruct
 	void init() {
 		System.out.println("init ReservationPrestationMB");
 		FacesContext ctx = FacesContext.getCurrentInstance();
 		Map<String,String> params = ctx.getExternalContext().getRequestParameterMap();
-		// idTerrain, idTroupeau, date debut et fin
-		String idTerrainString = params.get("id");
+		// idTerrain, idTroupeau, date debut et fin to extract from the url
+		String idTerrainString = params.get("idTerrain");
 		idTerrain =Integer.parseInt(idTerrainString);
-		
+		String idTroupeauString = params.get("idTroupeau");
+		idTerrain =Integer.parseInt(idTroupeauString);
 		
 		terrain = terrainIBusiness.findTerrainByIdTerrainAndUtilisateur(idTerrain, utilisateurConnecte);
 		troupeau = troupeauIBusiness.findTroupeauByIdTroupeauAndUtilisateur(idTroupeau, utilisateurConnecte);
 		
 		
-		//dateDebut = new Date(2021,6,1); // strange output in debug !!
-		//dateFin = new Date(2021,9,1);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
 		try {
-			dateDebutLimit = sdf.parse("01-6-2021");
+			dateDebutLimit = sdf.parse("01-8-2021");
 			dateFinLimit = sdf.parse("01-9-2021");
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -111,15 +109,17 @@ public class ReservationPrestationManagedBean implements Serializable {
 		// - qualiteTonte
 		// - bienEtreAnimal
 		prp = resaPrestaIBusiness.calculeDefautPrestation(idTerrain, idTroupeau, dateDebutLimit, dateFinLimit);
-		// 
-		// prp.setQualiteTonte(1.5);
+		//prp.setLongueurCloture(
+		//	prp.getLongueurClotureSu());
+		System.out.println("toto");
+		
 	}
 	
 	/* Quand on bouge les curseurs, appel ajax from xhtml
 	 - prix
 	 - abri, abreuvoir
 	 - qualitetonte, bienEtreAnimal
-	*/	                                                            // prp 
+	*/	                                                            // ou prp 
 	public void actualisePrixPrestation(int idTerrain, int idTroupeau, 
 			Date dateDebut, Date dateFin, int nbAnimaux, int longueurCloture) {
 		// prp = resaPrestaIBusiness.actualise(....)
@@ -128,7 +128,7 @@ public class ReservationPrestationManagedBean implements Serializable {
 	
 	@PreDestroy
 	void destroy() {
-		System.out.println("destroy ReservationPrestationIBusiness");
+		System.out.println("destroy ReservationPrestationMB");
 	}
 	
 	public Troupeau getTroupeau() {
