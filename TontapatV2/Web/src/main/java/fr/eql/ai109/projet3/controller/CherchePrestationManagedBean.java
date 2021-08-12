@@ -19,6 +19,7 @@ import fr.eql.ai109.projet3.entity.dto.TerrainTrouveApresRechercheDTO;
 import fr.eql.ai109.projet3.entity.dto.TroupeauTrouveApresRechercheDTO;
 import fr.eql.ai109.projet3.ibusiness.CherchePrestationIBusiness;
 import fr.eql.ai109.projet3.ibusiness.TerrainIBusiness;
+import fr.eql.ai109.projet3.ibusiness.TroupeauIBusiness;
 
 @ManagedBean(name = "mbRecherche")
 @RequestScoped
@@ -29,6 +30,7 @@ public class CherchePrestationManagedBean implements Serializable {
 	@ManagedProperty(value = "#{mbCompte.utilisateur}")
 	private Utilisateur utilisateurConnecte;
 	private Terrain terrain;
+	private Troupeau troupeau;
 	
 	private List<TroupeauTrouveApresRechercheDTO> troupeauxCompatiblesAvecDates;
 	private int idTerrain;
@@ -38,6 +40,9 @@ public class CherchePrestationManagedBean implements Serializable {
 	
 	@EJB
 	TerrainIBusiness terrainIBusiness;
+	
+	@EJB
+	TroupeauIBusiness troupeauIBusiness;
 	
 	@EJB
 	CherchePrestationIBusiness cherchePrestationIBusiness;
@@ -58,10 +63,19 @@ public class CherchePrestationManagedBean implements Serializable {
         }
         if(idTroupeauString != null) {
         	idTroupeau =Integer.parseInt(idTroupeauString);
-    		terrainsCompatiblesAvecDates = cherchePrestationIBusiness.chercheTerrainsCompatibles(idTroupeau);
+    		troupeau = troupeauIBusiness.findTroupeauById(idTroupeau);
+        	terrainsCompatiblesAvecDates = cherchePrestationIBusiness.chercheTerrainsCompatibles(idTroupeau);
         }
 	}
 	
+	public Troupeau getTroupeau() {
+		return troupeau;
+	}
+
+	public void setTroupeau(Troupeau troupeau) {
+		this.troupeau = troupeau;
+	}
+
 	public Utilisateur getUtilisateurConnecte() {
 		return utilisateurConnecte;
 	}

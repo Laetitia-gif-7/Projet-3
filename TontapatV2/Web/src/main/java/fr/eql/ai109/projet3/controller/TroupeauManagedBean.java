@@ -12,7 +12,7 @@ import javax.faces.bean.ViewScoped;
 
 import fr.eql.ai109.projet3.entity.Troupeau;
 import fr.eql.ai109.projet3.entity.Utilisateur;
-import fr.eql.ai109.projet3.ibusiness.TroupeauIBuisness;
+import fr.eql.ai109.projet3.ibusiness.TroupeauIBusiness;
 
 
 
@@ -36,11 +36,11 @@ public class TroupeauManagedBean implements Serializable {
 //	}
 
 	@EJB
-	TroupeauIBuisness troupeauIBuisness;
+	TroupeauIBusiness troupeauIBusiness;
 	
 	@PostConstruct
 	public void init() {
-		troupeaux = troupeauIBuisness.findTroupeauxByUtilisateur(utilisateurConnecte);
+		troupeaux = troupeauIBusiness.findTroupeauxByUtilisateur(utilisateurConnecte);
 		//nbAnimaux = troupeaux.get(0).getCompositionTroupeau().get(0).getNbAnimaux();
 		//System.out.println("hello");
 	}
