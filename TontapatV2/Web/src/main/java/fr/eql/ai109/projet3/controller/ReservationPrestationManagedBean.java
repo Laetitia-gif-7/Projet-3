@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -12,7 +11,7 @@ import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import fr.eql.ai109.projet3.entity.Terrain;
@@ -26,9 +25,8 @@ import fr.eql.ai109.projet3.ibusiness.TroupeauIBusiness;
 /*
  Request Scope should be enought, with only ajax calls ?  
 */
-
 @ManagedBean(name="mbReservation")
-@RequestScoped
+@ViewScoped
 public class ReservationPrestationManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -38,10 +36,8 @@ public class ReservationPrestationManagedBean implements Serializable {
 	
 	@EJB
 	private ReservationPrestationIBusiness resaPrestaIBusiness;
-	
 	@EJB
 	private TerrainIBusiness terrainIBusiness;
-	
 	@EJB
 	private TroupeauIBusiness troupeauIBusiness;
 	
@@ -51,24 +47,10 @@ public class ReservationPrestationManagedBean implements Serializable {
 	private Troupeau troupeau;
 	private int idTroupeau = 1;
 	
-	// variable from the formulaire of reservation
-	
-	//private int nbAnimaux;
+	// dates limites, provenant de l'algorithme de recherche et donné dans l'url (ou POST)
 	private Date dateDebutLimit, dateFinLimit;
-	/*
-	private int longueurCloture;
-	*/
-	// Sera fixé dans la vue, le client ne peut pas modifier ces paramètres
-	/*
-	private float cout; 
-	private int nbAbreuvoir;
-	private int nbAbri;
-	*/
 	
 	private ParametresReservationPrestation prp;
-	// equipement à commander au prestataire extérieur
-	//QuantiteEquipementPrestation equipementPayant;
-	//QuantiteEquipementPrestation equipementConseille; 
 	
 	@PostConstruct
 	void init() {
@@ -80,19 +62,18 @@ public class ReservationPrestationManagedBean implements Serializable {
 		idTerrain =Integer.parseInt(idTerrainString);
 		String idTroupeauString = params.get("idTroupeau");
 		idTerrain =Integer.parseInt(idTroupeauString);
+		String dateMinUrl = params.get("dateMin");
+		String dateMaxUrl = params.get("dateMax");
 		
-		terrain = terrainIBusiness.findTerrainByIdTerrainAndUtilisateur(idTerrain, utilisateurConnecte);
-		//troupeau = troupeauIBusiness.findTroupeauxByUtilisateur(utilisateurConnecte)
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		try {
-			dateDebutLimit = sdf.parse("01-8-2021");
-			dateFinLimit = sdf.parse("01-9-2021");
+			dateDebutLimit = sdf.parse(dateMinUrl); 
+			dateFinLimit = sdf.parse(dateMaxUrl);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		// really needed ?
+		terrain = terrainIBusiness.findTerrainByIdTerrainAndUtilisateur(idTerrain, utilisateurConnecte);
 		// retour attendu :
 		// - prix
 		// - nbAnimaux
@@ -100,62 +81,60 @@ public class ReservationPrestationManagedBean implements Serializable {
 		// - qualiteTonte
 		// - bienEtreAnimal
 		prp = resaPrestaIBusiness.calculeDefautPrestation(idTerrain, idTroupeau, dateDebutLimit, dateFinLimit);
-		//prp.setLongueurCloture(
-		//	prp.getLongueurClotureSu());
-		System.out.println("toto");
-		
-	}
-	
-	public void updateView() {
-		System.out.println("entry update view");
-		System.out.println("longueur cloture : "+ prp.getLongueurCloture());
-		System.out.println("must call business ");
+		// will fixe the limit pour le choix dans la date, done before ?
+		//prp.setDateDebut(dateDebutLimit);
+		// prp.setDateFin(dateFinLimit);
 	}
 	
 	/* Quand on bouge les curseurs, appel ajax from xhtml
 	 - prix
 	 - abri, abreuvoir
-	 - qualitetonte, bienEtreAnimal
-	*/	                                                            // ou prp 
-	public void actualisePrixPrestation(int idTerrain, int idTroupeau, 
-			Date dateDebut, Date dateFin, int nbAnimaux, int longueurCloture) {
-		// prp = resaPrestaIBusiness.actualise(....)
-		//return null;
+	 - qualitetonte, bienEtreAnimal */  // ou prp 
+	public void updateView() {
+		
+		System.out.println("entryUpdateView");
+		/*
+		System.out.println("value of prpr.nb aniamux :" + prp.getNbAnimaux());
+		System.out.println("value of prpr.nb cloture :" + prp.getLongueurCloture());
+		System.out.println("value of prpr.nb cloture supplementaitre :" + prp.getLongueurClotureSupplementaire());
+		
+		System.out.println("set cloture to 100");
+		prp.setLongueurCloture(100);
+		System.out.println("set animaux to 75");
+		prp.setNbAnimaux(75);
+		prp.setCout(1000.0);
+		*/
+		prp = resaPrestaIBusiness.actualisePrixPrestation(idTerrain, idTroupeau, prp);
 	}
 	
 	@PreDestroy
 	void destroy() {
-		System.out.println("destroy ReservationPrestationMB");
+		System.out.println("destroy ReservationPrestationMB really ??");
 	}
 	
+	public void setDateDebutLimit(Date dateDebutLimit) {
+		this.dateDebutLimit = dateDebutLimit;
+	}
+	public Date getDateDebutLimit() {
+		return dateDebutLimit;
+	}
+	public Date getDateFinLimit() {
+		return dateFinLimit;
+	}
+	public void setDateFinLimit(Date dateFinLimit) {
+		this.dateFinLimit = dateFinLimit;
+	}
+
 	public Troupeau getTroupeau() {
 		return troupeau;
 	}
-
 	public void setTroupeau(Troupeau troupeau) {
 		this.troupeau = troupeau;
 	}
 	
-	public Date getDateDebutLimit() {
-		return dateDebutLimit;
-	}
-
-	public void setDateDebut(Date dateDebut) {
-		this.dateDebutLimit = dateDebut;
-	}
-
-	public Date getDateFin() {
-		return dateFinLimit;
-	}
-
-	public void setDateFin(Date dateFin) {
-		this.dateFinLimit = dateFin;
-	}
-
 	public ParametresReservationPrestation getPrp() {
 		return prp;
 	}
-
 	public void setPrp(ParametresReservationPrestation prp) {
 		this.prp = prp;
 	}
@@ -163,7 +142,6 @@ public class ReservationPrestationManagedBean implements Serializable {
 	public int getIdTerrain() {
 		return idTerrain;
 	}
-
 	public void setIdTerrain(int idTerrain) {
 		this.idTerrain = idTerrain;
 	}
@@ -171,7 +149,6 @@ public class ReservationPrestationManagedBean implements Serializable {
 	public Utilisateur getUtilisateurConnecte() {
 		return utilisateurConnecte;
 	}
-
 	public void setUtilisateurConnecte(Utilisateur utilisateurConnecte) {
 		this.utilisateurConnecte = utilisateurConnecte;
 	}
@@ -179,7 +156,6 @@ public class ReservationPrestationManagedBean implements Serializable {
 	public Terrain getTerrain() {
 		return terrain;
 	}
-
 	public void setTerrain(Terrain terrain) {
 		this.terrain = terrain;
 	}
@@ -187,7 +163,6 @@ public class ReservationPrestationManagedBean implements Serializable {
 	public int getIdTroupeau() {
 		return idTroupeau;
 	}
-
 	public void setIdTroupeau(int idTroupeau) {
 		this.idTroupeau = idTroupeau;
 	}

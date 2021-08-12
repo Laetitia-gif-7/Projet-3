@@ -43,8 +43,9 @@
 									Jusqu'au :
 									<h:outputLabel value="#{terr.dateMax}" />
 								</p>
+								
+								Race :
 								<ul>
-									Race :
 									<ui:repeat var="pm" value="#{terr.terrain.proportionMorphologies}">
 										<ui:repeat var="match" value="#{pm.morphologieRef.raceRefs}">
 											<li><h:outputLabel value="#{match.libelleRace}" /></li>

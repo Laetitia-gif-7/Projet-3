@@ -149,8 +149,8 @@
 							<b:button value="Reserver" look="primary" outcome="reservationPrestation" >
 								<f:param name="idTroupeau" value="#{troup.troupeau.idTroupeau}" />
 								<f:param name="idTerrain" value="#{mbRecherche.idTerrain}" />
-								<f:param name="dateMin" value="#{troup.dateMin}" />
-								<f:param name="dateMax" value="#{troup.dateMax}" />
+								<f:param name="dateMin" value="#{mbRecherche.getMyDateString(troup.dateMin)}" />
+								<f:param name="dateMax" value="#{mbRecherche.getMyDateString(troup.dateMax)}" />
 							</b:button>
 						</h:form>				
 					</f:facet>
@@ -160,7 +160,6 @@
 			</div>
 		</b:column>
 	</ui:define>
-
 </ui:composition>
 
 </html>
