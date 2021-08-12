@@ -18,7 +18,7 @@ public class ParametresReservationPrestation implements Serializable {
 	//
 	private List<QuantiteEquipement> equipementSupplementaire; // a payer
 	private List<QuantiteEquipement> equipementSurTerrain;  // fixe
-	// fast access
+	// fast access, c'est la cloture supplémentaire (à payer)
 	private int longueurCloture;
 	// computed values, nice to show in view
 	private double qualiteTonte; // around 1.
@@ -26,7 +26,7 @@ public class ParametresReservationPrestation implements Serializable {
 	private double ugbMoyen;
 	// 
 	private int nbTotalAnimauxTroupeau; // fixe, depend du troupeau
-	private int nbAnimauxTroupeauLibres; //variable, ceux qui ne sont pas en prestation
+	private int nbAnimauxTroupeauDispos; //variable, ceux qui ne sont pas en prestation
 	/*
 	private double prixTransport;
 	private double prixMateriel;
@@ -87,11 +87,11 @@ public class ParametresReservationPrestation implements Serializable {
 	public void setNbTotalAnimauxTroupeau(int nbTotalAnimauxTroupeau) {
 		this.nbTotalAnimauxTroupeau = nbTotalAnimauxTroupeau;
 	}
-	public int getNbAnimauxTroupeauLibres() {
-		return nbAnimauxTroupeauLibres;
+	public int getNbAnimauxTroupeauDispo() {
+		return nbAnimauxTroupeauDispos;
 	}
-	public void setNbAnimauxTroupeauLibres(int nbAnimauxTroupeauLibres) {
-		this.nbAnimauxTroupeauLibres = nbAnimauxTroupeauLibres;
+	public void setNbAnimauxTroupeauDispo(int nbAnimauxTroupeauLibres) {
+		this.nbAnimauxTroupeauDispos = nbAnimauxTroupeauLibres;
 	}
 	
 	public double getUgbMoyen() {
