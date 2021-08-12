@@ -7,7 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+//import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 
 import fr.eql.ai109.projet3.entity.Troupeau;
@@ -46,7 +46,7 @@ public class TroupeauManagedBean implements Serializable {
 	}
 	
 	public String lancerRecherche(int idTroupeau) {
-		return "rechercheTroupeau.xhtml?faces-redirect=true&idTroupeau=" + Integer.toString(idTroupeau);
+		return "rechercheEleveur.xhtml?faces-redirect=true&idTroupeau=" + Integer.toString(idTroupeau);
 	}
 
 	public Utilisateur getUtilisateurConnecte() {
