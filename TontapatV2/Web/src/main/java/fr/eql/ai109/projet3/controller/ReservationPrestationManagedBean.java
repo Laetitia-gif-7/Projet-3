@@ -20,7 +20,7 @@ import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.entity.dto.ParametresReservationPrestation;
 import fr.eql.ai109.projet3.ibusiness.ReservationPrestationIBusiness;
 import fr.eql.ai109.projet3.ibusiness.TerrainIBusiness;
-import fr.eql.ai109.projet3.ibusiness.TroupeauIBuisness;
+import fr.eql.ai109.projet3.ibusiness.TroupeauIBusiness;
 
 /*
  Request Scope should be enought, with only ajax calls ?  
@@ -39,7 +39,7 @@ public class ReservationPrestationManagedBean implements Serializable {
 	@EJB
 	private TerrainIBusiness terrainIBusiness;
 	@EJB
-	private TroupeauIBuisness troupeauIBusiness;
+	private TroupeauIBusiness troupeauIBusiness;
 	
 	// pour avoir access de xhtml
 	private Terrain terrain; // peut contenir du matériel

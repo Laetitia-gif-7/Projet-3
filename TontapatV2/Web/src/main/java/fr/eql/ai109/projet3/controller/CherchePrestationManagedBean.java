@@ -10,7 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import fr.eql.ai109.projet3.entity.Terrain;
@@ -20,9 +20,10 @@ import fr.eql.ai109.projet3.entity.dto.TerrainTrouveApresRechercheDTO;
 import fr.eql.ai109.projet3.entity.dto.TroupeauTrouveApresRechercheDTO;
 import fr.eql.ai109.projet3.ibusiness.CherchePrestationIBusiness;
 import fr.eql.ai109.projet3.ibusiness.TerrainIBusiness;
+import fr.eql.ai109.projet3.ibusiness.TroupeauIBusiness;
 
 @ManagedBean(name = "mbRecherche")
-@RequestScoped
+@ViewScoped
 public class CherchePrestationManagedBean implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -30,6 +31,7 @@ public class CherchePrestationManagedBean implements Serializable {
 	@ManagedProperty(value = "#{mbCompte.utilisateur}")
 	private Utilisateur utilisateurConnecte;
 	private Terrain terrain;
+	private Troupeau troupeau;
 	
 	private List<TroupeauTrouveApresRechercheDTO> troupeauxCompatiblesAvecDates;
 	private int idTerrain;
@@ -41,6 +43,9 @@ public class CherchePrestationManagedBean implements Serializable {
 	TerrainIBusiness terrainIBusiness;
 	
 	@EJB
+	TroupeauIBusiness troupeauIBusiness;
+	
+	@EJB
 	CherchePrestationIBusiness cherchePrestationIBusiness;
 
 	@PostConstruct
@@ -49,23 +54,39 @@ public class CherchePrestationManagedBean implements Serializable {
         Map<String,String> params = ctx.getExternalContext().getRequestParameterMap();
         String idTerrainString = params.get("idTerrain");
         String idTroupeauString = params.get("idTroupeau");
-        System.out.println("id terrain en entierString "+ idTerrainString);
         if(idTerrainString != null) {
         	idTerrain =Integer.parseInt(idTerrainString);
         	System.out.println("id terrain en entier "+ idTerrain);
-    		//terrain = terrainIBusiness.findTerrainByIdTerrainAndUtilisateur(idTerrain, utilisateurConnecte);
     		terrain = terrainIBusiness.findByIdWithEquipement(idTerrain);
     		troupeauxCompatiblesAvecDates = cherchePrestationIBusiness.chercheTroupeauxCompatibles(idTerrain);
         }
         if(idTroupeauString != null) {
         	idTroupeau =Integer.parseInt(idTroupeauString);
+    		troupeau = troupeauIBusiness.findTroupeauById(idTroupeau);
     		terrainsCompatiblesAvecDates = cherchePrestationIBusiness.chercheTerrainsCompatibles(idTroupeau);
         }
+	}
+	// dates suggérées par l'algorithme( inscrit dans DB ), mais modifiable par le client dans la confirmation
+	public String reserveParEleveur(int idTerrain, Date dateDebut, Date dateFin) {
+		// idTroupeau
+		System.out.println("idTerrain : "+ idTerrain);
+		System.out.println("idTroupeau : "+ idTroupeau);
+		System.out.println("dateDebut : "+ dateDebut);
+		System.out.println("dateFin : "+ dateFin);
+		return "prestations.xhtml?faces-redirect=true";
 	}
 	
 	public String getMyDateString(Date date){
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		return sdf.format(date);
+	}
+	
+	public Troupeau getTroupeau() {
+		return troupeau;
+	}
+
+	public void setTroupeau(Troupeau troupeau) {
+		this.troupeau = troupeau;
 	}
 	
 	public Utilisateur getUtilisateurConnecte() {

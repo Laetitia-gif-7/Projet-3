@@ -18,7 +18,7 @@
 				<div>
 					<h2>
 						Troupeau Selectionné :
-<!-- 						<h:outputLabel value="#{mbRecherche.terrainsCompatiblesAvecDates.troupeau.nomTroupeau}" /> -->
+						<h:outputLabel value="#{mbRecherche.troupeau.nomTroupeau}" />
 					</h2>
 				</div>
 				<h:outputText value="Malheureusement aucun terrain disponible"
@@ -43,7 +43,6 @@
 									Jusqu'au :
 									<h:outputLabel value="#{terr.dateMax}" />
 								</p>
-								
 								Race :
 								<ul>
 									<ui:repeat var="pm" value="#{terr.terrain.proportionMorphologies}">
@@ -117,12 +116,16 @@
 									value="#{pm.proportionMorphologie}" /> %</li>
 						</ui:repeat>
 					</ul>
+					
 					<f:facet name="footer">
+						<h:form>					
 						<b:button value="Close" dismiss="modal" />
-						<b:button value="Reserver" look="primary" href="prestations.xhtml" />
+						<b:commandButton value="Reserver" look="primary" action="#{mbRecherche.reserveParEleveur(terr.terrain.idTerrain,terr.dateMin,terr.dateMax)}"/>
+<!-- 						<b:commandButton value="test" look="primary" action="#{mbRecherche.testVide()}" /> -->
+						</h:form>
 					</f:facet>
 					</b:modal>
-					</ui:repeat>
+				</ui:repeat>
 				</div>
 			</div>
 	</ui:define>
