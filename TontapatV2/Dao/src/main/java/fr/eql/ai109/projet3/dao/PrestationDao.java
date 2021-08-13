@@ -60,6 +60,9 @@ public class PrestationDao extends GenericDao<Prestation> implements PrestationI
 			for( int i=0; i<presta.getEvaluations().size(); i++) {
 				entityManager.refresh(presta.getEvaluations().get(i));
 			}
+			for( int i=0; i<presta.getIncidents().size(); i++) {
+				entityManager.refresh(presta.getIncidents().get(i));
+			}
 		}
 		return prestas;
 	}

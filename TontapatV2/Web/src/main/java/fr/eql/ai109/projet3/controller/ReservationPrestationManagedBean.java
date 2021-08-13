@@ -13,13 +13,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-
 import org.primefaces.event.SlideEndEvent;
-
 import fr.eql.ai109.projet3.entity.Terrain;
 import fr.eql.ai109.projet3.entity.Troupeau;
 import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.entity.dto.ParametresReservationPrestation;
+
 import fr.eql.ai109.projet3.ibusiness.PrestationIBusiness;
 import fr.eql.ai109.projet3.ibusiness.ReservationPrestationIBusiness;
 import fr.eql.ai109.projet3.ibusiness.TerrainIBusiness;
@@ -49,6 +48,7 @@ public class ReservationPrestationManagedBean implements Serializable {
 	private Troupeau troupeau;
 	private int idTroupeau = 1;
 	
+	
 	// dates limites, provenant de l'algorithme de recherche et donné dans l'url
 	private Date dateDebutLimit, dateFinLimit;
 	// dto to go and back with business
@@ -69,7 +69,11 @@ public class ReservationPrestationManagedBean implements Serializable {
 		// idPrestation différent de null => je sais que la demande vient de l'éleveur
 		//  => sinon nouvelle prestation à faire
 		
+
+		
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
 		try {
 			dateDebutLimit = sdf.parse(dateMinUrl); 
 			dateFinLimit = sdf.parse(dateMaxUrl);
@@ -178,3 +182,4 @@ public class ReservationPrestationManagedBean implements Serializable {
 	}
 	
 }
+

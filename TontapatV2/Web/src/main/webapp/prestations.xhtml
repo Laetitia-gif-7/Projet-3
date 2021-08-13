@@ -25,12 +25,12 @@
 		<div class="terrainsTitre">
 			<h1>Vos Prestation, <h:outputLabel value="#{mbCompte.utilisateur.nom}" /> !</h1>
 		</div>
-		
+		<forme>
 		<button class="terrainsAjoutTroupeau" >
 			<p>Déclarer un incident</p>
 			<b:iconAwesome value="plus-circle" solid="true" size="3x"/>
 		</button>
-
+</forme>
 		<div class="terrainsDivs">
 			<ui:repeat class="terrainsBigDiv" var="prestaBU" value="#{mbPresta.prestations}">
 				<div class="terrainsBigDiv">
@@ -63,9 +63,38 @@
 							<p>Note : <h:outputLabel value="#{eval.note}" /></p>
 							<p>Commentaire : <h:outputLabel value="#{eval.commentaire}" /></p>
 						</ui:repeat>
+						<b:button class="prestationButtonIncident"
+							value="Déclarer un incident"
+							onclick="$('.modalPseudoClass${status.index.incident}').modal()" />
+							
+						<ul>
+							<h:outputLabel value="#{mbPresta.incidentRefSelectionne}"/> 
+						</ul>
 					</div>
 				</div>
 			</ui:repeat>
+			
+			<b:modal id="amodal${status.index.incident}"
+					title="Incidents"
+					styleClass="modalPseudoClass${status.index.incident}" closable="false"
+					close-on-escape="false" backdrop="false">
+
+				<p>Selectionner un incident dans la liste ci-dessous :</p>
+				<form method="post" action="prestations.xhtml">
+            <h:selectOneMenu id="idIncidentRefSelectionn" value="{#{mbPresta.incidentRefSelectionne}">
+            	<f:selectItems var="inc" value="#{mbPresta.incidentRef}" itemValue="#{inc}" itemLabel="#{inc.libelleIncident}" />
+            </h:selectOneMenu>
+            <br/>
+            <input type="submit" value="Valider"/>
+           
+				</form>
+			<f:facet name="footer">
+						<h:form>
+							<b:button value="Close" dismiss="modal" />
+						</h:form>
+					</f:facet>
+				</b:modal>
+				
 		</div>
 		
 		<!--  test State, out of loop ui:repeat it is ok, inside problem : maybe more to come-->
@@ -85,6 +114,19 @@
 				</div>
 			</c:forEach>
 		</div>
+		
+		
+		
+		<h:form>
+			<ui:repeat var="prestaBU" value="#{mbPresta.prestations}" >
+<!-- 		<b:commandButton value="Déclarer un incident" look="primary" -->
+<!-- 								action="#{mbPresta.declarerIncident(prestaBU.value.prestation.idPrestation)}" /> -->
+				<b:button value="declarer un incident" outcome="incidents">
+					<f:param name="idprestation" value="#{prestaBU.value.prestation.idPrestation}"/>
+				</b:button>
+			</ui:repeat>
+		</h:form>
+		HelloWorld <h:outputLabel value="#{mbPresta.incidentRef}"/>
 		
 </ui:define>
 </ui:composition>
