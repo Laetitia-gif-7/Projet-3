@@ -5,11 +5,14 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:b="http://bootsfaces.net/ui"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
 	
 <h:head>
-	<ui:insert name="head"></ui:insert>
+	<ui:insert name="head">
 <!-- 	ui insert javascript files -->
+	<h:outputScript name="jsf.js" library="javax.faces" target="head"/>
+	</ui:insert>
 </h:head>
 
 <ui:composition template="/arch.xhtml">
@@ -29,7 +32,7 @@
 	<p>Nb d'animaux du troupeau : <h:outputText value="#{mbReservation.prp.nbTotalAnimauxTroupeau}"/></p>
 	<p>On pourrait mettre ses dates de fin prestation,  pour pouvoir reserver plus d'animaux</p>
 	Variable<br/>
-	<h:form id="prpFrom">
+	<h:form id="prpForm">
 		<b:panel >
 <!-- 		style-class="cat-margin-top-3rem cat-margin-bottom-5rem  -->
 <!-- 		col-sm-offset-1 col-md-offset-2 col-xs-12 col-sm-10 col-md-8"> -->
@@ -52,17 +55,40 @@
 		<p>Qualité Tonte : <h:outputText value="#{mbReservation.prp.qualiteTonte}" /></p>
 		<p>Bien être animal : <h:outputText value="#{mbReservation.prp.bienEtreAnimal}" /></p>
 		<p>Nbre d'animaux : <h:outputText value="#{mbReservation.prp.nbAnimaux}" /></p>
+<!-- 		<h:inputHidden id="hnb" value="#{mbReservation.prp.nbAnimaux}" /> -->
 		<p>Nbre d'animaux recommandés: <h:outputText value="#{mbReservation.prp.nbAnimauxRecommande}" /></p>
-		<p>Longueur cloture: <h:outputText value="#{mbReservation.prp.longueurCloture}" /></p>
-		<b:column>
-    		<b:slider2 mode="basic" min="1" max="#{mbReservation.prp.nbTotalAnimauxTroupeau}" span="10" value="#{mbReservation.prp.nbAnimaux}" label="Nb Animaux" />
-  		</b:column>
-  		<b:column>
-    		<b:slider2 mode="basic" min="1" max="200" span="10" value="#{mbReservation.prp.longueurCloture}" label="Longueur clôture" />
-  		</b:column>
-  		<h:commandButton value="Submit" action="#{mbReservation.updateView}">
-  			<f:ajax execute="@form" render="@form" />
-  		</h:commandButton>
+		<p>Longueur cloture: <h:outputText id="longueur" value="#{mbReservation.prp.longueurCloture}" /></p>
+		<hr/>
+		<p:column>
+			<p>Nbre d'animaux : <h:outputText id="textNbAnimaux" value="#{mbReservation.prp.nbAnimaux}" /></p>
+			<h:inputHidden id="htnb" value="#{mbReservation.prp.nbAnimaux}" />
+    		<p:slider id="slid1" for="htnb" minValue="5" maxValue="#{mbReservation.prp.nbTotalAnimauxTroupeau}" display="textNbAnimaux">
+    			<p:ajax event="slideEnd" listener="#{mbReservation.updateAjaxPrimefaces}" process="prpForm" update="prpForm"/>
+    		</p:slider>
+  		</p:column>
+  		<hr/>
+  		<p:column>
+			<p>Longueur clôture : <h:outputText id="textLongueur" value="#{mbReservation.prp.longueurCloture}" /></p>
+			<h:inputHidden id="hlc" value="#{mbReservation.prp.longueurCloture}" />
+    		<p:slider id="slid2" for="hlc" minValue="0" maxValue="300" display="textLongueur">
+    			<p:ajax event="slideEnd" listener="#{mbReservation.updateAjaxPrimefaces}" process="prpForm" update="prpForm"/>
+    		</p:slider>
+  		</p:column>  		
+<!--   		<b:column> -->
+<!--     		<b:slider2 id="slid2" ajax="true" mode="badge" min="1" max="200" span="10" value="#{mbReservation.prp.longueurCloture}" label="Longueur clôture" action="#{mbReservation.testUpdateAjax()}"> -->
+<!-- 				<f:ajax listener="#{mbReservation.testUpdateAjax()}" execute="@form" render="@form" /> -->
+<!--     		</b:slider2> -->
+<!--   		</b:column> -->
+<!-- 		<b:column> -->
+<!--     		<b:slider2 mode="badge" min="1" max="200" span="10" value="#{mbReservation.prp.longueurCloture}" label="Longueur clôture"  -->
+<!--     			onchange="alert('Before the AJAX call');jsf.ajax.request(this, event,  -->
+<!--     				{execute:'prpForm', render:'prpForm'}); return false;" -->
+<!--     				actionListener="#{mbReservation.testUpdateAjax()}" > -->
+<!--     		</b:slider2> -->
+<!--   		</b:column> -->
+<!--   		<h:commandButton value="Submit" action="#{mbReservation.updateView}"> -->
+<!--   			<f:ajax execute="@form" render="@form" /> -->
+<!--   		</h:commandButton> -->
   	</h:form>
 	
 </ui:define>

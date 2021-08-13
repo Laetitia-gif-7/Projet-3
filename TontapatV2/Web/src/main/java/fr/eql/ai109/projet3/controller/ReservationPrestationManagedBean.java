@@ -12,7 +12,10 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.behavior.AjaxBehavior;
 import javax.faces.context.FacesContext;
+
+import org.primefaces.event.SlideEndEvent;
 
 import fr.eql.ai109.projet3.entity.Terrain;
 import fr.eql.ai109.projet3.entity.Troupeau;
@@ -22,9 +25,6 @@ import fr.eql.ai109.projet3.ibusiness.ReservationPrestationIBusiness;
 import fr.eql.ai109.projet3.ibusiness.TerrainIBusiness;
 import fr.eql.ai109.projet3.ibusiness.TroupeauIBusiness;
 
-/*
- Request Scope should be enought, with only ajax calls ?  
-*/
 @ManagedBean(name="mbReservation")
 @ViewScoped
 public class ReservationPrestationManagedBean implements Serializable {
@@ -47,9 +47,9 @@ public class ReservationPrestationManagedBean implements Serializable {
 	private Troupeau troupeau;
 	private int idTroupeau = 1;
 	
-	// dates limites, provenant de l'algorithme de recherche et donné dans l'url (ou POST)
+	// dates limites, provenant de l'algorithme de recherche et donné dans l'url
 	private Date dateDebutLimit, dateFinLimit;
-	
+	// dto to go and back with business
 	private ParametresReservationPrestation prp;
 	
 	@PostConstruct
@@ -81,9 +81,6 @@ public class ReservationPrestationManagedBean implements Serializable {
 		// - qualiteTonte
 		// - bienEtreAnimal
 		prp = resaPrestaIBusiness.calculeDefautPrestation(idTerrain, idTroupeau, dateDebutLimit, dateFinLimit);
-		// will fixe the limit pour le choix dans la date, done before ?
-		//prp.setDateDebut(dateDebutLimit);
-		// prp.setDateFin(dateFinLimit);
 	}
 	
 	/* Quand on bouge les curseurs, appel ajax from xhtml
@@ -93,11 +90,21 @@ public class ReservationPrestationManagedBean implements Serializable {
 	public void updateView() {
 		
 		System.out.println("entryUpdateView");
-		/*
+		
 		System.out.println("value of prpr.nb aniamux :" + prp.getNbAnimaux());
 		System.out.println("value of prpr.nb cloture :" + prp.getLongueurCloture());
 		System.out.println("value of prpr.nb cloture supplementaitre :" + prp.getLongueurClotureSupplementaire());
+		// if update cloture must be adjusted ??
+		prp = resaPrestaIBusiness.actualisePrixPrestation(idTerrain, idTroupeau, prp);
+	}
+	
+	public void updateAjaxPrimefaces(SlideEndEvent event) {
+		System.out.println("testUpdateAjaxPrimefaces event: "+ event);
+		System.out.println("getvalue :" + event.getValue());
 		
+		System.out.println("nb aniamux :" + prp.getNbAnimaux());
+		System.out.println("longueur cloture :" + prp.getLongueurCloture());
+		/*
 		System.out.println("set cloture to 100");
 		prp.setLongueurCloture(100);
 		System.out.println("set animaux to 75");
@@ -105,6 +112,10 @@ public class ReservationPrestationManagedBean implements Serializable {
 		prp.setCout(1000.0);
 		*/
 		prp = resaPrestaIBusiness.actualisePrixPrestation(idTerrain, idTroupeau, prp);
+	}
+	
+	public void testUpdateAjax() {
+		System.out.println("testUpdateAjax \n");
 	}
 	
 	@PreDestroy
