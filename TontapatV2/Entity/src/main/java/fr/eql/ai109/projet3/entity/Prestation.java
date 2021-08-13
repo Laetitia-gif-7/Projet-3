@@ -99,7 +99,6 @@ public class Prestation implements Serializable {
 	@JoinColumn(name="id_terrain", nullable=false)
 	private Terrain terrain;
 	
-	/* Troupeau more complex with compo_troupeau_presta */
 	@OneToMany(mappedBy="prestation")
 	private List<CompositionTroupeauPrestation> compositionTroupeauPrestations;
 	

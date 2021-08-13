@@ -70,19 +70,19 @@
 		
 		<!--  test State, out of loop ui:repeat it is ok, inside problem : maybe more to come-->
 	<!-- https://stackoverflow.com/questions/3362487/dynamic-uiinclude-inside-uirepeat-is-there-a-simple-solution -->
-			Test : <h:outputLabel value="#{mbPresta.prestations[0].templateXhtml}"/>
+		Test : <h:outputLabel value="#{mbPresta.prestations[0].templateXhtml}"/>
 <!-- 	<ui:repeat var="prestaBU" value="#{mbPresta.prestations}" > -->
 		<div class="terrainsDivs">
 			<c:forEach var="prestaBU" items="#{mbPresta.prestations}" >
-			<div class="terrainsBigDiv">
-				<div class="terrainSmallDiv">
-					<ui:include src="#{prestaBU.value.templateXhtml}">
-						<ui:param name="prestaBuByMain" value="#{prestaBU.value}" />
-						<ui:param name="user" value="#{mbCompte}" />
-						<!-- no need to pass #mbPresta (include ?) -->
-					</ui:include>
+				<div class="terrainsBigDiv">
+					<div class="terrainSmallDiv">
+						<ui:include src="#{prestaBU.value.templateXhtml}">
+							<ui:param name="prestaBuByMain" value="#{prestaBU.value}" />
+							<ui:param name="user" value="#{mbCompte}" />
+							<!-- no need to pass #mbPresta (include ?) -->
+						</ui:include>
+					</div>
 				</div>
-			</div>
 			</c:forEach>
 		</div>
 		

@@ -12,7 +12,6 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.component.behavior.AjaxBehavior;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.SlideEndEvent;
@@ -21,6 +20,7 @@ import fr.eql.ai109.projet3.entity.Terrain;
 import fr.eql.ai109.projet3.entity.Troupeau;
 import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.entity.dto.ParametresReservationPrestation;
+import fr.eql.ai109.projet3.ibusiness.PrestationIBusiness;
 import fr.eql.ai109.projet3.ibusiness.ReservationPrestationIBusiness;
 import fr.eql.ai109.projet3.ibusiness.TerrainIBusiness;
 import fr.eql.ai109.projet3.ibusiness.TroupeauIBusiness;
@@ -40,6 +40,8 @@ public class ReservationPrestationManagedBean implements Serializable {
 	private TerrainIBusiness terrainIBusiness;
 	@EJB
 	private TroupeauIBusiness troupeauIBusiness;
+	@EJB
+	private PrestationIBusiness prestationIBusiness;
 	
 	// pour avoir access de xhtml
 	private Terrain terrain; // peut contenir du matériel
@@ -64,6 +66,8 @@ public class ReservationPrestationManagedBean implements Serializable {
 		idTerrain =Integer.parseInt(idTroupeauString);
 		String dateMinUrl = params.get("dateMin");
 		String dateMaxUrl = params.get("dateMax");
+		// idPrestation différent de null => je sais que la demande vient de l'éleveur
+		//  => sinon nouvelle prestation à faire
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		try {
@@ -83,14 +87,12 @@ public class ReservationPrestationManagedBean implements Serializable {
 		prp = resaPrestaIBusiness.calculeDefautPrestation(idTerrain, idTroupeau, dateDebutLimit, dateFinLimit);
 	}
 	
-	/* Quand on bouge les curseurs, appel ajax from xhtml
+	/* Quand on bouge les curseurs et les dates, appel ajax from xhtml, on recalcule :
 	 - prix
-	 - abri, abreuvoir
-	 - qualitetonte, bienEtreAnimal */  // ou prp 
+	 - nb abris, nb abreuvoirs
+	 - qualitetonte, bienEtreAnimal */ 
 	public void updateView() {
-		
 		System.out.println("entryUpdateView");
-		
 		System.out.println("value of prpr.nb aniamux :" + prp.getNbAnimaux());
 		System.out.println("value of prpr.nb cloture :" + prp.getLongueurCloture());
 		System.out.println("value of prpr.nb cloture supplementaitre :" + prp.getLongueurClotureSupplementaire());
@@ -98,22 +100,19 @@ public class ReservationPrestationManagedBean implements Serializable {
 		prp = resaPrestaIBusiness.actualisePrixPrestation(idTerrain, idTroupeau, prp);
 	}
 	
+	public void validerPrestationParClient() {
+		System.out.println("Création prestation ou confirmation par client");
+		prestationIBusiness.createPrestationClient(utilisateurConnecte, prp);
+		return;
+	}
+	// for tests with ajax, to move to another branch
 	public void updateAjaxPrimefaces(SlideEndEvent event) {
 		System.out.println("testUpdateAjaxPrimefaces event: "+ event);
 		System.out.println("getvalue :" + event.getValue());
-		
 		System.out.println("nb aniamux :" + prp.getNbAnimaux());
 		System.out.println("longueur cloture :" + prp.getLongueurCloture());
-		/*
-		System.out.println("set cloture to 100");
-		prp.setLongueurCloture(100);
-		System.out.println("set animaux to 75");
-		prp.setNbAnimaux(75);
-		prp.setCout(1000.0);
-		*/
 		prp = resaPrestaIBusiness.actualisePrixPrestation(idTerrain, idTroupeau, prp);
 	}
-	
 	public void testUpdateAjax() {
 		System.out.println("testUpdateAjax \n");
 	}
@@ -123,11 +122,11 @@ public class ReservationPrestationManagedBean implements Serializable {
 		System.out.println("destroy ReservationPrestationMB really ??");
 	}
 	
-	public void setDateDebutLimit(Date dateDebutLimit) {
-		this.dateDebutLimit = dateDebutLimit;
-	}
 	public Date getDateDebutLimit() {
 		return dateDebutLimit;
+	}
+	public void setDateDebutLimit(Date dateDebutLimit) {
+		this.dateDebutLimit = dateDebutLimit;
 	}
 	public Date getDateFinLimit() {
 		return dateFinLimit;

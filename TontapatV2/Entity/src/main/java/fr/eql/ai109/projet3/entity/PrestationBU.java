@@ -1,6 +1,7 @@
 package fr.eql.ai109.projet3.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /* Extends the prestation entity :
  * - State design pattern to deal with all different steps in a prestation 
@@ -82,6 +83,10 @@ public class PrestationBU implements Serializable {
 	public void valide() {
 		state.valide(this);
 	}
+	/*
+	public void valideAvecDate(LocalDateTime date) {
+		state.valideAvecDate(this);
+	}*/
 
 	public void annule() {
 		state.annule(this);

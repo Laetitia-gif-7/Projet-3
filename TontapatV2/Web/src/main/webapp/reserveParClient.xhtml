@@ -23,6 +23,7 @@
 		<!-- mbPresta accessible -->
 		<b:commandButton value="Confirmer" action="#{mbPresta.valide( prestaBuByMain.prestation.idPrestation )}" />
 		<b:commandButton value="Annuler" action="#{mbPresta.annule( prestaBuByMain.prestation.idPrestation ) }"/>
+<!-- 		<f:ajax listener="#{mbReservation.updateView()}" execute="@form" render="@form" /> -->
 		</h:form>
 	</ui:fragment>
 </ui:composition>

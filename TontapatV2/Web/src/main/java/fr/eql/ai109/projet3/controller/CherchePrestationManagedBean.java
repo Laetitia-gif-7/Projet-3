@@ -19,6 +19,7 @@ import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.entity.dto.TerrainTrouveApresRechercheDTO;
 import fr.eql.ai109.projet3.entity.dto.TroupeauTrouveApresRechercheDTO;
 import fr.eql.ai109.projet3.ibusiness.CherchePrestationIBusiness;
+import fr.eql.ai109.projet3.ibusiness.PrestationIBusiness;
 import fr.eql.ai109.projet3.ibusiness.TerrainIBusiness;
 import fr.eql.ai109.projet3.ibusiness.TroupeauIBusiness;
 
@@ -47,6 +48,9 @@ public class CherchePrestationManagedBean implements Serializable {
 	
 	@EJB
 	CherchePrestationIBusiness cherchePrestationIBusiness;
+	
+	@EJB
+	PrestationIBusiness prestationIBusiness;
 
 	@PostConstruct
 	public void init() {
@@ -73,6 +77,8 @@ public class CherchePrestationManagedBean implements Serializable {
 		System.out.println("idTroupeau : "+ idTroupeau);
 		System.out.println("dateDebut : "+ dateDebut);
 		System.out.println("dateFin : "+ dateFin);
+		
+		prestationIBusiness.createPrestationEleveur(utilisateurConnecte, idTerrain, idTroupeau, dateDebut, dateFin);
 		return "prestations.xhtml?faces-redirect=true";
 	}
 	

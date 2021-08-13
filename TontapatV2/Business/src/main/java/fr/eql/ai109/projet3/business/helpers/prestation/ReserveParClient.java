@@ -52,4 +52,10 @@ public class ReserveParClient implements StatePrestation {
 	public void setTemplateString(PrestationBU p) {
 		p.setTemplateXhtml("reserveParClient.xhtml");
 	}
+	/*
+	@Override
+	public void valideAvecDate(PrestationBU p, LocalDateTime date) {
+		// TODO Auto-generated method stub
+		
+	}*/
 }
