@@ -28,8 +28,11 @@ public class TerrainBusiness implements TerrainIBusiness {
 		return terrainIDao.getTerrainByIdTerrainAndUser(idTerrain, utilisateur);
 	}
 
-	
-	
-	
+	@Override
+	public Terrain findByIdWithEquipement(int idTerrain) {
+		// TODO Auto-generated method stub
+		return terrainIDao.getByIdWithEquipement(idTerrain);
+	}
+
 
 }

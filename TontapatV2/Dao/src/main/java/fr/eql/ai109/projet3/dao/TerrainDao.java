@@ -63,6 +63,7 @@ public class TerrainDao extends GenericDao<Terrain> implements TerrainIDao {
 		return terrain;
 	}
 
+	// used ???to check
 	@Override
 	public List<QuantiteEquipement> getEquipement(int idTerrain) {
 		
@@ -91,7 +92,7 @@ public class TerrainDao extends GenericDao<Terrain> implements TerrainIDao {
 				.setParameter("paramIdTerrain", idTerrain);
 		
 		terrain = query.getSingleResult();
-		// strange ??, error in normal mode, all equipments in debug mode
+		// strange ?? error in normal mode, all equipments in debug mode
 		Equipement eq;
 		for(QuantiteEquipement qe : terrain.getQuantiteEquipement()) {
 			eq = qe.getEquipement();

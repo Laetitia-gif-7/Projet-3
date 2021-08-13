@@ -2,15 +2,17 @@ package fr.eql.ai109.projet3.dao;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import fr.eql.ai109.projet3.dao.utils.utils;
+import fr.eql.ai109.projet3.entity.CompositionTroupeauPrestation;
 import fr.eql.ai109.projet3.entity.Prestation;
 import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.idao.PrestationIDao;
@@ -64,7 +66,48 @@ public class PrestationDao extends GenericDao<Prestation> implements PrestationI
 		}
 		return prestas;
 	}
+	
+	public List<Prestation> prestationsEnCoursPourTroupeauId(int idTroupeau, Date dateDebut, Date dateFin) {
+		
+		TypedQuery<Prestation> query = entityManager.createQuery(
+				"SELECT DISTINCT prest "
+				+ "FROM Troupeau tr "
+				+ "JOIN tr.compositionTroupeauPrestations ctp "
+				+ "JOIN ctp.prestation prest "
+				+ "WHERE not( (prest.finPrestation < :paramDateDebut) or (prest.debutPrestation > :paramDateFin ) ) "
+				+ "AND tr.idTroupeau = :paramTroupeauId ", Prestation.class);
+		
+		query.setParameter("paramTroupeauId", idTroupeau);
+		query.setParameter("paramDateDebut", utils.convertToLocalDateTimeViaInstant(dateDebut) );
+		query.setParameter("paramDateFin", utils.convertToLocalDateTimeViaInstant(dateFin) );
+		
+		List<Prestation> listPrestations = query.getResultList();
+		
+		// solve lazy initialisation problems in getting access to ctp
+		for(Prestation presta : listPrestations)
+			for(CompositionTroupeauPrestation ctp : presta.getCompositionTroupeauPrestations())
+				entityManager.refresh(ctp);
+		
+		return listPrestations;
+	}
 
+	@Override
+	public int nbAnimauxEnPrestationPourTroupeauId(int idTroupeau, Date dateDebut, Date dateFin) {
+		
+		TypedQuery<Long> query = entityManager.createQuery(
+				"SELECT sum(ctp.nbAnimaux) "
+				+ "FROM Troupeau tr "
+				+ "JOIN tr.compositionTroupeauPrestations ctp "
+				+ "JOIN ctp.prestation prest "
+				+ "WHERE not( (prest.finPrestation < :paramDateDebut) or (prest.debutPrestation > :paramDateFin ) ) "
+				+ "AND tr.idTroupeau = :paramTroupeauId ", Long.class);
+		
+		query.setParameter("paramTroupeauId", idTroupeau);
+		query.setParameter("paramDateDebut", utils.convertToLocalDateTimeViaInstant(dateDebut) );
+		query.setParameter("paramDateFin", utils.convertToLocalDateTimeViaInstant(dateFin) );
+		long total = query.getSingleResult();
+		return (int)total;
+	}
 }
 
 

@@ -8,12 +8,12 @@ import javax.ejb.Stateless;
 
 import fr.eql.ai109.projet3.entity.Troupeau;
 import fr.eql.ai109.projet3.entity.Utilisateur;
-import fr.eql.ai109.projet3.ibusiness.TroupeauIBuisness;
+import fr.eql.ai109.projet3.ibusiness.TroupeauIBusiness;
 import fr.eql.ai109.projet3.idao.TroupeauIDao;
 
-@Remote(TroupeauIBuisness.class)
+@Remote(TroupeauIBusiness.class)
 @Stateless
-public class TroupeauBuisness implements TroupeauIBuisness{
+public class TroupeauBusiness implements TroupeauIBusiness{
 	
 	@EJB
 	TroupeauIDao troupeauIDao;
@@ -32,7 +32,7 @@ public class TroupeauBuisness implements TroupeauIBuisness{
 	}
 
 	@Override
-	public Troupeau findTroupeauByIdTroupeauAndUtilisateur(int idTroupeau, Utilisateur utilisateur) {
+	public Troupeau findTroupeauById(int idTroupeau) {
 		
 		return troupeauIDao.getById(idTroupeau);
 	}

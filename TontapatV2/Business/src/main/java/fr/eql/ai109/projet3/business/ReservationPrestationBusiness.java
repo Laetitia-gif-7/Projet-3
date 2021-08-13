@@ -16,8 +16,8 @@ import javax.ejb.Stateless;
 
 import fr.eql.ai109.projet3.business.factories.FactoryEquipement;
 import fr.eql.ai109.projet3.business.factories.FactoryQuantiteEquipement;
+
 import fr.eql.ai109.projet3.entity.Equipement;
-//import fr.eql.ai109.projet3.entity.PeriodeDisponibilite;
 import fr.eql.ai109.projet3.entity.QuantiteEquipement;
 import fr.eql.ai109.projet3.entity.Terrain;
 import fr.eql.ai109.projet3.entity.Troupeau;
@@ -25,7 +25,7 @@ import fr.eql.ai109.projet3.entity.constants.ConstantVariable;
 import fr.eql.ai109.projet3.entity.dto.ParametresReservationPrestation;
 
 import fr.eql.ai109.projet3.ibusiness.ReservationPrestationIBusiness;
-import fr.eql.ai109.projet3.idao.EquipementIDao;
+import fr.eql.ai109.projet3.idao.PrestationIDao;
 import fr.eql.ai109.projet3.idao.TerrainIDao;
 import fr.eql.ai109.projet3.idao.TroupeauIDao;
 
@@ -34,13 +34,11 @@ import fr.eql.ai109.projet3.idao.TroupeauIDao;
 public class ReservationPrestationBusiness implements ReservationPrestationIBusiness {
 
 	@EJB
-	EquipementIDao equipementIDao;
-	
-	@EJB
 	TerrainIDao terrainIDao;
-	
 	@EJB
-	TroupeauIDao troupeauIDao; 
+	TroupeauIDao troupeauIDao;
+	@EJB
+	PrestationIDao prestationIDao;
 	
 	@PostConstruct
 	void init() {
@@ -56,6 +54,8 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 	public ParametresReservationPrestation calculeDefautPrestation(int idTerrain, int idTroupeau, Date dateDebut, Date dateFin) {
 		// initial call, all must be filled
 		ParametresReservationPrestation prp= new ParametresReservationPrestation();
+		prp.setDateDebut(dateDebut);
+		prp.setDateFin(dateFin);
 		
 		// periode de la prestation en jours
 		LocalDate debut = convertToLocalDateViaInstant(dateDebut);
@@ -64,19 +64,24 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 				
 		// besoin du terrain (surface, equipement disponible)
 		Terrain terrain = terrainIDao.getByIdWithEquipement(idTerrain);
-		double superficie = terrain.getSuperficie().doubleValue();
+		//double superficie = terrain.getSuperficie().doubleValue();
 		// need compositionTroupeau
 		Troupeau troupeau = troupeauIDao.getTroupeauByIdWithComposition(idTroupeau);
-		
-		// to improve, take into account the disponibility
+
+		// take into account the disponibility of animals
 		int nbTotalAnimauxTroupeau = troupeau.getNbTotalAnimaux();
 		prp.setNbTotalAnimauxTroupeau(nbTotalAnimauxTroupeau);
+		// take into account the disponibility of animals
+		int nbAnimauxOccupes = prestationIDao.nbAnimauxEnPrestationPourTroupeauId(idTroupeau, dateDebut, dateFin);
+		int nbAnimauxDispo = nbTotalAnimauxTroupeau - nbAnimauxOccupes;
+		prp.setNbAnimauxTroupeauDispo(nbAnimauxDispo);
+		
 		double ugbMoyen = troupeau.getUGBMoyen();
 		prp.setUgbMoyen(ugbMoyen);
 		
 		// retourne le nombre d'animaux recommandé (size, period, ugb) : 
-		// nbAnimaux recommandé  + nbAnimaux vraiment disponible sur ce troupeau
-		List<Integer> listNbAnimaux = initialGuessNbAnimal(nbJour, terrain, nbTotalAnimauxTroupeau, ugbMoyen);
+		// nbAnimaux recommandés  + nbAnimaux vraiment disponible sur ce troupeau
+		List<Integer> listNbAnimaux = initialGuessNbAnimaux(nbJour, terrain, nbAnimauxDispo, ugbMoyen);
 		int nbAnimauxRecommande = listNbAnimaux.get(0);
 		int nbAnimaux = listNbAnimaux.get(1);
 		prp.setNbAnimauxRecommande(nbAnimauxRecommande);
@@ -87,52 +92,111 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 		prp.setEquipementSurTerrain(equipSurTerrain);
 		
 		// materiel necessaire pour la prestation
-		List<QuantiteEquipement> equipNecessaire = calculeEquipementNecessaire(nbAnimaux);
+		List<QuantiteEquipement> equipNecessaire = calculeEquipementNecessaire(nbAnimaux, true);
 		
 		// materiel à payer equipNecessaire - equipSurTerrain
 		List<QuantiteEquipement> equipSupplementaire = soustraitEquipement(equipNecessaire, equipSurTerrain);
 		
 		prp.setEquipementSupplementaire(equipSupplementaire);
+		// cloture supplémentaire inprp
 		int longueurTmp = prp.getLongueurClotureSupplementaire();
 		prp.setLongueurCloture(longueurTmp);
 		// check availability of the missing materials by REST webservice
 		
+		// util function,  need to be much better, 
+		// wrong total cloture doit etre calculée !!
+		// int longueurCloture = getLongueurCloture(equipNecessaire);
+		
 		// prix à payer              
 		double coutTotal=0; // = calculePrixPrestation(prp); (for refactorisation)
-		coutTotal += calculePrixAnimaux(troupeau, nbAnimaux, nbJour);
-		coutTotal += calculePrixMateriel(equipSupplementaire);
+		coutTotal += calculePrixAnimaux( troupeau, nbAnimaux, nbJour ); // troupeau, getCoutParAnimal
+		coutTotal += calculePrixMateriel( equipSupplementaire );
 		coutTotal += calculePrixTransport( nbAnimaux );
 		prp.setCout(coutTotal);
 		
-		// util function,  need to be much better, 
-		// wrong total cloture doit etre calculée !!
+		// doit etre la somme cloture supplementaire + cloture du terrain
 		int longueurCloture = getLongueurCloture(equipNecessaire);
-		
+		System.out.println("longueur cloture necessaire : " + longueurCloture);
 		prp.setBienEtreAnimal(
 				calculeBienEtreAnimal(nbAnimaux, longueurCloture, terrain.getSuperficie().intValue(),
 						terrain.isClos()));
 		
 		prp.setQualiteTonte( (double)nbAnimaux / nbAnimauxRecommande );
 		return prp;
-		
 	}
 	
 	@Override
-	public ParametresReservationPrestation actualisePrixPrestation(int idTerrain, int idTroupeau, Date dateDebut,
-			Date dateFin, int nbAnimaux, int longueurCloture) {
-		// TODO Auto-generated method stub
-		return null;
+	public ParametresReservationPrestation actualisePrixPrestation(int idTerrain, int idTroupeau, ParametresReservationPrestation prp) {
+		// periode de la prestation en jours
+		LocalDate debut = convertToLocalDateViaInstant(prp.getDateDebut());
+		LocalDate fin = convertToLocalDateViaInstant(prp.getDateFin());
+		long nbJour = ChronoUnit.DAYS.between(debut, fin);
+		
+		// Could easily avoid the database request
+		// besoin du terrain (surface, isClos) //  equipement disponible saved the first time
+		Terrain terrain = terrainIDao.getByIdWithEquipement(idTerrain);
+		// need troupeau, only for getcoutParAnimal
+		Troupeau troupeau = troupeauIDao.getTroupeauByIdWithComposition(idTroupeau);
+		
+		// reactualise le nombre d'animaux disponibles avec les nouvelles dates
+		int nbAnimauxOccupes = prestationIDao.nbAnimauxEnPrestationPourTroupeauId(idTroupeau, prp.getDateDebut(), prp.getDateFin());
+		prp.setNbAnimauxTroupeauDispo( prp.getNbTotalAnimauxTroupeau()-nbAnimauxOccupes);
+		
+		// change si date change, ne prend pas en compte le nombre d'animaaux, seulement recommandé
+		// nbAnimaux fixé par utilisateur dans ce cas
+		int nbAnimauxRecommande = initialGuessNbAnimaux(
+				nbJour, terrain, prp.getNbAnimauxTroupeauDispo(), prp.getUgbMoyen()).get(0); // superficie
+		prp.setNbAnimauxRecommande(nbAnimauxRecommande);
+		
+		// Equipements
+		List<QuantiteEquipement> equipSurTerrain = prp.getEquipementSurTerrain();
+		
+		// materiel necessaire pour la prestation, can be factorized ?
+		// false do not compute cloture in the function, get from the input in prp
+		List<QuantiteEquipement> equipNecessaire = calculeEquipementNecessaire( prp.getNbAnimaux(), false );
+		// only copy the input from the user
+		equipNecessaire.add( FactoryQuantiteEquipement.Cloture.createQuantiteEquipement(prp.getLongueurCloture()) );
+		
+		// materiel à payer equipNecessaire - equipSurTerrain
+		List<QuantiteEquipement> equipSupplementaire = soustraitEquipement(equipNecessaire, equipSurTerrain);
+		prp.setEquipementSupplementaire(equipSupplementaire);
+		
+		int longueurTmp = prp.getLongueurClotureSupplementaire();
+		prp.setLongueurCloture(longueurTmp);
+		// check availability of the missing materials by REST webservice
+		
+		// prix à payer              
+		double coutTotal=0; // = calculePrixPrestation(prp); (for refactorisation)
+		coutTotal += calculePrixAnimaux(troupeau, prp.getNbAnimaux(), nbJour); // troupeau, getCoutParAnimal
+		coutTotal += calculePrixMateriel(equipSupplementaire);
+		coutTotal += calculePrixTransport( prp.getNbAnimaux() );
+		prp.setCout(coutTotal);
+		
+		// doit etre la somme cloture supplementaire + cloture du terrain
+		int longueurCloture = getLongueurCloture(equipNecessaire);
+		System.out.println("longueur cloture necessaire : " + longueurCloture);
+		prp.setBienEtreAnimal(
+				calculeBienEtreAnimal(prp.getNbAnimaux(), prp.getLongueurCloture(), terrain.getSuperficie().intValue(),
+						terrain.isClos()));
+		
+		prp.setQualiteTonte( (double)prp.getNbAnimaux() / nbAnimauxRecommande );
+		return prp;
 	}
 	
 	//////// Private methods
-	private List<QuantiteEquipement> calculeEquipementNecessaire(int nbAnimaux) {
+	private List<QuantiteEquipement> calculeEquipementNecessaire(int nbAnimaux, boolean calculeLongueurCloture) {
 		
 		List<QuantiteEquipement> listEquipement= new ArrayList<>();
-		// cloture
-		int surface = nbAnimaux * ConstantVariable.SEUIL_BIEN_ETRE_ANIMAL_CONFORTABLE;
-		int longueurCloture = (int) (Math.sqrt(surface) * 4);
-		QuantiteEquipement qe = FactoryQuantiteEquipement.Cloture.createQuantiteEquipement(longueurCloture);
-		listEquipement.add(qe);
+		QuantiteEquipement qe;
+		
+		if( calculeLongueurCloture ) {
+			// cloture
+			int surface = nbAnimaux * ConstantVariable.SEUIL_BIEN_ETRE_ANIMAL_CONFORTABLE;
+			// 4 * cote d'un carré
+			int longueurCloture = (int) (Math.sqrt(surface) * 4);
+			qe = FactoryQuantiteEquipement.Cloture.createQuantiteEquipement(longueurCloture);
+			listEquipement.add(qe);
+		}
 		
 		// nbre d'abris : une surface pour tous les animaux / surface d'un abri
 		int abri = (( nbAnimaux * ConstantVariable.M2_PAR_ANIMAL_ABRI ) / ConstantVariable.M2_PAR_ABRI ) + 1;
@@ -148,7 +212,7 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 	}
 
 	// first estimation of the number of animals for the prestation
-	private List<Integer> initialGuessNbAnimal(long nbJour, Terrain terrain, int nbTotalAnimauxTroupeau, double ugbMoyen) {
+	private List<Integer> initialGuessNbAnimaux(long nbJour, Terrain terrain, int nbAnimauxTroupeauDispo, double ugbMoyen) {
 		int nbAnimaux;
 		int nbAnimauxRecommande;
 		
@@ -159,8 +223,8 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 				* ( 365f / nbJour ) );
 		
 		// must be available in the troupeau
-		if( nbTotalAnimauxTroupeau < nbAnimauxRecommande )
-			nbAnimaux = nbTotalAnimauxTroupeau;
+		if( nbAnimauxTroupeauDispo < nbAnimauxRecommande )
+			nbAnimaux = nbAnimauxTroupeauDispo;
 		else
 			nbAnimaux = nbAnimauxRecommande;
 		

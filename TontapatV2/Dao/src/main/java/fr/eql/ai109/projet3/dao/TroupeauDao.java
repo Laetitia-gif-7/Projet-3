@@ -1,16 +1,21 @@
 package fr.eql.ai109.projet3.dao;
 
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
-
-import fr.eql.ai109.projet3.entity.QuantiteEquipement;
+import fr.eql.ai109.projet3.dao.utils.utils;
+import fr.eql.ai109.projet3.entity.CompositionTroupeau;
+import fr.eql.ai109.projet3.entity.CompositionTroupeauPrestation;
+import fr.eql.ai109.projet3.entity.Prestation;
 import fr.eql.ai109.projet3.entity.Troupeau;
 import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.idao.TroupeauIDao;
@@ -48,17 +53,14 @@ public class TroupeauDao extends GenericDao<Troupeau> implements TroupeauIDao {
 				entityManager.refresh(troupeaux.get(i).getPeriodeDisponibilites().get(j));
 			}
 		}
-		
-		
-		
-		return troupeaux;
-	
+
+		return troupeaux;	
 	}
 	
 	@Override
 	public Troupeau getTroupeauByIdWithComposition(int idTroupeau) {
+		 
 		Troupeau troupeau;
-		
 		TypedQuery<Troupeau> query = entityManager.createQuery(
 				  "SELECT t "
 				+ "FROM Troupeau t "
@@ -71,14 +73,6 @@ public class TroupeauDao extends GenericDao<Troupeau> implements TroupeauIDao {
 		return troupeau;
 	}
 
-	@Override
-	public Troupeau getTroupeauByIdTroupeauAndUser(int idTroupeau, Utilisateur utilisateur) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	
 }
 	
 
