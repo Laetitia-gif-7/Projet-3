@@ -1,18 +1,27 @@
 package fr.eql.ai109.projet3.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 //import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 //import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UISelectItems;
+import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 
+import com.google.j2objc.annotations.ReflectionSupport.Level;
+
+import fr.eql.ai109.projet3.entity.Incident;
 import fr.eql.ai109.projet3.entity.IncidentRef;
 import fr.eql.ai109.projet3.entity.Prestation;
 import fr.eql.ai109.projet3.entity.PrestationBU;
@@ -33,6 +42,8 @@ public class PrestationManagedBean implements Serializable {
 	private Utilisateur utilisateurConnecte;
 //	private List<Prestation> prestationx;
 	private List<IncidentRef> incidentRef;
+	private List<SelectItem> listSelectIncident;
+	private List<Incident> incidents;
 	private IncidentRef incidentRefSelectionne;
 	private int testId; 
 	
@@ -82,8 +93,45 @@ public class PrestationManagedBean implements Serializable {
 			System.out.println("prestExt :" + prestations.get(prestationKey).getPrestation().getDebutPrestation());
 			System.out.println("state string :"+ prestations.get(prestationKey).getStateString());
 		}
-		incidentRef = incidentIBusiness.findAllIncidentRef();	
+		incidentRef = incidentIBusiness.findAllIncidentRef();
+//		listSelectIncident = new ArrayList<SelectItem>();
+//		for (IncidentRef incidentRef2 : incidentRef) {
+//			listSelectIncident.add(new SelectItem(incidentRef2.getIdIncidentRef(),incidentRef2.getLibelleIncident()));
+//		}
+
 	}
+	
+	public List<SelectItem> getListSelectIncident() {
+		List<SelectItem> listSelectIncident = new ArrayList<SelectItem>();
+		for (IncidentRef incidentRef2 : incidentRef) {
+			listSelectIncident.add(new SelectItem(incidentRef2.getIdIncidentRef(), incidentRef2.getLibelleIncident()));
+		}
+		return listSelectIncident;
+	}
+	
+//	public void incidentRefSelectionne() {
+////		incidentRef.set(idIncidentRefSelectionne, incidentRefSelectionne)
+////		
+////        utilisateur.setPrenom(prenom);
+////        utilisateurDao.creer( utilisateur );
+//		String idIncidentRefSelectionne = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("formulaire:idIncidentRefSelectionne");
+//        FacesMessage message = new FacesMessage( "Incident enregitré !" );
+//        FacesContext.getCurrentInstance().addMessage( null, message );
+//    }
+	
+	
+	public List<Incident> getIncidents() {
+		return incidents;
+	}
+
+	public void setIncidents(List<Incident> incidents) {
+		this.incidents = incidents;
+	}
+
+	public void setListSelectIncident(List<SelectItem> listSelectIncident) {
+		this.listSelectIncident = listSelectIncident;
+	}
+
 	@PreDestroy
 	void destroy() {
 		System.out.println("destroy PrestationDao");
