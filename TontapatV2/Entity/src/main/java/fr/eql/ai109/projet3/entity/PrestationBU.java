@@ -18,6 +18,7 @@ public class PrestationBU implements Serializable {
 	private Utilisateur client;
 	private Utilisateur eleveur;
 	//private Utilisateur berger;
+	// private Utilisateur partenaire
 	
 	//default, should be overwritten by each state
 	private String stateString = "UNIMPLEMENTED";

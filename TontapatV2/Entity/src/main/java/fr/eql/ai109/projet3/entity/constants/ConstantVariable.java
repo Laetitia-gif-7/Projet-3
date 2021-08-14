@@ -12,7 +12,7 @@ public final class ConstantVariable {
 	public static final int L_PAR_ABREUVOIR = 200; // 200 L par abreuvoir
 	
 	// prix du prestataire exterieur
-	public static double PRIX_MATERIEL_CLOTURE = 1.; // 1 euros par metre
+	public static double PRIX_MATERIEL_CLOTURE = 5.; // 1 euros par metre
 	public static double PRIX_MATERIEL_ABRI = 100.;
 	public static double PRIX_MATERIEL_ABREUVOIR = 50.;
 	

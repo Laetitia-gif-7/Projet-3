@@ -9,17 +9,19 @@
 	User connecté :<h:outputLabel value="#{user.utilisateur.id}"/> 
 	<h:outputLabel value="#{prestaBuByMain.stateString}"/>
 	<hr/>
+	
 	<!-- Message pour l'initiateur seulement -->
 	<ui:fragment rendered="#{prestaBuByMain.idUtilisateurInitiateur == user.utilisateur.id}">
 		<!-- Test si eleveur ou client, au moins afficher le nom du partenaire (partenaire ? fausse bonne idée ?) -->
 		Votre demande de réservation a été confirmée par <h:outputLabel value="#{prestaBuByMain.eleveur.nom}"/>
 	</ui:fragment>
+	
 	<hr/>
 	<!-- Message si une nouvelle date a été proposée, poposer une date c'est écraser date etats_des_lieux_proposée dans la db -->
 	<!-- Accepter la date c'est copier la date proposée dans la date etats_des_lieux_acceptés => state suivant ! -->
 	<ui:fragment rendered="#{id_derniere_proposition !=  user.utilisateur.id}" >
 		Une nouvelle date pour l'état des lieux vous a été proposée : 
-		<p> <h:outputText value="#{prestaBuByMain.prestation.premiereVisite}"/></p>
+		<p> <h:outputText value="#{prestaBuByMain.prestation.premiereVisitePropose}"/></p>
 		Accepter, Proposer une nouvelle date ou Annuler
 		<b:commandButton value="Accepter cette date" action="#{mbPresta.valide(prestaBuByMain.prestation.idPrestation)}" />
 		<!-- datepicker to get nouvelleDate -->
@@ -29,7 +31,7 @@
 	
 	<!-- Message si une votre derniere proposition est encore en attente -->
 	<ui:fragment rendered="#{id_derniere_proposition ==  user.utilisateur.id}" >
-		Votre nouvelle proposition de date d'états des lieux est en attente
+		Votre dernière proposition de date d'états des lieux est en attente
 		<b:commandButton value="Annuler" action="#{mbPresta.annule( prestaBuByMain.prestation.idPrestation )}"/>
 	</ui:fragment>
 </ui:composition>
