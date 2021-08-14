@@ -22,7 +22,7 @@ public class ConfirmeParEleveur implements StatePrestation, Serializable  {
 	@Override
 	public void valide(PrestationBU p) {
 		Prestation prestation = p.getPrestation();
-		prestation.setAcceptationEleveur(LocalDateTime.now());
+		prestation.setPremiereVisiteAccepte(LocalDateTime.now());
 		p.setState(DateEtatDesLieuxValide.DATEETATSDESLIEUXVALIDE);   
 	}
 

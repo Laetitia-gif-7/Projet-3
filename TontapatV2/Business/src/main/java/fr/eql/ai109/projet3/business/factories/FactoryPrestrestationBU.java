@@ -71,7 +71,7 @@ public class FactoryPrestrestationBU {
 		}
 		
 		// ACCEPTATION DATE d'état des lieux par l'éleveur
-		if( prestation.getAcceptationEleveur() == null) {
+		if( prestation.getPremiereVisiteAccepte() == null) {
 			
 			if( utilisateurInitiateurId == clientId ) {
 				proxy.setState( ConfirmeParEleveur.CONFIRMEPARELEVEUR );

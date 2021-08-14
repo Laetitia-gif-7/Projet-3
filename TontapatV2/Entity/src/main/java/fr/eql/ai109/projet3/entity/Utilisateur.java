@@ -65,6 +65,9 @@ public class Utilisateur implements Serializable  {
 	@OneToMany(mappedBy="utilisateur", fetch = FetchType.LAZY)
 	private Set<Troupeau> troupeaux;
 	
+	@OneToMany(mappedBy="IdDerniereProposition", fetch = FetchType.LAZY)
+	private List<Prestation> prestationDernieresPropositions;
+	
 	@OneToMany(mappedBy="initiateurPrestation", fetch = FetchType.LAZY)
 	private List<Prestation> prestationInitiees;
 	
@@ -206,14 +209,10 @@ public class Utilisateur implements Serializable  {
 	public void setTroupeaux(Set<Troupeau> troupeaux) {
 		this.troupeaux = troupeaux;
 	}
-	
-	
-	
-	
-	
-	
-	 
-	
-	
-
+	public List<Prestation> getPrestationDernieresPropositions() {
+		return prestationDernieresPropositions;
+	}
+	public void setPrestationDernieresPropositions(List<Prestation> prestationDernieresPropositions) {
+		this.prestationDernieresPropositions = prestationDernieresPropositions;
+	}
 }
