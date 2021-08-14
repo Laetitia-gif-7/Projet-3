@@ -112,6 +112,17 @@ public class Prestation implements Serializable {
 	@OneToMany(mappedBy="prestation")
 	private List<Evaluation> evaluations;
 	
+	@OneToMany(mappedBy="prestation")
+	private List<Tache> taches;
+	
+	public List<Tache> getTaches() {
+		return taches;
+	}
+
+	public void setTaches(List<Tache> taches) {
+		this.taches = taches;
+	}
+
 	public List<Evaluation> getEvaluations() {
 		return evaluations;
 	}
