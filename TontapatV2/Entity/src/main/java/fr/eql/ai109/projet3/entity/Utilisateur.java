@@ -65,7 +65,7 @@ public class Utilisateur implements Serializable  {
 	@OneToMany(mappedBy="utilisateur", fetch = FetchType.LAZY)
 	private Set<Troupeau> troupeaux;
 	
-	@OneToMany(mappedBy="IdDerniereProposition", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="idDerniereProposition", fetch = FetchType.LAZY)
 	private List<Prestation> prestationDernieresPropositions;
 	
 	@OneToMany(mappedBy="initiateurPrestation", fetch = FetchType.LAZY)
