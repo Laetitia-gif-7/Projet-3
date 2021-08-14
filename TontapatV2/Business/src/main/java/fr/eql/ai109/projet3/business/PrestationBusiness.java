@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -15,8 +16,12 @@ import javax.ejb.Stateless;
 
 import fr.eql.ai109.projet3.entity.CompositionTroupeau;
 import fr.eql.ai109.projet3.entity.CompositionTroupeauPrestation;
+import fr.eql.ai109.projet3.entity.Equipement;
 import fr.eql.ai109.projet3.entity.Prestation;
 import fr.eql.ai109.projet3.entity.PrestationBU;
+import fr.eql.ai109.projet3.entity.QuantiteEquipement;
+import fr.eql.ai109.projet3.entity.QuantiteEquipementPrestation;
+import fr.eql.ai109.projet3.entity.QuantiteEquipementPrestationPK;
 import fr.eql.ai109.projet3.entity.Troupeau;
 import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.entity.dto.ParametresReservationPrestation;
@@ -61,8 +66,52 @@ public class PrestationBusiness implements PrestationIBusiness {
 	}
 	
 	@Override
-	public void createPrestationClient(Utilisateur utilisateurConnecte, ParametresReservationPrestation prp) {
-		//
+	public void createPrestationClient(Utilisateur utilisateur, 
+			ParametresReservationPrestation prp, int idTerrain, int idTroupeau) {
+		Prestation prestation = new Prestation();
+				
+		prestation.setInitiateurPrestation(utilisateur);
+		prestation.setReservation( LocalDateTime.now() );
+		prestation.setDebutPrestation(utils.convertToLocalDateTimeViaInstant(prp.getDateDebut()));
+		prestation.setFinPrestation(utils.convertToLocalDateTimeViaInstant(prp.getDateFin()));
+		prestation.setCoutPrestation((float)prp.getCout());
+		prestation.setTerrain( terrainIDao.getById(idTerrain) );
+		UUID uuid = UUID.randomUUID();
+		System.out.println("uuid : " + uuid.toString());
+		prestation.setNumeroPrestation(uuid.toString());
+		prestation.setIdDerniereProposition(utilisateur);
+		prestation.setPremiereVisitePropose(utils.convertToLocalDateTimeViaInstant(prp.getPremiereVisite()));
+		
+		
+		
+		Troupeau troupeau = troupeauIDao.getById(idTroupeau);
+		prestation = prestationIDao.add(prestation);
+		
+		List<QuantiteEquipementPrestation> equipementPrestationSupplementaires = new ArrayList<>();
+		for(QuantiteEquipement quantiteEquip : prp.getEquipementSupplementaire() ) {
+			QuantiteEquipementPrestation quantiteSupplementaire = new QuantiteEquipementPrestation(); 
+			quantiteSupplementaire.setPrestation(prestation);
+			quantiteSupplementaire.setCout( 0 );
+			quantiteSupplementaire.setQuantite(  quantiteEquip.getQuantite());	
+			
+			quantiteSupplementaire.setEquipement( quantiteEquip.getEquipement() );
+			QuantiteEquipementPrestationPK qepPk = new QuantiteEquipementPrestationPK();
+			qepPk.setIdEquipement( quantiteEquip.getEquipement().getIdEquipement());
+			qepPk.setIdPrestation( prestation.getIdPrestation() );
+			quantiteSupplementaire.setId( qepPk );
+			
+			equipementPrestationSupplementaires.add(quantiteSupplementaire);
+		}
+		
+		prestation.setQuantiteEquipementPrestations( equipementPrestationSupplementaires );
+		prestationIDao.enregistreEquipementSupplementaires(equipementPrestationSupplementaires);
+		
+		// need function to set correct number to a set of compotroupeaux
+		CompositionTroupeauPrestation compoTroupeauPresta = new CompositionTroupeauPrestation();
+		compoTroupeauPresta.setPrestation( prestation );
+		compoTroupeauPresta.setNbAnimaux(prp.getNbAnimaux());
+		compoTroupeauPresta.setTroupeau( troupeau );
+		compositionTroupeauPrestationIDao.add(compoTroupeauPresta);
 	}
 
 	@Override
@@ -75,20 +124,11 @@ public class PrestationBusiness implements PrestationIBusiness {
 		prestation.setDebutPrestation(utils.convertToLocalDateTimeViaInstant(dateDebut));
 		prestation.setFinPrestation(utils.convertToLocalDateTimeViaInstant(dateFin));
 		prestation.setTerrain( terrainIDao.getById(idTerrain) );
-		// UUID uuid = UUID.randomUUID();
+		UUID uuid = UUID.randomUUID();
+		prestation.setNumeroPrestation(uuid.toString());
+		
 		Troupeau troupeau = troupeauIDao.getById(idTroupeau);
 		CompositionTroupeauPrestation compoTroupeauPresta = new CompositionTroupeauPrestation();
-		
-		//compoTroupeauPresta.setPrestation( prestation );
-		//compoTroupeauPresta.setNbAnimaux(0);
-		//compoTroupeauPresta.setTroupeau( troupeau );
-		/*
-		compositionTroupeauPrestationIDao.add(compoTroupeauPresta);
-		List<CompositionTroupeauPrestation> listCompos = new ArrayList<>();
-		listCompos.add(compoTroupeauPresta);
-		prestation.setCompositionTroupeauPrestations( listCompos );
-		*/
-		
 		
 		prestation = prestationIDao.add(prestation);
 		compoTroupeauPresta.setPrestation( prestation );
@@ -97,6 +137,10 @@ public class PrestationBusiness implements PrestationIBusiness {
 		compositionTroupeauPrestationIDao.add(compoTroupeauPresta);
 		
 	}
+	// calcule le nombre d'animaux et de races
+	private void createCompositionTroupeau(CompositionTroupeauPrestation ctp, int nbAniamux) {
+	}
+	
 	
 	@Override
 	public Map<Integer,PrestationBU> findPrestationsByUtilisateur(Utilisateur utilisateur) {

@@ -12,6 +12,7 @@ public enum FactoryEquipement {
 		Equipement createEquipement() {
 			Equipement equip = new Equipement();
 			equip.setLibelleEquipement("clôture");
+			equip.setIdEquipement(1);
 			return equip;
 			//equip.setIdEquipement(1);
 			//equip.setUniteRef(null);
@@ -22,6 +23,7 @@ public enum FactoryEquipement {
 		Equipement createEquipement() {
 			Equipement equip = new Equipement();
 			equip.setLibelleEquipement("abri");
+			equip.setIdEquipement(3);
 			return equip;
 		}
 	},
@@ -30,6 +32,7 @@ public enum FactoryEquipement {
 		Equipement createEquipement() {
 			Equipement equip = new Equipement();
 			equip.setLibelleEquipement("abreuvoir");
+			equip.setIdEquipement(2);
 			return equip;
 		}
 	};

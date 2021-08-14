@@ -13,7 +13,8 @@ public interface PrestationIBusiness {
 	Map<Integer,PrestationBU> findPrestationsByUtilisateur(Utilisateur utilisateur);
 	// to create a prestation
 	void createPrestationEleveur(Utilisateur utilisateur,int idTerrain,int idTroupeau,Date dateDebut,Date dateFin);
-	void createPrestationClient(Utilisateur utilisateurConnecte, ParametresReservationPrestation prp);
+	void createPrestationClient(Utilisateur utilisateurConnecte, ParametresReservationPrestation prp,
+			int idTerrain, int idTroupeau );
 	
 	// prestationbu contains prestation + additional data. Can send back to the view for updating it
 	PrestationBU valide(PrestationBU pbu);

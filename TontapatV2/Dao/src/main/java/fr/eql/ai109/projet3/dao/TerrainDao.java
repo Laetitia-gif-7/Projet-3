@@ -96,6 +96,7 @@ public class TerrainDao extends GenericDao<Terrain> implements TerrainIDao {
 		Equipement eq;
 		for(QuantiteEquipement qe : terrain.getQuantiteEquipement()) {
 			eq = qe.getEquipement();
+			qe.getEquipement().getUniteRef();
 		}
 		
 		return terrain;
