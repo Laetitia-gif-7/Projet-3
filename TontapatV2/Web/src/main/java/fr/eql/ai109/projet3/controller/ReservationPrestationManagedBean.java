@@ -100,10 +100,9 @@ public class ReservationPrestationManagedBean implements Serializable {
 		prp = resaPrestaIBusiness.actualisePrixPrestation(idTerrain, idTroupeau, prp);
 	}
 	
-	public void validerPrestationParClient() {
-		System.out.println("Création prestation ou confirmation par client");
-		prestationIBusiness.createPrestationClient(utilisateurConnecte, prp);
-		return;
+	public String validerPrestationParClient() {
+		prestationIBusiness.createPrestationClient(utilisateurConnecte, prp, idTerrain, idTroupeau);
+		return "prestations.xhtml";
 	}
 	// for tests with ajax, to move to another branch
 	public void updateAjaxPrimefaces(SlideEndEvent event) {

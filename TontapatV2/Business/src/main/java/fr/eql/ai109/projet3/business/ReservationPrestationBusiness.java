@@ -99,8 +99,8 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 		
 		prp.setEquipementSupplementaire(equipSupplementaire);
 		// cloture supplémentaire here
-		int longueurTmp = prp.getLongueurClotureSupplementaire();
-		prp.setLongueurCloture(longueurTmp);
+		//int longueurTmp = prp.getLongueurClotureSupplementaire();
+		//prp.setLongueurCloture(longueurTmp);
 		// check availability of the missing materials by REST webservice
 		
 		// util function,  need to be much better, 
@@ -311,12 +311,18 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 			qteEquipement = new QuantiteEquipement();
 			
 			for(QuantiteEquipement necess : equipNecessaire )
-				if( necess.getEquipement().getLibelleEquipement().equals(str) )
+				if( necess.getEquipement().getLibelleEquipement().equals(str) ) {
 					qteNecess = necess.getQuantite();
+					equipement = necess.getEquipement();
+				}
+					
+				
 			
 			for(QuantiteEquipement present : equipSurTerrain )
-				if( present.getEquipement().getLibelleEquipement().equals(str) )
+				if( present.getEquipement().getLibelleEquipement().equals(str) ) {
+					//equipement.setIdEquipement( present.getEquipement().getIdEquipement() );
 					qteNecess -= present.getQuantite();
+				}
 			
 			// assign the missing materiel
 			if( qteNecess > 0 ) 

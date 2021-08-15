@@ -13,7 +13,12 @@ import javax.persistence.TypedQuery;
 
 import fr.eql.ai109.projet3.dao.utils.utils;
 import fr.eql.ai109.projet3.entity.CompositionTroupeauPrestation;
+import fr.eql.ai109.projet3.entity.Equipement;
 import fr.eql.ai109.projet3.entity.Prestation;
+import fr.eql.ai109.projet3.entity.QuantiteEquipement;
+import fr.eql.ai109.projet3.entity.QuantiteEquipementPrestation;
+import fr.eql.ai109.projet3.entity.Terrain;
+import fr.eql.ai109.projet3.entity.Troupeau;
 import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.idao.PrestationIDao;
 
@@ -104,6 +109,36 @@ public class PrestationDao extends GenericDao<Prestation> implements PrestationI
 		query.setParameter("paramDateFin", utils.convertToLocalDateTimeViaInstant(dateFin) );
 		long total = query.getSingleResult();
 		return (int)total;
+	}
+	
+	@Override
+	public void enregistreEquipementSupplementaires(List<QuantiteEquipementPrestation>  listEquipements) {
+		for(QuantiteEquipementPrestation equip : listEquipements)
+			entityManager.persist(equip);
+	}
+	
+	
+	@Override
+	public void enregistreCompoTroupeauPresta(List<CompositionTroupeauPrestation>  listCompoTroupo) {
+		for(CompositionTroupeauPrestation ctp : listCompoTroupo)
+			entityManager.persist(ctp);
+	}
+	
+	public List<Prestation> allPrestationWhithCtp(){
+		List<Prestation> prestations = getAll();
+		List<CompositionTroupeauPrestation> cpt;
+		Troupeau troupeau;
+		Terrain terrain;
+		Utilisateur eleveur;
+		Utilisateur client;
+		for (Prestation prestation : prestations) {
+			terrain = prestation.getTerrain();
+			client = terrain.getUtilisateur();
+			cpt = prestation.getCompositionTroupeauPrestations();
+			troupeau = cpt.get(0).getTroupeau();
+			eleveur = troupeau.getUtilisateur();
+		}
+		return prestations;
 	}
 }
 

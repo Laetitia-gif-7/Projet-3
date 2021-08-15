@@ -1,5 +1,6 @@
 package fr.eql.ai109.projet3.business;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +14,8 @@ import fr.eql.ai109.projet3.entity.CompositionTroupeauPrestation;
 import fr.eql.ai109.projet3.entity.Prestation;
 import fr.eql.ai109.projet3.entity.Terrain;
 import fr.eql.ai109.projet3.entity.Troupeau;
+import fr.eql.ai109.projet3.entity.Utilisateur;
+import fr.eql.ai109.projet3.entity.dto.PrestationTrouveApresRechercheDTO;
 import fr.eql.ai109.projet3.entity.dto.TerrainTrouveApresRechercheDTO;
 import fr.eql.ai109.projet3.entity.dto.TroupeauTrouveApresRechercheDTO;
 import fr.eql.ai109.projet3.ibusiness.CherchePrestationIBusiness;
@@ -20,6 +23,7 @@ import fr.eql.ai109.projet3.idao.CherchePrestationIDao;
 import fr.eql.ai109.projet3.idao.PrestationIDao;
 import fr.eql.ai109.projet3.idao.TerrainIDao;
 import fr.eql.ai109.projet3.idao.TroupeauIDao;
+import fr.eql.ai109.projet3.idao.UtilisateurIDao;
 
 @Remote(CherchePrestationIBusiness.class)
 @Stateless
@@ -34,6 +38,9 @@ public class CherchePrestationBusiness implements CherchePrestationIBusiness {
 	TroupeauIDao troupeauIDao;
 	@EJB
 	PrestationIDao prestationIDao;
+	
+	@EJB
+	UtilisateurIDao UtilisateurIDao;
 	
 	@Override
 	public List<TroupeauTrouveApresRechercheDTO> chercheTroupeauxCompatibles(int idTerrain) {
@@ -90,7 +97,32 @@ public class CherchePrestationBusiness implements CherchePrestationIBusiness {
 		
 		return nbAnimauxDansTroupeau - nbAnimauxOccupes;
 	}
+
 	
-	
+	public List<Prestation> cherchePrestationMemeDepartement(Utilisateur utilisateurBerger) {
+		List<Prestation> tempPrestations = prestationIDao.allPrestationWhithCtp();
+		List<Prestation> prestations = new ArrayList<Prestation>();
+		String departementBerger = utilisateurBerger.getVilleCp().getDepartement();
+		for (int i=0; i<tempPrestations.size(); i++) {
+			String departementTerrain = tempPrestations.get(i).getTerrain().getVilleCp().getDepartement();
+			if(departementTerrain.equals(departementBerger)) {
+				LocalDateTime datePremiereVisite = tempPrestations.get(i).getPremiereVisiteAccepte();
+				LocalDateTime dateConfirmationBerger = tempPrestations.get(i).getConfirmationBerger();
+				String nomClient = tempPrestations.get(i).getTerrain().getUtilisateur().getNom();
+				String nomEleveur = tempPrestations.get(i).getCompositionTroupeauPrestations().get(0).getTroupeau().getUtilisateur().getNom();
+				if(datePremiereVisite != null
+					&& tempPrestations.get(i).isBesoinBerger()
+					&& dateConfirmationBerger == null
+					&& !(nomClient.equals(utilisateurBerger.getNom()))
+					&& !(nomEleveur.equals(utilisateurBerger.getNom()))) {
+					
+					prestations.add(tempPrestations.get(i));
+					
+				}
+			}
+		}
+		
+		return prestations;
+	}
 
 }
