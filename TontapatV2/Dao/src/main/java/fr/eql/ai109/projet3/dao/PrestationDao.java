@@ -14,6 +14,8 @@ import fr.eql.ai109.projet3.dao.utils.utils;
 import fr.eql.ai109.projet3.entity.CompositionTroupeauPrestation;
 import fr.eql.ai109.projet3.entity.Prestation;
 import fr.eql.ai109.projet3.entity.QuantiteEquipementPrestation;
+import fr.eql.ai109.projet3.entity.Terrain;
+import fr.eql.ai109.projet3.entity.Troupeau;
 import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.idao.PrestationIDao;
 
@@ -117,6 +119,23 @@ public class PrestationDao extends GenericDao<Prestation> implements PrestationI
 	public void enregistreCompoTroupeauPresta(List<CompositionTroupeauPrestation>  listCompoTroupo) {
 		for(CompositionTroupeauPrestation ctp : listCompoTroupo)
 			entityManager.persist(ctp);
+	}
+	
+	public List<Prestation> allPrestationWhithCtp(){
+		List<Prestation> prestations = getAll();
+		List<CompositionTroupeauPrestation> cpt;
+		Troupeau troupeau;
+		Terrain terrain;
+		Utilisateur eleveur;
+		Utilisateur client;
+		for (Prestation prestation : prestations) {
+			terrain = prestation.getTerrain();
+			client = terrain.getUtilisateur();
+			cpt = prestation.getCompositionTroupeauPrestations();
+			troupeau = cpt.get(0).getTroupeau();
+			eleveur = troupeau.getUtilisateur();
+		}
+		return prestations;
 	}
 }
 

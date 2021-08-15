@@ -23,13 +23,11 @@
 	
 	<ui:define name="content">
 		<div class="terrainsTitre">
-			<h1>Vos Prestation, <h:outputLabel value="#{mbCompte.utilisateur.nom}" /> !</h1>
+			<h1>Vos Prestations, <h:outputLabel value="#{mbCompte.utilisateur.nom}" /> !</h1>
 		</div>
 		
-		<button class="terrainsAjoutTroupeau" >
-			<p>Déclarer un incident</p>
-			<b:iconAwesome value="plus-circle" solid="true" size="3x"/>
-		</button>
+		<b:button value="Rechercher une prestation/Devenir Berger" class="terrainsAjoutTroupeau" href="rechercheBerger.xhtml" >
+		</b:button>
 
 		<div class="terrainsDivs">
 			<ui:repeat class="terrainsBigDiv" var="prestaBU" value="#{mbPresta.prestations}">

@@ -15,6 +15,7 @@ public interface PrestationIBusiness {
 	void createPrestationEleveur(Utilisateur utilisateur,int idTerrain,int idTroupeau,Date dateDebut,Date dateFin);
 	void createPrestationClient(Utilisateur utilisateurConnecte, ParametresReservationPrestation prp,
 			int idTerrain, int idTroupeau );
+	void ReservePrestationBerger(int idPrestation, Utilisateur berger);
 	
 	// prestationbu contains prestation + additional data. Can send back to the view for updating it
 	PrestationBU valide(PrestationBU pbu);
@@ -22,6 +23,4 @@ public interface PrestationIBusiness {
 	
 	PrestationBU annule(int idPrestation);
 	// void valide( Date...)
-	
-	
 }
