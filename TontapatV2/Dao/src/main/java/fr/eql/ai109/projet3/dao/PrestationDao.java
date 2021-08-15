@@ -1,6 +1,5 @@
 package fr.eql.ai109.projet3.dao;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,9 +12,7 @@ import javax.persistence.TypedQuery;
 
 import fr.eql.ai109.projet3.dao.utils.utils;
 import fr.eql.ai109.projet3.entity.CompositionTroupeauPrestation;
-import fr.eql.ai109.projet3.entity.Equipement;
 import fr.eql.ai109.projet3.entity.Prestation;
-import fr.eql.ai109.projet3.entity.QuantiteEquipement;
 import fr.eql.ai109.projet3.entity.QuantiteEquipementPrestation;
 import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.idao.PrestationIDao;

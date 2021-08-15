@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -17,19 +18,23 @@ import javax.ejb.Stateless;
 import fr.eql.ai109.projet3.entity.CompositionTroupeau;
 import fr.eql.ai109.projet3.entity.CompositionTroupeauPrestation;
 import fr.eql.ai109.projet3.entity.Equipement;
+import fr.eql.ai109.projet3.entity.PeriodeDisponibilite;
 import fr.eql.ai109.projet3.entity.Prestation;
 import fr.eql.ai109.projet3.entity.PrestationBU;
 import fr.eql.ai109.projet3.entity.QuantiteEquipement;
 import fr.eql.ai109.projet3.entity.QuantiteEquipementPrestation;
 import fr.eql.ai109.projet3.entity.QuantiteEquipementPrestationPK;
+import fr.eql.ai109.projet3.entity.Terrain;
 import fr.eql.ai109.projet3.entity.Troupeau;
 import fr.eql.ai109.projet3.entity.Utilisateur;
+import fr.eql.ai109.projet3.entity.constants.ConstantVariable;
 import fr.eql.ai109.projet3.entity.dto.ParametresReservationPrestation;
 // import fr.eql.ai109.projet3.business.helpers.prestation.*; not need anymore after Factory
 import fr.eql.ai109.projet3.business.factories.FactoryPrestrestationBU;
 import fr.eql.ai109.projet3.business.utils.utils;
 import fr.eql.ai109.projet3.ibusiness.PrestationIBusiness;
 import fr.eql.ai109.projet3.idao.CompositionTroupeauPrestationIDao;
+import fr.eql.ai109.projet3.idao.PeriodeDisponibiliteIDao;
 import fr.eql.ai109.projet3.idao.PrestationIDao;
 import fr.eql.ai109.projet3.idao.RaceRefIDao;
 import fr.eql.ai109.projet3.idao.TerrainIDao;
@@ -59,6 +64,9 @@ public class PrestationBusiness implements PrestationIBusiness {
 	@EJB
 	RaceRefIDao raceRefIDao;
 	
+	@EJB
+	PeriodeDisponibiliteIDao periodeDisponibiliteIDao;
+	
 	
 	@PostConstruct
 	void init() {
@@ -80,13 +88,13 @@ public class PrestationBusiness implements PrestationIBusiness {
 		prestation.setDebutPrestation(utils.convertToLocalDateTimeViaInstant(prp.getDateDebut()));
 		prestation.setFinPrestation(utils.convertToLocalDateTimeViaInstant(prp.getDateFin()));
 		prestation.setCoutPrestation((float)prp.getCout());
-		prestation.setTerrain( terrainIDao.getById(idTerrain) );
+		Terrain terrain = terrainIDao.getById(idTerrain);
+		prestation.setTerrain( terrain );
 		UUID uuid = UUID.randomUUID();
 		System.out.println("uuid : " + uuid.toString());
 		prestation.setNumeroPrestation(uuid.toString());
 		prestation.setIdDerniereProposition(utilisateur);
 		prestation.setPremiereVisitePropose(utils.convertToLocalDateTimeViaInstant(prp.getPremiereVisite()));
-		
 		
 		prestation = prestationIDao.add(prestation);
 		
@@ -110,22 +118,32 @@ public class PrestationBusiness implements PrestationIBusiness {
 		prestation.setQuantiteEquipementPrestations( equipementPrestationSupplementaires );
 		prestationIDao.enregistreEquipementSupplementaires(equipementPrestationSupplementaires);
 		
-		// need a function to set the correct number compoTroupeauPrestation
-		//Troupeau troupeau = troupeauIDao.getById(idTroupeau);
+		// Assign correct number of animals in compoTroupeauPrestation
+// TODO
+// May delete the previous one if set by the eleveur 
 		Troupeau troupeau = troupeauIDao.getTroupeauByIdWithComposition(idTroupeau);
 		List<CompositionTroupeauPrestation>  compoTroupeauPrestations = 
 				createCompositionTroupeauPrestation( prp.getNbAnimaux(), troupeau, prp.getDateDebut(), prp.getDateFin());
-		
 		for( CompositionTroupeauPrestation ctp : compoTroupeauPrestations) {
 			ctp.setPrestation(prestation);
 			ctp.setTroupeau(troupeau);
 			compositionTroupeauPrestationIDao.add(ctp);
 		}
+		
+		// Doit spliter la période de disponibilité du terrain
+		PeriodeDisponibilite periodeDispoTerrain = terrainIDao.getPeriodeDisponibilite(idTerrain, prp.getDateDebut(), prp.getDateFin());
+		List<PeriodeDisponibilite> listDispos = splitPeriodeDisponibilite( periodeDispoTerrain, prp.getDateDebut(), prp.getDateFin() );
+		// set the new ones before sending to DAO
+		for( PeriodeDisponibilite dispo : listDispos ) {
+			dispo.setCreationDispo( new Date() );
+			dispo.setTerrain( terrain );
+		}
+		// delete previous periode cannot here ?? cannot remove a detached object ??
+		periodeDisponibiliteIDao.splitPeriode( periodeDispoTerrain.getDispoId(), listDispos );
 	}
 
 	@Override
-	public void createPrestationEleveur(Utilisateur utilisateur, int idTerrain, int idTroupeau, Date dateDebut,
-			Date dateFin) {
+	public void createPrestationEleveur(Utilisateur utilisateur, int idTerrain, int idTroupeau, Date dateDebut, Date dateFin) {
 		Prestation prestation = new Prestation();
 		// soit ici, en objet, soit dans la dao directement en  sql / jsql
 		prestation.setInitiateurPrestation(utilisateur);
@@ -219,6 +237,37 @@ public class PrestationBusiness implements PrestationIBusiness {
 		}
 		
 		return mapRaceDispo;
+	}
+	
+	private List<PeriodeDisponibilite> splitPeriodeDisponibilite( PeriodeDisponibilite period, Date dateDebut, Date dateFin ) {
+		List<PeriodeDisponibilite> listPeriods = new ArrayList<>();
+		PeriodeDisponibilite periodSplited;
+		
+		long diffInMillies; // = Math.abs(secondDate.getTime() - firstDate.getTime());
+	    long diff; //= TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+	    
+		if (period.getDebutPeriode().getTime() < dateDebut.getTime() ) {
+			diffInMillies = Math.abs(dateDebut.getTime() - period.getDebutPeriode().getTime());
+			diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+			if ( diff > ConstantVariable.MIN_JOUR_PERIODE_DISPO ) {
+				periodSplited = new PeriodeDisponibilite();
+				periodSplited.setDebutPeriode( period.getDebutPeriode());
+				periodSplited.setFinPeriode( dateDebut );
+				listPeriods.add(periodSplited);
+			}
+		}
+				
+		if (period.getFinPeriode().getTime() > dateFin.getTime() ) {
+			diffInMillies = Math.abs(  period.getFinPeriode().getTime() - dateFin.getTime() );
+			diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+			if ( diff > ConstantVariable.MIN_JOUR_PERIODE_DISPO ) {
+				periodSplited = new PeriodeDisponibilite();
+				periodSplited.setDebutPeriode( dateFin );
+				periodSplited.setFinPeriode( period.getFinPeriode());
+				listPeriods.add(periodSplited);
+			}
+		}
+		return listPeriods;
 	}
 	
 	

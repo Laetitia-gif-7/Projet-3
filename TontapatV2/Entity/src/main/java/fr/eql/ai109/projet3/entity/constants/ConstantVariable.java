@@ -21,4 +21,6 @@ public final class ConstantVariable {
 	
 	public static int HA_EN_METRE2 = 10000;
 	
+	public static int MIN_JOUR_PERIODE_DISPO = 30; // 20 jours minimum pour definir une periode de disponibilité
+	
 }

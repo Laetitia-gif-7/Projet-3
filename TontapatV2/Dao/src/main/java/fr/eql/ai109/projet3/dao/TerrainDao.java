@@ -1,6 +1,7 @@
 package fr.eql.ai109.projet3.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Remote;
@@ -9,10 +10,10 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import fr.eql.ai109.projet3.entity.Equipement;
+import fr.eql.ai109.projet3.entity.PeriodeDisponibilite;
 import fr.eql.ai109.projet3.entity.ProportionVegetation;
 import fr.eql.ai109.projet3.entity.QuantiteEquipement;
 import fr.eql.ai109.projet3.entity.Terrain;
-import fr.eql.ai109.projet3.entity.Troupeau;
 import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.idao.TerrainIDao;
 
@@ -101,6 +102,26 @@ public class TerrainDao extends GenericDao<Terrain> implements TerrainIDao {
 		
 		return terrain;
 	}
+	
+	@Override
+	public PeriodeDisponibilite getPeriodeDisponibilite(int idTerrain, Date dateDebut, Date dateFin) {
+		PeriodeDisponibilite pd; // = null;
+		TypedQuery<PeriodeDisponibilite> query = entityManager.createQuery(
+				  "SELECT pd "
+				+ "FROM Terrain t "
+				+ "JOIN t.periodeDisponibilites pd "
+				+ "WHERE t.id = :paramIdTerrain "
+				+ "   AND ( pd.debutPeriode <= :paramDateDebut ) AND (pd.finPeriode >= :paramDateFin) "
+				, PeriodeDisponibilite.class);
+		
+		query.setParameter("paramIdTerrain", idTerrain);
+		query.setParameter("paramDateDebut", dateDebut);
+		query.setParameter("paramDateFin", dateFin);
+		pd = query.getSingleResult();
+		return pd;
+	}
+	
+}
 
 //	cmd.CommandText = @"SELECT DISTINCT tr.troupeau_id, compte.nom, compte.prenom, espece.libelle, morpho.*, pm.*, vege.*, pv.*,
 //            CASE WHEN pd.debut_periode > pd2.debut_periode THEN pd.debut_periode
@@ -139,4 +160,3 @@ public class TerrainDao extends GenericDao<Terrain> implements TerrainIDao {
 //and pd.terrain_id = @id_field
 //ORDER BY tr.troupeau_id, MinDateService";
 
-}
