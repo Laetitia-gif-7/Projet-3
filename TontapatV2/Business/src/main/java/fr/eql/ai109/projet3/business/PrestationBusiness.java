@@ -129,7 +129,7 @@ public class PrestationBusiness implements PrestationIBusiness {
 			ctp.setTroupeau(troupeau);
 			compositionTroupeauPrestationIDao.add(ctp);
 		}
-		
+		/*
 		// Doit spliter la période de disponibilité du terrain
 		PeriodeDisponibilite periodeDispoTerrain = terrainIDao.getPeriodeDisponibilite(idTerrain, prp.getDateDebut(), prp.getDateFin());
 		List<PeriodeDisponibilite> listDispos = splitPeriodeDisponibilite( periodeDispoTerrain, prp.getDateDebut(), prp.getDateFin() );
@@ -140,6 +140,7 @@ public class PrestationBusiness implements PrestationIBusiness {
 		}
 		// delete previous periode cannot here ?? cannot remove a detached object ??
 		periodeDisponibiliteIDao.splitPeriode( periodeDispoTerrain.getDispoId(), listDispos );
+		*/
 	}
 
 	@Override
