@@ -31,6 +31,7 @@ import fr.eql.ai109.projet3.business.utils.utils;
 import fr.eql.ai109.projet3.ibusiness.PrestationIBusiness;
 import fr.eql.ai109.projet3.idao.CompositionTroupeauPrestationIDao;
 import fr.eql.ai109.projet3.idao.PrestationIDao;
+import fr.eql.ai109.projet3.idao.RaceRefIDao;
 import fr.eql.ai109.projet3.idao.TerrainIDao;
 import fr.eql.ai109.projet3.idao.TroupeauIDao;
 
@@ -54,6 +55,10 @@ public class PrestationBusiness implements PrestationIBusiness {
 
 	@EJB
 	CompositionTroupeauPrestationIDao compositionTroupeauPrestationIDao;
+	
+	@EJB
+	RaceRefIDao raceRefIDao;
+	
 	
 	@PostConstruct
 	void init() {
@@ -83,8 +88,6 @@ public class PrestationBusiness implements PrestationIBusiness {
 		prestation.setPremiereVisitePropose(utils.convertToLocalDateTimeViaInstant(prp.getPremiereVisite()));
 		
 		
-		
-		Troupeau troupeau = troupeauIDao.getById(idTroupeau);
 		prestation = prestationIDao.add(prestation);
 		
 		List<QuantiteEquipementPrestation> equipementPrestationSupplementaires = new ArrayList<>();
@@ -95,6 +98,7 @@ public class PrestationBusiness implements PrestationIBusiness {
 			quantiteSupplementaire.setQuantite(  quantiteEquip.getQuantite());	
 			
 			quantiteSupplementaire.setEquipement( quantiteEquip.getEquipement() );
+			// work with explicit creation of PK
 			QuantiteEquipementPrestationPK qepPk = new QuantiteEquipementPrestationPK();
 			qepPk.setIdEquipement( quantiteEquip.getEquipement().getIdEquipement());
 			qepPk.setIdPrestation( prestation.getIdPrestation() );
@@ -106,12 +110,17 @@ public class PrestationBusiness implements PrestationIBusiness {
 		prestation.setQuantiteEquipementPrestations( equipementPrestationSupplementaires );
 		prestationIDao.enregistreEquipementSupplementaires(equipementPrestationSupplementaires);
 		
-		// need function to set correct number to a set of compotroupeaux
-		CompositionTroupeauPrestation compoTroupeauPresta = new CompositionTroupeauPrestation();
-		compoTroupeauPresta.setPrestation( prestation );
-		compoTroupeauPresta.setNbAnimaux(prp.getNbAnimaux());
-		compoTroupeauPresta.setTroupeau( troupeau );
-		compositionTroupeauPrestationIDao.add(compoTroupeauPresta);
+		// need a function to set the correct number compoTroupeauPrestation
+		//Troupeau troupeau = troupeauIDao.getById(idTroupeau);
+		Troupeau troupeau = troupeauIDao.getTroupeauByIdWithComposition(idTroupeau);
+		List<CompositionTroupeauPrestation>  compoTroupeauPrestations = 
+				createCompositionTroupeauPrestation( prp.getNbAnimaux(), troupeau, prp.getDateDebut(), prp.getDateFin());
+		
+		for( CompositionTroupeauPrestation ctp : compoTroupeauPrestations) {
+			ctp.setPrestation(prestation);
+			ctp.setTroupeau(troupeau);
+			compositionTroupeauPrestationIDao.add(ctp);
+		}
 	}
 
 	@Override
@@ -130,15 +139,86 @@ public class PrestationBusiness implements PrestationIBusiness {
 		Troupeau troupeau = troupeauIDao.getById(idTroupeau);
 		CompositionTroupeauPrestation compoTroupeauPresta = new CompositionTroupeauPrestation();
 		
+		// just create a link between prestation et le troupeau, 
+		// the composition will be done (automatically) by the client
 		prestation = prestationIDao.add(prestation);
 		compoTroupeauPresta.setPrestation( prestation );
 		compoTroupeauPresta.setNbAnimaux(0);
 		compoTroupeauPresta.setTroupeau( troupeau );
 		compositionTroupeauPrestationIDao.add(compoTroupeauPresta);
-		
 	}
-	// calcule le nombre d'animaux et de races
-	private void createCompositionTroupeau(CompositionTroupeauPrestation ctp, int nbAniamux) {
+	
+	// calcule le nombre d'animaux et de races de la prestation
+	// take into account the number of animals disponibles
+	private  List<CompositionTroupeauPrestation> createCompositionTroupeauPrestation(int nbAnimaux, Troupeau troupeau, Date debut, Date fin) {
+		List<CompositionTroupeauPrestation> compotroupoPrestas = new ArrayList<>();
+		
+		// get the animaux already in prestation
+		List<CompositionTroupeauPrestation> compotroupoPrestasOccupes = new ArrayList<>();
+
+		//  race_id  nb_animaux
+		Map<Integer, Integer> mapRaceDispo= nbAnimauxParRaceDisponibles(troupeau, debut, fin);
+		
+		// try to take out as much as possible from each race, order random
+		for( Map.Entry<Integer, Integer> entry : mapRaceDispo.entrySet() ) {
+			
+			CompositionTroupeauPrestation ctp = new CompositionTroupeauPrestation();
+			// cette race ne suffit pas a fournir nbAnimaux
+			if( entry.getValue() <= nbAnimaux ) {
+				ctp.setNbAnimaux(entry.getValue());
+				// Problem !! Need raceRef and its id : like quantite !!
+				ctp.setRaceRef( raceRefIDao.getById( entry.getKey() ) );
+				// RaceRef( getRaceRefFromId(entry.getkey()) );
+				nbAnimaux -= entry.getValue();
+			// cette race contient plus ou egal a nbAnimaux
+			}  else {
+				ctp.setNbAnimaux(nbAnimaux);
+				ctp.setRaceRef( raceRefIDao.getById( entry.getKey() ) );
+				nbAnimaux = 0;
+			}
+			
+			compotroupoPrestas.add(ctp);
+			if (nbAnimaux == 0)
+				return compotroupoPrestas;
+		}
+		// jamais execute
+		return compotroupoPrestas;
+	}
+
+	private Map<Integer, Integer> nbAnimauxParRaceDisponibles(Troupeau troupeau, Date debut, Date fin) {
+		
+		List<Prestation> prestas = prestationIDao.prestationsEnCoursPourTroupeauId( troupeau.getIdTroupeau() , debut, fin);
+		// Intermediate map, certainly easier
+		// id_race  , nb_animaux
+		Map<Integer, Integer> mapRaceOccupes = new HashMap<>();
+		for(Prestation presta : prestas) {
+			
+			for(CompositionTroupeauPrestation ctp : presta.getCompositionTroupeauPrestations()) {
+				int ctp_id_race = ctp.getRaceRef().getIdRace();
+				int nb_race = ctp.getNbAnimaux();
+				
+				// update the map, creating key if necessary
+				if( mapRaceOccupes.containsKey(ctp_id_race) ) 
+					mapRaceOccupes.put(ctp_id_race, mapRaceOccupes.get(ctp_id_race)+ nb_race );
+				else
+					mapRaceOccupes.put(ctp_id_race, nb_race);
+			}
+		}
+		
+		Map<Integer, Integer> mapRaceInitial = new HashMap<>();
+		for( CompositionTroupeau ct : troupeau.getCompositionTroupeau() )
+			mapRaceInitial.put(ct.getRaceRef().getIdRace(), ct.getNbAnimaux());
+		
+		// Aniamuxdisponibles
+		Map<Integer,Integer> mapRaceDispo = new HashMap<>();
+		// initial always more races
+		for( Map.Entry<Integer,Integer> entry : mapRaceInitial.entrySet() ) {
+			int nbdispo = entry.getValue() - mapRaceOccupes.get( entry.getKey() );
+			if( nbdispo > 0 )
+				mapRaceDispo.put(entry.getKey(), nbdispo );
+		}
+		
+		return mapRaceDispo;
 	}
 	
 	
