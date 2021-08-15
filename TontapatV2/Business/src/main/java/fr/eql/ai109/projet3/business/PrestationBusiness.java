@@ -148,6 +148,14 @@ public class PrestationBusiness implements PrestationIBusiness {
 		compositionTroupeauPrestationIDao.add(compoTroupeauPresta);
 	}
 	
+	public void ReservePrestationBerger(int idPrestation, Utilisateur berger) {
+		Prestation prestation = prestationIDao.getById(idPrestation);
+		prestation.setBerger(berger);
+		prestation.setConfirmationBerger(LocalDateTime.now());
+		prestationIDao.update(prestation);
+		
+	}
+	
 	// calcule le nombre d'animaux et de races de la prestation
 	// take into account the number of animals disponibles
 	private  List<CompositionTroupeauPrestation> createCompositionTroupeauPrestation(int nbAnimaux, Troupeau troupeau, Date debut, Date fin) {

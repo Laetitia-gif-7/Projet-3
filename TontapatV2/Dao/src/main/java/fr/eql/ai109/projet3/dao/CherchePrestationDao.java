@@ -14,19 +14,22 @@ import javax.persistence.TypedQuery;
 
 import fr.eql.ai109.projet3.entity.CompositionTroupeau;
 import fr.eql.ai109.projet3.entity.MorphologieRef;
+import fr.eql.ai109.projet3.entity.Prestation;
 import fr.eql.ai109.projet3.entity.ProportionMorphologie;
 import fr.eql.ai109.projet3.entity.ProportionVegetation;
 import fr.eql.ai109.projet3.entity.RaceRef;
 import fr.eql.ai109.projet3.entity.Terrain;
 import fr.eql.ai109.projet3.entity.Troupeau;
+import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.entity.VegetationRef;
+import fr.eql.ai109.projet3.entity.dto.PrestationTrouveApresRechercheDTO;
 import fr.eql.ai109.projet3.entity.dto.TerrainTrouveApresRechercheDTO;
 import fr.eql.ai109.projet3.entity.dto.TroupeauTrouveApresRechercheDTO;
 import fr.eql.ai109.projet3.idao.CherchePrestationIDao;
 
 @Remote(CherchePrestationIDao.class)
 @Stateless
-public class CherchePrestationDao implements CherchePrestationIDao {
+public class CherchePrestationDao extends GenericDao<Prestation> implements CherchePrestationIDao {
 
 	@PersistenceContext(unitName = "PUTontapatV2")
 	protected EntityManager entityManager;
