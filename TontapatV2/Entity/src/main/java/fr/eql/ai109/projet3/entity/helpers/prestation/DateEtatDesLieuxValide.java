@@ -1,4 +1,4 @@
-package fr.eql.ai109.projet3.business.helpers.prestation;
+package fr.eql.ai109.projet3.entity.helpers.prestation;
 
 import java.time.LocalDateTime;
 
@@ -7,11 +7,11 @@ import fr.eql.ai109.projet3.entity.StatePrestation;
 /*
  * Etat final, soit annulation prématurée, soit fin normale d'une prestation
  */
-public class Annule implements StatePrestation {
+public class DateEtatDesLieuxValide implements StatePrestation {
 
 	private static final long serialVersionUID = 1L;
 	
-	public static final Annule ANNULE = new Annule();
+	public static final DateEtatDesLieuxValide DATEETATSDESLIEUXVALIDE = new DateEtatDesLieuxValide();
 	
 	@Override
 	public void valide(PrestationBU p) {

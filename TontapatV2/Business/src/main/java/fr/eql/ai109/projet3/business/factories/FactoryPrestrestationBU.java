@@ -9,10 +9,10 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
 
-import fr.eql.ai109.projet3.business.helpers.prestation.Annule;
-import fr.eql.ai109.projet3.business.helpers.prestation.ConfirmeParEleveur;
-import fr.eql.ai109.projet3.business.helpers.prestation.ReserveParClient;
-import fr.eql.ai109.projet3.business.helpers.prestation.ReserveParEleveur;
+import fr.eql.ai109.projet3.entity.helpers.prestation.Annule;
+import fr.eql.ai109.projet3.entity.helpers.prestation.ConfirmeParEleveur;
+import fr.eql.ai109.projet3.entity.helpers.prestation.ReserveParClient;
+import fr.eql.ai109.projet3.entity.helpers.prestation.ReserveParEleveur;
 import fr.eql.ai109.projet3.entity.Prestation;
 import fr.eql.ai109.projet3.entity.PrestationBU;
 import fr.eql.ai109.projet3.entity.Utilisateur;

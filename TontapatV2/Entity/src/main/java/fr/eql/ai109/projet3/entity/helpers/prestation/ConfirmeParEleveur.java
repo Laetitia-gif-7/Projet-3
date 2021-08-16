@@ -1,4 +1,4 @@
-package fr.eql.ai109.projet3.business.helpers.prestation;
+package fr.eql.ai109.projet3.entity.helpers.prestation;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

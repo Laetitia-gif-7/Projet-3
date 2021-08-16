@@ -36,11 +36,5 @@
 		<artifactId>IBusiness</artifactId>
 		<version>${project.version}</version>
   	</dependency>
-  	<!-- Added because of State pattern...to solve... -->
-  	<dependency>
-		<groupId>${project.groupId}</groupId>
-		<artifactId>Business</artifactId>
-		<version>${project.version}</version>
-  	</dependency>
   </dependencies>
 </project>
