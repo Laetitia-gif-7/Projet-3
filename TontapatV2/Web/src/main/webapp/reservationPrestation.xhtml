@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+	
+<h:head>
+	<ui:insert name="head"></ui:insert>
+<!-- 	ui insert javascript files -->
+</h:head>
+
+<ui:composition template="/arch.xhtml">
+<ui:define name="content">
+	Ajustez votre prestation !<br/>
+	Avec Terrain:  <h:outputText value="#{mbReservation.terrain.nomTerrain}" />
+	Avec id Terrain: <h:outputText value="#{mbReservation.idTerrain}" />
+	Avec id Troupeau: <h:outputText value="#{mbReservation.idTroupeau}" />
+	<hr/>
+	Matériel enregistré sur votre terrain :
+	<ul>
+		<ui:repeat var="qe" value="#{mbReservation.prp.equipementSurTerrain}" >
+			<li><h:outputLabel value="#{qe.quantite}" /><h:outputLabel value="#{qe.equipement.uniteRef.libelleUnite}" /> de <h:outputLabel value="#{qe.equipement.libelleEquipement}" /></li>
+		</ui:repeat>
+	</ul>
+	<hr/>
+	<p>Nb d'animaux du troupeau : <h:outputText value="#{mbReservation.prp.nbTotalAnimauxTroupeau}"/></p>
+	Variable<br/>
+	<h:form>
+		<p>Prix : <h:outputText value="#{mbReservation.prp.cout}" /></p>
+		<p>Qualité Tonte : <h:outputText value="#{mbReservation.prp.qualiteTonte}" /></p>
+		<p>Nbre d'animaux : <h:outputText value="#{mbReservation.prp.nbAnimaux}" /></p>
+		<p>Nbre d'animaux recommandés: <h:outputText value="#{mbReservation.prp.nbAnimauxRecommande}" /></p>
+		<p>Longueur cloture: <h:outputText value="#{mbReservation.prp.longueurCloture}" /></p>
+		<b:column>
+    		<b:slider2 mode="basic" min="1" max="#{mbReservation.prp.nbTotalAnimauxTroupeau}" span="10" value="#{mbReservation.prp.nbAnimaux}" label="Nb Animaux" />
+  		</b:column>
+  		<b:column>
+    		<b:slider2 mode="basic" min="1" max="200" span="10" value="#{mbReservation.prp.longueurCloture}" label="Longueur clôture" />
+  		</b:column>
+  	</h:form>
+	
+</ui:define>
+</ui:composition>
+</html>

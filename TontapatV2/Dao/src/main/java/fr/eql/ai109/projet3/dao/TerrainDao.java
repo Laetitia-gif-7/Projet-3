@@ -6,9 +6,13 @@ import java.util.List;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
+import fr.eql.ai109.projet3.entity.Equipement;
 import fr.eql.ai109.projet3.entity.ProportionVegetation;
+import fr.eql.ai109.projet3.entity.QuantiteEquipement;
 import fr.eql.ai109.projet3.entity.Terrain;
+import fr.eql.ai109.projet3.entity.Troupeau;
 import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.idao.TerrainIDao;
 
@@ -54,8 +58,45 @@ public class TerrainDao extends GenericDao<Terrain> implements TerrainIDao {
 		query.setParameter("idTerrainParam", idTerrain);
 		terrain = (Terrain) query.getSingleResult();
 		for (int i=0; i<terrain.getPeriodeDisponibilites().size(); i++) {
-				entityManager.refresh(terrain.getPeriodeDisponibilites().get(i));
+			entityManager.refresh(terrain.getPeriodeDisponibilites().get(i));
 		}
+		return terrain;
+	}
+
+	@Override
+	public List<QuantiteEquipement> getEquipement(int idTerrain) {
+		
+		TypedQuery<QuantiteEquipement> query = 
+				entityManager.createQuery(
+						  "SELECT qe "
+						+ "FROM Terrain t "
+						+ "JOIN t.quantiteEquipement qe "
+						+ "WHERE t.idTerrain := paramTerrainId ",
+						QuantiteEquipement.class).setParameter("paramTerrainId",idTerrain);
+		List<QuantiteEquipement> qes = query.getResultList();
+		return qes;
+	}
+	
+	@Override
+	public Terrain getByIdWithEquipement(int idTerrain) {
+		Terrain terrain;
+		
+		TypedQuery<Terrain> query = entityManager.createQuery(
+				  "SELECT t "
+				+ "FROM Terrain t "
+				+ "JOIN t.quantiteEquipement qe "
+				+ "JOIN qe.equipement qee "
+				+ "WHERE t.idTerrain = :paramIdTerrain ",
+				Terrain.class)
+				.setParameter("paramIdTerrain", idTerrain);
+		
+		terrain = query.getSingleResult();
+		// strange ??, error in normal mode, all equipments in debug mode
+		Equipement eq;
+		for(QuantiteEquipement qe : terrain.getQuantiteEquipement()) {
+			eq = qe.getEquipement();
+		}
+		
 		return terrain;
 	}
 

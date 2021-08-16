@@ -90,5 +90,4 @@ public class PrestationManagedBean implements Serializable {
 	public void setPrestations(Map<Integer,PrestationBU> prestations) {
 		this.prestations = prestations;
 	}
-
 }

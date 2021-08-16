@@ -1,6 +1,7 @@
 package fr.eql.ai109.projet3.controller;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -64,6 +65,14 @@ public class CherchePrestationManagedBean implements Serializable {
 
 	public void setTerrain(Terrain terrain) {
 		this.terrain = terrain;
+	}
+	
+	public int getIdTerrain() {
+		return idTerrain;
+	}
+
+	public void setIdTerrain(int idTerrain) {
+		this.idTerrain = idTerrain;
 	}
 
 	public List<TroupeauTrouveApresRechercheDTO> getTroupeauxCompatiblesAvecDates() {

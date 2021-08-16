@@ -26,68 +26,124 @@
 			<h1>Vos Prestations, <h:outputText value="#{mbCompte.utilisateur.nom}" /> !</h1>
 		</div>		
 
-		<b:tabView activeIndex="2">
-		  <b:tab title="En Cours">
-		    <div class="terrainsDivs">
-			<ui:repeat class="terrainsBigDiv" var="prestaBU" value="#{mbPresta.prestations}">
-				<h:panelGroup rendered="#{prestaBU.value.stateString == 'CONFIRMEPARELEVEUR' || prestaBU.value.stateString == 'RESERVEPARCLIENT' || prestaBU.value.stateString == 'RESERVEPARELEVEUR'}">
-						
-				</h:panelGroup>
-			</ui:repeat>
-			
-		</div>
-	  </b:tab>
-	  <b:tab title="En Attentes">
-	  <f:facet name="anchor"><b:iconAwesome name="cog" spin="true" /></f:facet>
-	    <div class="terrainsDivs">
-			<ui:repeat class="terrainsBigDiv" var="prestaBU" value="#{mbPresta.prestations}">
-			<h:panelGroup rendered="#{prestaBU.value.stateString == 'CONFIRMEPARELEVEUR' || prestaBU.value.stateString == 'RESERVEPARCLIENT' || prestaBU.value.stateString == 'RESERVEPARELEVEUR'}">
-				
-			
-			</h:panelGroup>
-			</ui:repeat>
-		</div>
-	  </b:tab>
-	  <!-- The next tab shows tabs aren't limited to text. You can put anything in a tab. -->
-	  <b:tab title="Terminées">
-		<div class="terrainsDivs">
-			<c:forEach var="prestaBU" items="#{mbPresta.prestations}" >
-				<div class="terrainsBigDiv">
-					<div class="terrainSmallDiv">
-						<ui:include src="#{prestaBU.value.templateXhtml}">
-							<ui:param name="prestaBuByMain" value="#{prestaBU.value}" />
-							<ui:param name="user" value="#{mbCompte}" />
-							<!-- no need to pass #mbPresta (include ?) -->
-						</ui:include>
-					</div>
-				</div>
-			</c:forEach>
-		</div>
-	  </b:tab>
-	  <b:tab title="Annulées">
-	    <p>This is fancy tab with a spinning image.</p>
-	  </b:tab>
-		 
-		</b:tabView>
-		
+
 		<!--  test State, out of loop ui:repeat it is ok, inside problem : maybe more to come-->
-	<!-- https://stackoverflow.com/questions/3362487/dynamic-uiinclude-inside-uirepeat-is-there-a-simple-solution -->
-			Test : <h:outputLabel value="#{mbPresta.prestations[0].templateXhtml}"/>
-<!-- 	<ui:repeat var="prestaBU" value="#{mbPresta.prestations}" > -->
-		<div class="terrainsDivs">
-			<c:forEach var="prestaBU" items="#{mbPresta.prestations}" >
-			<div class="terrainsBigDiv">
-				<div class="terrainSmallDiv">
-					<ui:include src="#{prestaBU.value.templateXhtml}">
+		<!-- https://stackoverflow.com/questions/3362487/dynamic-uiinclude-inside-uirepeat-is-there-a-simple-solution -->
+		<!-- 	<ui:repeat var="prestaBU" value="#{mbPresta.prestations}" > -->
+		<b:tabView activeIndex="2" class="terrainsDivs">
+		<b:tab title="En Cours">
+			<c:forEach var="prestaBU" items="#{mbPresta.prestations}" varStatus="status" class="terrainBigDiv">
+				<h:panelGroup><!--  rendered="#{prestaBU.value.prestation.debutPrestation.compareTo(date.now)<0 && prestaBU.value.prestation.finPrestation.compareTo(date.now)>0 && (prestaBU.value.prestation.debutPrestation.contratBerger || prestaBU.value.prestation.debutPrestation.contratEleveur || prestaBU.value.prestation.debutPrestation.contratClient) !== null}">-->
+					<div class="terrainBigDiv">
+						<div class="terrainSmallDiv">
+							<ui:include src="#{prestaBU.value.templateXhtml}" >
+								<ui:param name="prestaBuByMain" value="#{prestaBU.value}" />
+								<ui:param name="user" value="#{mbCompte}" />
+								<!-- no need to pass #mbPresta (include ?) -->
+							</ui:include>
+							<b:button  class="PrestationButtonDetail" value="Voir le détail de la prestation" onclick="$('.modalPseudoClass${status.index}').modal()"/>
+						</div>
+					</div>
+				</h:panelGroup>
+				<b:modal id="amodal${status.index}" title="Détail de la prestation : #{prestaBU.value.prestation.numeroPrestation}" styleClass="modalPseudoClass${status.index}" backdrop="true" closable="true" close-on-escape="true">
+				  <ui:include src="#{prestaBU.value.templateXhtml}">
 						<ui:param name="prestaBuByMain" value="#{prestaBU.value}" />
 						<ui:param name="user" value="#{mbCompte}" />
 						<!-- no need to pass #mbPresta (include ?) -->
 					</ui:include>
-				</div>
-			</div>
+				  <f:facet name="footer">
+				    <b:button value="Close" dismiss="modal" />
+				    <b:button value="Declarer un incident" look="primary" dismiss="modal" />
+				    <b:button value="Arrêter la prestation" look="primary" dismiss="modal" />
+				  </f:facet>
+				</b:modal>
+			</c:forEach>
+	  </b:tab>
+	  <b:tab title="En Attentes">
+	  	<f:facet name="anchor"><b:iconAwesome name="cog" spin="true" /></f:facet>
+			<c:forEach var="prestaBU" items="#{mbPresta.prestations}" varStatus="status" class="terrainBigDiv">
+				<h:panelGroup rendered="#{prestaBU.value.stateString == 'CONFIRMEPARELEVEUR' || prestaBU.value.stateString == 'RESERVEPARCLIENT' || prestaBU.value.stateString == 'RESERVEPARELEVEUR'}">
+					<div class="terrainBigDiv">
+						<div class="terrainSmallDiv">
+							<ui:include src="#{prestaBU.value.templateXhtml}">
+								<ui:param name="prestaBuByMain" value="#{prestaBU.value}" />
+								<ui:param name="user" value="#{mbCompte}" />
+								<!-- no need to pass #mbPresta (include ?) -->
+							</ui:include>
+							<b:button  class="PrestationButtonDetail" value="Voir le détail de la prestation" onclick="$('.modalPseudoClass${status.index}').modal()"/>
+						</div>
+					</div>
+				</h:panelGroup>
+				<b:modal id="amodal${status.index}" title="Détail de la prestation : #{prestaBU.value.prestation.numeroPrestation}" styleClass="modalPseudoClass${status.index}" backdrop="true" closable="true" close-on-escape="true">
+				  <ui:include src="#{prestaBU.value.templateXhtml}">
+						<ui:param name="prestaBuByMain" value="#{prestaBU.value}" />
+						<ui:param name="user" value="#{mbCompte}" />
+						<!-- no need to pass #mbPresta (include ?) -->
+					</ui:include>
+				  <f:facet name="footer">
+				    <b:button value="Close" dismiss="modal" />
+				    <b:button value="Valider la prestation" look="primary" dismiss="modal" />
+				    <b:button value="Annuler la prestation" look="primary" dismiss="modal" />
+				  </f:facet>
+				</b:modal>
+			</c:forEach>
+	  </b:tab>
+	  <b:tab title="Terminées">
+		<div class="terrainsDivs">
+			<c:forEach var="prestaBU" items="#{mbPresta.prestations}" varStatus="status" class="terrainBigDiv">
+				<h:panelGroup> <!-- rendered="#{}" -->
+					<div class="terrainBigDiv">
+						<div class="terrainSmallDiv">
+							<ui:include src="#{prestaBU.value.templateXhtml}">
+								<ui:param name="prestaBuByMain" value="#{prestaBU.value}" />
+								<ui:param name="user" value="#{mbCompte}" />
+								<!-- no need to pass #mbPresta (include ?) -->
+							</ui:include>
+							<b:button  class="PrestationButtonDetail" value="Voir le détail de la prestation" onclick="$('.modalPseudoClass${status.index}').modal()"/>
+						</div>
+					</div>
+				</h:panelGroup>
+				<b:modal id="amodal${status.index}" title="Détail de la prestation : #{prestaBU.value.prestation.numeroPrestation}" styleClass="modalPseudoClass${status.index}" backdrop="true" closable="true" close-on-escape="true">
+				  <ui:include src="#{prestaBU.value.templateXhtml}">
+						<ui:param name="prestaBuByMain" value="#{prestaBU.value}" />
+						<ui:param name="user" value="#{mbCompte}" />
+						<!-- no need to pass #mbPresta (include ?) -->
+					</ui:include>
+				  <f:facet name="footer">
+				    <b:button value="Close" dismiss="modal" />
+				  </f:facet>
+				</b:modal>
 			</c:forEach>
 		</div>
-		
+	  </b:tab>
+	  <b:tab title="Annulées">
+			<c:forEach var="prestaBU" items="#{mbPresta.prestations}" varStatus="status" class="terrainBigDiv">
+				<h:panelGroup rendered="#{prestaBU.value.stateString == 'ANNULER'}">
+					<div class="terrainBigDiv">
+						<div class="terrainSmallDiv">
+							<ui:include src="#{prestaBU.value.templateXhtml}">
+								<ui:param name="prestaBuByMain" value="#{prestaBU.value}" />
+								<ui:param name="user" value="#{mbCompte}" />
+								<!-- no need to pass #mbPresta (include ?) -->
+							</ui:include>
+							<b:button  class="PrestationButtonDetail" value="Voir le détail de la prestation" onclick="$('.modalPseudoClass${status.index}').modal()"/>
+						</div>
+					</div>
+				</h:panelGroup>
+				<b:modal id="amodal${status.index}" title="Détail de la prestation : #{prestaBU.value.prestation.numeroPrestation}" styleClass="modalPseudoClass${status.index}" backdrop="true" closable="true" close-on-escape="true">
+				  <ui:include src="#{prestaBU.value.templateXhtml}">
+					<ui:param name="prestaBuByMain" value="#{prestaBU.value}" />
+					<ui:param name="user" value="#{mbCompte}" />
+					<!-- no need to pass #mbPresta (include ?) -->
+				</ui:include>
+				  <f:facet name="footer">
+				    <b:button value="Close" dismiss="modal" />
+				  </f:facet>
+				</b:modal>
+			</c:forEach>
+	  </b:tab>
+	</b:tabView>
+
 </ui:define>
 </ui:composition>
 </html>

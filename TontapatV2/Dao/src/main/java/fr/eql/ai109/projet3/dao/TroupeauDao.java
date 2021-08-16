@@ -8,7 +8,7 @@ import java.util.List;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
-
+import javax.persistence.TypedQuery;
 
 import fr.eql.ai109.projet3.entity.Troupeau;
 import fr.eql.ai109.projet3.entity.Utilisateur;
@@ -52,6 +52,22 @@ public class TroupeauDao extends GenericDao<Troupeau> implements TroupeauIDao {
 		
 		return troupeaux;
 	
+	}
+	
+	@Override
+	public Troupeau getTroupeauByIdWithComposition(int idTroupeau) {
+		Troupeau troupeau;
+		
+		TypedQuery<Troupeau> query = entityManager.createQuery(
+				  "SELECT t "
+				+ "FROM Troupeau t "
+				+ "JOIN FETCH t.compositionTroupeau ct "
+				+ "WHERE t.idTroupeau = :paramIdTroupeau ",
+				Troupeau.class)
+				.setParameter("paramIdTroupeau", idTroupeau);
+		
+		troupeau = query.getSingleResult();
+		return troupeau;
 	}
 	
 }
