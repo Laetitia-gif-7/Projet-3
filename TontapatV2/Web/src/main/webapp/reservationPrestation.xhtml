@@ -8,6 +8,7 @@
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:p="http://primefaces.org/ui">
 	
+
 <h:head>
 	<ui:insert name="head">
 <!-- 	ui insert javascript files -->
@@ -17,12 +18,19 @@
 
 <ui:composition template="/arch.xhtml">
 <ui:define name="content">
+Ajustez votre prestation !<br/>
+	Avec Terrain:  <h:outputText value="#{mbReservation.terrain.nomTerrain}" />
+	Avec id Terrain: <h:outputText value="#{mbReservation.idTerrain}" />
+	Avec id Troupeau: <h:outputText value="#{mbReservation.idTroupeau}" />
+	<hr/>
+	Matériel enregistré sur votre terrain (gratuit):
 	Ajustez votre prestation !<br/>
 	Avec Terrain:  <h:outputText value="#{mbReservation.terrain.nomTerrain}" />
 	Avec id Terrain: <h:outputText value="#{mbReservation.idTerrain}" />
 	Avec id Troupeau: <h:outputText value="#{mbReservation.idTroupeau}" />
 	<hr/>
 	Matériel enregistré sur votre terrain (gratuit):
+>>>>>>> master
 	<ul>
 		<ui:repeat var="qe" value="#{mbReservation.prp.equipementSurTerrain}" >
 			<li><h:outputLabel value="#{qe.quantite}" /><h:outputLabel value="#{qe.equipement.uniteRef.libelleUnite}" /> de <h:outputLabel value="#{qe.equipement.libelleEquipement}" /></li>
