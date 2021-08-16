@@ -16,7 +16,7 @@ import javax.ejb.Stateless;
 
 import fr.eql.ai109.projet3.business.factories.FactoryEquipement;
 import fr.eql.ai109.projet3.business.factories.FactoryQuantiteEquipement;
-
+import fr.eql.ai109.projet3.business.utils.utils;
 import fr.eql.ai109.projet3.entity.Equipement;
 import fr.eql.ai109.projet3.entity.QuantiteEquipement;
 import fr.eql.ai109.projet3.entity.Terrain;
@@ -58,8 +58,8 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 		prp.setDateFin(dateFin);
 		
 		// periode de la prestation en jours
-		LocalDate debut = convertToLocalDateViaInstant(dateDebut);
-		LocalDate fin = convertToLocalDateViaInstant(dateFin);
+		LocalDate debut = utils.convertToLocalDateViaInstant(dateDebut);
+		LocalDate fin = utils.convertToLocalDateViaInstant(dateFin);
 		long nbJour = ChronoUnit.DAYS.between(debut, fin); 
 				
 		// besoin du terrain (surface, equipement disponible)
@@ -98,9 +98,9 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 		List<QuantiteEquipement> equipSupplementaire = soustraitEquipement(equipNecessaire, equipSurTerrain);
 		
 		prp.setEquipementSupplementaire(equipSupplementaire);
-		// cloture supplémentaire inprp
-		int longueurTmp = prp.getLongueurClotureSupplementaire();
-		prp.setLongueurCloture(longueurTmp);
+		// cloture supplémentaire here
+		//int longueurTmp = prp.getLongueurClotureSupplementaire();
+		//prp.setLongueurCloture(longueurTmp);
 		// check availability of the missing materials by REST webservice
 		
 		// util function,  need to be much better, 
@@ -128,8 +128,8 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 	@Override
 	public ParametresReservationPrestation actualisePrixPrestation(int idTerrain, int idTroupeau, ParametresReservationPrestation prp) {
 		// periode de la prestation en jours
-		LocalDate debut = convertToLocalDateViaInstant(prp.getDateDebut());
-		LocalDate fin = convertToLocalDateViaInstant(prp.getDateFin());
+		LocalDate debut = utils.convertToLocalDateViaInstant(prp.getDateDebut());
+		LocalDate fin = utils.convertToLocalDateViaInstant(prp.getDateFin());
 		long nbJour = ChronoUnit.DAYS.between(debut, fin);
 		
 		// Could easily avoid the database request
@@ -148,21 +148,25 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 				nbJour, terrain, prp.getNbAnimauxTroupeauDispo(), prp.getUgbMoyen()).get(0); // superficie
 		prp.setNbAnimauxRecommande(nbAnimauxRecommande);
 		
-		// Equipements
+		// Equipements, sur terrain did not change
 		List<QuantiteEquipement> equipSurTerrain = prp.getEquipementSurTerrain();
+		// but prp.longueurCloture is wrong here
 		
 		// materiel necessaire pour la prestation, can be factorized ?
 		// false do not compute cloture in the function, get from the input in prp
 		List<QuantiteEquipement> equipNecessaire = calculeEquipementNecessaire( prp.getNbAnimaux(), false );
-		// only copy the input from the user
-		equipNecessaire.add( FactoryQuantiteEquipement.Cloture.createQuantiteEquipement(prp.getLongueurCloture()) );
-		
+		// only copy the input from the user for the cloture + Disponible sur son terrain
+		int clotureSurTerrain = this.getLongueurCloture(equipSurTerrain);
+		int clotureChoixUtilisateur = prp.getLongueurCloture(); // a rajouter avant soustraction
+		equipNecessaire.add( FactoryQuantiteEquipement.Cloture.createQuantiteEquipement( 
+				clotureSurTerrain + clotureChoixUtilisateur) );
+				
 		// materiel à payer equipNecessaire - equipSurTerrain
 		List<QuantiteEquipement> equipSupplementaire = soustraitEquipement(equipNecessaire, equipSurTerrain);
 		prp.setEquipementSupplementaire(equipSupplementaire);
 		
-		int longueurTmp = prp.getLongueurClotureSupplementaire();
-		prp.setLongueurCloture(longueurTmp);
+		//int longueurTmp = prp.getLongueurClotureSupplementaire();
+		//prp.setLongueurCloture(longueurTmp);
 		// check availability of the missing materials by REST webservice
 		
 		// prix à payer              
@@ -176,7 +180,7 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 		int longueurCloture = getLongueurCloture(equipNecessaire);
 		System.out.println("longueur cloture necessaire : " + longueurCloture);
 		prp.setBienEtreAnimal(
-				calculeBienEtreAnimal(prp.getNbAnimaux(), prp.getLongueurCloture(), terrain.getSuperficie().intValue(),
+				calculeBienEtreAnimal(prp.getNbAnimaux(), prp.getLongueurCloture() + clotureSurTerrain, terrain.getSuperficie().intValue(),
 						terrain.isClos()));
 		
 		prp.setQualiteTonte( (double)prp.getNbAnimaux() / nbAnimauxRecommande );
@@ -307,12 +311,18 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 			qteEquipement = new QuantiteEquipement();
 			
 			for(QuantiteEquipement necess : equipNecessaire )
-				if( necess.getEquipement().getLibelleEquipement().equals(str) )
+				if( necess.getEquipement().getLibelleEquipement().equals(str) ) {
 					qteNecess = necess.getQuantite();
+					equipement = necess.getEquipement();
+				}
+					
+				
 			
 			for(QuantiteEquipement present : equipSurTerrain )
-				if( present.getEquipement().getLibelleEquipement().equals(str) )
+				if( present.getEquipement().getLibelleEquipement().equals(str) ) {
+					//equipement.setIdEquipement( present.getEquipement().getIdEquipement() );
 					qteNecess -= present.getQuantite();
+				}
 			
 			// assign the missing materiel
 			if( qteNecess > 0 ) 
@@ -329,15 +339,9 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 	// extract longueur cloture for the list, bad implemenentation / structure => Map !!
 	private int getLongueurCloture(List<QuantiteEquipement> equipNecessaire) {
 		for( QuantiteEquipement qe : equipNecessaire )
-			if( qe.getEquipement().getLibelleEquipement() == "clôture" )
+			if( qe.getEquipement().getLibelleEquipement().equals("clôture") )
 				return qe.getQuantite();
 		return 0;
-	}
-	
-	private LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
-	    return dateToConvert.toInstant()
-	      .atZone(ZoneId.systemDefault())
-	      .toLocalDate();
 	}
 	
 	/* to delete, send a fixed prp

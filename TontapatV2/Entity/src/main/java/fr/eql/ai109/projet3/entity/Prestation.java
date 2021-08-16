@@ -36,6 +36,10 @@ public class Prestation implements Serializable {
 	@Column(name="id_prestation", unique=true, nullable=false)
 	private int idPrestation;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="id_derniere_proposition")
+	private Utilisateur idDerniereProposition;
+	
 	@Column(name="cout_prestation")
 	private float coutPrestation;
 	
@@ -57,11 +61,11 @@ public class Prestation implements Serializable {
 	@Column(name="fin_prestation")
 	private LocalDateTime finPrestation;
 	
-	@Column(name="premiere_visite")
-	private LocalDateTime premiereVisite;
+	@Column(name="premiere_visite_propose")
+	private LocalDateTime premiereVisitePropose;
 	
-	@Column(name="acceptation_eleveur")
-	private LocalDateTime acceptationEleveur;
+	@Column(name="premiere_visite_accepte")
+	private LocalDateTime premiereVisiteAccepte;
 	
 	@Column(name="confirmation_berger")
 	private LocalDateTime confirmationBerger;
@@ -99,7 +103,6 @@ public class Prestation implements Serializable {
 	@JoinColumn(name="id_terrain", nullable=false)
 	private Terrain terrain;
 	
-	/* Troupeau more complex with compo_troupeau_presta */
 	@OneToMany(mappedBy="prestation")
 	private List<CompositionTroupeauPrestation> compositionTroupeauPrestations;
 	
@@ -113,6 +116,17 @@ public class Prestation implements Serializable {
 	@OneToMany(mappedBy="prestation")
 	private List<Evaluation> evaluations;
 	
+	@OneToMany(mappedBy="prestation")
+	private List<Tache> taches;
+	
+	public List<Tache> getTaches() {
+		return taches;
+	}
+
+	public void setTaches(List<Tache> taches) {
+		this.taches = taches;
+	}
+
 	public List<Evaluation> getEvaluations() {
 		return evaluations;
 	}
@@ -193,20 +207,28 @@ public class Prestation implements Serializable {
 		this.finPrestation = finPrestation;
 	}
 
-	public LocalDateTime getPremiereVisite() {
-		return premiereVisite;
+	public Utilisateur getIdDerniereProposition() {
+		return idDerniereProposition;
 	}
 
-	public void setPremiereVisite(LocalDateTime premiereVisite) {
-		this.premiereVisite = premiereVisite;
+	public void setIdDerniereProposition(Utilisateur idDerniereProposition) {
+		this.idDerniereProposition = idDerniereProposition;
 	}
 
-	public LocalDateTime getAcceptationEleveur() {
-		return acceptationEleveur;
+	public LocalDateTime getPremiereVisitePropose() {
+		return premiereVisitePropose;
 	}
 
-	public void setAcceptationEleveur(LocalDateTime acceptationEleveur) {
-		this.acceptationEleveur = acceptationEleveur;
+	public void setPremiereVisitePropose(LocalDateTime premiereVisitePropose) {
+		this.premiereVisitePropose = premiereVisitePropose;
+	}
+
+	public LocalDateTime getPremiereVisiteAccepte() {
+		return premiereVisiteAccepte;
+	}
+
+	public void setPremiereVisiteAccepte(LocalDateTime premiereVisiteAccepte) {
+		this.premiereVisiteAccepte = premiereVisiteAccepte;
 	}
 
 	public LocalDateTime getConfirmationBerger() {

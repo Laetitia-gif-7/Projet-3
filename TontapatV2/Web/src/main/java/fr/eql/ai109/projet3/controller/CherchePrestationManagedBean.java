@@ -13,12 +13,14 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import fr.eql.ai109.projet3.entity.Prestation;
 import fr.eql.ai109.projet3.entity.Terrain;
 import fr.eql.ai109.projet3.entity.Troupeau;
 import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.entity.dto.TerrainTrouveApresRechercheDTO;
 import fr.eql.ai109.projet3.entity.dto.TroupeauTrouveApresRechercheDTO;
 import fr.eql.ai109.projet3.ibusiness.CherchePrestationIBusiness;
+import fr.eql.ai109.projet3.ibusiness.PrestationIBusiness;
 import fr.eql.ai109.projet3.ibusiness.TerrainIBusiness;
 import fr.eql.ai109.projet3.ibusiness.TroupeauIBusiness;
 
@@ -35,9 +37,11 @@ public class CherchePrestationManagedBean implements Serializable {
 	
 	private List<TroupeauTrouveApresRechercheDTO> troupeauxCompatiblesAvecDates;
 	private int idTerrain;
-	
+
 	private List<TerrainTrouveApresRechercheDTO> terrainsCompatiblesAvecDates;
 	private int idTroupeau;
+	
+	private List<Prestation> prestationsMemeDepartement;
 	
 	@EJB
 	TerrainIBusiness terrainIBusiness;
@@ -47,6 +51,9 @@ public class CherchePrestationManagedBean implements Serializable {
 	
 	@EJB
 	CherchePrestationIBusiness cherchePrestationIBusiness;
+	
+	@EJB
+	PrestationIBusiness prestationIBusiness;
 
 	@PostConstruct
 	public void init() {
@@ -65,7 +72,16 @@ public class CherchePrestationManagedBean implements Serializable {
     		troupeau = troupeauIBusiness.findTroupeauById(idTroupeau);
     		terrainsCompatiblesAvecDates = cherchePrestationIBusiness.chercheTerrainsCompatibles(idTroupeau);
         }
+        
+        prestationsMemeDepartement = cherchePrestationIBusiness.cherchePrestationMemeDepartement(utilisateurConnecte);
+
 	}
+	
+	public String reservationBerger(int idPrestation) {
+		prestationIBusiness.ReservePrestationBerger(idPrestation, utilisateurConnecte);
+		return "prestations.xhtml";
+	}
+	
 	// dates suggérées par l'algorithme( inscrit dans DB ), mais modifiable par le client dans la confirmation
 	public String reserveParEleveur(int idTerrain, Date dateDebut, Date dateFin) {
 		// idTroupeau
@@ -73,6 +89,8 @@ public class CherchePrestationManagedBean implements Serializable {
 		System.out.println("idTroupeau : "+ idTroupeau);
 		System.out.println("dateDebut : "+ dateDebut);
 		System.out.println("dateFin : "+ dateFin);
+		
+		prestationIBusiness.createPrestationEleveur(utilisateurConnecte, idTerrain, idTroupeau, dateDebut, dateFin);
 		return "prestations.xhtml?faces-redirect=true";
 	}
 	
@@ -129,4 +147,10 @@ public class CherchePrestationManagedBean implements Serializable {
 		this.troupeauxCompatiblesAvecDates = troupeauxCompatiblesAvecDates;
 	}
 
+	public List<Prestation> getPrestationsMemeDepartement() {
+		return prestationsMemeDepartement;
+	}
+	public void setPrestationsMemeDepartement(List<Prestation> prestationsMemeDepartement) {
+		this.prestationsMemeDepartement = prestationsMemeDepartement;
+	}
 }

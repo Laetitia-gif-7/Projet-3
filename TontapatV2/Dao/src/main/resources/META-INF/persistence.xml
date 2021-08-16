@@ -34,6 +34,9 @@
   <class>fr.eql.ai109.projet3.entity.IncidentRef</class>
   <class>fr.eql.ai109.projet3.entity.PeriodeDisponibilite</class>
   <class>fr.eql.ai109.projet3.entity.Evaluation</class>
+  <class>fr.eql.ai109.projet3.entity.Tache</class>
+  <class>fr.eql.ai109.projet3.entity.TacheRef</class>
+  <class>fr.eql.ai109.projet3.entity.AnnulationTache</class>
   <!-- <jar-file>lib/Entity-1.0.0.jar</jar-file> -->
 
   <properties>

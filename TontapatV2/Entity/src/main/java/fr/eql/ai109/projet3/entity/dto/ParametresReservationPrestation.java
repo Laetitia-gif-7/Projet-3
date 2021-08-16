@@ -15,7 +15,8 @@ public class ParametresReservationPrestation implements Serializable {
 	private int nbAnimauxRecommande;
 	private Date dateDebut;
 	private Date dateFin;
-	//
+	private Date premiereVisite;
+	
 	private List<QuantiteEquipement> equipementSupplementaire; // a payer
 	private List<QuantiteEquipement> equipementSurTerrain;  // fixe
 	// fast access, c'est la cloture supplémentaire (à payer)
@@ -35,6 +36,28 @@ public class ParametresReservationPrestation implements Serializable {
 	public double getCout() {
 		return cout;
 	}
+	
+	
+	public Date getPremiereVisite() {
+		return premiereVisite;
+	}
+
+
+	public void setPremiereVisite(Date premiereVisite) {
+		this.premiereVisite = premiereVisite;
+	}
+
+
+	public int getNbAnimauxTroupeauDispos() {
+		return nbAnimauxTroupeauDispos;
+	}
+
+
+	public void setNbAnimauxTroupeauDispos(int nbAnimauxTroupeauDispos) {
+		this.nbAnimauxTroupeauDispos = nbAnimauxTroupeauDispos;
+	}
+
+
 	public List<QuantiteEquipement> getEquipementSupplementaire() {
 		return equipementSupplementaire;
 	}

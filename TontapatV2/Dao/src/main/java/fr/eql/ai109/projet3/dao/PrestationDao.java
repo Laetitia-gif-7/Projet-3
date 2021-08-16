@@ -1,6 +1,5 @@
 package fr.eql.ai109.projet3.dao;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +13,9 @@ import javax.persistence.TypedQuery;
 import fr.eql.ai109.projet3.dao.utils.utils;
 import fr.eql.ai109.projet3.entity.CompositionTroupeauPrestation;
 import fr.eql.ai109.projet3.entity.Prestation;
+import fr.eql.ai109.projet3.entity.QuantiteEquipementPrestation;
+import fr.eql.ai109.projet3.entity.Terrain;
+import fr.eql.ai109.projet3.entity.Troupeau;
 import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.idao.PrestationIDao;
 
@@ -40,7 +42,8 @@ public class PrestationDao extends GenericDao<Prestation> implements PrestationI
 					+ "FROM Prestation p "
 					+ "JOIN FETCH p.compositionTroupeauPrestations ctp "
 					+ "WHERE p.terrain.utilisateur =:utilisateurParam "
-					+ "	  OR ctp.troupeau.utilisateur =:utilisateurParam2 ",Prestation.class);
+					+ "	  OR ctp.troupeau.utilisateur =:utilisateurParam2 "
+					+ "      OR p.berger =:utilisateurParam3 ",Prestation.class);
 			/* not working as expected, keep to retest
 			"SELECT DISTINCT p "
 					+ "FROM Prestation p "
@@ -51,6 +54,7 @@ public class PrestationDao extends GenericDao<Prestation> implements PrestationI
 			*/
 		query.setParameter("utilisateurParam", utilisateur);
 		query.setParameter("utilisateurParam2", utilisateur);
+		query.setParameter("utilisateurParam3", utilisateur);
 		prestas = query.getResultList();
 		// do not manage to load all data. to test an other SQL request all Equipements of  each prestations ??
 		for( Prestation presta : prestas) {
@@ -107,6 +111,36 @@ public class PrestationDao extends GenericDao<Prestation> implements PrestationI
 		query.setParameter("paramDateFin", utils.convertToLocalDateTimeViaInstant(dateFin) );
 		long total = query.getSingleResult();
 		return (int)total;
+	}
+	
+	@Override
+	public void enregistreEquipementSupplementaires(List<QuantiteEquipementPrestation>  listEquipements) {
+		for(QuantiteEquipementPrestation equip : listEquipements)
+			entityManager.persist(equip);
+	}
+	
+	
+	@Override
+	public void enregistreCompoTroupeauPresta(List<CompositionTroupeauPrestation>  listCompoTroupo) {
+		for(CompositionTroupeauPrestation ctp : listCompoTroupo)
+			entityManager.persist(ctp);
+	}
+	
+	public List<Prestation> allPrestationWhithCtp(){
+		List<Prestation> prestations = getAll();
+		List<CompositionTroupeauPrestation> cpt;
+		Troupeau troupeau;
+		Terrain terrain;
+		Utilisateur eleveur;
+		Utilisateur client;
+		for (Prestation prestation : prestations) {
+			terrain = prestation.getTerrain();
+			client = terrain.getUtilisateur();
+			cpt = prestation.getCompositionTroupeauPrestations();
+			troupeau = cpt.get(0).getTroupeau();
+			eleveur = troupeau.getUtilisateur();
+		}
+		return prestations;
 	}
 }
 
