@@ -15,17 +15,24 @@
 	</ui:define>
 	<ui:define name="content">
 		<div class="terrainsTitre">
-			<h1>
-				Vos Terrains,
-				<h:outputLabel value="#{mbCompte.utilisateur.nom}" />
-				!
-			</h1>
+			<h:panelGroup rendered="#{not empty mbCompte.utilisateur}">
+        		<h1>Vos Terrains, <h:outputLabel value="#{mbCompte.utilisateur.nom}" /> !</h1>
+    		</h:panelGroup>
 		</div>
-		<button class="terrainsAjoutTroupeau">
-			<p>Ajouter un terrain</p>
-			<b:iconAwesome value="plus-circle" solid="true" size="3x" />
-		</button>
-		<div class="terrainsDivs">
+		<h:panelGroup rendered="#{empty mbCompte.utilisateur}">
+			<div class="userNotConnected">
+				<h1>Vous devez vous connecter pour accéder à vos troupeaux !</h1>
+				<a class="troupeauxAjoutTroupeau" href="connected.xhtml">
+					<p>Se connecter</p>
+				</a>
+			</div>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{not empty mbCompte.utilisateur}">
+			<button class="troupeauxAjoutTroupeau">
+				<p>Ajouter un terrain</p>
+				<b:iconAwesome value="plus-circle" solid="true" size="3x"/>
+			</button>
+		</h:panelGroup>		<div class="terrainsDivs">
 			<ui:repeat class="terrainBigDiv" var="terrain"
 				value="#{mbTerrain.terrains}" varStatus="status">
 				<div class="terrainBigDiv">

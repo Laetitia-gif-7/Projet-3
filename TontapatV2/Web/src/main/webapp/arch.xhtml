@@ -10,8 +10,8 @@
 	<h:outputStylesheet library="css" name="myStyle.css" />
 </h:head>
 
-<h:body>
-	<b:navBar brand="Tontapat" brandHref="connected.xhtml" fluid="true" contentDisabled="#{navBarBean.navBarDisabled}">
+<h:body style="width: 100%">
+	<b:navBar brand="Tontapat" brandHref="connected.xhtml" fluid="true" contentDisabled="#{navBarBean.navBarDisabled}" class="headerNavBar">
 	  <b:navbarLinks contentDisabled="#{navBarBean.navBarLinksDisabled}">
 	    <b:navLink value="Mes troupeaux" href="troupeaux.xhtml"></b:navLink>
 	    <b:navLink value="Mes terrains" href="terrains.xhtml"></b:navLink>
@@ -28,10 +28,15 @@
 
 	    <b:dropMenu value="Utilisateur">
 	      <b:navLink value="Se connecter" href="login.xhtml" rendered="#{empty mbCompte.utilisateur}"></b:navLink>
-	      <b:navLink value="S'inscrire" href="login.xhtml" rendered="#{empty mbCompte.utilisateur}">></b:navLink>
-	      <b:navLink value="Se deconnecter" href="index.html" rendered="#{not empty mbCompte.utilisateur}"></b:navLink>
+	      <b:navLink value="S'inscrire" href="login.xhtml" rendered="#{empty mbCompte.utilisateur}"></b:navLink>
+	      <h:form>
+	      	<b:navCommandLink value="Se deconnecter" href="connected.xhtml" action="#{mbCompte.deconnection()}" rendered="#{not empty mbCompte.utilisateur}"/>
+	      </h:form>
+	      
 	    </b:dropMenu>
-	    <b:iconAwesome value="user" solid="true" size="3x" />
+	    : <h:outputText value="#{mbCompte.utilisateur.nom}"/>
+	    &nbsp;
+	    <b:iconAwesome value="user" solid="true" size="2x"></b:iconAwesome>
 	  </b:navbarLinks>
 	</b:navBar>
 
@@ -42,8 +47,8 @@
 			</b:column>
 		</b:row>
 	</b:container>
-	<div class="acceuil-footer acceuil-flex-justify-content acceuil-flex-align-items">
-		<h2>mywebsite - 2021</h2>
+	<div class="footer">
+		<h2>Tontapat - 2021</h2>
 	</div>
 
 
