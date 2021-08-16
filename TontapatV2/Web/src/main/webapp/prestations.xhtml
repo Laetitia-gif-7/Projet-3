@@ -79,6 +79,12 @@
 							<ui:param name="user" value="#{mbCompte}" />
 							<!-- no need to pass #mbPresta (include ?) -->
 						</ui:include>
+						<h:form>
+							<b:commandButton value="Valider" look="primary"
+										action="#{mbPresta.signerContrat(prestaBU.value.prestation.idPrestation)}" >
+<!-- 									action="#{mbPresta.validerEtatDesLieux(prestaBU.value.prestation.idPrestation)}" > -->
+							</b:commandButton>
+						</h:form>
 					</div>
 				</div>
 			</c:forEach>

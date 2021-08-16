@@ -139,6 +139,21 @@ public class PrestationDao extends GenericDao<Prestation> implements PrestationI
 		}
 		return prestations;
 	}
+	
+	public Prestation prestationWhithCtp(int idPrestation) {
+		Prestation prestation = getById(idPrestation);
+		Terrain terrain = prestation.getTerrain();
+		Utilisateur client = terrain.getUtilisateur();
+		//terrain.setUtilisateur(client);
+		List<CompositionTroupeauPrestation> cpt = prestation.getCompositionTroupeauPrestations();
+		Troupeau troupeau = cpt.get(0).getTroupeau();
+		Utilisateur eleveur = troupeau.getUtilisateur();
+		//troupeau.setUtilisateur(eleveur);
+		//cpt.get(0).setTroupeau(troupeau);
+		//prestation.setTerrain(terrain);
+		//prestation.setCompositionTroupeauPrestations(cpt);
+		return prestation;
+	}
 }
 
 

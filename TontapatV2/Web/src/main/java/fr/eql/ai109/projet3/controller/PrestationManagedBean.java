@@ -55,6 +55,16 @@ public class PrestationManagedBean implements Serializable {
 			System.out.println("state string :"+ prestations.get(prestationKey).getStateString());
 		}
 	}
+	
+	public String validerEtatDesLieux(int idPrestation) {
+		prestaIBusiness.valideEtatDesLieux(idPrestation, utilisateurConnecte);
+		return "prestations.xhtml";
+	}
+	
+	public String signerContrat(int idPrestation) {
+		prestaIBusiness.valideContrat(idPrestation, utilisateurConnecte);
+		return "prestations.xhtml";
+	}
 
 	// should make action on a specific prestation
 	public void valide(int idPrestation) {
