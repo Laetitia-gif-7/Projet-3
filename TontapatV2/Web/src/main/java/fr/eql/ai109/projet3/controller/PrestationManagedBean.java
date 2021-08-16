@@ -13,6 +13,7 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 //import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UISelectItems;
@@ -98,6 +99,8 @@ public class PrestationManagedBean implements Serializable {
 //		for (IncidentRef incidentRef2 : incidentRef) {
 //			listSelectIncident.add(new SelectItem(incidentRef2.getIdIncidentRef(),incidentRef2.getLibelleIncident()));
 //		}
+		//incidentRefSelectionne = incidentRef.get(0);
+		
 
 	}
 	
