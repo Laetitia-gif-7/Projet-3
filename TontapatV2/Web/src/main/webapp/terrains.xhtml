@@ -26,10 +26,10 @@
 			<b:iconAwesome value="plus-circle" solid="true" size="3x" />
 		</button>
 		<div class="terrainsDivs">
-			<ui:repeat class="terrainsBigDiv" var="terrain"
+			<ui:repeat class="terrainBigDiv" var="terrain"
 				value="#{mbTerrain.terrains}" varStatus="status">
-				<div class="terrainsBigDiv">
-					<div class="terrainsSmallDiv">
+				<div class="terrainBigDiv">
+					<div class="terrainSmallDiv">
 						<p>
 							Nom :
 							<h:outputLabel value="#{terrain.nomTerrain}" />
@@ -67,8 +67,7 @@
 				</div>
 				<b:modal id="amodal${status.index}"
 					title="Détail du terrain : #{terrain.nomTerrain}"
-					styleClass="modalPseudoClass${status.index}" closable="false"
-					close-on-escape="false" backdrop="false">
+					styleClass="modalPseudoClass${status.index}" backdrop="true" closable="true" close-on-escape="true">
 					<p>
 						Nom :
 						<h:outputLabel value="#{terrain.nomTerrain}" />
@@ -95,7 +94,7 @@
 
 					<p>Equipement :</p>
 					<ul>
-						<ui:repeat class="terrainsBigDiv" var="qe"
+						<ui:repeat class="terrainBigDiv" var="qe"
 							value="#{terrain.quantiteEquipement}">
 							<li><h:outputLabel value="#{qe.quantite}" />
 								<h:outputLabel value="#{qe.equipement.uniteRef.libelleUnite}" />
@@ -104,11 +103,11 @@
 					</ul>
 
 					<p>Race compatible pour le type de végétation :</p>
-					<ui:repeat class="terrainsBigDiv" var="pv"
+					<ui:repeat class="terrainBigDiv" var="pv"
 						value="#{terrain.proportionVegetations}">
 						<ul>
 							<h:outputLabel value="#{pv.vegetationRef.libelleVegetation}" />
-							<ui:repeat class="terrainsBigDiv" var="vr"
+							<ui:repeat class="terrainBigDiv" var="vr"
 								value="#{pv.vegetationRef.raceRefs}">
 								<li><h:outputLabel value="#{vr.libelleRace}" /> pour <h:outputLabel
 										value="#{pv.proportionVege}" /> %</li>
@@ -117,7 +116,7 @@
 					</ui:repeat>
 					<p>Type de morphologie :</p>
 					<ul>
-						<ui:repeat class="terrainsBigDiv" var="pm"
+						<ui:repeat class="terrainBigDiv" var="pm"
 							value="#{terrain.proportionMorphologies}">
 							<li><h:outputLabel
 									value="#{pm.morphologieRef.libelleMorphologie}" /> pour <h:outputLabel

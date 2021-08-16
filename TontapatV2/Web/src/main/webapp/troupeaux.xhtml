@@ -38,7 +38,7 @@
 			            <b:button  class="troupeauButtonDetail" value="Voir le détail du troupeau" onclick="$('.modalPseudoClass${status.index}').modal()"/>						
 					</div>
 				</div>
-				<b:modal id="amodal${status.index}" title="Détail du troupeau : #{troupeau.nomTroupeau}" styleClass="modalPseudoClass${status.index}" closable="false"  close-on-escape="false" backdrop="false">
+				<b:modal id="amodal${status.index}" title="Détail du troupeau : #{troupeau.nomTroupeau}" styleClass="modalPseudoClass${status.index}" backdrop="true" closable="true" close-on-escape="true">
 						<p>Nom : <h:outputLabel value="#{troupeau.nomTroupeau}" /></p>
 						<p>Description : <h:outputLabel value="#{troupeau.description}" /></p>
 						<p>Coût par animal : <h:outputLabel value="#{troupeau.coutParAnimal}" /> €</p>
