@@ -55,6 +55,7 @@ public class PrestationManagedBean implements Serializable {
 	private int testId; 
 	
 	
+	
 
 	public int getTestId() {
 		return testId;
@@ -88,6 +89,8 @@ public class PrestationManagedBean implements Serializable {
 	private PrestationIBusiness prestaIBusiness;
 	@EJB
 	private IncidentIBusiness incidentIBusiness;
+	
+	
 	
 	
 	
@@ -128,6 +131,11 @@ public class PrestationManagedBean implements Serializable {
 //        FacesContext.getCurrentInstance().addMessage( null, message );
 //    }
 	
+	public void enregistrerUnIncident(Prestation prestation, IncidentRef incidentRef) {
+		incidentIBusiness.DeclarationIncident(prestation, utilisateurConnecte, incidentRef);
+		 
+		
+	}
 	
 	public List<Incident> getIncidents() {
 		return incidents;
