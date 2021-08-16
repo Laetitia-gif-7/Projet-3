@@ -1,6 +1,7 @@
 package fr.eql.ai109.projet3.entity.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import fr.eql.ai109.projet3.entity.QuantiteEquipement;
@@ -12,27 +13,51 @@ public class ParametresReservationPrestation implements Serializable {
 	private double cout;
 	private int nbAnimaux;
 	private int nbAnimauxRecommande;
-	// init at list<>(), easier ?
-	private List<QuantiteEquipement> equipementSupplementaire;
-	private List<QuantiteEquipement> equipementSurTerrain;
-	private int longueurCloture;
+	private Date dateDebut;
+	private Date dateFin;
+	private Date premiereVisite;
 	
+	private List<QuantiteEquipement> equipementSupplementaire; // a payer
+	private List<QuantiteEquipement> equipementSurTerrain;  // fixe
+	// fast access, c'est la cloture supplémentaire (à payer)
+	private int longueurCloture;
 	// computed values, nice to show in view
 	private double qualiteTonte; // around 1.
-	private double bienEtreAnimal; // surface/animal ou around 1.
+	private double bienEtreAnimal; // around 1.
 	private double ugbMoyen;
-	
-	// intermediate variables, usefull for view ?
-	private int nbTotalAnimauxTroupeau;
+	// 
+	private int nbTotalAnimauxTroupeau; // fixe, depend du troupeau
+	private int nbAnimauxTroupeauDispos; //variable, ceux qui ne sont pas en prestation
 	/*
 	private double prixTransport;
 	private double prixMateriel;
 	private double prixAnimaux;
 	*/
-	
 	public double getCout() {
 		return cout;
 	}
+	
+	
+	public Date getPremiereVisite() {
+		return premiereVisite;
+	}
+
+
+	public void setPremiereVisite(Date premiereVisite) {
+		this.premiereVisite = premiereVisite;
+	}
+
+
+	public int getNbAnimauxTroupeauDispos() {
+		return nbAnimauxTroupeauDispos;
+	}
+
+
+	public void setNbAnimauxTroupeauDispos(int nbAnimauxTroupeauDispos) {
+		this.nbAnimauxTroupeauDispos = nbAnimauxTroupeauDispos;
+	}
+
+
 	public List<QuantiteEquipement> getEquipementSupplementaire() {
 		return equipementSupplementaire;
 	}
@@ -55,6 +80,12 @@ public class ParametresReservationPrestation implements Serializable {
 	}
 	public void setNbAnimaux(int nbAnimaux) {
 		this.nbAnimaux = nbAnimaux;
+	}
+	public int getNbAnimauxRecommande() {
+		return nbAnimauxRecommande;
+	}
+	public void setNbAnimauxRecommande(int nbAnimauxRecommande) {
+		this.nbAnimauxRecommande = nbAnimauxRecommande;
 	}
 	
 	public double getQualiteTonte() {
@@ -79,6 +110,12 @@ public class ParametresReservationPrestation implements Serializable {
 	public void setNbTotalAnimauxTroupeau(int nbTotalAnimauxTroupeau) {
 		this.nbTotalAnimauxTroupeau = nbTotalAnimauxTroupeau;
 	}
+	public int getNbAnimauxTroupeauDispo() {
+		return nbAnimauxTroupeauDispos;
+	}
+	public void setNbAnimauxTroupeauDispo(int nbAnimauxTroupeauLibres) {
+		this.nbAnimauxTroupeauDispos = nbAnimauxTroupeauLibres;
+	}
 	
 	public double getUgbMoyen() {
 		return ugbMoyen;
@@ -87,13 +124,6 @@ public class ParametresReservationPrestation implements Serializable {
 		this.ugbMoyen = ugbMoyen;
 	}
 	
-	public int getNbAnimauxRecommande() {
-		return nbAnimauxRecommande;
-	}
-	
-	public void setNbAnimauxRecommande(int nbAnimauxRecommande) {
-		this.nbAnimauxRecommande = nbAnimauxRecommande;
-	}
 	
 	public int getLongueurClotureSupplementaire() {
 		for( QuantiteEquipement qe : equipementSupplementaire )
@@ -115,4 +145,17 @@ public class ParametresReservationPrestation implements Serializable {
 	public void setLongueurCloture(int longueurCloture) {
 		this.longueurCloture = longueurCloture;
 	}
+	public Date getDateDebut() {
+		return dateDebut;
+	}
+	public void setDateDebut(Date dateDebut) {
+		this.dateDebut = dateDebut;
+	}
+	public Date getDateFin() {
+		return dateFin;
+	}
+	public void setDateFin(Date dateFin) {
+		this.dateFin = dateFin;
+	}
+	
 }

@@ -1,6 +1,7 @@
 package fr.eql.ai109.projet3.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 public interface StatePrestation extends Serializable {
 	
@@ -8,4 +9,5 @@ public interface StatePrestation extends Serializable {
 	void annule(PrestationBU p);
 	void setStateName(PrestationBU p);
 	void setTemplateString(PrestationBU p);
+	//void valideAvecDate(PrestationBU p, LocalDateTime date);
 }

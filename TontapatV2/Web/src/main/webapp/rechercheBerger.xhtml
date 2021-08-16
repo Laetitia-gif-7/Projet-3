@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<ui:composition template="/arch.xhtml">
+
+	<ui:define name="head">
+		<title>Recherche</title>
+		<!-- <f:metadata>
+			<f:event listener="#{mbAccount.disconnect()}" type="preRenderView"></f:event>
+		</f:metadata> -->
+	</ui:define>
+
+	<ui:define name="content">
+		<h1>Résultats de la recherche</h1>
+		<b:column>
+			<div>
+				<h:outputText value="Malheureusement aucune prestation disponible"
+					rendered="#{empty mbRecherche.prestationsMemeDepartement}" />
+				
+				<div class="troupeauxDivs">
+					<ui:repeat class="troupeauxBigDiv" var="presta"
+						value="#{mbRecherche.prestationsMemeDepartement}"
+						varStatus="status">
+						<div class="troupeauBigDiv">
+							<div class="troupeauSmallDiv">
+								<p>
+									Numéro :
+									<h:outputLabel value="#{presta.numeroPrestation}" />
+								</p>
+								<p>
+									A partir du :
+									<h:outputLabel value="#{presta.debutPrestation}" />
+									Jusqu'au :
+									<h:outputLabel value="#{presta.finPrestation}" />
+								</p>
+								<p>
+									Date de la visite d'état des lieux :
+									<h:outputLabel value="#{presta.premiereVisitePropose}" />
+								</p>
+								<p>
+									Adresse du terrain :
+									<h:outputLabel value="#{presta.terrain.noRue}" />
+									<span> </span>
+									<h:outputLabel value="#{presta.terrain.rue}" />
+									<span> </span>
+									<h:outputLabel value="#{presta.terrain.villeCp.codePostal}" />
+									<span> </span>
+									<h:outputLabel value="#{presta.terrain.villeCp.ville}" />
+									<span> </span>
+									<h:outputLabel value="#{presta.terrain.villeCp.departement}" />
+								</p>
+								<h:form>
+									<b:commandButton value="Reserver" look="primary"
+									action="#{mbRecherche.reservationBerger(presta.idPrestation)}" >
+									</b:commandButton>
+								</h:form>
+							</div>
+						</div>
+					</ui:repeat>
+				</div>
+			</div>
+		</b:column>
+	</ui:define>
+</ui:composition>
+
+</html>

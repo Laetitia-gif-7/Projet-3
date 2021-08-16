@@ -16,33 +16,6 @@
 
 	<ui:define name="content">
 		<h1>Résultats de la recherche</h1>
-
-<!-- 		<b:form> -->
-<!-- 			<b:panel -->
-<!-- 				style-class="cat-margin-top-3rem cat-margin-bottom-5rem  -->
-<!-- 				col-sm-offset-1 col-md-offset-2 col-xs-12 col-sm-10 col-md-8"> -->
-<!-- 				<b:row> -->
-<!-- 					<b:column> -->
-<!-- 						<b:datepicker id="cdate1" mode="toggle-icon" showWeek="true" -->
-<!-- 							firstDay="1" value="#{dateBean.cdate}" required="true" -->
-<!-- 							label="Date Début:" label-col-sm="5" col-sm="6" /> -->
-<!-- 					</b:column> -->
-<!-- 				</b:row> -->
-<!-- 				<b:row> -->
-<!-- 					<b:column> -->
-<!-- 						<b:datepicker id="cdate2" mode="toggle-icon" showWeek="true" -->
-<!-- 							firstDay="1" value="#{dateBean.cdate}" required="true" -->
-<!-- 							label="Date Fin:" label-col-sm="5" col-sm="6" /> -->
-<!-- 					</b:column> -->
-<!-- 				</b:row> -->
-<!-- 				<b:row> -->
-<!-- 					<b:column col-sm="6"> -->
-<!-- 						<b:commandButton value="Rechercher" update="@form" col-sm="6" -->
-<!-- 							look="success" onclick="ajax:dateBean.onSubmitDate3()" /> -->
-<!-- 					</b:column> -->
-<!-- 				</b:row> -->
-<!-- 			</b:panel> -->
-<!-- 		</b:form> -->
 		<b:column>
 			<div>
 				<br />
@@ -75,13 +48,16 @@
 									Jusqu'au :
 									<h:outputLabel value="#{troup.dateMax}" />
 								</p>
+								<p>
+									Race : 
+								</p>
 								<ul>
-									Race :
 									<ui:repeat var="match"
 										value="#{troup.troupeau.compositionTroupeau}">
 										<li><h:outputLabel value="#{match.raceRef.libelleRace}" /></li>
 									</ui:repeat>
 								</ul>
+								
 								<b:button class="troupeauButtonDetail"
 									value="Voir le détail du troupeau"
 									onclick="$('.modalPseudoClass${status.index}').modal()" />
@@ -89,7 +65,8 @@
 							</div>
 							<b:modal id="amodal${status.index}"
 								title="Détail du troupeau : #{troupeau.nomTroupeau}"
-								styleClass="modalPseudoClass${status.index}" backdrop="true" closable="true" close-on-escape="true">
+								styleClass="modalPseudoClass${status.index}" closable="false"
+								close-on-escape="false" backdrop="false">
 								<p>
 									Nom :
 									<h:outputLabel value="#{troup.troupeau.nomTroupeau}" />
@@ -148,8 +125,8 @@
 							<b:button value="Reserver" look="primary" outcome="reservationPrestation" >
 								<f:param name="idTroupeau" value="#{troup.troupeau.idTroupeau}" />
 								<f:param name="idTerrain" value="#{mbRecherche.idTerrain}" />
-								<f:param name="dateMin" value="#{troup.dateMin}" />
-								<f:param name="dateMax" value="#{troup.dateMax}" />
+								<f:param name="dateMin" value="#{mbRecherche.getMyDateString(troup.dateMin)}" />
+								<f:param name="dateMax" value="#{mbRecherche.getMyDateString(troup.dateMax)}" />
 							</b:button>
 						</h:form>				
 					</f:facet>
@@ -159,7 +136,6 @@
 			</div>
 		</b:column>
 	</ui:define>
-
 </ui:composition>
 
 </html>

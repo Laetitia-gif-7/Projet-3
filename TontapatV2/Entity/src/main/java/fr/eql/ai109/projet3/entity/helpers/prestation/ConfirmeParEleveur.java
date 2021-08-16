@@ -1,7 +1,9 @@
-package fr.eql.ai109.projet3.business.helpers.prestation;
+package fr.eql.ai109.projet3.entity.helpers.prestation;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
+import fr.eql.ai109.projet3.entity.Prestation;
 import fr.eql.ai109.projet3.entity.PrestationBU;
 import fr.eql.ai109.projet3.entity.StatePrestation;
 
@@ -19,11 +21,14 @@ public class ConfirmeParEleveur implements StatePrestation, Serializable  {
 	
 	@Override
 	public void valide(PrestationBU p) {
+		Prestation prestation = p.getPrestation();
+		prestation.setPremiereVisiteAccepte(LocalDateTime.now());
+		p.setState(DateEtatDesLieuxValide.DATEETATSDESLIEUXVALIDE);   
 	}
 
 	@Override
 	public void annule(PrestationBU p) {
-		//
+		
 	}
 
 	@Override
@@ -35,4 +40,16 @@ public class ConfirmeParEleveur implements StatePrestation, Serializable  {
 	public void setTemplateString(PrestationBU p) {
 		p.setTemplateXhtml("confirmeParEleveur.xhtml");
 	}
+
+	/*
+	@Override
+	public void valideAvecDate(PrestationBU p, LocalDateTime date) {
+		Prestation prestation = p.getPrestation();
+		prestation.setAcceptationEleveur(LocalDateTime.now());
+		p.setState(ConfirmeParEleveur.CONFIRMEPARELEVEUR);
+		p.getPrestation().setAcceptationEleveur(date);
+		
+		p.setState(ConfirmeParEleveur.CONFIRMEPARELEVEUR);
+		
+	}*/
 }

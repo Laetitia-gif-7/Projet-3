@@ -9,5 +9,6 @@ public interface TerrainIBusiness {
 
 	List<Terrain> findTerrainsByUtilisateur(Utilisateur utilisateur);
 	Terrain findTerrainByIdTerrainAndUtilisateur(int idTerrain, Utilisateur utilisateur);
+	Terrain findByIdWithEquipement(int idTerrain);
 	
 }

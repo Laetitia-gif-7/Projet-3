@@ -1,6 +1,9 @@
 package fr.eql.ai109.projet3.controller;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 //import java.util.List;
 import java.util.Map;
 
@@ -70,10 +73,19 @@ public class PrestationManagedBean implements Serializable {
 		prestations.put(newPbu.getPrestation().getIdPrestation(), newPbu);
 	}
 	
+	public void valideAvecDate(int idPrestation, LocalDateTime date) {
+		System.out.println("Valider avec date : " + idPrestation);
+		//PrestationBU newPbu = prestaIBusiness.valideAvecDate(prestations.get(idPrestation), date);
+	}
+	
 	public void annule(int idPrestation) {
 		System.out.println("Annuler la prestation :" + idPrestation);
 	}
 
+	public String formatMyLocalDateTime(LocalDateTime date) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		return date.format(formatter);
+	}
 	
 	public Utilisateur getUtilisateurConnecte() {
 		return utilisateurConnecte;

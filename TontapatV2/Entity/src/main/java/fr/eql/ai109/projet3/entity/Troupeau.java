@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-/* Added util functions : (good place ?)
+/* Added util functions : (good place ??)
  * int getNbtotalAnimaux()
  * double getUGBMoyen()
  * 

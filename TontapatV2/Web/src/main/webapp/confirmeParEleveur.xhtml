@@ -5,20 +5,32 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:b="http://bootsfaces.net/ui">
 	
-	Confirmé par client.xhtml component<br/>
+	Confirmé par eleveur.xhtml component<br/>
 	User connecté :<h:outputLabel value="#{user.utilisateur.id}"/> 
 	<hr/>
 	<h:outputLabel value="#{prestaBuByMain.stateString}"/>
 	
-	<!-- Vue Client -->
+	<!-- Vue Client, reservation confirmée. la date d'état des lieux peut etre modifiee ou acceptée (date proposée par l'éleveur)  -->
 	<ui:fragment rendered="#{prestaBuByMain.client.id == user.utilisateur.id}">
-		Votre demande de réservation a été confirmée par
-		<h:outputLabel value="#{prestaBuByMain.eleveur.nom}"/>, valider la prestation
+		Votre demande de réservation a été confirmée par <h:outputLabel value="#{prestaBuByMain.eleveur.nom}"/>
+		<!-- SI  id_derniere_proposition !=  myId (idClient) --> 
+		<p>  date proposéé:..........</p>
+		<p> Accepter ou proposer une nouvelle date </p>
+		<!-- SI id_derniere_proposition ==  myId (idClient) (mon id)   -->
+		En attente du retour de l'éleveur 
 	</ui:fragment>
 	
-	<!--  Vue Eleveur -->
+	<!--  Vue Eleveur, il peut valider la date d'état des lieux suggérée par le client
+		  Ou, proposer 1 nouvelle date -->
 	<ui:fragment rendered="#{prestaBuByMain.eleveur.id == user.utilisateur.id}">
-		En attente de la validation finale du client
-		<h:outputLabel value="#{prestaBuByMain.client.nom}"/>, valider la prestation
+		<!-- SI  id_derniere_proposition != myId(idEleveur) -->
+		<p> date proposée d'état des lieux : <h:outputText value="#{prestaBuByMain.prestation.premiereVisite}"/></p>
+		<!-- SI  id_derniere_proposition == my(Id)idEleveur -->
+		En attente du retour du client
+		<h:form>
+ 			<b:commandButton value="Confirmer la date" action="#{mbPresta.valideAvecDate( prestaBuByMain.prestation.idPrestation, prestaBuByMain.prestation.premiereVisite)}" />
+			<b:commandButton value="Annuler" action="#{mbPresta.annule( prestaBuByMain.prestation.idPrestation ) }"/>
+		</h:form>
+<!-- 		<h:outputLabel value="#{prestaBuByMain.client.nom}"/>, valider la prestation -->
 	</ui:fragment>
 </ui:composition>

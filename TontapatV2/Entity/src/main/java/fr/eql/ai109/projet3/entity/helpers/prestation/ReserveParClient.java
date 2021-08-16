@@ -1,4 +1,4 @@
-package fr.eql.ai109.projet3.business.helpers.prestation;
+package fr.eql.ai109.projet3.entity.helpers.prestation;
 
 import java.time.LocalDateTime;
 
@@ -52,4 +52,10 @@ public class ReserveParClient implements StatePrestation {
 	public void setTemplateString(PrestationBU p) {
 		p.setTemplateXhtml("reserveParClient.xhtml");
 	}
+	/*
+	@Override
+	public void valideAvecDate(PrestationBU p, LocalDateTime date) {
+		// TODO Auto-generated method stub
+		
+	}*/
 }
