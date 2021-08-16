@@ -35,7 +35,7 @@ public class ReserveParClient implements StatePrestation {
 		// entity will be updated in PrestationBusiness, not need dao access here (and can move later to Entity)
 		Prestation prestation = p.getPrestation();
 		prestation.setConfirmation(LocalDateTime.now());
-		p.setState(ConfirmeParEleveur.CONFIRMEPARELEVEUR);
+		p.setState(ConfirmeParPartenaire.CONFIRMEPARPARTENAIRE);
 	}
 
 	@Override

@@ -10,7 +10,8 @@ import javax.ejb.Startup;
 
 
 import fr.eql.ai109.projet3.entity.helpers.prestation.Annule;
-import fr.eql.ai109.projet3.entity.helpers.prestation.ConfirmeParEleveur;
+import fr.eql.ai109.projet3.entity.helpers.prestation.ConfirmeParPartenaire;
+//import fr.eql.ai109.projet3.entity.helpers.prestation.ConfirmeParEleveur;
 import fr.eql.ai109.projet3.entity.helpers.prestation.ReserveParClient;
 import fr.eql.ai109.projet3.entity.helpers.prestation.ReserveParEleveur;
 import fr.eql.ai109.projet3.entity.Prestation;
@@ -70,17 +71,24 @@ public class FactoryPrestrestationBU {
 			return proxy;
 		}
 		
+		// CONFIRME PAR PARTENAIRE
+		if(  prestation.getPremiereVisiteAccepte() == null) {
+			proxy.setState(ConfirmeParPartenaire.CONFIRMEPARPARTENAIRE);
+		}
+		
+		/*
 		// ACCEPTATION DATE d'état des lieux par l'éleveur
 		if( prestation.getPremiereVisiteAccepte() == null) {
 			
 			if( utilisateurInitiateurId == clientId ) {
-				proxy.setState( ConfirmeParEleveur.CONFIRMEPARELEVEUR );
+				//proxy.setState( ConfirmeParEleveur.CONFIRMEPARELEVEUR );
 			// TODO continue the logic
 			} else {
 				proxy.setState(null);
 			}
 			return proxy;
 		}
+		*/
 		// return default should be an error
 		return proxy;
 	}

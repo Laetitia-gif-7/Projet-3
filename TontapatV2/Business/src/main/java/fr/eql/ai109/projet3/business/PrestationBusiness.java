@@ -175,6 +175,21 @@ public class PrestationBusiness implements PrestationIBusiness {
 		
 	}
 	
+	@Override
+	public Map<Integer,PrestationBU> findPrestationsByUtilisateur(Utilisateur utilisateur) {
+		List<Prestation> prestations = prestationIDao.getPrestationsByUser(utilisateur);
+		//  Id prestation , prestationBu
+		Map<Integer,PrestationBU> prestationsBu = new HashMap<>();
+		
+		for (Prestation prestation : prestations) {
+			System.out.println("test: " + prestation.toString());
+			prestationsBu.put(
+					prestation.getIdPrestation(),
+					factoryPrestaBu.createPrestationBU(prestation, utilisateur ) );
+		}
+		return prestationsBu;
+	}
+	
 	// calcule le nombre d'animaux et de races de la prestation
 	// take into account the number of animals disponibles
 	private  List<CompositionTroupeauPrestation> createCompositionTroupeauPrestation(int nbAnimaux, Troupeau troupeau, Date debut, Date fin) {
@@ -278,21 +293,7 @@ public class PrestationBusiness implements PrestationIBusiness {
 		}
 		return listPeriods;
 	}
-	
-	
-	@Override
-	public Map<Integer,PrestationBU> findPrestationsByUtilisateur(Utilisateur utilisateur) {
-		List<Prestation> prestations = prestationIDao.getPrestationsByUser(utilisateur);
-		Map<Integer,PrestationBU> prestationsBu = new HashMap<>();
-		
-		for (Prestation prestation : prestations) {
-			System.out.println("test: " + prestation.toString());
-			prestationsBu.put(
-					prestation.getIdPrestation(),
-					factoryPrestaBu.createPrestationBU(prestation, utilisateur ) );
-		}
-		return prestationsBu;
-	}
+
 
 	@Override
 	public PrestationBU valide(PrestationBU prestaBu) {

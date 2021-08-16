@@ -13,11 +13,11 @@ import fr.eql.ai109.projet3.entity.StatePrestation;
  * - le client peut annuler la réservation => PrestationAnnule
  * - l'éleveur peut rien faire de plus ... ?
  */
-public class ConfirmeParEleveur implements StatePrestation, Serializable  {
+public class ConfirmeParPartenaire implements StatePrestation, Serializable  {
 
 	private static final long serialVersionUID = 1L;
 	
-	public static final ConfirmeParEleveur CONFIRMEPARELEVEUR = new ConfirmeParEleveur();
+	public static final ConfirmeParPartenaire CONFIRMEPARPARTENAIRE = new ConfirmeParPartenaire();
 	
 	@Override
 	public void valide(PrestationBU p) {
@@ -33,12 +33,12 @@ public class ConfirmeParEleveur implements StatePrestation, Serializable  {
 
 	@Override
 	public void setStateName(PrestationBU p) {
-		p.setStateString("CONFIRMEPARELEVEUR");
+		p.setStateString("CONFIRMEPARPARTENAIRE");
 	}
 
 	@Override
 	public void setTemplateString(PrestationBU p) {
-		p.setTemplateXhtml("confirmeParEleveur.xhtml");
+		p.setTemplateXhtml("confirmeParPartenaire.xhtml");
 	}
 
 	/*

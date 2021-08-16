@@ -42,7 +42,8 @@ public class PrestationDao extends GenericDao<Prestation> implements PrestationI
 					+ "FROM Prestation p "
 					+ "JOIN FETCH p.compositionTroupeauPrestations ctp "
 					+ "WHERE p.terrain.utilisateur =:utilisateurParam "
-					+ "	  OR ctp.troupeau.utilisateur =:utilisateurParam2 ",Prestation.class);
+					+ "	  OR ctp.troupeau.utilisateur =:utilisateurParam2 "
+					+ "   OR p.berger =:utilisateurParam3 ",Prestation.class);
 			/* not working as expected, keep to retest
 			"SELECT DISTINCT p "
 					+ "FROM Prestation p "
@@ -53,6 +54,7 @@ public class PrestationDao extends GenericDao<Prestation> implements PrestationI
 			*/
 		query.setParameter("utilisateurParam", utilisateur);
 		query.setParameter("utilisateurParam2", utilisateur);
+		query.setParameter("utilisateurParam3", utilisateur);
 		prestas = query.getResultList();
 		// do not manage to load all data. to test an other SQL request all Equipements of  each prestations ??
 		for( Prestation presta : prestas) {

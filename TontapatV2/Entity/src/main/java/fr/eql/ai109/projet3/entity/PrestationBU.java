@@ -17,7 +17,7 @@ public class PrestationBU implements Serializable {
 	// extends entity attributes to ease treatment ? 
 	private Utilisateur client;
 	private Utilisateur eleveur;
-	//private Utilisateur berger;
+	private Utilisateur berger;
 	// private Utilisateur partenaire
 	
 	//default, should be overwritten by each state
