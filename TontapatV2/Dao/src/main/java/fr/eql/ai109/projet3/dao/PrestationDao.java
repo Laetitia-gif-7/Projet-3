@@ -43,7 +43,7 @@ public class PrestationDao extends GenericDao<Prestation> implements PrestationI
 					+ "JOIN FETCH p.compositionTroupeauPrestations ctp "
 					+ "WHERE p.terrain.utilisateur =:utilisateurParam "
 					+ "	  OR ctp.troupeau.utilisateur =:utilisateurParam2 "
-					+ "	  OR p.berger =:utilisateurParam3 ",Prestation.class);
+					+ "   OR p.berger =:utilisateurParam3 ",Prestation.class);
 			/* not working as expected, keep to retest
 			"SELECT DISTINCT p "
 					+ "FROM Prestation p "
