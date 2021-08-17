@@ -41,6 +41,12 @@ public class ReserveParEleveur implements StatePrestation {
 		
 	}
 
+	@Override
+	public void valideAvecDate(PrestationBU p, Utilisateur utilisateur, LocalDateTime date) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	/*
 	@Override
 	public void valideAvecDate(PrestationBU p, LocalDateTime date) {

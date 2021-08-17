@@ -3,6 +3,7 @@ package fr.eql.ai109.projet3.controller;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -53,8 +54,17 @@ public class PrestationManagedBean implements Serializable {
 	private List<Incident> incidents;
 	private IncidentRef incidentRefSelectionne;
 	private int testId; 
+	private Date nouvelleDate;
 	
 	
+
+	public Date getNouvelleDate() {
+		return nouvelleDate;
+	}
+
+	public void setNouvelleDate(Date nouvelleDate) {
+		this.nouvelleDate = nouvelleDate;
+	}
 
 	public int getTestId() {
 		return testId;
@@ -179,9 +189,12 @@ public class PrestationManagedBean implements Serializable {
 		prestations.put(updatedPbu.getPrestation().getIdPrestation(), updatedPbu);
 	}
 	
-	public void valideAvecDate(int idPrestation, LocalDateTime date) {
+	public void valideAvecDate(int idPrestation, Date date) {
 		System.out.println("Valider avec date : " + idPrestation);
-		//PrestationBU newPbu = prestaIBusiness.valideAvecDate(prestations.get(idPrestation), date);
+		PrestationBU updatedPbu = prestaIBusiness.valide(prestations.get(idPrestation), date, utilisateurConnecte);
+		assert idPrestation == updatedPbu.getPrestation().getIdPrestation();
+		// update the value
+		prestations.put(updatedPbu.getPrestation().getIdPrestation(), updatedPbu);
 	}
 	
 	public void annule(int idPrestation) {

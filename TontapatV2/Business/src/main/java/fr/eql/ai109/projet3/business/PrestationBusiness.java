@@ -311,6 +311,13 @@ public class PrestationBusiness implements PrestationIBusiness {
 		prestationIDao.update(prestaBu.getPrestation());
 		return prestaBu;
 	}
+	
+	@Override
+	public PrestationBU valide(PrestationBU prestaBu, Date date, Utilisateur utilisateur) {
+		prestaBu.valide(utilisateur);
+		prestationIDao.update(prestaBu.getPrestation());
+		return null;
+	}
 
 	/*
 	@Override

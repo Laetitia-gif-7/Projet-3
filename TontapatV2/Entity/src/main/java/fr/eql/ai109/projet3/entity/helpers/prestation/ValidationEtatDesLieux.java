@@ -49,4 +49,10 @@ public class ValidationEtatDesLieux implements StatePrestation {
 		
 	}
 
+	@Override
+	public void valideAvecDate(PrestationBU p, Utilisateur utilisateur, LocalDateTime date) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

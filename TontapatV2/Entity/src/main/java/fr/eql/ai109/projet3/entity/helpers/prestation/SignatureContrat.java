@@ -53,4 +53,10 @@ public class SignatureContrat implements StatePrestation {
 		//if( p.getBerger() == utilisateur )
 		//	presta.setContratBerger(LocalDateTime.now());
 	}
+
+	@Override
+	public void valideAvecDate(PrestationBU p, Utilisateur utilisateur, LocalDateTime date) {
+		// TODO Auto-generated method stub
+		
+	}
 }

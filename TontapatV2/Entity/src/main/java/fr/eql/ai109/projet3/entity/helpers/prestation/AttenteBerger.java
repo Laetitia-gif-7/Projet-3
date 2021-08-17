@@ -1,5 +1,7 @@
 package fr.eql.ai109.projet3.entity.helpers.prestation;
 
+import java.time.LocalDateTime;
+
 import fr.eql.ai109.projet3.entity.PrestationBU;
 import fr.eql.ai109.projet3.entity.StatePrestation;
 import fr.eql.ai109.projet3.entity.Utilisateur;
@@ -13,8 +15,13 @@ public class AttenteBerger implements StatePrestation {
 	@Override
 	public void valide(PrestationBU p) {
 		// TODO Auto-generated method stub
-
 	}
+	
+	@Override
+	public void valide(PrestationBU p, Utilisateur utilisateur) {}
+
+	@Override
+	public void valideAvecDate(PrestationBU p, Utilisateur utilisateur, LocalDateTime date) {}
 
 	@Override
 	public void annule(PrestationBU p) {
@@ -31,10 +38,6 @@ public class AttenteBerger implements StatePrestation {
 		p.setTemplateXhtml("attenteBerger.xhtml");
 	}
 
-	@Override
-	public void valide(PrestationBU p, Utilisateur utilisateur) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 }

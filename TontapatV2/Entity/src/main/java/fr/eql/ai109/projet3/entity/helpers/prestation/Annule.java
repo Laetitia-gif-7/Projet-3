@@ -21,6 +21,13 @@ public class Annule implements StatePrestation {
 	}
 
 	@Override
+	public void valide(PrestationBU p, Utilisateur utilisateur) {}
+
+	@Override
+	public void valideAvecDate(PrestationBU p, Utilisateur utilisateur, LocalDateTime date) {}
+	
+
+	@Override
 	public void annule(PrestationBU p) {
 	}
 
@@ -41,9 +48,4 @@ public class Annule implements StatePrestation {
 		
 	}*/
 
-	@Override
-	public void valide(PrestationBU p, Utilisateur utilisateur) {
-		// TODO Auto-generated method stub
-		
-	}
 }

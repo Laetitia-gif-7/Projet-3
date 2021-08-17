@@ -62,4 +62,10 @@ public class ReserveParClient implements StatePrestation {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void valideAvecDate(PrestationBU p, Utilisateur utilisateur, LocalDateTime date) {
+		// TODO Auto-generated method stub
+		
+	}
 }

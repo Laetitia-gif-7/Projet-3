@@ -26,6 +26,19 @@ public class ConfirmeParPartenaire implements StatePrestation, Serializable  {
 		//prestation.setPremiereVisiteAccepte(LocalDateTime.now());
 		//p.setState(DateEtatDesLieuxValide.DATEETATSDESLIEUXVALIDE);   
 	}
+	
+	@Override
+	public void valide(PrestationBU p, Utilisateur utilisateur) {}
+
+	@Override
+	public void valideAvecDate(PrestationBU p, Utilisateur utilisateur, LocalDateTime date) {
+		Prestation presta = p.getPrestation();
+		if( p.getClient() == utilisateur )
+			presta.setContratClient(LocalDateTime.now());
+		
+		if( p.getEleveur() == utilisateur )
+			presta.setContratEleveur(LocalDateTime.now());
+	}
 
 	@Override
 	public void annule(PrestationBU p) {
@@ -42,11 +55,7 @@ public class ConfirmeParPartenaire implements StatePrestation, Serializable  {
 		p.setTemplateXhtml("confirmeParPartenaire.xhtml");
 	}
 
-	@Override
-	public void valide(PrestationBU p, Utilisateur utilisateur) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	/*
 	@Override
