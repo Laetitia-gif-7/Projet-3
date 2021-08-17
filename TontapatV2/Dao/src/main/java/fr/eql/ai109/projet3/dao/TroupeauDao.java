@@ -12,7 +12,6 @@ import javax.ejb.Stateless;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
-
 import fr.eql.ai109.projet3.dao.utils.utils;
 import fr.eql.ai109.projet3.entity.CompositionTroupeau;
 import fr.eql.ai109.projet3.entity.CompositionTroupeauPrestation;

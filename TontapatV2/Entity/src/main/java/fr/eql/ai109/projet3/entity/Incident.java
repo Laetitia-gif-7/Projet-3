@@ -1,7 +1,8 @@
 package fr.eql.ai109.projet3.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,8 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+//import javax.persistence.Temporal;
+//import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="incident")
@@ -25,13 +26,13 @@ public class Incident implements Serializable {
 	@Column(name="id_incident", unique=true, nullable=false)
 	private int idIncident;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	//@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="date_declaration")
-	private Date dateDeclaration;
+	private LocalDateTime dateDeclaration;
 
-	@Temporal(TemporalType.TIMESTAMP)
+	//@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="date_fin_incident")
-	private Date dateFinIncident;
+	private LocalDateTime dateFinIncident;
 	
 	@Column(length=254)
 	private String description;
@@ -62,19 +63,19 @@ public class Incident implements Serializable {
 		this.idIncident = idIncident;
 	}
 
-	public Date getDateDeclaration() {
+	public LocalDateTime getDateDeclaration() {
 		return dateDeclaration;
 	}
 
-	public void setDateDeclaration(Date dateDeclaration) {
+	public void setDateDeclaration(LocalDateTime dateDeclaration) {
 		this.dateDeclaration = dateDeclaration;
 	}
 
-	public Date getDateFinIncident() {
+	public LocalDateTime getDateFinIncident() {
 		return dateFinIncident;
 	}
 
-	public void setDateFinIncident(Date dateFinIncident) {
+	public void setDateFinIncident(LocalDateTime dateFinIncident) {
 		this.dateFinIncident = dateFinIncident;
 	}
 

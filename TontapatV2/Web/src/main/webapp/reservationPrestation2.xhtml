@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+	
+	<ui:composition template="/arch.xhtml">
+		<ui:define name="content">
+			<h1>Ajustez votre prestation!</h1>
+			<h2>Prestation entre 
+			<h:outputText value="#{mbReservation.terrain.nomTerrain}" /> et 
+			<h:outputText value="#{mbReservation.troupeau.nomTroupeau}"/>.</h2><br/>
+			<hr/>
+			<p>Vos equipement :</p>
+						
+				<ui:repeat var="resa" value="#{mbReservation.terrain}">
+					<li>
+						<h:outputLabel value="#{resa.quantiteEquipement}" />
+					</li>
+				</ui:repeat>			
+			<hr/>
+	Variable<br/>
+	<p>Nbre : <h:outputText value="#{mbReservation.prp.qualiteTonte}" /></p>
+	<p>Nbre d'animaux : <h:outputText value="#{mbReservation.prp.nbAnimaux}" /></p>
+	<h:form>
+		<h:inputText value="#{mbReservation.prp.nbAnimaux}" />
+		<b:column>
+    		<b:slider2 mode="basic" min="10" max="#{mbReservation.prp.nbTotalAnimauxTroupeau}" span="7" value="#{mbReservation.prp.nbAnimaux}" 
+    			label="Nb Animaux" />
+  		</b:column>
+  	</h:form>
+		</ui:define>
+		</ui:composition>
+</html>
