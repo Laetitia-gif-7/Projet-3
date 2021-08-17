@@ -1,5 +1,7 @@
 package fr.eql.ai109.projet3.business.factories;
 
+import java.time.LocalDateTime;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
@@ -11,7 +13,9 @@ import javax.ejb.Startup;
 
 import fr.eql.ai109.projet3.entity.helpers.prestation.Annule;
 import fr.eql.ai109.projet3.entity.helpers.prestation.AttenteBerger;
+import fr.eql.ai109.projet3.entity.helpers.prestation.AvantPrestation;
 import fr.eql.ai109.projet3.entity.helpers.prestation.ConfirmeParPartenaire;
+import fr.eql.ai109.projet3.entity.helpers.prestation.EnCours;
 import fr.eql.ai109.projet3.entity.helpers.prestation.ReserveParClient;
 import fr.eql.ai109.projet3.entity.helpers.prestation.ReserveParEleveur;
 import fr.eql.ai109.projet3.entity.helpers.prestation.SignatureContrat;
@@ -48,11 +52,15 @@ public class FactoryPrestationBU {
 		// One composition troupeau should always be available
 		// assert here to retest
 		int eleveurId = prestation.getCompositionTroupeauPrestations().get(0).getTroupeau().getUtilisateur().getId();
-		
+		int bergerId; // = 0;
 		// insert into the object for the view
 		proxy.setClient(prestation.getTerrain().getUtilisateur());
 		proxy.setEleveur(prestation.getCompositionTroupeauPrestations().get(0).getTroupeau().getUtilisateur());
 		
+		if( (prestation.isBesoinBerger() == true) && (prestation.getBerger() != null) )  {
+			bergerId =  prestation.getBerger().getId();
+			proxy.setBerger( prestation.getBerger() );
+		}
 		//if( prestation.getReservation() == null )
 		//	throw new Exception("Error in prestation Reservation is null");
 		
@@ -97,8 +105,24 @@ public class FactoryPrestationBU {
 		}
 		
 		if( prestation.getContratClient() == null || prestation.getContratEleveur() == null || 
-			( prestation.isBesoinBerger() == true && prestation.getContratBerger()  == null)	)  {
-			proxy.setState(SignatureContrat.SIGNATURECONTRAT);
+			( prestation.isBesoinBerger() == true && prestation.getContratBerger()  == null) ) {
+				proxy.setState(SignatureContrat.SIGNATURECONTRAT);
+				return proxy;
+			}
+		
+		LocalDateTime dtnow = LocalDateTime.now(); 
+		if( prestation.getDebutPrestation().compareTo(dtnow) > 0 ) {
+			proxy.setState(AvantPrestation.AVANTPRESTATION);
+			return proxy;
+		}
+		
+		if( prestation.getDebutPrestation().compareTo(dtnow) > 0  &&  prestation.getFinPrestation().compareTo(dtnow) < 0 ) {
+			proxy.setState(EnCours.ENCOURS);
+			return proxy;
+		}
+		
+		if( prestation.getFinPrestation().compareTo(dtnow) > 0 ) {
+			proxy.setState(EnCours.ENCOURS);
 			return proxy;
 		}
 		

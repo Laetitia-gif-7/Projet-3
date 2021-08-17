@@ -10,7 +10,7 @@ import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
+import java.time.temporal.ChronoUnit;
 //import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -54,7 +54,7 @@ public class PrestationManagedBean implements Serializable {
 	private List<Incident> incidents;
 	private IncidentRef incidentRefSelectionne;
 	private int testId; 
-	private Date nouvelleDate;
+	private Date nouvelleDate = new Date();
 	
 	
 
@@ -189,9 +189,9 @@ public class PrestationManagedBean implements Serializable {
 		prestations.put(updatedPbu.getPrestation().getIdPrestation(), updatedPbu);
 	}
 	
-	public void valideAvecDate(int idPrestation, Date date) {
+	public void valideAvecDate(int idPrestation) {
 		System.out.println("Valider avec date : " + idPrestation);
-		PrestationBU updatedPbu = prestaIBusiness.valide(prestations.get(idPrestation), date, utilisateurConnecte);
+		PrestationBU updatedPbu = prestaIBusiness.valide(prestations.get(idPrestation), this.nouvelleDate, utilisateurConnecte);
 		assert idPrestation == updatedPbu.getPrestation().getIdPrestation();
 		// update the value
 		prestations.put(updatedPbu.getPrestation().getIdPrestation(), updatedPbu);
@@ -200,6 +200,11 @@ public class PrestationManagedBean implements Serializable {
 	public void annule(int idPrestation) {
 		System.out.println("Annuler la prestation :" + idPrestation);
 	}
+	
+	public long nbDaysToLocalDatetime( LocalDateTime date ) { 
+		return ChronoUnit.DAYS.between(LocalDateTime.now(), date);
+	}
+	
 	
 	public String formatMyLocalDateTime(LocalDateTime date) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");

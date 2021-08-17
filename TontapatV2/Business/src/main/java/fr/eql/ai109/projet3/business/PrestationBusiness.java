@@ -314,9 +314,9 @@ public class PrestationBusiness implements PrestationIBusiness {
 	
 	@Override
 	public PrestationBU valide(PrestationBU prestaBu, Date date, Utilisateur utilisateur) {
-		prestaBu.valide(utilisateur);
+		prestaBu.valide(utilisateur, utils.convertToLocalDateTimeViaInstant(date));
 		prestationIDao.update(prestaBu.getPrestation());
-		return null;
+		return prestaBu;
 	}
 
 	/*

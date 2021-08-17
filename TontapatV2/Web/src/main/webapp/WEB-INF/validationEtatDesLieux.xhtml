@@ -24,10 +24,14 @@
 	<ui:fragment rendered="#{prestaBuByMain.prestation.etatLieuEleveur != null}">
 		<p>L'éleveur a validé l'état des lieux le <h:outputText value="#{prestaBuByMain.prestation.etatLieuEleveur}" /></p>
 	</ui:fragment>
+	<ui:fragment rendered="#{(prestaBuByMain.prestation.besoinBerger) and (prestaBuByMain.prestation.etatLieuBerger != null)}">
+		<p>Le berger a validé l'état des lieux le <h:outputText value="#{prestaBuByMain.prestation.etatLieuBerger}" /></p>
+	</ui:fragment>
 <!-- 	 berger -->
 
 	<ui:fragment rendered="#{(user.utilisateur.id == prestaBuByMain.client.id and prestaBuByMain.prestation.etatLieuClient == null) or
-		(user.utilisateur.id == prestaBuByMain.eleveur.id and prestaBuByMain.prestation.etatLieuEleveur == null)}" >
+		(user.utilisateur.id == prestaBuByMain.eleveur.id and prestaBuByMain.prestation.etatLieuEleveur == null) or 
+		(user.utilisateur.id == prestaBuByMain.berger.id and prestaBuByMain.prestation.etatLieuBerger == null)}" >
 		Si vous souhaitez poursuivre cette prestation, vous devez valider l'état des lieux
 		<h:form>
 			<b:commandButton value="Valider" look="primary"

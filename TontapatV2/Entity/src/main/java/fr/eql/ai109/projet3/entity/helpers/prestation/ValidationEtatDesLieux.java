@@ -44,9 +44,8 @@ public class ValidationEtatDesLieux implements StatePrestation {
 		if( p.getEleveur().getId() == utilisateur.getId() )
 			presta.setEtatLieuEleveur(LocalDateTime.now());
 		
-		//if( p.getBerger() == utilisateur )
-		//	presta.setEtatLieuClient(LocalDateTime.now());
-		
+		if( p.getBerger().getId() == utilisateur.getId() )
+			presta.setEtatLieuBerger(LocalDateTime.now());
 	}
 
 	@Override
