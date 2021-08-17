@@ -45,32 +45,7 @@
 								<!-- no need to pass #mbPresta (include ?) -->
 							</ui:include>
 							<b:button  class="PrestationButtonDetail" value="Voir le détail de la prestation" onclick="$('.modalPseudoClass${status.index}').modal()"/>
-							<p>
-						Incidents en cours :<h:outputLabel value="#{mbPresta.incidentRefSelectionne.libelleIncident}"/> 
-						</p>
-						<b:button class="prestationButtonIncident"
-							value="Déclarer un incident"
-							onclick="$('.modalPseudoClass${status.index.incident}').modal()" />
-							<b:modal id="amodal${status.index.incident}"
-					title="Incidents"
-					styleClass="modalPseudoClass${status.index.incident}" closable="false"
-					close-on-escape="false" backdrop="false">
-
-				<p>Selectionner un incident dans la liste ci-dessous :</p>
-				<b:form method="post" action="prestations.xhtml}">
-            <b:selectOneMenu id="idIncidentRefSelectionn" value="#{mbPresta.incidentRefSelectionne}" >
-            	<f:selectItems var="inc" value="#{mbPresta.incidentRef}" itemValue="#{inc}" itemLabel="#{inc.libelleIncident}" />
-            </b:selectOneMenu>
-            <br/>
-            <b:commandButton value="Valider" action="#{mbPresta.enregistrerUnIncident(prestaBU.value.prestation, mbPresta.incidentRefSelectionne)}"/>
-           
-				</b:form>
-			<f:facet name="footer">
-						<h:form>
-							<b:button value="Close" dismiss="modal" />
-						</h:form>
-					</f:facet>
-				</b:modal>
+							
 							<b:modal id="amodal${status.index}" title="Détail de la prestation : #{prestaBU.value.prestation.numeroPrestation}" styleClass="modalPseudoClass${status.index}" backdrop="true" closable="true" close-on-escape="true">
 				  <ui:include src="#{prestaBU.value.templateXhtml}">
 						<ui:param name="prestaBuByMain" value="#{prestaBU.value}" />
@@ -176,9 +151,139 @@
 			</c:forEach>
 	  </b:tab>
 	</b:tabView>
-						
-							
-						
-</ui:define>
+
+<!-- 		<p> -->
+<!-- 			Incidents en cours : -->
+<!-- 			<h:outputLabel -->
+<!-- 				value="#{mbPresta.incidentRefSelectionne.libelleIncident}" /> -->
+<!-- 		</p> -->
+<!-- 		<b:button class="prestationButtonIncident" -->
+<!-- 			value="Déclarer un incident" -->
+<!-- 			onclick="$('.modalPseudoClass${status.index.incident}').modal()" /> -->
+<!-- 		<b:modal id="amodal${status.index.incident}" title="Incidents" -->
+<!-- 			styleClass="modalPseudoClass${status.index.incident}" -->
+<!-- 			closable="false" close-on-escape="false" backdrop="false"> -->
+
+<!-- 			<p>Selectionner un incident dans la liste ci-dessous :</p> -->
+<!-- 			<b:form method="post" action="prestations.xhtml}"> -->
+<!-- 				<b:selectOneMenu id="idIncidentRefSelectionn" -->
+<!-- 					value="#{mbPresta.incidentRefSelectionne}"> -->
+<!-- 					<f:selectItems var="inc" value="#{mbPresta.incidentRef}" -->
+<!-- 						itemValue="#{inc}" itemLabel="#{inc.libelleIncident}" /> -->
+<!-- 				</b:selectOneMenu> -->
+<!-- 				<br /> -->
+<!-- 				<b:commandButton value="Valider" -->
+<!-- 					action="#{mbPresta.enregistrerUnIncident(prestaBU.value.prestation, mbPresta.incidentRefSelectionne)}" /> -->
+
+<!-- 			</b:form> -->
+<!-- 			<f:facet name="footer"> -->
+<!-- 				<h:form> -->
+<!-- 					<b:button value="Close" dismiss="modal" /> -->
+<!-- 				</h:form> -->
+<!-- 			</f:facet> -->
+<!-- 		</b:modal> -->
+		
+		
+		<p>
+			Taches en cours :
+			<h:outputLabel
+				value="#{mbPresta.tacheRefSelectionne.libelleTache}" />
+		</p>
+		<ui:fragment rendered="#{(empty mbPresta.tache) or ((not empty mbPresta.tache) and (mbPresta.tache.debutRealisation != null))}">
+		<b:button class="prestationButtonTache"
+			value="Ajouter une Tache"
+			onclick="$('.modalPseudoClass${status.index.tache}').modal()" />
+			
+			<b:modal id="amodal${status.index.tache}" title="Taches"
+			styleClass="modalPseudoClass${status.index.tache}"
+			closable="false" close-on-escape="false" backdrop="false">
+
+			<p>Selectionner une tache dans la liste ci-dessous :</p>
+			<b:form method="post" action="prestations.xhtml}">
+				<b:selectOneMenu id="idTacheRefSelectionn"
+					value="#{mbPresta.tacheRefSelectionne}">
+					<f:selectItems var="tache" value="#{mbPresta.tacheRefs}"
+						itemValue="#{tache}" itemLabel="#{tache.libelleTache}" />
+				</b:selectOneMenu>
+				<br />
+				<b:row>
+				<b:column>
+					<b:datepicker id="cdate1" mode="toggle-icon" showWeek="true"
+							firstDay="1" value="#{mbPresta.pt.debutPlannifiee}" required="true"
+							label="Date de début planifiée:" label-col-sm="5" col-sm="6">
+					</b:datepicker>
+				</b:column>
+			</b:row>
+			<b:row>
+				<b:column>
+					<b:datepicker id="cdate2" mode="toggle-icon" showWeek="true"
+							firstDay="1" value="#{mbPresta.pt.finPlanifiee}" required="true"
+							label="Date de fin planifiée:" label-col-sm="5" col-sm="6" >
+					</b:datepicker>
+				</b:column>
+			</b:row>
+				<br />
+				<b:commandButton value="Valider"
+					action="#{mbPresta.AjoutTache(prestaBU.value.prestation, mbPresta.tacheRefSelectionne)}" />
+
+			</b:form>
+			<f:facet name="footer">
+				<h:form>
+					<b:button value="Close" dismiss="modal" />
+				</h:form>
+			</f:facet>
+		</b:modal>
+			
+		</ui:fragment>
+		<ui:fragment rendered="#{(mbPresta.tache.creationTache != null) and (mbPresta.tache.debutRealisation == null)}">
+<!-- 		<b:button class="prestationButtonTache" -->
+<!-- 			value="Valider La Tache" -->
+<!-- 			onclick="$('.modalPseudoClass${status.index.tache}').modal()" /> -->
+			
+<!-- 			<b:modal id="amodal${status.index.tache}" title="Taches" -->
+<!-- 			styleClass="modalPseudoClass${status.index.tache}" -->
+<!-- 			closable="false" close-on-escape="false" backdrop="false"> -->
+
+			<p>Indiquez les dates de réalisation de la tache</p>
+			<b:form method="post" action="prestations.xhtml}">
+				<br />
+				<b:row>
+				<b:column>
+					<b:datepicker id="cdate1" mode="toggle-icon" showWeek="true"
+							firstDay="1" value="#{mbPresta.pt.debutPlannifiee}" required="true"
+							label="Date de début de la réalisation:" label-col-sm="5" col-sm="6">
+					</b:datepicker>
+				</b:column>
+			</b:row>
+			<b:row>
+				<b:column>
+					<b:datepicker id="cdate2" mode="toggle-icon" showWeek="true"
+							firstDay="1" value="#{mbPresta.pt.finPlanifiee}" required="true"
+							label="Date de fin de la réalisation:" label-col-sm="5" col-sm="6" >
+					</b:datepicker>
+				</b:column>
+			</b:row>
+			<b:row>
+				<b:column>
+				  <b:inputTextarea placeholder="Veuillez remplir votre rapport..." value="#{mbPresta.pt.rapport}">
+				  </b:inputTextarea>
+				</b:column>
+			</b:row>
+				<br />
+				<b:commandButton value="Valider La Tache"
+					action="#{mbPresta.ValideTache()}" />
+
+			</b:form>
+			<f:facet name="footer">
+				<h:form>
+					<b:button value="Close" dismiss="modal" />
+				</h:form>
+			</f:facet>
+<!-- 		</b:modal> -->
+			
+		</ui:fragment>
+		
+
+	</ui:define>
 </ui:composition>
 </html>

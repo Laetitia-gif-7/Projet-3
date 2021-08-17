@@ -3,6 +3,7 @@ package fr.eql.ai109.projet3.controller;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import java.time.LocalDate;
@@ -32,10 +33,14 @@ import fr.eql.ai109.projet3.entity.Incident;
 import fr.eql.ai109.projet3.entity.IncidentRef;
 import fr.eql.ai109.projet3.entity.Prestation;
 import fr.eql.ai109.projet3.entity.PrestationBU;
+import fr.eql.ai109.projet3.entity.Tache;
+import fr.eql.ai109.projet3.entity.TacheRef;
 import fr.eql.ai109.projet3.entity.Terrain;
 import fr.eql.ai109.projet3.entity.Utilisateur;
+import fr.eql.ai109.projet3.entity.dto.ParametresTache;
 import fr.eql.ai109.projet3.ibusiness.IncidentIBusiness;
 import fr.eql.ai109.projet3.ibusiness.PrestationIBusiness;
+import fr.eql.ai109.projet3.ibusiness.TacheIBusiness;
 
 // @RequestScoped
 
@@ -50,12 +55,16 @@ public class PrestationManagedBean implements Serializable {
 //	private List<Prestation> prestationx;
 	private List<IncidentRef> incidentRef;
 	private List<SelectItem> listSelectIncident;
+	private List<TacheRef> tacheRefs;
+	private List<SelectItem> listSelectTaches;
 	private List<Incident> incidents;
 	private IncidentRef incidentRefSelectionne;
-	private int testId; 
+	private TacheRef tacheRefSelectionne;
+	private int testId;
+	private ParametresTache pt;
+	private Tache tache;
 	
-	
-	
+
 
 	public int getTestId() {
 		return testId;
@@ -90,7 +99,8 @@ public class PrestationManagedBean implements Serializable {
 	@EJB
 	private IncidentIBusiness incidentIBusiness;
 	
-	
+	@EJB
+	private TacheIBusiness tacheIBusiness;
 	
 	
 	
@@ -104,12 +114,15 @@ public class PrestationManagedBean implements Serializable {
 			System.out.println("state string :"+ prestations.get(prestationKey).getStateString());
 		}
 		incidentRef = incidentIBusiness.findAllIncidentRef();
+		
+		tacheRefs = tacheIBusiness.findAllTacheRefs();
+		
 //		listSelectIncident = new ArrayList<SelectItem>();
 //		for (IncidentRef incidentRef2 : incidentRef) {
 //			listSelectIncident.add(new SelectItem(incidentRef2.getIdIncidentRef(),incidentRef2.getLibelleIncident()));
 //		}
 		//incidentRefSelectionne = incidentRef.get(0);
-		
+		pt = new ParametresTache();
 
 	}
 	
@@ -119,6 +132,14 @@ public class PrestationManagedBean implements Serializable {
 			listSelectIncident.add(new SelectItem(incidentRef2.getIdIncidentRef(), incidentRef2.getLibelleIncident()));
 		}
 		return listSelectIncident;
+	}
+	
+	public List<SelectItem> getListSelectTaches() {
+		List<SelectItem> listSelectTaches = new ArrayList<SelectItem>();
+		for (TacheRef tacheRef : tacheRefs) {
+			listSelectTaches.add(new SelectItem(tacheRef.getIdTacheRef(), tacheRef.getLibelleTache()));
+		}
+		return listSelectTaches;
 	}
 	
 //	public void incidentRefSelectionne() {
@@ -133,8 +154,22 @@ public class PrestationManagedBean implements Serializable {
 	
 	public void enregistrerUnIncident(Prestation prestation, IncidentRef incidentRef) {
 		incidentIBusiness.DeclarationIncident(prestation, utilisateurConnecte, incidentRef);
-		 
+	}
+	
+	public void AjoutTache(Prestation prestation, TacheRef tacheRef) {
+		Date debutPlanifiee = pt.getDebutPlannifiee();
+		Date finPlanifiee = pt.getFinPlanifiee();
 		
+		tache = tacheIBusiness.AjouterTache(prestation, utilisateurConnecte, tacheRef, debutPlanifiee, finPlanifiee);
+	}
+	
+	public void ValideTache() {
+		int idTache = tache.getIdTache();
+		Date debutRealisation = pt.getDebutRealisation();
+		Date finRealisation = pt.getFinRealisation();
+		String rapport = pt.getRapport();
+		
+		tache = tacheIBusiness.ValiderTache(idTache, utilisateurConnecte, debutRealisation, finRealisation, rapport);
 	}
 	
 	public List<Incident> getIncidents() {
@@ -147,6 +182,10 @@ public class PrestationManagedBean implements Serializable {
 
 	public void setListSelectIncident(List<SelectItem> listSelectIncident) {
 		this.listSelectIncident = listSelectIncident;
+	}
+	
+	public void setListSelectTaches(List<SelectItem> listSelectTaches) {
+		this.listSelectTaches = listSelectTaches;
 	}
 
 	@PreDestroy
@@ -213,6 +252,39 @@ public class PrestationManagedBean implements Serializable {
 
 	public void setIncidentRef(List<IncidentRef> incidentRef) {
 		this.incidentRef = incidentRef;
+	}
+
+	public List<TacheRef> getTacheRefs() {
+		return tacheRefs;
+	}
+
+	public void setTacheRefs(List<TacheRef> tacheRefs) {
+		this.tacheRefs = tacheRefs;
+	}
+
+	public TacheRef getTacheRefSelectionne() {
+		return tacheRefSelectionne;
+	}
+
+	public void setTacheRefSelectionne(TacheRef tacheRefSelectionne) {
+		this.tacheRefSelectionne = tacheRefSelectionne;
+	}
+	
+
+	public ParametresTache getPt() {
+		return pt;
+	}
+
+	public void setPt(ParametresTache pt) {
+		this.pt = pt;
+	}
+
+	public Tache getTache() {
+		return tache;
+	}
+
+	public void setTache(Tache tache) {
+		this.tache = tache;
 	}
 
 }

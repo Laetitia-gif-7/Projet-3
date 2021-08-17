@@ -1,6 +1,7 @@
 package fr.eql.ai109.projet3.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -22,12 +23,12 @@ public class Tache implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="tache_id", unique=true, nullable=false)
-	private int tacheId;
+	@Column(name="id_tache", unique=true, nullable=false)
+	private int idTache;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	//@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="creation_tache")
-	private Date creationTache;
+	private LocalDateTime creationTache;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="date_annulation")
@@ -64,19 +65,19 @@ public class Tache implements Serializable {
 	@JoinColumn(name="id_annulation")
 	private AnnulationTache annulationTache;
 
-	public int getTacheId() {
-		return tacheId;
+	public int getIdTache() {
+		return idTache;
 	}
 
-	public void setTacheId(int tacheId) {
-		this.tacheId = tacheId;
+	public void setIdTache(int idTache) {
+		this.idTache = idTache;
 	}
 
-	public Date getCreationTache() {
+	public LocalDateTime getCreationTache() {
 		return creationTache;
 	}
 
-	public void setCreationTache(Date creationTache) {
+	public void setCreationTache(LocalDateTime creationTache) {
 		this.creationTache = creationTache;
 	}
 
