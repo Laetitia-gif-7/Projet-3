@@ -52,18 +52,8 @@ public class PrestationManagedBean implements Serializable {
 	private List<SelectItem> listSelectIncident;
 	private List<Incident> incidents;
 	private IncidentRef incidentRefSelectionne;
-	private int testId; 
 	
 	
-	
-
-	public int getTestId() {
-		return testId;
-	}
-
-	public void setTestId(int testId) {
-		this.testId = testId;
-	}
 
 	public IncidentRef getIncidentRefSelectionne() {
 		return incidentRefSelectionne;
@@ -131,11 +121,11 @@ public class PrestationManagedBean implements Serializable {
 //        FacesContext.getCurrentInstance().addMessage( null, message );
 //    }
 	
-	public void enregistrerUnIncident(Prestation prestation, IncidentRef incidentRef) {
-		incidentIBusiness.DeclarationIncident(prestation, utilisateurConnecte, incidentRef);
-		 
-		
-	}
+//	public void enregistrerUnIncident(Prestation prestation, IncidentRef incidentRef) {
+//		incidentIBusiness.DeclarationIncident(prestation, utilisateurConnecte, incidentRef);
+//		 
+//		
+//	}
 	
 	public List<Incident> getIncidents() {
 		return incidents;
@@ -203,16 +193,16 @@ public class PrestationManagedBean implements Serializable {
 	}
 	
 	public String declarerIncident(int idPrestation) {
-		return "incidents.xhtml?faces-redirect=false&id=" + Integer.toString(idPrestation);
+		return "incidents.xhtml?faces-redirect=true&id=" + Integer.toString(idPrestation);
 	}
 	
 
-	public List<IncidentRef> getIncidentRef() {
-		return incidentRef;
-	}
-
-	public void setIncidentRef(List<IncidentRef> incidentRef) {
-		this.incidentRef = incidentRef;
-	}
+//	public list<incidentref> getincidentref() {
+//		return incidentref;
+//	}
+//
+//	public void setincidentref(list<incidentref> incidentref) {
+//		this.incidentref = incidentref;
+//	}
 
 }

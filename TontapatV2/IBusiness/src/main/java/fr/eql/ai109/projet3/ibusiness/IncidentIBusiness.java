@@ -10,6 +10,6 @@ public interface IncidentIBusiness {
 	
 	List<IncidentRef> findAllIncidentRef();
 
-	public void DeclarationIncident(Prestation prestation, Utilisateur utilisateurConnecte, IncidentRef incidentRef);
+	public void DeclarationIncident(int idPrestation, Utilisateur utilisateurConnecte, IncidentRef incidentRef);
 
 }

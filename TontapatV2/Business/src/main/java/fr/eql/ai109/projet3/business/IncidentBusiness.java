@@ -15,6 +15,7 @@ import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.ibusiness.IncidentIBusiness;
 import fr.eql.ai109.projet3.idao.IncidentIDao;
 import fr.eql.ai109.projet3.idao.IncidentRefIDao;
+import fr.eql.ai109.projet3.idao.PrestationIDao;
 
 @Remote(IncidentIBusiness.class)
 @Stateless
@@ -26,6 +27,9 @@ public class IncidentBusiness implements IncidentIBusiness{
 	@EJB
 	IncidentIDao incidentIDao;
 
+	@EJB
+	PrestationIDao prestationIDao;
+	
 	@Override
 	public List<IncidentRef> findAllIncidentRef() {
 		
@@ -33,13 +37,14 @@ public class IncidentBusiness implements IncidentIBusiness{
 	}
 
 	@Override
-	public void DeclarationIncident(Prestation prestation, Utilisateur utilisateurConnecte, IncidentRef incidentRef) {
+	public void DeclarationIncident(int idPrestation, Utilisateur utilisateurConnecte, IncidentRef incidentRef) {
 		Incident incident = new Incident();	
 		incident.setDeclarateur(utilisateurConnecte);
-		incident.setPrestation(prestation);
+		incident.setPrestation(prestationIDao.getById(idPrestation));
 		incident.setDateDeclaration(LocalDateTime.now());
 		incident.setIncidentRef(incidentRef);
 		incidentIDao.add(incident);
+		
 	}
 
 }

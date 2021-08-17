@@ -6,55 +6,32 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:b="http://bootsfaces.net/ui"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-<h:head>
-	<ui:insert name="head"></ui:insert>
-<!-- 	ui insert javascript files -->
-</h:head>
-
 <ui:composition template="/arch.xhtml">
-<f:metadata>
-	<f:viewParam name="idprestation" value="#{mbPresta.testId}">
-	</f:viewParam>
-</f:metadata>
-<ui:define name="content">
-<h1>Déclarer un incident</h1>
+
+	<ui:define name="head">
+		<title>Incident</title>
+		<!-- <f:metadata>
+			<f:event listener="#{mbAccount.disconnect()}" type="preRenderView"></f:event>
+		</f:metadata> -->
+	</ui:define>
+
+	<ui:define name="content">
+		<h1>Incident</h1>
+		<b:column>
+			<div>
+				<br />
+				<div>
 	<p>Selectionner un incident dans la liste ci-dessous :</p>
-<!-- 			<input type="text" id="theinput" name="theinput" /> -->
-<select name="thelist" onChange="combo(this, 'theinput')">
-  <option>Mort d'une bête</option>
-  <option>Bête bléssée</option>
-  <option>Cloture cassée</option>
-</select> 
-
-<form><select size="1"  onChange="location = this.options[this.selectedIndex].value;">
-    <option>Selectionner un incident :</option>
-    <option value="page1.php" >choix 1</option>
-    <option value="page2.php" >choix 2</option>
-</select>
-</form>
-
-
-
-<form method="post" action="prestations.xhtml">
-            <h:selectOneMenu value="#{mbPresta.incidentRefSelectionne}">
-            	<f:selectItems var="inc" value="#{mbPresta.incidentRef}" itemValue="#{inc}" itemLabel="#{inc.libelleIncident}" />
-            </h:selectOneMenu>
+				</div>
+	<b:form method="post" action="prestations.xhtml">
+    	<b:selectOneMenu id="idIncidentRefSelectionne" value="#{mbIncident.incidentRefSelectionne}" >
+        	<f:selectItems var="inc" value="#{mbIncident.incidentRef}" itemValue="#{inc}" itemLabel="#{inc.libelleIncident}" />
+        </b:selectOneMenu>
             <br/>
-            <input type="submit" value="Valider"/>
-           
-</form>
-
-
-
-
-
-
-   
-
-
-
-
- 
+    <b:commandButton value="Valider" action="#{mbIncident.enregistrerUnIncident(mbIncident.incidentRefSelectionne)}"/>
+    </b:form> 
+    </div>
+    </b:column>
 </ui:define>
 </ui:composition>
 </html>
