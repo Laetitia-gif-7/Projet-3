@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 public interface StatePrestation extends Serializable {
 	
 	void valide(PrestationBU p);
+	void valide(PrestationBU p, Utilisateur utilisateur);
 	void annule(PrestationBU p);
 	void setStateName(PrestationBU p);
 	void setTemplateString(PrestationBU p);

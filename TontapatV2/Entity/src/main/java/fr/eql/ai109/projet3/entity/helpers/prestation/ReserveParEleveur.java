@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import fr.eql.ai109.projet3.entity.PrestationBU;
 import fr.eql.ai109.projet3.entity.StatePrestation;
+import fr.eql.ai109.projet3.entity.Utilisateur;
 
 /*
  * Etat initial si l'éleveur fait la réservation :
@@ -26,12 +27,18 @@ public class ReserveParEleveur implements StatePrestation {
 
 	@Override
 	public void setStateName(PrestationBU p) {
-		p.setStateString("RESERVEPARELEVEUR");
+		p.setStateString("ENATTENTE");
 	}
 
 	@Override
 	public void setTemplateString(PrestationBU p) {
 		p.setTemplateXhtml("reserveParEleveur.xhtml");
+	}
+
+	@Override
+	public void valide(PrestationBU p, Utilisateur utilisateur) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	/*

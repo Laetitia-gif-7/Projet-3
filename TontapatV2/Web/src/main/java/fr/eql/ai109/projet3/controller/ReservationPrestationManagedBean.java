@@ -13,7 +13,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import org.primefaces.event.SlideEndEvent;
+//import org.primefaces.event.SlideEndEvent;
+
 import fr.eql.ai109.projet3.entity.Terrain;
 import fr.eql.ai109.projet3.entity.Troupeau;
 import fr.eql.ai109.projet3.entity.Utilisateur;
@@ -112,13 +113,15 @@ public class ReservationPrestationManagedBean implements Serializable {
 		return "prestations.xhtml";
 	}
 	// for tests with ajax, to move to another branch
+	/*
 	public void updateAjaxPrimefaces(SlideEndEvent event) {
 		System.out.println("testUpdateAjaxPrimefaces event: "+ event);
 		System.out.println("getvalue :" + event.getValue());
 		System.out.println("nb aniamux :" + prp.getNbAnimaux());
 		System.out.println("longueur cloture :" + prp.getLongueurCloture());
 		prp = resaPrestaIBusiness.actualisePrixPrestation(idTerrain, idTroupeau, prp);
-	}
+	}*/
+	
 	public void testUpdateAjax() {
 		System.out.println("testUpdateAjax \n");
 	}
