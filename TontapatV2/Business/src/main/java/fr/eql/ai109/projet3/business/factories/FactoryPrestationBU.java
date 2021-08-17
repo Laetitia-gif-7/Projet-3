@@ -79,26 +79,19 @@ public class FactoryPrestationBU {
 			proxy.setState(ConfirmeParPartenaire.CONFIRMEPARPARTENAIRE);
 		}
 		
-		/*
+		
 		// ACCEPTATION DATE d'état des lieux par l'éleveur
 		if( prestation.getPremiereVisiteAccepte() == null) {
 			
 			if( utilisateurInitiateurId == clientId ) {
-<<<<<<< HEAD:TontapatV2/Business/src/main/java/fr/eql/ai109/projet3/business/factories/FactoryPrestrestationBU.java
-				//proxy.setState( ConfirmeParEleveur.CONFIRMEPARELEVEUR );
-=======
 				proxy.setState( ConfirmeParPartenaire.CONFIRMEPARPARTENAIRE );
->>>>>>> newState:TontapatV2/Business/src/main/java/fr/eql/ai109/projet3/business/factories/FactoryPrestationBU.java
 			// TODO continue the logic
 			} else {
 				proxy.setState(null);
 			}
 			return proxy;
 		}
-<<<<<<< HEAD:TontapatV2/Business/src/main/java/fr/eql/ai109/projet3/business/factories/FactoryPrestrestationBU.java
-		*/
-=======
-		
+		// Attente berger
 		if( prestation.isBesoinBerger() == true && prestation.getBerger() == null ) {
 			proxy.setState(AttenteBerger.ATTENTEBERGER);
 			return proxy;
@@ -117,7 +110,6 @@ public class FactoryPrestationBU {
 		}
 		
 		// TODO en Cours
->>>>>>> newState:TontapatV2/Business/src/main/java/fr/eql/ai109/projet3/business/factories/FactoryPrestationBU.java
 		// return default should be an error
 		return proxy;
 	}
