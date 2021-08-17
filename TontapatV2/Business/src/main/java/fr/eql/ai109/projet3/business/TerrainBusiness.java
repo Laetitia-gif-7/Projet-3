@@ -34,4 +34,5 @@ public class TerrainBusiness implements TerrainIBusiness {
 		return terrainIDao.getByIdWithEquipement(idTerrain);
 	}
 
+
 }

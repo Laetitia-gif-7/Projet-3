@@ -43,7 +43,7 @@ public class PrestationDao extends GenericDao<Prestation> implements PrestationI
 					+ "JOIN FETCH p.compositionTroupeauPrestations ctp "
 					+ "WHERE p.terrain.utilisateur =:utilisateurParam "
 					+ "	  OR ctp.troupeau.utilisateur =:utilisateurParam2 "
-					+ "      OR p.berger =:utilisateurParam3 ",Prestation.class);
+					+ "   OR p.berger =:utilisateurParam3 ",Prestation.class);
 			/* not working as expected, keep to retest
 			"SELECT DISTINCT p "
 					+ "FROM Prestation p "
@@ -63,6 +63,9 @@ public class PrestationDao extends GenericDao<Prestation> implements PrestationI
 			}
 			for( int i=0; i<presta.getEvaluations().size(); i++) {
 				entityManager.refresh(presta.getEvaluations().get(i));
+			}
+			for( int i=0; i<presta.getIncidents().size(); i++) {
+				entityManager.refresh(presta.getIncidents().get(i));
 			}
 		}
 		return prestas;
@@ -138,6 +141,21 @@ public class PrestationDao extends GenericDao<Prestation> implements PrestationI
 			eleveur = troupeau.getUtilisateur();
 		}
 		return prestations;
+	}
+	
+	public Prestation prestationWhithCtp(int idPrestation) {
+		Prestation prestation = getById(idPrestation);
+		Terrain terrain = prestation.getTerrain();
+		Utilisateur client = terrain.getUtilisateur();
+		//terrain.setUtilisateur(client);
+		List<CompositionTroupeauPrestation> cpt = prestation.getCompositionTroupeauPrestations();
+		Troupeau troupeau = cpt.get(0).getTroupeau();
+		Utilisateur eleveur = troupeau.getUtilisateur();
+		//troupeau.setUtilisateur(eleveur);
+		//cpt.get(0).setTroupeau(troupeau);
+		//prestation.setTerrain(terrain);
+		//prestation.setCompositionTroupeauPrestations(cpt);
+		return prestation;
 	}
 }
 
