@@ -9,4 +9,5 @@ public interface TroupeauIBusiness {
 
 	List<Troupeau> findTroupeauxByUtilisateur(Utilisateur utilisateur);
 	Troupeau findTroupeauById(int idTroupeau);
+
 }

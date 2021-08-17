@@ -16,6 +16,8 @@ public interface PrestationIBusiness {
 	void createPrestationClient(Utilisateur utilisateurConnecte, ParametresReservationPrestation prp,
 			int idTerrain, int idTroupeau );
 	void ReservePrestationBerger(int idPrestation, Utilisateur berger);
+	void valideEtatDesLieux(int idPrestation, Utilisateur utilisateur);
+	void valideContrat(int idPrestation, Utilisateur utilisateur);
 	
 	// prestationbu contains prestation + additional data. Can send back to the view for updating it
 	PrestationBU valide(PrestationBU pbu);

@@ -9,4 +9,7 @@ public interface TroupeauIDao extends GenericIDao<Troupeau> {
 	
 	List<Troupeau> getTroupeauxByUser(Utilisateur utilisateur);
 	Troupeau getTroupeauByIdWithComposition(int idTroupeau);
+	
+	
+	
 }

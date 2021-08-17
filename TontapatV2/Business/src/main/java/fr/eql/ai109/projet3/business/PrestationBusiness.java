@@ -320,6 +320,38 @@ public class PrestationBusiness implements PrestationIBusiness {
 		return new PrestationBU();
 	}
 
+	@Override
+	public void valideEtatDesLieux(int idPrestation, Utilisateur utilisateur) {
+		Prestation prestation = prestationIDao.prestationWhithCtp(idPrestation);
+		if(utilisateur.getId() == prestation.getBerger().getId()) {
+			prestation.setEtatLieuBerger(LocalDateTime.now());
+		}
+		if(utilisateur.getId() == prestation.getTerrain().getUtilisateur().getId()) {
+			prestation.setEtatLieuClient(LocalDateTime.now());
+		}
+		if(utilisateur.getId() == prestation.getCompositionTroupeauPrestations().get(0).getTroupeau().getUtilisateur().getId()) {
+			prestation.setEtatLieuEleveur(LocalDateTime.now());
+		}
+		prestationIDao.update(prestation);
+		
+	}
+
+	@Override
+	public void valideContrat(int idPrestation, Utilisateur utilisateur) {
+		Prestation prestation = prestationIDao.prestationWhithCtp(idPrestation);
+		if(utilisateur.getId() == prestation.getBerger().getId()) {
+			prestation.setContratBerger(LocalDateTime.now());
+		}
+		if(utilisateur.getId() == prestation.getTerrain().getUtilisateur().getId()) {
+			prestation.setContratClient(LocalDateTime.now());
+		}
+		if(utilisateur.getId() == prestation.getCompositionTroupeauPrestations().get(0).getTroupeau().getUtilisateur().getId()) {
+			prestation.setContratEleveur(LocalDateTime.now());
+		}
+		prestationIDao.update(prestation);
+		
+	}
+
 }
 		
 	

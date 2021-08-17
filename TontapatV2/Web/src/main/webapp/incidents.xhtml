@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+<h:head>
+	<ui:insert name="head"></ui:insert>
+<!-- 	ui insert javascript files -->
+</h:head>
+
+<ui:composition template="/arch.xhtml">
+<f:metadata>
+	<f:viewParam name="idprestation" value="#{mbPresta.testId}">
+	</f:viewParam>
+</f:metadata>
+<ui:define name="content">
+<h1>Déclarer un incident</h1>
+	<p>Selectionner un incident dans la liste ci-dessous :</p>
+<!-- 			<input type="text" id="theinput" name="theinput" /> -->
+<select name="thelist" onChange="combo(this, 'theinput')">
+  <option>Mort d'une bête</option>
+  <option>Bête bléssée</option>
+  <option>Cloture cassée</option>
+</select> 
+
+<form><select size="1"  onChange="location = this.options[this.selectedIndex].value;">
+    <option>Selectionner un incident :</option>
+    <option value="page1.php" >choix 1</option>
+    <option value="page2.php" >choix 2</option>
+</select>
+</form>
+
+
+
+<form method="post" action="prestations.xhtml">
+            <h:selectOneMenu value="#{mbPresta.incidentRefSelectionne}">
+            	<f:selectItems var="inc" value="#{mbPresta.incidentRef}" itemValue="#{inc}" itemLabel="#{inc.libelleIncident}" />
+            </h:selectOneMenu>
+            <br/>
+            <input type="submit" value="Valider"/>
+           
+</form>
+
+
+
+
+
+
+   
+
+
+
+
+ 
+</ui:define>
+</ui:composition>
+</html>
