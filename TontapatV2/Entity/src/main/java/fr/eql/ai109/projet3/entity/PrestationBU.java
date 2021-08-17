@@ -84,6 +84,10 @@ public class PrestationBU implements Serializable {
 	public void valide() {
 		state.valide(this);
 	}
+	
+	public void valide(Utilisateur utilisateur) {
+		state.valide(this, utilisateur);
+	}
 	/*
 	public void valideAvecDate(LocalDateTime date) {
 		state.valideAvecDate(this);

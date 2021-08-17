@@ -30,7 +30,7 @@ import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.entity.constants.ConstantVariable;
 import fr.eql.ai109.projet3.entity.dto.ParametresReservationPrestation;
 // import fr.eql.ai109.projet3.business.helpers.prestation.*; not need anymore after Factory
-import fr.eql.ai109.projet3.business.factories.FactoryPrestrestationBU;
+import fr.eql.ai109.projet3.business.factories.FactoryPrestationBU;
 import fr.eql.ai109.projet3.business.utils.utils;
 import fr.eql.ai109.projet3.ibusiness.PrestationIBusiness;
 import fr.eql.ai109.projet3.idao.CompositionTroupeauPrestationIDao;
@@ -47,7 +47,7 @@ public class PrestationBusiness implements PrestationIBusiness {
 	Map<Integer, PrestationBU> prestationsBU = new HashMap<>();
 	
 	@EJB
-    private FactoryPrestrestationBU factoryPrestaBu;
+    private FactoryPrestationBU factoryPrestaBu;
 	
 	@EJB
 	PrestationIDao prestationIDao;
@@ -305,6 +305,21 @@ public class PrestationBusiness implements PrestationIBusiness {
 		// date have been included and state changed
 		return prestaBu;
 	}
+	
+	@Override
+	public PrestationBU valide(PrestationBU prestaBu, Utilisateur utilisateur) {
+		prestaBu.valide(utilisateur);
+		prestationIDao.update(prestaBu.getPrestation());
+		return prestaBu;
+	}
+	
+	@Override
+	public PrestationBU valide(PrestationBU prestaBu, Date date, Utilisateur utilisateur) {
+		prestaBu.valide(utilisateur);
+		prestationIDao.update(prestaBu.getPrestation());
+		return null;
+	}
+
 	/*
 	@Override
 	public PrestationBU valideAvecDate(PrestationBU prestaBu, LocalDateTime date) {
