@@ -72,8 +72,9 @@ public class IncidentManagedBean implements Serializable{
 //	        FacesContext.getCurrentInstance().addMessage( null, message );
 //	    }
 		
-		public void enregistrerUnIncident(IncidentRef incidentRefSelectionne) {
+		public String enregistrerUnIncident(IncidentRef incidentRefSelectionne) {
 			incidentIBusiness.DeclarationIncident(idPrestation, utilisateurConnecte, incidentRefSelectionne);
+			return "prestations.xhtml";
 			 
 			
 		}

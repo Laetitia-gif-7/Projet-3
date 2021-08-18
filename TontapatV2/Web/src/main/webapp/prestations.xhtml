@@ -42,18 +42,20 @@
 							<ui:include src="#{prestaBU.value.templateXhtml}" >
 								<ui:param name="prestaBuByMain" value="#{prestaBU.value}" />
 								<ui:param name="user" value="#{mbCompte}" />
-<!-- 								<p>Incidents en cours :<h:outputLabel value="#{mbPresta.incidentRefSelectionne.libelleIncident}"/> </p> -->
+								
 								<!-- no need to pass #mbPresta (include ?) -->
 							</ui:include>
+							<p>Incidents en cours :
+								<ui:repeat var="inc" value="#{prestaBU.value.prestation.incidents}">
+				                <h:outputLabel value="#{inc.incidentRef.libelleIncident}"/> 
+			            		</ui:repeat>
+								</p>
 							<b:form>
 							<b:commandButton value="Déclarer un incident" look="primary"
 							action="#{mbPresta.declarerIncident(prestaBU.value.prestation.idPrestation)}" />
 							</b:form>
 							<b:button  class="PrestationButtonDetail" value="Voir le détail de la prestation" onclick="$('.modalPseudoClass${status.index}').modal()"/>
-							
-						
-						
-							
+				
 							<b:modal id="amodal${status.index}" title="Détail de la prestation : #{prestaBU.value.prestation.numeroPrestation}" styleClass="modalPseudoClass${status.index}" backdrop="true" closable="true" close-on-escape="true">
 				  <ui:include src="#{prestaBU.value.templateXhtml}">
 						<ui:param name="prestaBuByMain" value="#{prestaBU.value}" />

@@ -50,9 +50,11 @@ public class PrestationManagedBean implements Serializable {
 //	private List<Prestation> prestationx;
 	private List<IncidentRef> incidentRef;
 	private List<SelectItem> listSelectIncident;
-	private List<Incident> incidents;
+	//private List<Incident> incidents;
 	private IncidentRef incidentRefSelectionne;
 	
+	
+
 	
 
 	public IncidentRef getIncidentRefSelectionne() {
@@ -81,8 +83,7 @@ public class PrestationManagedBean implements Serializable {
 	private IncidentIBusiness incidentIBusiness;
 	
 	
-	
-	
+
 	
 	@PostConstruct
 	public void init() {
@@ -93,7 +94,7 @@ public class PrestationManagedBean implements Serializable {
 			System.out.println("prestExt :" + prestations.get(prestationKey).getPrestation().getDebutPrestation());
 			System.out.println("state string :"+ prestations.get(prestationKey).getStateString());
 		}
-		incidentRef = incidentIBusiness.findAllIncidentRef();
+//		incidentRef = incidentIBusiness.findAllIncidentRef();
 //		listSelectIncident = new ArrayList<SelectItem>();
 //		for (IncidentRef incidentRef2 : incidentRef) {
 //			listSelectIncident.add(new SelectItem(incidentRef2.getIdIncidentRef(),incidentRef2.getLibelleIncident()));
@@ -127,13 +128,13 @@ public class PrestationManagedBean implements Serializable {
 //		
 //	}
 	
-	public List<Incident> getIncidents() {
-		return incidents;
-	}
-
-	public void setIncidents(List<Incident> incidents) {
-		this.incidents = incidents;
-	}
+//	public List<Incident> getIncidents() {
+//		return incidents;
+//	}
+//
+//	public void setIncidents(List<Incident> incidents) {
+//		this.incidents = incidents;
+//	}
 
 	public void setListSelectIncident(List<SelectItem> listSelectIncident) {
 		this.listSelectIncident = listSelectIncident;
@@ -195,7 +196,7 @@ public class PrestationManagedBean implements Serializable {
 	public String declarerIncident(int idPrestation) {
 		return "incidents.xhtml?faces-redirect=true&id=" + Integer.toString(idPrestation);
 	}
-	
+//	
 
 //	public list<incidentref> getincidentref() {
 //		return incidentref;

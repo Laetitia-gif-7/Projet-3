@@ -18,6 +18,7 @@ import javax.ejb.Stateless;
 import fr.eql.ai109.projet3.entity.CompositionTroupeau;
 import fr.eql.ai109.projet3.entity.CompositionTroupeauPrestation;
 import fr.eql.ai109.projet3.entity.Equipement;
+import fr.eql.ai109.projet3.entity.Incident;
 import fr.eql.ai109.projet3.entity.PeriodeDisponibilite;
 import fr.eql.ai109.projet3.entity.Prestation;
 import fr.eql.ai109.projet3.entity.PrestationBU;
@@ -34,6 +35,7 @@ import fr.eql.ai109.projet3.business.factories.FactoryPrestrestationBU;
 import fr.eql.ai109.projet3.business.utils.utils;
 import fr.eql.ai109.projet3.ibusiness.PrestationIBusiness;
 import fr.eql.ai109.projet3.idao.CompositionTroupeauPrestationIDao;
+import fr.eql.ai109.projet3.idao.IncidentIDao;
 import fr.eql.ai109.projet3.idao.PeriodeDisponibiliteIDao;
 import fr.eql.ai109.projet3.idao.PrestationIDao;
 import fr.eql.ai109.projet3.idao.RaceRefIDao;
@@ -66,6 +68,9 @@ public class PrestationBusiness implements PrestationIBusiness {
 	
 	@EJB
 	PeriodeDisponibiliteIDao periodeDisponibiliteIDao;
+	
+	@EJB
+	IncidentIDao incidentIDao; 
 	
 	
 	@PostConstruct
@@ -211,6 +216,8 @@ public class PrestationBusiness implements PrestationIBusiness {
 		// jamais execute
 		return compotroupoPrestas;
 	}
+	
+	
 
 	private Map<Integer, Integer> nbAnimauxParRaceDisponibles(Troupeau troupeau, Date debut, Date fin) {
 		
