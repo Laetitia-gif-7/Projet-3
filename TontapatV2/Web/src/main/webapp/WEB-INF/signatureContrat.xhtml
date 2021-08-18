@@ -5,13 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:b="http://bootsfaces.net/ui">
 	
-	Signature des contrats<br/>
-	User connecté :<h:outputLabel value="#{user.utilisateur.id}"/> 
-	Client :<h:outputLabel value="#{prestaBuByMain.client.id}"/>
-	Eleveur :<h:outputLabel value="#{prestaBuByMain.eleveur.id}"/> 
-	<h:outputLabel value="#{prestaBuByMain.stateString}"/>
-	<hr/>
-			
+	Signature des contrats<br/>		
 	<ui:fragment rendered="#{prestaBuByMain.prestation.contratClient != null}">
 		<p>Le client a déjà signé le contrat et payé le : <h:outputText value="#{prestaBuByMain.prestation.contratClient}" /></p>
 	</ui:fragment>
@@ -29,23 +23,19 @@
 		<p>Si vous souhaitez poursuivre cette prestation, il faut passer à la caisse</p>
 		<h:form>
 			<b:commandButton value="Valider et Payer" look="primary"
-			 	action="#{mbPresta.valideAvecUtilisateur(prestaBuByMain.prestation.idPrestation)}" >
-			</b:commandButton>
+			 	action="#{mbPresta.valideAvecUtilisateur(prestaBuByMain.prestation.idPrestation)}" />
 			<b:button  class="PrestationButtonDetail" value="Voir le détail de la prestation" onclick="$('.modalPseudoClass${prestaBuKey}').modal()"/>
 		</h:form>
 	</ui:fragment>
 	
 	<!-- Les autres seulement signer -->
 	<ui:fragment rendered="#{((user.utilisateur.id == prestaBuByMain.eleveur.id) and (prestaBuByMain.prestation.contratEleveur == null)) or 
-				((user.utilisateur.id == prestaBuByMain.berger.id) and (prestaBuByMain.prestation.contratBerger == null))}" >
+			 ((user.utilisateur.id == prestaBuByMain.berger.id) and (prestaBuByMain.prestation.contratBerger == null))}" >
 		<p>Si vous souhaitez poursuivre cette prestation, vous devez signer le contrat</p>
 		<h:form>
 			<b:commandButton value="Valider" look="primary"
-			 	action="#{mbPresta.valideAvecUtilisateur(prestaBuByMain.prestation.idPrestation)}" >
-			</b:commandButton>
+			 	action="#{mbPresta.valideAvecUtilisateur(prestaBuByMain.prestation.idPrestation)}" />
 			<b:button  class="PrestationButtonDetail" value="Voir le détail de la prestation" onclick="$('.modalPseudoClass${prestaBuKey}').modal()"/>
 		</h:form>
 	</ui:fragment>
-	
-	
 </ui:composition>
