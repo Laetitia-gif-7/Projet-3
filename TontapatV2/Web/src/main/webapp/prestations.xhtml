@@ -37,7 +37,7 @@
 		</h:panelGroup>
 	
 <!-- <h:form> -->
-		<b:tabView activeIndex="0" class="terrainsDivs">
+		<b:tabView activeIndex="1" class="terrainsDivs">
 		<b:tab title="En Cours">
 			<c:forEach var="prestaBU" items="#{mbPresta.prestations}">
 				<h:panelGroup rendered="#{prestaBU.value.stateString == 'ENCOURS'}">
@@ -66,7 +66,7 @@
 		  </c:forEach>
 	  </b:tab>
 	  <b:tab title="En Attentes">
-<!-- 	  	<f:facet name="anchor"><b:iconAwesome name="cog" spin="true" /></f:facet> -->
+	  	<f:facet name="anchor"><b:iconAwesome name="cog" spin="true" /></f:facet>
 			<c:forEach var="prestaBU" items="#{mbPresta.prestations}">
 				<h:panelGroup rendered="#{prestaBU.value.stateString == 'ENATTENTE'}" >
 <!-- 				 || prestaBU.value.stateString == 'RESERVEPARCLIENT' || prestaBU.value.stateString == 'CONFIRMEPARPARTENAIRE'  -->
@@ -113,21 +113,20 @@
 		</div>
 	</b:tab>		
 	  <b:tab title="Annulées">
-<!-- 			<c:forEach var="prestaBU" items="#{mbPresta.prestations}" varStatus="status" class="terrainBigDiv"> -->
-			<div class="terrainsDivs">
-			<c:forEach var="prestaBU" items="#{mbPresta.prestations}" >
-				<h:panelGroup rendered="#{prestaBU.value.stateString == 'ANNULE'}">
-					<div class="terrainBigDiv">
-						<div class="terrainSmallDiv">
-							<ui:include src="#{'/WEB-INF/'.concat(prestaBU.value.templateXhtml)}">
-								<ui:param name="prestaBuByMain" value="#{prestaBU.value}" />
-								<ui:param name="user" value="#{mbCompte}" />
-								<ui:param name="prestaBuKey" value="#{prestaBU.key}" />
-								<!-- no need to pass #mbPresta (include ?) -->
-							</ui:include>
-						</div>
+		<div class="terrainsDivs">
+		<c:forEach var="prestaBU" items="#{mbPresta.prestations}" >
+			<h:panelGroup rendered="#{prestaBU.value.stateString == 'ANNULE'}">
+				<div class="terrainBigDiv">
+					<div class="terrainSmallDiv">
+						<ui:include src="#{'/WEB-INF/'.concat(prestaBU.value.templateXhtml)}">
+							<ui:param name="prestaBuByMain" value="#{prestaBU.value}" />
+							<ui:param name="user" value="#{mbCompte}" />
+							<ui:param name="prestaBuKey" value="#{prestaBU.key}" />
+							<!-- no need to pass #mbPresta (include ?) -->
+						</ui:include>
 					</div>
-				</h:panelGroup>
+				</div>
+			</h:panelGroup>
 <!-- 				<ui:include src="templateDetailPrestationModal.xhtml"> -->
 <!-- 						<ui:param name="prestaBuByMain" value="#{prestaBU.value}" /> -->
 <!-- 						<ui:param name="prestaBuKey" value="#{prestaBU.key}" /> -->
@@ -149,6 +148,7 @@
 			</div>
 	  </b:tab>
 	  </b:tabView>
+<!-- </h:form> -->
 	  <!-- Try, one modal for all -->
 	  <c:forEach var="prestaBU" items="#{mbPresta.prestations}">
 		<ui:include src="/WEB-INF/templateDetailPrestationModal.xhtml">
@@ -184,12 +184,8 @@
 <!-- 					</f:facet> -->
 <!-- 				</b:modal> -->
 <!-- </h:form> -->
-<ui:debug hotkey="l" rendered="true"/>
-						
+<ui:debug hotkey="l" rendered="true"/>			
 </ui:define>
-
-		
-		
 </ui:composition>
 <!-- <ui:debug hotkey="k" rendered="true"/> -->
 </html>

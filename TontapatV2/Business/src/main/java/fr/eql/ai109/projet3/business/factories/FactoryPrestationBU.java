@@ -133,9 +133,6 @@ public class FactoryPrestationBU {
 			proxy.setState(Termine.TERMINE);
 			return proxy;
 		}
-		
-		// TODO en Cours
-		// return default should be an error
 		return proxy;
 	}
 }
