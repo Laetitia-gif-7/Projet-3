@@ -1,86 +1,340 @@
-.blockPage {
-	opacity: 0 !important;
+html {
+    position: relative;
+    margin: 0;
+}
+body {
+	display: block;
+	width: 100%;
+	height : 100vh;
+	justify-content: space-between;
+	margin: 0;
 }
 
-.acceuil-padding-1rem {
-	padding: 1rem !important;
+.footer {
+	height: 6rem !important;
+	background-color: #225e40 !important;
+	width: 100%;
+	color: #ffffff;
+	text-align:center;
 }
-
-.acceuil-margin-top-3rem {
-	margin-top: 3rem !important;
-}
-
-.acceuil-margin-bottom-5rem {
-	margin-bottom: 5rem !important;
-}
-
-.acceuil-width-100 {
-	width: 100% !important;
-}
-
-.acceuil-top-1rem {
-	position: relative !important;
-	top: 1rem !important;
-}
-
-.acceuil-header {
-	min-height: 10rem !important;
-	background-color: #575775 !important;
-}
-
-
-.acceuil-content {
-	min-height: calc(100vh - 20rem) !important;
-}
-
-.acceuil-footer {
-	min-height: 10rem !important;
-	background-color: #575775 !important;
-}
-
-.acceuil-flex-justify-content {
-	display: flex !important;
-	justify-content: center !important;
-}
-
-.acceuil-flex-align-items {
-	display: flex !important;
-	align-items: center !important
+.footer h2 {
+	padding-top: 12px;
 }
 
 /* HEADER DU ARCH.XHTML */
 
-.navBarRight {
-	display :flex;
-	justify-content: right;
+.headerNavBar {
+	background-color: #225e40!important;
+	min-height: 6rem !important;
+	color: #ffffff;
+	font-size: 2rem;
+	margin: auto !important;
+	width: 100%;
 }
-navBarLeft {
-	display :flex;
-	justify-content: left;
+
+.userNotConnected {
+	margin: auto;
+	margin-top: 20rem;
+	width: 70rem;
+	height: 30rem;
+	border: 5px solid #225e40;
+	border-radius: 15px;
+	display: flex;
+	flex-direction: column;
+}
+
+.userNotConnected h1 {
+	text-align: center;
+}
+.userNotConnected a {
+	margin: auto;
+}
+
+.buttonDisconnect {
+	color: #808080!important;
+	font-size: 1.5rem !important;
+	background-color: #ffffff !important;
+	border: #ffffff !important;
+	margin: auto!important;
+	width: 100%;
+	height: 100%;
+}
+.buttonDisconnect:hover {
+	background-color: #00314f!important;
+	color: #ffffff !important;
+}
+/* ----------------- CONNECTED PAGE  */
+
+.container-top {
+    max-height: 79vh;
+    height: 39em;
+    background-image: url("#{resource['assets/Slide1.png']}");
+    background-color: #d8e8c8;
+    background-position: right;
+    background-repeat: no-repeat;
+    display: flex;
+    margin-top: 6rem;
+}
+
+.container-top-h1 {
+    position: absolute;
+    top: 5%;
+    left: 57%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    font-family: 'Roboto';
+    text-align: left;
+}
+
+.container-top-p {
+    margin: 7%;
+    align-self: center;
+    width: 36%;
+}
+.sectionButtonIncriptionAcceuil {
+	width: 100%;
+	display:flex;
+	padding: auto;
+}
+.buttonInscriptionAcceuil {
+	background-color: #c6eacf;
+	width : 30%;
+	height: 20%;
+	padding: 2rem;
+	margin: auto;
+	margin-bottom: 4rem;
+	color: #000000;
+	text-align: center;
+	font-size: 3rem;
+	border-radius: 10px;
+	box-shadow: 5px 5px 5px #225e40;
+	transition: background-color 1s, transform 1s;
+	justify-content: center;
+}
+.buttonInscriptionAcceuil:hover {
+	background-color: #9bd9ac;
+	transform: scale(1.1);
+}
+
+/* Feature */
+.features {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    padding-top: 50px;
+}
+
+.row-1 {
+    flex-basis: 31%;
+    background: #edf5ec;
+    border-radius: 10px;
+    margin-bottom: 5%;
+    padding: 20px 12px;
+    box-sizing: border-box;
+}
+
+.features h1 {
+    font-size: 36px;
+    font-weight: 600;
+}
+
+.features p {
+    color: #777;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 22px;
+    padding: 10px;
+}
+
+.row-2 {
+    margin-top: 5%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.features-col {
+    flex-basis: 31%;
+    background: #edf5ec;
+    border-radius: 10px;
+    margin-bottom: 5%;
+    padding: 20px 12px;
+    box-sizing: border-box;
+}
+/* contact form */
+
+.section-contact-form {
+    min-height: 60vh;
+    height: 20rem !important;
+    background-color: #225e40;
+    background: url("#{resource['assets/contact-form-pic1.jpg']}") no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5rem;
+}
+
+.contact-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact-info {
+    color: #fff;
+    max-width: 500px;
+    line-height: 65px;
+    padding-left: 50px;
+    font-size: 18px;
+}
+
+    .contact-info i {
+        margin-right: 20px;
+        font-size: 25px;
+    }
+
+.contact-form {
+    max-width: 700px;
+    margin-right: 50px;
+}
+
+.contact-info, .contact-form {
+    flex: 1;
+}
+
+    .contact-form h2 {
+        color: #fff;
+        text-align: center;
+        margin: auto;
+        font-size: 35px;
+        text-transform: uppercase;
+        margin-bottom: 30px;
+    }
+
+    .contact-form .text-box {
+        background: #000;
+        color: #fff;
+        border: none;
+        width: calc(50% - 10px);
+        height: 50px;
+        padding: 12px;
+        font-size: 15px;
+        border-radius: 5px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        opacity: 0.9;
+    }
+
+        .contact-form .text-box:first-child {
+            margin-right: 15px;
+        }
+
+    .contact-form textarea {
+        background: #000;
+        color: #fff;
+        border: none;
+        width: 100%;
+        padding: 12px;
+        font-size: 15px;
+        min-height: 200px;
+        max-height: 400px;
+        resize: vertical;
+        border-radius: 5px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        opacity: 0.9;
+    }
+
+    .contact-form .send-btn {
+        float: right;
+        background: #4F6367;
+        color: #fff;
+        border: none;
+        width: 120px;
+        height: 40px;
+        font-size: 15px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+        transition-property: background;
+    }
+
+        .contact-form .send-btn:hover {
+            background: #bdd5b9;
+        }
+
+@media screen and (max-width :950px) {
+    .contact-section {
+        flex-direction: column;
+    }
+
+    .contact-info, .contact-form {
+        margin: 30px 50px;
+    }
+
+        .contact-form h2 {
+            font-size: 30px;
+        }
+
+        .contact-form .text-box {
+            width: 100%;
+        }
+}
+
+/* css message d'alert */
+.alert-success {
+    z-index: 1;
+    background: #bdd5b9;
+    font-size: 18px;
+    padding: 20px 40px;
+    min-width: 420px;
+    position: fixed;
+    right: 0;
+    top: 10px;
+    border-left: 8px solid;
+    border-radius: 3px;
+}
+
+.alert-error {
+    z-index: 1;
+    background: #FFF3CD;
+    font-size: 18px;
+    padding: 20px 40px;
+    min-width: 420px;
+    position: fixed;
+    right: 0;
+    top: 10px;
+    border-left: 8px solid #FFA502;
+    border-radius: 3px;
 }
 
 /* ---------------- MES TROUPEAUX */
 
 .troupeauxTitre {
 	margin: auto;
+	margin-top: 8rem;
 	text-align:center;
 }
 .troupeauxAjoutTroupeau {
-	background-color: #DBA9A9;
+	background-color: #c6eacf;
 	width : 30%;
 	height: 20%;
 	padding: 2rem;
 	margin: 2rem;
 	color: #000000;
 	border-radius: 10px;
-	box-shadow: 5px 5px 5px #B05656;
+	box-shadow: 5px 5px 5px #225e40;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	transition: background-color 1s, transform 1s;
 }
 .troupeauxAjoutTroupeau:hover {
-  background-color: #ff6f6f;
+  background-color: #9bd9ac;
   transform: scale(1.1);
 }
 .troupeauxAjoutTroupeau p {
@@ -112,13 +366,13 @@ navBarLeft {
 	padding: 1rem;
 	margin: 1rem;
 	color: #000000;
-	background-color: #DBA9A9;
+	background-color: #c6eacf;
 	border-radius: 10px;
 }
 .troupeauBigDiv:hover {
-  background-color: #ff6f6f;
+  background-color: #9bd9ac;
   transform: scale(1.1);
-  box-shadow: 5px 5px 5px #B05656;
+  box-shadow: 5px 5px 5px #ffffff;
 }
 
 
@@ -126,24 +380,25 @@ navBarLeft {
 
 .terrainsTitre {
 	margin: auto;
+	margin-top: 8rem;
 	text-align:center;
 }
 .terrainsAjoutTroupeau {
-	background-color: #DBA9A9;
+	background-color: #c6eacf;
 	width : 30%;
 	height: 20%;
 	padding: 2rem;
 	margin: 2rem;
 	color: #000000;
 	border-radius: 10px;
-	box-shadow: 5px 5px 5px #B05656;
+	box-shadow: 5px 5px 5px #225e40;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	transition: background-color 1s, transform 1s;
 }
 .terrainsAjoutTroupeau:hover {
-  background-color: #ff6f6f;
+  background-color: #9bd9ac;
   transform: scale(1.1);
 }
 .terrainsAjoutTroupeau p {
@@ -154,8 +409,8 @@ navBarLeft {
 .terrainsDivs {
 	display: flex;
 	flex-direction : row;
-	flex-wrap: wrap;
 	height: 100%;
+	width: 100%;
 }
 .terrainDiv p {
 	color: #000000;
@@ -175,13 +430,68 @@ navBarLeft {
 	padding: 1rem;
 	margin: 1rem;
 	color: #000000;
-	background-color: #DBA9A9;
+	background-color: #c6eacf;
 	border-radius: 10px;
 }
 .terrainBigDiv:hover {
-  background-color: #ff6f6f;
+  background-color: #9bd9ac;
   transform: scale(1.1);
-  box-shadow: 5px 5px 5px #B05656;
+  box-shadow: 5px 5px 5px #ffffff;
 }
 
+/* ---------- MES PRESTATIONS */
+.buttonRechercherPresta {
+	background-color: #c6eacf !important;
+	justify-content: center;
+	width : 30rem;
+	height: 5rem;
+	padding: 2rem;
+	margin: auto !important;
+	margin-bottom: 3rem !important;
+	color: #000000 !important;
+	border-radius: 10px;
+	box-shadow: 5px 5px 5px #225e40;
+	transition: background-color 1s, transform 1s;
+}
 
+.buttonRechercherPresta:hover {
+  background-color: #9bd9ac;
+  transform: scale(1.1);
+}
+
+.prestationsTab {
+	width: 100%;
+	font-size: 2rem;
+}
+
+/*----------------- PAGE DE LOGIN */
+
+#loginForm {
+	margin-top: 10rem;
+}
+
+.loginFormMasterize {
+	background-color: #c6eacf !important;
+}
+
+.userNotEnrolled {
+	margin: auto;
+	margin-top: 40rem;
+	margin-bottom : 10rem;
+	width: 70rem;
+	height: 15rem;
+	border: 5px solid #225e40;
+	border-radius: 15px;
+	display: flex;
+	flex-direction: column;
+}
+
+.userNotEnrolled h1 {
+	text-align: center;
+	font-size: 2rem;
+}
+.userNotEnrolled a {
+	margin: auto;
+	font-size: 2rem;
+	padding-bottom:4rem ;	
+}

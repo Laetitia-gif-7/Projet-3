@@ -41,6 +41,11 @@ public class CompteMangedBean implements Serializable {
 		}
 		return forward;
 	}
+	
+	public String deconnection() {
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "/connected.xhtml?faces-redirect=true";
+	}
 
 	public String getEmail() {
 		return email;

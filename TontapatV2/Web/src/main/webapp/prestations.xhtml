@@ -19,17 +19,25 @@
 	
 	<ui:define name="content">
 		<div class="terrainsTitre">
-			<h1>Vos Prestations, <h:outputText value="#{mbCompte.utilisateur.nom}" /> !</h1>
+			<h:panelGroup rendered="#{not empty mbCompte.utilisateur}">
+        		<h1>Vos Prestations, <h:outputLabel value="#{mbCompte.utilisateur.nom}" /> !</h1>
+    		</h:panelGroup>
 		</div>
-		
-		<b:button value="Rechercher une prestation/Devenir Berger" class="terrainsAjoutTroupeau" href="rechercheBerger.xhtml" >
-		</b:button>
+		<h:panelGroup rendered="#{empty mbCompte.utilisateur}">
+			<div class="userNotConnected">
+				<h1>Vous devez vous connecter pour accéder à vos troupeaux !</h1>
+				<a class="troupeauxAjoutTroupeau" href="login.xhtml">
+					<p>Se connecter</p>
+				</a>
+			</div>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{not empty mbCompte.utilisateur}">
+			<b:button value="Rechercher une prestation/Devenir Berger" class="buttonRechercherPresta" href="rechercheBerger.xhtml" >
+			</b:button>
+	
+	
 
-
-		<!--  test State, out of loop ui:repeat it is ok, inside problem : maybe more to come-->
-		<!-- https://stackoverflow.com/questions/3362487/dynamic-uiinclude-inside-uirepeat-is-there-a-simple-solution -->
-		<!-- 	<ui:repeat var="prestaBU" value="#{mbPresta.prestations}" > -->
-<h:form>
+	<h:form>
 		<b:tabView activeIndex="0" class="terrainsDivs">
 		<b:tab title="En Cours">
 			<c:forEach var="prestaBU" items="#{mbPresta.prestations}" varStatus="status" class="terrainBigDiv">
@@ -92,14 +100,22 @@
 							<ui:param name="prestaBuByMain" value="#{prestaBU.value}" />
 							<ui:param name="user" value="#{mbCompte}" />
 						</ui:include>
-					</div>
+					  <f:facet name="footer">
+					  	<h:form>
+					    	<b:button value="Close" dismiss="modal" />
+					    	<b:button value="Valider la prestation" look="primary" dismiss="modal" />
+					    	<b:button value="Annuler la prestation" look="primary" dismiss="modal" />
+					  	</h:form>
+					  </f:facet>
 				</div>
- 				</h:panelGroup> 
-			</c:forEach>
-		</div>
-	  </b:tab>
+				</div>
+				</h:panelGroup>
+				</c:forEach>
+				</div>
+		  </b:tab>		
 	  <b:tab title="Annulées">
 <!-- 			<c:forEach var="prestaBU" items="#{mbPresta.prestations}" varStatus="status" class="terrainBigDiv"> -->
+			<div class="terrainsDivs">
 			<c:forEach var="prestaBU" items="#{mbPresta.prestations}" >
 				<h:panelGroup rendered="#{prestaBU.value.stateString == 'ANNULE'}">
 					<div class="terrainBigDiv">
@@ -131,6 +147,7 @@
 <!-- 					</f:facet> -->
 <!-- 				</b:modal> -->
 			</c:forEach>
+			</div>
 	  </b:tab>
 	  </b:tabView>
 	  <!-- Try, one modal for all -->
@@ -140,13 +157,13 @@
 			<ui:param name="prestaBuKey" value="#{prestaBU.key}" />
 		</ui:include>
 	</c:forEach>
+	
 <!-- 						<p> -->
 <!-- 						Incidents en cours :<h:outputLabel value="#{mbPresta.incidentRefSelectionne.libelleIncident}"/>  -->
 <!-- 						</p> -->
 <!-- 						<b:button class="prestationButtonIncident" -->
 <!-- 							value="Déclarer un incident" -->
-<!-- 							onclick="$('.modalPseudoClass${status.index.incident}').modal()" /> -->
-							
+<!-- 							onclick="$('.modalPseudoClass${status.index.incident}').modal()" /> -->						
 <!-- 						<b:modal id="amodal${status.index.incident}" -->
 <!-- 					title="Incidents" -->
 <!-- 					styleClass="modalPseudoClass${status.index.incident}" closable="false" -->
@@ -167,9 +184,14 @@
 <!-- 						</h:form> -->
 <!-- 					</f:facet> -->
 <!-- 				</b:modal> -->
-</h:form>
+	</h:form>
+</h:panelGroup>
 <ui:debug hotkey="l" rendered="true"/>
+						
 </ui:define>
+
+		
+		
 </ui:composition>
 <!-- <ui:debug hotkey="k" rendered="true"/> -->
 </html>
