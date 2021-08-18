@@ -1,0 +1,12 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui" >
+	
+	<h:outputLabel value="#{prestaBuByMain.stateString}"/>
+	<p>Plus que <h:outputLabel value="#{ mbPresta.nbDaysToLocalDatetime(prestaBuByMain.prestation.debutPrestation) }" /> jours !</p>
+	<p>La prestation débutera le : <h:outputLabel value="#{prestaBuByMain.prestation.debutPrestation}" /></p>
+	<b:button  class="PrestationButtonDetail" value="Voir le détail de la prestation" onclick="$('.modalPseudoClass${prestaBU.key}').modal()" />
+</ui:composition>

@@ -2,27 +2,35 @@ package fr.eql.ai109.projet3.entity.helpers.prestation;
 
 import java.time.LocalDateTime;
 
+import fr.eql.ai109.projet3.entity.Prestation;
 import fr.eql.ai109.projet3.entity.PrestationBU;
 import fr.eql.ai109.projet3.entity.StatePrestation;
 import fr.eql.ai109.projet3.entity.Utilisateur;
 
 /*
- * Etat initial si l'éleveur fait la réservation :
+ * Etat initial si le client a fait la réservation :
  * - le client peut annuler la réservation => PrestationAnnule
- * - le client peut confirmer la réservation => ConfirmParclient
+ * - l'éleveur peut confirmer la réservation => ConfirméParEleveur
  */
-public class ReserveParEleveur implements StatePrestation {
+
+public class AvantPrestation implements StatePrestation {
 
 	private static final long serialVersionUID = 1L;
 	
-	public static final ReserveParEleveur RESERVEPARELEVEUR = new ReserveParEleveur();
+	public static final AvantPrestation AVANTPRESTATION = new AvantPrestation();
 	
 	@Override
 	public void valide(PrestationBU p) {
+		//  set the confirmation date in prestation entity => save db with update here or in business 
+		// entity will be updated in PrestationBusiness, not need dao access here (and can move later to Entity)
+		Prestation prestation = p.getPrestation();
+		prestation.setConfirmation(LocalDateTime.now());
+		p.setState(AvantPrestation.AVANTPRESTATION);
 	}
 
 	@Override
 	public void annule(PrestationBU p) {
+		// p.
 	}
 
 	@Override
@@ -32,8 +40,14 @@ public class ReserveParEleveur implements StatePrestation {
 
 	@Override
 	public void setTemplateString(PrestationBU p) {
-		p.setTemplateXhtml("reserveParEleveur.xhtml");
+		p.setTemplateXhtml("avantPrestation.xhtml");
 	}
+	/*
+	@Override
+	public void valideAvecDate(PrestationBU p, LocalDateTime date) {
+		// TODO Auto-generated method stub
+		
+	}*/
 
 	@Override
 	public void valide(PrestationBU p, Utilisateur utilisateur) {
@@ -46,10 +60,4 @@ public class ReserveParEleveur implements StatePrestation {
 		// TODO Auto-generated method stub
 		
 	}
-
-	/*
-	@Override
-	public void valideAvecDate(PrestationBU p, LocalDateTime date) {
-		// TODO Auto-generated method stub
-	}*/
 }

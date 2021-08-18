@@ -28,8 +28,16 @@
         	<f:selectItems var="inc" value="#{mbIncident.incidentRef}" itemValue="#{inc}" itemLabel="#{inc.libelleIncident}" />
         </b:selectOneMenu>
             <br/>
-    <b:commandButton value="Valider" action="#{mbIncident.enregistrerUnIncident(mbIncident.incidentRefSelectionne)}"/>
-    </b:form> 
+   <p>Description de l'incident :</p>
+    <b:row>
+                <b:column>
+                  <b:inputTextarea placeholder="Vous pouvez ajouter un commentaire pour plus de précision sur l'incident..." value="#{mbIncident.incidents.description}">
+                  </b:inputTextarea>
+                </b:column>
+            </b:row> 
+            <br/>
+         <b:commandButton value="Valider" action="#{mbIncident.enregistrerUnIncident(mbIncident.incidentRefSelectionne)}"/>
+    </b:form>
     </div>
     </b:column>
 </ui:define>

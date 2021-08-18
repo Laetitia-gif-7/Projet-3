@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:b="http://bootsfaces.net/ui">
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
 
 <h:head>
 	<ui:insert name="head"></ui:insert>
@@ -11,28 +12,35 @@
 </h:head>
 
 <h:body>
-	<b:navBar brand="Tontapat" brandHref="connected.xhtml" fluid="true" contentDisabled="#{navBarBean.navBarDisabled}">
+	<b:navBar brand="Tontapat" brandHref="connected.xhtml" fluid="true" contentDisabled="#{navBarBean.navBarDisabled}" class="headerNavBar" fixed="top">
+	  <h:form>
 	  <b:navbarLinks contentDisabled="#{navBarBean.navBarLinksDisabled}">
 	    <b:navLink value="Mes troupeaux" href="troupeaux.xhtml"></b:navLink>
 	    <b:navLink value="Mes terrains" href="terrains.xhtml"></b:navLink>
 	    <b:navLink value="Mes prestations" href="prestations.xhtml"></b:navLink>
-	    <b:navLink value="FAQ" href="#"></b:navLink>
 	    <b:dropMenu value="FAQ/Contact">
-	      <b:navLink value="Contact" href="#"></b:navLink>
-	      <b:navLink value="Documentation" href="#"></b:navLink>
-	      <b:navLink value="Informations" href="#"></b:navLink>
+	      <b:navLink value="Contact" href="connected.xhtml"></b:navLink>
+	      <b:navLink value="Documentation" href="connected.xhtml"></b:navLink>
+	      <b:navLink value="Informations" href="connected.xhtml"></b:navLink>
 	    </b:dropMenu>
 	  </b:navbarLinks>
 	  
 	  <b:navbarLinks pull="right" styleClass="hidden-xs">
 
 	    <b:dropMenu value="Utilisateur">
-	      <b:navLink value="Se connecter" href="login.xhtml" rendered="#{empty mbCompte.utilisateur}"></b:navLink>
-	      <b:navLink value="S'inscrire" href="login.xhtml" rendered="#{empty mbCompte.utilisateur}">></b:navLink>
-	      <b:navLink value="Se deconnecter" href="index.html" rendered="#{not empty mbCompte.utilisateur}"></b:navLink>
+	      <b:navLink value="Se connecter" href="login.xhtml" rendered="#{empty mbCompte.utilisateur}" class="buttonConnect"></b:navLink>
+	      <b:navLink value="S'inscrire" href="login.xhtml" rendered="#{empty mbCompte.utilisateur}" class="buttonConnect"></b:navLink>
+	      <h:form>
+	      	<b:commandButton value="Se deconnecter" action="#{mbCompte.deconnection()}" rendered="#{not empty mbCompte.utilisateur}" class="buttonDisconnect"/>
+	      </h:form>
+	      
 	    </b:dropMenu>
-	    <b:iconAwesome value="user" solid="true" size="3x" />
+	    &nbsp;
+	    <h:outputText value="#{mbCompte.utilisateur.nom}"/>
+	    &nbsp;
+	    <b:iconAwesome value="user" solid="true" size="2x"></b:iconAwesome>
 	  </b:navbarLinks>
+	  </h:form>
 	</b:navBar>
 
 	<b:container>
@@ -42,11 +50,10 @@
 			</b:column>
 		</b:row>
 	</b:container>
-	<div class="acceuil-footer acceuil-flex-justify-content acceuil-flex-align-items">
-		<h2>mywebsite - 2021</h2>
+	<div class="footer">
+		<h2>Tontapat - 2021</h2>
 	</div>
-
-
+	
 </h:body>
 
 </html>

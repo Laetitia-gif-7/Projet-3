@@ -1,0 +1,22 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui">
+	
+	<b:modal id="bmodal${prestaBuKey}" title="Détail de la prestation : #{prestaBuByMain.prestation.numeroPrestation}"
+			 styleClass="modalPseudoClass${prestaBuKey}" backdrop="true" closable="true" close-on-escape="true">
+	template Modal <h:outputLabel value="#{prestaBuByMain.stateString}"/>
+	<p> date prévue de début de prestation : <h:outputLabel value="#{prestaBuByMain.prestation.debutPrestation}"/> </p>
+	<p> date de fin : <h:outputLabel value="#{prestaBuByMain.prestation.finPrestation}"/> </p>
+	<p> prestaBuKey : <h:outputLabel value="#{prestaBuKey}"/> </p>
+	<f:facet name="footer">
+  		<h:form>
+    		<b:button value="Close" dismiss="modal" />
+<!--     		<b:button value="Valider la prestation" look="primary" dismiss="modal" /> -->
+    		<b:button value="Annuler la prestation" look="primary" dismiss="modal" />
+  		</h:form>
+	</f:facet>
+	</b:modal>
+</ui:composition>

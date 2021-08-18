@@ -21,4 +21,5 @@ public interface PrestationIDao extends GenericIDao<Prestation> {
 	void enregistreCompoTroupeauPresta(List<CompositionTroupeauPrestation> listCompoTroupo);
 	
 	List<Prestation> allPrestationWhithCtp();
+	Prestation prestationWhithCtp(int idPrestation);
 }

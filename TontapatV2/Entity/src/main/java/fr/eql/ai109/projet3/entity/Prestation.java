@@ -23,14 +23,6 @@ public class Prestation implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	public List<QuantiteEquipementPrestation> getQuantiteEquipementPrestations() {
-		return quantiteEquipementPrestations;
-	}
-
-	public void setQuantiteEquipementPrestations(List<QuantiteEquipementPrestation> quantiteEquipementPrestations) {
-		this.quantiteEquipementPrestations = quantiteEquipementPrestations;
-	}
-
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_prestation", unique=true, nullable=false)
@@ -206,7 +198,7 @@ public class Prestation implements Serializable {
 	public void setFinPrestation(LocalDateTime finPrestation) {
 		this.finPrestation = finPrestation;
 	}
-
+	
 	public Utilisateur getIdDerniereProposition() {
 		return idDerniereProposition;
 	}
@@ -317,6 +309,13 @@ public class Prestation implements Serializable {
 
 	public void setBerger(Utilisateur berger) {
 		this.berger = berger;
+	}
+	
+	public List<QuantiteEquipementPrestation> getQuantiteEquipementPrestations() {
+		return quantiteEquipementPrestations;
+	}
+	public void setQuantiteEquipementPrestations(List<QuantiteEquipementPrestation> quantiteEquipementPrestations) {
+		this.quantiteEquipementPrestations = quantiteEquipementPrestations;
 	}
 	
 	public List<CompositionTroupeauPrestation> getCompositionTroupeauPrestations() {

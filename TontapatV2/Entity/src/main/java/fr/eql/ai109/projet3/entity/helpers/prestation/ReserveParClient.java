@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import fr.eql.ai109.projet3.entity.Prestation;
 import fr.eql.ai109.projet3.entity.PrestationBU;
 import fr.eql.ai109.projet3.entity.StatePrestation;
+import fr.eql.ai109.projet3.entity.Utilisateur;
 
 /*
  * Etat initial si le client a fait la réservation :
@@ -17,9 +18,6 @@ public class ReserveParClient implements StatePrestation {
 	private static final long serialVersionUID = 1L;
 	
 	public static final ReserveParClient RESERVEPARCLIENT = new ReserveParClient();
-	
-	//@EJB
-	//PrestationIDao prestationIdao;
 	
 	@Override
 	public void valide(PrestationBU p) {
@@ -35,7 +33,7 @@ public class ReserveParClient implements StatePrestation {
 		// entity will be updated in PrestationBusiness, not need dao access here (and can move later to Entity)
 		Prestation prestation = p.getPrestation();
 		prestation.setConfirmation(LocalDateTime.now());
-		p.setState(ConfirmeParEleveur.CONFIRMEPARELEVEUR);
+		p.setState(ConfirmeParPartenaire.CONFIRMEPARPARTENAIRE);
 	}
 
 	@Override
@@ -45,7 +43,7 @@ public class ReserveParClient implements StatePrestation {
 
 	@Override
 	public void setStateName(PrestationBU p) {
-		p.setStateString("RESERVEPARCLIENT");
+		p.setStateString("ENATTENTE");
 	}
 
 	@Override
@@ -58,4 +56,16 @@ public class ReserveParClient implements StatePrestation {
 		// TODO Auto-generated method stub
 		
 	}*/
+
+	@Override
+	public void valide(PrestationBU p, Utilisateur utilisateur) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void valideAvecDate(PrestationBU p, Utilisateur utilisateur, LocalDateTime date) {
+		// TODO Auto-generated method stub
+		
+	}
 }

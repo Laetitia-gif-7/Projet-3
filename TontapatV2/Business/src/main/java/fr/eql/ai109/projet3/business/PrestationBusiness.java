@@ -31,7 +31,7 @@ import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.entity.constants.ConstantVariable;
 import fr.eql.ai109.projet3.entity.dto.ParametresReservationPrestation;
 // import fr.eql.ai109.projet3.business.helpers.prestation.*; not need anymore after Factory
-import fr.eql.ai109.projet3.business.factories.FactoryPrestrestationBU;
+import fr.eql.ai109.projet3.business.factories.FactoryPrestationBU;
 import fr.eql.ai109.projet3.business.utils.utils;
 import fr.eql.ai109.projet3.ibusiness.PrestationIBusiness;
 import fr.eql.ai109.projet3.idao.CompositionTroupeauPrestationIDao;
@@ -49,7 +49,7 @@ public class PrestationBusiness implements PrestationIBusiness {
 	Map<Integer, PrestationBU> prestationsBU = new HashMap<>();
 	
 	@EJB
-    private FactoryPrestrestationBU factoryPrestaBu;
+    private FactoryPrestationBU factoryPrestaBu;
 	
 	@EJB
 	PrestationIDao prestationIDao;
@@ -180,6 +180,21 @@ public class PrestationBusiness implements PrestationIBusiness {
 		
 	}
 	
+	@Override
+	public Map<Integer,PrestationBU> findPrestationsByUtilisateur(Utilisateur utilisateur) {
+		List<Prestation> prestations = prestationIDao.getPrestationsByUser(utilisateur);
+		//  Id prestation , prestationBu
+		Map<Integer,PrestationBU> prestationsBu = new HashMap<>();
+		
+		for (Prestation prestation : prestations) {
+			System.out.println("test: " + prestation.toString());
+			prestationsBu.put(
+					prestation.getIdPrestation(),
+					factoryPrestaBu.createPrestationBU(prestation, utilisateur ) );
+		}
+		return prestationsBu;
+	}
+	
 	// calcule le nombre d'animaux et de races de la prestation
 	// take into account the number of animals disponibles
 	private  List<CompositionTroupeauPrestation> createCompositionTroupeauPrestation(int nbAnimaux, Troupeau troupeau, Date debut, Date fin) {
@@ -285,21 +300,6 @@ public class PrestationBusiness implements PrestationIBusiness {
 		}
 		return listPeriods;
 	}
-	
-	
-	@Override
-	public Map<Integer,PrestationBU> findPrestationsByUtilisateur(Utilisateur utilisateur) {
-		List<Prestation> prestations = prestationIDao.getPrestationsByUser(utilisateur);
-		Map<Integer,PrestationBU> prestationsBu = new HashMap<>();
-		
-		for (Prestation prestation : prestations) {
-			System.out.println("test: " + prestation.toString());
-			prestationsBu.put(
-					prestation.getIdPrestation(),
-					factoryPrestaBu.createPrestationBU(prestation, utilisateur ) );
-		}
-		return prestationsBu;
-	}
 
 	@Override
 	public PrestationBU valide(PrestationBU prestaBu) {
@@ -307,10 +307,24 @@ public class PrestationBusiness implements PrestationIBusiness {
 		prestaBu.valide();
 		// only way to save in db, it is from here
 		prestationIDao.update(prestaBu.getPrestation());
-		
 		// date have been included and state changed
 		return prestaBu;
 	}
+	
+	@Override
+	public PrestationBU valide(PrestationBU prestaBu, Utilisateur utilisateur) {
+		prestaBu.valide(utilisateur);
+		prestationIDao.update(prestaBu.getPrestation());
+		return prestaBu;
+	}
+	
+	@Override
+	public PrestationBU valide(PrestationBU prestaBu, Date date, Utilisateur utilisateur) {
+		prestaBu.valide(utilisateur, utils.convertToLocalDateTimeViaInstant(date));
+		prestationIDao.update(prestaBu.getPrestation());
+		return prestaBu;
+	}
+
 	/*
 	@Override
 	public PrestationBU valideAvecDate(PrestationBU prestaBu, LocalDateTime date) {
@@ -324,6 +338,38 @@ public class PrestationBusiness implements PrestationIBusiness {
 	public PrestationBU annule(int id) {
 		// TODO To implement
 		return new PrestationBU();
+	}
+
+	@Override
+	public void valideEtatDesLieux(int idPrestation, Utilisateur utilisateur) {
+		Prestation prestation = prestationIDao.prestationWhithCtp(idPrestation);
+		if(utilisateur.getId() == prestation.getBerger().getId()) {
+			prestation.setEtatLieuBerger(LocalDateTime.now());
+		}
+		if(utilisateur.getId() == prestation.getTerrain().getUtilisateur().getId()) {
+			prestation.setEtatLieuClient(LocalDateTime.now());
+		}
+		if(utilisateur.getId() == prestation.getCompositionTroupeauPrestations().get(0).getTroupeau().getUtilisateur().getId()) {
+			prestation.setEtatLieuEleveur(LocalDateTime.now());
+		}
+		prestationIDao.update(prestation);
+		
+	}
+
+	@Override
+	public void valideContrat(int idPrestation, Utilisateur utilisateur) {
+		Prestation prestation = prestationIDao.prestationWhithCtp(idPrestation);
+		if(utilisateur.getId() == prestation.getBerger().getId()) {
+			prestation.setContratBerger(LocalDateTime.now());
+		}
+		if(utilisateur.getId() == prestation.getTerrain().getUtilisateur().getId()) {
+			prestation.setContratClient(LocalDateTime.now());
+		}
+		if(utilisateur.getId() == prestation.getCompositionTroupeauPrestations().get(0).getTroupeau().getUtilisateur().getId()) {
+			prestation.setContratEleveur(LocalDateTime.now());
+		}
+		prestationIDao.update(prestation);
+		
 	}
 
 }

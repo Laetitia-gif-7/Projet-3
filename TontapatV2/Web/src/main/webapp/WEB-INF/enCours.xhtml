@@ -1,0 +1,29 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui" >
+	
+	<h:outputLabel value="#{prestaBuByMain.stateString}"/>
+	<p>La prestation est en cours depuis le :  <h:outputLabel value="#{prestaBuByMain.prestation.debutPrestation}"/></p>
+	<p>Fin prévue le : <h:outputLabel value="#{prestaBuByMain.prestation.finPrestation}"/></p>
+	
+	<p>Incidents en cours :</p>
+		<ul>
+		<ui:repeat var="inc" value="#{prestaBU.value.prestation.incidents}">
+		<li>
+			<h:outputLabel value="#{inc.incidentRef.libelleIncident}"/> 
+		</li>
+		</ui:repeat>
+		</ul>
+	
+	<b:form>
+		<b:commandButton value="Déclarer un incident" look="primary"
+						action="#{mbPresta.declarerIncident(prestaBU.value.prestation.idPrestation)}" />
+		</b:form>
+							
+<!--	<b:button class="prestationButtonIncident" value="Déclarer un incident"/> -->
+				<!-- onclick="$('.modalPseudoClass${status.index.incident}').modal()" /> -->
+	<b:button  class="PrestationButtonDetail" value="Voir le détail de la prestation" onclick="$('.modalPseudoClass${prestaBU.key}').modal()"/>
+</ui:composition>

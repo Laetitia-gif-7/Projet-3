@@ -1,0 +1,41 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui">
+	
+	Signature des contrats<br/>		
+	<ui:fragment rendered="#{prestaBuByMain.prestation.contratClient != null}">
+		<p>Le client a déjà signé le contrat et payé le : <h:outputText value="#{prestaBuByMain.prestation.contratClient}" /></p>
+	</ui:fragment>
+	
+	<ui:fragment rendered="#{prestaBuByMain.prestation.contratEleveur != null}">
+		<p>L'éleveur a déjà signé le contrat le : <h:outputText value="#{prestaBuByMain.prestation.contratEleveur}" /></p>
+	</ui:fragment>
+	
+	<ui:fragment rendered="#{(prestaBuByMain.prestation.besoinBerger) and (prestaBuByMain.prestation.contratBerger != null)}">
+		<p>Le berger a déjà signé le contrat le : <h:outputText value="#{prestaBuByMain.prestation.contratBerger}" /></p>
+	</ui:fragment>
+
+	<!-- Client doit payer -->
+	<ui:fragment rendered="#{(user.utilisateur.id == prestaBuByMain.client.id and prestaBuByMain.prestation.contratClient == null)}"> 
+		<p>Si vous souhaitez poursuivre cette prestation, il faut passer à la caisse</p>
+		<h:form>
+			<b:commandButton value="Valider et Payer" look="primary"
+			 	action="#{mbPresta.valideAvecUtilisateur(prestaBuByMain.prestation.idPrestation)}" />
+			<b:button  class="PrestationButtonDetail" value="Voir le détail de la prestation" onclick="$('.modalPseudoClass${prestaBuKey}').modal()"/>
+		</h:form>
+	</ui:fragment>
+	
+	<!-- Les autres seulement signer -->
+	<ui:fragment rendered="#{((user.utilisateur.id == prestaBuByMain.eleveur.id) and (prestaBuByMain.prestation.contratEleveur == null)) or 
+			 ((user.utilisateur.id == prestaBuByMain.berger.id) and (prestaBuByMain.prestation.contratBerger == null))}" >
+		<p>Si vous souhaitez poursuivre cette prestation, vous devez signer le contrat</p>
+		<h:form>
+			<b:commandButton value="Valider" look="primary"
+			 	action="#{mbPresta.valideAvecUtilisateur(prestaBuByMain.prestation.idPrestation)}" />
+			<b:button  class="PrestationButtonDetail" value="Voir le détail de la prestation" onclick="$('.modalPseudoClass${prestaBuKey}').modal()"/>
+		</h:form>
+	</ui:fragment>
+</ui:composition>

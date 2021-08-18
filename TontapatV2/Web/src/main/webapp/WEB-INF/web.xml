@@ -26,7 +26,7 @@
 	
 	<context-param>
 		<param-name>BootsFaces_THEME</param-name>
-		<param-value>slate</param-value>
+		<param-value>flatly</param-value>
 	</context-param>
 	<context-param>
 		<param-name>net.bootsfaces.blockUI</param-name>
@@ -38,6 +38,6 @@
 </context-param>
 	
   <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
+    <welcome-file>connected.xhtml</welcome-file>
   </welcome-file-list>
 </web-app>
