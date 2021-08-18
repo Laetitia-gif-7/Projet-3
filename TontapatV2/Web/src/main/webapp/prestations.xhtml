@@ -36,11 +36,12 @@
 				<b:button value="Rechercher une prestation/Devenir Berger" class="buttonRechercherPresta" href="rechercheBerger.xhtml" >
 				</b:button>
 			</h:form>
-			<h:panelGroup rendered="#{empty mbPresta.prestations}">
-				<div class="nothingRegister">
-					<h1>Vous n'avez actuellement aucune prestation !</h1>
-				</div>
-			</h:panelGroup>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{empty mbPresta.prestations}">
+			<div class="nothingRegister">
+				<h1>Vous n'avez actuellement aucune prestation !</h1>
+			</div>
+		</h:panelGroup>
 	
 		<b:tabView activeIndex="0">
 			<b:tab title="En Cours">
@@ -113,46 +114,15 @@
 				</c:forEach>
 		 </b:tab>
 	</b:tabView>
-	  
-	  <!-- Try, one modal for all -->
-	  <c:forEach var="prestaBU" items="#{mbPresta.prestations}">
+	<!-- Try, one modal for all -->
+	<c:forEach var="prestaBU" items="#{mbPresta.prestations}">
 		<ui:include src="/WEB-INF/templateDetailPrestationModal.xhtml">
 			<ui:param name="prestaBuByMain" value="#{prestaBU.value}" />
 			<ui:param name="prestaBuKey" value="#{prestaBU.key}" />
 		</ui:include>
-	  </c:forEach>
-	</h:panelGroup>
-		
-	
-<!-- 						<p> -->
-<!-- 						Incidents en cours :<h:outputLabel value="#{mbPresta.incidentRefSelectionne.libelleIncident}"/>  -->
-<!-- 						</p> -->
-<!-- 						<b:button class="prestationButtonIncident" -->
-<!-- 							value="Déclarer un incident" -->
-<!-- 							onclick="$('.modalPseudoClass${status.index.incident}').modal()" /> -->						
-<!-- 						<b:modal id="amodal${status.index.incident}" -->
-<!-- 					title="Incidents" -->
-<!-- 					styleClass="modalPseudoClass${status.index.incident}" closable="false" -->
-<!-- 					close-on-escape="false" backdrop="false"> -->
+	 </c:forEach>
 
-<!-- 				<p>Selectionner un incident dans la liste ci-dessous :</p> -->
-<!-- 				<b:form method="post" action="prestations.xhtml"> -->
-<!--             <b:selectOneMenu id="idIncidentRefSelectionn" value="#{mbPresta.incidentRefSelectionne}" > -->
-<!--             	<f:selectItems var="inc" value="#{mbPresta.incidentRef}" itemValue="#{inc}" itemLabel="#{inc.libelleIncident}" /> -->
-<!--             </b:selectOneMenu> -->
-<!--             <br/> -->
-<!--             <input type="submit" value="Valider"/> -->
-           
-<!-- 				</b:form> -->
-<!-- 			<f:facet name="footer"> -->
-<!-- 						<h:form> -->
-<!-- 							<b:button value="Close" dismiss="modal" /> -->
-<!-- 						</h:form> -->
-<!-- 					</f:facet> -->
-<!-- 				</b:modal> -->
-						
-
-	<ui:debug hotkey="l" rendered="true"/>			
+<ui:debug hotkey="l" rendered="true"/>			
 </ui:define>
 </ui:composition>
 <!-- <ui:debug hotkey="k" rendered="true"/> -->

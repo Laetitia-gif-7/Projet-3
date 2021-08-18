@@ -24,10 +24,8 @@
 	<h:panelGroup rendered="#{not empty mbPresta.incidentRefSelectionne.libelleIncident}">
 		<p>Incidents en cours :<h:outputLabel value="#{mbPresta.incidentRefSelectionne.libelleIncident}"/></p>
 	</h:panelGroup>
-	
-		<h:form>
-			<b:button class="prestationButtonIncident" value="Déclarer un incident"/>
-					<!-- onclick="$('.modalPseudoClass${status.index.incident}').modal()" /> -->
-			<b:button  class="PrestationButtonDetail" value="Voir le détail de la prestation" onclick="$('.modalPseudoClass${prestaBU.key}').modal()"/>
-		</h:form>
+	<h:form>
+		<b:button class="prestationButtonIncident" value="Déclarer un incident"/>
+		<b:button  class="PrestationButtonDetail" value="Voir le détail de la prestation" onclick="$('.modalPseudoClass${prestaBU.key}').modal()"/>
+	</h:form>
 </ui:composition>
