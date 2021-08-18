@@ -26,9 +26,9 @@
 		<h:panelGroup rendered="#{empty mbCompte.utilisateur}">
 			<div class="userNotConnected">
 				<h1>Vous devez vous connecter pour accéder à vos prestations !</h1>
-				<a class="troupeauxAjoutTroupeau" href="login.xhtml">
- 					<p>Se connecter</p>
-				</a>
+				<p><a class="troupeauxAjoutTroupeau" href="login.xhtml">
+ 				Se connecter
+				</a></p>
 			</div>
 		</h:panelGroup>
 		<h:panelGroup rendered="#{not empty mbCompte.utilisateur}">

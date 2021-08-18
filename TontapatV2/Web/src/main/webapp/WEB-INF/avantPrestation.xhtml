@@ -6,10 +6,8 @@
 	xmlns:b="http://bootsfaces.net/ui" >
 	
 	<h:outputLabel value="#{prestaBuByMain.stateString}"/>
-	<p>Plus que 
-		<h:outputLabel value="#{ mbPresta.nbDaysToLocalDatetime(prestaBuByMain.prestation.debutPrestation) }">
-			<f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy"/>
-		 </h:outputLabel>
+	<p>Plus que  
+		<h:outputLabel value="#{ mbPresta.nbDaysToLocalDatetime(prestaBuByMain.prestation.debutPrestation) }" />
 		jours !
 	</p>
 	<p>La prestation débutera le : 
