@@ -5,8 +5,11 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:b="http://bootsfaces.net/ui" >
 	
-	<h:outputLabel value="#{prestaBuByMain.stateString}"/>
-	<p>La prestation a pris fin le : <h:outputLabel value="#{prestaBuByMain.prestation.finPrestation}"/></p>
-	<p>Fin prévue le : <h:outputLabel value="#{prestaBuByMain.prestation.finPrestation}"/></p>
+	<p>Numero de la prestation : <h:outputLabel value="#{prestaBuByMain.prestation.numeroPrestation}" /></p>
+	<p>La prestation a pris fin le :
+		<h:outputLabel value="#{prestaBuByMain.prestation.finPrestation}">
+			 <f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy"/>
+		</h:outputLabel>
+	</p>
 	<b:button  class="PrestationButtonDetail" value="Voir le détail de la prestation" onclick="$('.modalPseudoClass${prestaBU.key}').modal()" />
 </ui:composition>

@@ -5,16 +5,16 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:b="http://bootsfaces.net/ui">
 	
-	Réservé par eleveur.xhtml component<br/>
-	User connecté :<h:outputLabel value="#{user.utilisateur.id}"/> 
-	<hr/>
-	<h:outputLabel value="#{prestaBuByMain.stateString}"/>
-	
 	<!-- Vue Client -->
 	<ui:fragment rendered="#{prestaBuByMain.client.id == user.utilisateur.id}">
-		Vous avez une demande de réservation de Mr. 
-		<h:outputLabel value="#{prestaBuByMain.eleveur.nom}"/> button Voir prestation proposée
-		<b:button value="En savoir plus.." look="primary" outcome="reservationPrestation" >
+		<p>Numero de la prestation : <h:outputLabel value="#{prestaBuByMain.prestation.numeroPrestation}" /></p>
+		<p>Date de création de la prestation :
+		<h:outputLabel value="#{prestaBuByMain.prestation.reservation}">
+			 <f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy"/>
+		</h:outputLabel></p>
+		Vous avez une demande de réservation de :  
+		<h:outputLabel value="#{prestaBuByMain.eleveur.nom}"/>
+		<b:button value="Voir la prestation proposée" look="primary" outcome="reservationPrestation" >
 			<f:param name="idTroupeau" value="#{prestaBuByMain.prestation.compositionTroupeauPrestations.get(0).troupeau.idTroupeau}" />
 			<f:param name="idTerrain" value="#{prestaBuByMain.prestation.terrain.idTerrain}" />
 			<f:param name="dateMin" value="#{mbPresta.formatMyLocalDateTime(prestaBuByMain.prestation.debutPrestation)}" />
@@ -25,7 +25,8 @@
 	
 	<!--  Vue Eleveur -->
 	<ui:fragment rendered="#{prestaBuByMain.eleveur.id == user.utilisateur.id}">
-		En attente de la confirmation du client
+		<p>Numero de la prestation : <h:outputLabel value="#{prestaBuByMain.prestation.numeroPrestation}" /></p>
+		En attente de la confirmation de : 
 		<h:outputLabel value="#{prestaBuByMain.client.nom}"/>
 	</ui:fragment>
 </ui:composition>
