@@ -6,20 +6,8 @@
 	xmlns:b="http://bootsfaces.net/ui">
 	
 	Validation etat des lieux component<br/>
-	User connecté :<h:outputLabel value="#{user.utilisateur.id}"/> 
-	Client :<h:outputLabel value="#{prestaBuByMain.client.id}"/>
-	Eleveur :<h:outputLabel value="#{prestaBuByMain.eleveur.id}"/> 
-	<h:outputLabel value="#{prestaBuByMain.stateString}"/>
-	<hr/>
-	
-	
-<!-- 	<ui:fragment rendered="#{(prestaBuByMain.client.id == user.utilisateur.id) and (prestaBuByMain.prestation.etatLieuClient == null)}"> -->
-<!-- 		Si l'état des lieux a été fait, veuillez le valider sur l'application -->
-<!-- 	</ui:fragment> -->
-		
 	<ui:fragment rendered="#{prestaBuByMain.prestation.etatLieuClient != null}">
 		<p>Le client a validé l'état des lieux le <h:outputText value="#{prestaBuByMain.prestation.etatLieuClient}" /></p>
-		
 	</ui:fragment>
 	<ui:fragment rendered="#{prestaBuByMain.prestation.etatLieuEleveur != null}">
 		<p>L'éleveur a validé l'état des lieux le <h:outputText value="#{prestaBuByMain.prestation.etatLieuEleveur}" /></p>
@@ -27,7 +15,6 @@
 	<ui:fragment rendered="#{(prestaBuByMain.prestation.besoinBerger) and (prestaBuByMain.prestation.etatLieuBerger != null)}">
 		<p>Le berger a validé l'état des lieux le <h:outputText value="#{prestaBuByMain.prestation.etatLieuBerger}" /></p>
 	</ui:fragment>
-<!-- 	 berger -->
 
 	<ui:fragment rendered="#{(user.utilisateur.id == prestaBuByMain.client.id and prestaBuByMain.prestation.etatLieuClient == null) or
 		(user.utilisateur.id == prestaBuByMain.eleveur.id and prestaBuByMain.prestation.etatLieuEleveur == null) or 
