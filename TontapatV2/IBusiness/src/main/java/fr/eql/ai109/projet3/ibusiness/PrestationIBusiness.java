@@ -17,10 +17,16 @@ public interface PrestationIBusiness {
 			int idTerrain, int idTroupeau );
 	void ReservePrestationBerger(int idPrestation, Utilisateur berger);
 	
+	void valideEtatDesLieux(int idPrestation, Utilisateur utilisateur);
+	void valideContrat(int idPrestation, Utilisateur utilisateur);
+	
 	// prestationbu contains prestation + additional data. Can send back to the view for updating it
 	PrestationBU valide(PrestationBU pbu);
+	PrestationBU valide(PrestationBU pbu, Utilisateur utilisateur);
+	PrestationBU valide(PrestationBU prestationBU, Date date, Utilisateur utilisateurConnecte);
 	//PrestationBU valideAvecDate(PrestationBU prestationBU, LocalDateTime date);
 	
 	PrestationBU annule(int idPrestation);
 	// void valide( Date...)
+	
 }

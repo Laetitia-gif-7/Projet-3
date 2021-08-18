@@ -1,0 +1,44 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui">
+	
+	confirmeParPartenaire.xhtml<br/>
+	User connecté :<h:outputLabel value="#{user.utilisateur.id}"/> 
+	<h:outputLabel value="#{prestaBuByMain.stateString}"/>
+	<hr/>
+	
+	<!-- Message pour l'initiateur seulement -->
+	<ui:fragment rendered="#{prestaBuByMain.prestation.initiateurPrestation.id == user.utilisateur.id}">
+		<!-- Test si eleveur ou client, au moins afficher le nom du partenaire (partenaire ? fausse bonne idée ?) -->
+		Votre demande de réservation a été confirmée 
+<!-- 		par <h:outputLabel value="#{prestaBuByMain.eleveur.nom}"/> -->
+	</ui:fragment>
+	<h:form>
+	
+	<hr/>
+	<!-- Message si une nouvelle date a été proposée, poposer une date c'est écraser date etats_des_lieux_proposée dans la db -->
+	<!-- Accepter la date c'est copier la date proposée dans la date etats_des_lieux_acceptés => state suivant ! -->
+	<ui:fragment rendered="#{prestaBuByMain.prestation.idDerniereProposition.id !=  user.utilisateur.id}" >
+		Une nouvelle date pour l'état des lieux vous a été proposée : 
+		<p> <h:outputText value="#{prestaBuByMain.prestation.premiereVisitePropose}"/></p>
+		<b:commandButton value="Accepter cette date" action="#{mbPresta.valideAvecUtilisateur(prestaBuByMain.prestation.idPrestation)}" />
+		<!-- datepicker to get nouvelleDate -->
+		<p>Proposer une nouvelle date</p>
+		<b:datepicker id="cdate1" mode="toggle-icon" showWeek="true"
+				firstDay="1" value="#{mbPresta.nouvelleDate}" required="true"
+				label="Choisir une nouvelle date:" label-col-sm="10" col-sm="10" />
+		<b:commandButton value="Proposer une nouvelle date" action="#{mbPresta.valideAvecDate(prestaBuByMain.prestation.idPrestation)}" />
+	</ui:fragment>
+	
+	<!-- Message si une votre derniere proposition est encore en attente -->
+	<ui:fragment rendered="#{prestaBuByMain.prestation.idDerniereProposition.id ==  user.utilisateur.id}" >
+		
+		Votre dernière proposition de date d'états des lieux est en attente
+<!-- 		<b:commandButton value="Annuler" action="#{mbPresta.annule( prestaBuByMain.prestation.idPrestation )}"/> -->
+	</ui:fragment>
+	<b:button  class="PrestationButtonDetail" value="Voir le détail de la prestation" onclick="$('.modalPseudoClass${prestaBU.key}').modal()"/>
+	</h:form>
+</ui:composition>

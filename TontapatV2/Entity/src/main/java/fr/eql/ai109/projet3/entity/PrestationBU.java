@@ -17,7 +17,7 @@ public class PrestationBU implements Serializable {
 	// extends entity attributes to ease treatment ? 
 	private Utilisateur client;
 	private Utilisateur eleveur;
-	//private Utilisateur berger;
+	private Utilisateur berger;
 	// private Utilisateur partenaire
 	
 	//default, should be overwritten by each state
@@ -50,7 +50,6 @@ public class PrestationBU implements Serializable {
 	public Utilisateur getClient() {
 		return client;
 	}
-
 	public void setClient(Utilisateur client) {
 		this.client = client;
 	}
@@ -58,16 +57,21 @@ public class PrestationBU implements Serializable {
 	public Utilisateur getEleveur() {
 		return eleveur;
 	}
-
 	public void setEleveur(Utilisateur eleveur) {
 		this.eleveur = eleveur;
 	}
 	
+	public Utilisateur getBerger() {
+		return berger;
+	}
+	public void setBerger(Utilisateur berger) {
+		this.berger = berger;
+	}
+
 	// give direct access
 	public Prestation getPrestation() {
 		return prestation;
 	}
-	
 	public void setPrestation(Prestation prestation) {
 		this.prestation = prestation;
 	}
@@ -75,7 +79,6 @@ public class PrestationBU implements Serializable {
 	public String getStateString() {
 		return stateString;
 	}
-	
 	public void setStateString(String str) {
 		this.stateString = str;
 	}
@@ -84,6 +87,14 @@ public class PrestationBU implements Serializable {
 	public void valide() {
 		state.valide(this);
 	}
+	public void valide(Utilisateur utilisateur) {
+		state.valide(this, utilisateur);
+	}
+	
+	public void valide(Utilisateur utilisateur, LocalDateTime date) {
+		state.valideAvecDate(this, utilisateur, date);
+	}
+	
 	/*
 	public void valideAvecDate(LocalDateTime date) {
 		state.valideAvecDate(this);

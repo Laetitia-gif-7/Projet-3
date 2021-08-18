@@ -1,0 +1,30 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui">
+	
+	Validation etat des lieux component<br/>
+	<ui:fragment rendered="#{prestaBuByMain.prestation.etatLieuClient != null}">
+		<p>Le client a validé l'état des lieux le <h:outputText value="#{prestaBuByMain.prestation.etatLieuClient}" /></p>
+	</ui:fragment>
+	<ui:fragment rendered="#{prestaBuByMain.prestation.etatLieuEleveur != null}">
+		<p>L'éleveur a validé l'état des lieux le <h:outputText value="#{prestaBuByMain.prestation.etatLieuEleveur}" /></p>
+	</ui:fragment>
+	<ui:fragment rendered="#{(prestaBuByMain.prestation.besoinBerger) and (prestaBuByMain.prestation.etatLieuBerger != null)}">
+		<p>Le berger a validé l'état des lieux le <h:outputText value="#{prestaBuByMain.prestation.etatLieuBerger}" /></p>
+	</ui:fragment>
+
+	<ui:fragment rendered="#{(user.utilisateur.id == prestaBuByMain.client.id and prestaBuByMain.prestation.etatLieuClient == null) or
+		(user.utilisateur.id == prestaBuByMain.eleveur.id and prestaBuByMain.prestation.etatLieuEleveur == null) or 
+		(user.utilisateur.id == prestaBuByMain.berger.id and prestaBuByMain.prestation.etatLieuBerger == null)}" >
+		Si vous souhaitez poursuivre cette prestation, vous devez valider l'état des lieux
+		<h:form>
+			<b:commandButton value="Valider" look="primary"
+			 action="#{mbPresta.valideAvecUtilisateur(prestaBuByMain.prestation.idPrestation)}" >
+			</b:commandButton>
+			<b:button  class="PrestationButtonDetail" value="Voir le détail de la prestation" onclick="$('.modalPseudoClass${prestaBuKey}').modal()"/>
+		</h:form>
+	</ui:fragment>	
+</ui:composition>

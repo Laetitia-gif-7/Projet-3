@@ -3,14 +3,17 @@ package fr.eql.ai109.projet3.controller;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
+import java.time.temporal.ChronoUnit;
 //import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
@@ -37,8 +40,6 @@ import fr.eql.ai109.projet3.entity.Utilisateur;
 import fr.eql.ai109.projet3.ibusiness.IncidentIBusiness;
 import fr.eql.ai109.projet3.ibusiness.PrestationIBusiness;
 
-// @RequestScoped
-
 @ManagedBean(name = "mbPresta")
 @ViewScoped
 public class PrestationManagedBean implements Serializable {
@@ -53,9 +54,18 @@ public class PrestationManagedBean implements Serializable {
 	private List<Incident> incidents;
 	private IncidentRef incidentRefSelectionne;
 	private int testId; 
+	private Date nouvelleDate = new Date();
 	
 	
 	
+
+	public Date getNouvelleDate() {
+		return nouvelleDate;
+	}
+
+	public void setNouvelleDate(Date nouvelleDate) {
+		this.nouvelleDate = nouvelleDate;
+	}
 
 	public int getTestId() {
 		return testId;
@@ -103,14 +113,17 @@ public class PrestationManagedBean implements Serializable {
 			System.out.println("prestExt :" + prestations.get(prestationKey).getPrestation().getDebutPrestation());
 			System.out.println("state string :"+ prestations.get(prestationKey).getStateString());
 		}
-		incidentRef = incidentIBusiness.findAllIncidentRef();
+		//incidentRef = incidentIBusiness.findAllIncidentRef();
 //		listSelectIncident = new ArrayList<SelectItem>();
 //		for (IncidentRef incidentRef2 : incidentRef) {
 //			listSelectIncident.add(new SelectItem(incidentRef2.getIdIncidentRef(),incidentRef2.getLibelleIncident()));
 //		}
 		//incidentRefSelectionne = incidentRef.get(0);
-		
-
+	}
+	
+	@PreDestroy
+	void destroy() {
+		System.out.println("destroy PrestationDao");
 	}
 	
 	public List<SelectItem> getListSelectIncident() {
@@ -140,6 +153,16 @@ public class PrestationManagedBean implements Serializable {
 	public List<Incident> getIncidents() {
 		return incidents;
 	}
+	
+	public String validerEtatDesLieux(int idPrestation) {
+		prestaIBusiness.valideEtatDesLieux(idPrestation, utilisateurConnecte);
+		return "prestations.xhtml";
+	}
+	
+	public String signerContrat(int idPrestation) {
+		prestaIBusiness.valideContrat(idPrestation, utilisateurConnecte);
+		return "prestations.xhtml";
+	}
 
 	public void setIncidents(List<Incident> incidents) {
 		this.incidents = incidents;
@@ -148,12 +171,6 @@ public class PrestationManagedBean implements Serializable {
 	public void setListSelectIncident(List<SelectItem> listSelectIncident) {
 		this.listSelectIncident = listSelectIncident;
 	}
-
-	@PreDestroy
-	void destroy() {
-		System.out.println("destroy PrestationDao");
-	}
-	
 	
 	// should make action on a specific prestation
 	public void valide(int idPrestation) {
@@ -172,15 +189,36 @@ public class PrestationManagedBean implements Serializable {
 		prestations.put(newPbu.getPrestation().getIdPrestation(), newPbu);
 	}
 	
-	public void valideAvecDate(int idPrestation, LocalDateTime date) {
-		System.out.println("Valider avec date : " + idPrestation);
-		//PrestationBU newPbu = prestaIBusiness.valideAvecDate(prestations.get(idPrestation), date);
+	public void valideAvecUtilisateur(int idPrestation) {
+		PrestationBU updatedPbu = prestaIBusiness.valide(prestations.get(idPrestation), utilisateurConnecte);
+		// assert in debug mode
+		assert idPrestation == updatedPbu.getPrestation().getIdPrestation();
+		// update the value
+		prestations.put(updatedPbu.getPrestation().getIdPrestation(), updatedPbu);
 	}
+	
+	public void valideAvecDate(int idPrestation) {
+		System.out.println("Valider avec date : " + idPrestation);
+		PrestationBU updatedPbu = prestaIBusiness.valide(prestations.get(idPrestation), this.nouvelleDate, utilisateurConnecte);
+		assert idPrestation == updatedPbu.getPrestation().getIdPrestation();
+		// update the value
+		prestations.put(updatedPbu.getPrestation().getIdPrestation(), updatedPbu);
+	}
+	
+//	public void validePourEleveur(int id) {
+//		System.out.println("ELEVEur !! " + id);
+//		
+//	}
 	
 	public void annule(int idPrestation) {
 		System.out.println("Annuler la prestation :" + idPrestation);
 	}
-
+	
+	public long nbDaysToLocalDatetime( LocalDateTime date ) { 
+		return ChronoUnit.DAYS.between(LocalDateTime.now(), date);
+	}
+	
+	
 	public String formatMyLocalDateTime(LocalDateTime date) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		return date.format(formatter);
