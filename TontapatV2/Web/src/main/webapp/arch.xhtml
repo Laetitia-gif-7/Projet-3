@@ -13,6 +13,7 @@
 
 <h:body>
 	<b:navBar brand="Tontapat" brandHref="connected.xhtml" fluid="true" contentDisabled="#{navBarBean.navBarDisabled}" class="headerNavBar" fixed="top">
+	  <h:form>
 	  <b:navbarLinks contentDisabled="#{navBarBean.navBarLinksDisabled}">
 	    <b:navLink value="Mes troupeaux" href="troupeaux.xhtml"></b:navLink>
 	    <b:navLink value="Mes terrains" href="terrains.xhtml"></b:navLink>
@@ -34,10 +35,12 @@
 	      </h:form>
 	      
 	    </b:dropMenu>
-	    : <h:outputText value="#{mbCompte.utilisateur.nom}"/>
+	    &nbsp;
+	    <h:outputText value="#{mbCompte.utilisateur.nom}"/>
 	    &nbsp;
 	    <b:iconAwesome value="user" solid="true" size="2x"></b:iconAwesome>
 	  </b:navbarLinks>
+	  </h:form>
 	</b:navBar>
 
 	<b:container>

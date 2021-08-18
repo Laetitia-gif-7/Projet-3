@@ -23,21 +23,32 @@
 		<h:panelGroup rendered="#{empty mbCompte.utilisateur}">
 			<div class="userNotConnected">
 				<h1>Vous devez vous connecter pour accéder à vos troupeaux !</h1>
-				<a class="troupeauxAjoutTroupeau" href="login.xhtml">
+				<a class="troupeauxAjoutTroupeau" href="login.xhtml" style="text-decoration: none">
 					<p>Se connecter</p>
 				</a>
 			</div>
 		</h:panelGroup>
 		<h:panelGroup rendered="#{not empty mbCompte.utilisateur}">
+			<h:form>
 			<button class="troupeauxAjoutTroupeau">
 				<p>Ajouter un troupeau</p>
 				<b:iconAwesome value="plus-circle" solid="true" size="3x"/>
 			</button>
+			</h:form>
+			<h:panelGroup rendered="#{empty mbTroupeau.troupeaux}">
+			<div class="nothingRegister">
+				<h1>Vous n'avez actuellement aucun troupeau enregistré !</h1>
+			</div>
+			</h:panelGroup>
 		</h:panelGroup>
 		<div class="troupeauxDivs">
 			<ui:repeat class="troupeauxBigDiv" var="troupeau" value="#{mbTroupeau.troupeaux}" varStatus="status">
 				<div class="troupeauBigDiv">
 					<div class="troupeauSmallDiv">
+						<div class="imageTroupeau">
+							<img src="#{resource['assets/troupeauMouton.jpg']}" class="imageTroupeau"></img>
+							<!-- <h:graphicImage value="#{terrain.photo}" class="imageTroupeau"/> -->
+						</div>
 						<p>Nom : <h:outputLabel value="#{troupeau.nomTroupeau}" /></p>
 						<p>Description : <h:outputLabel value="#{troupeau.description}" /></p>
 						<p>Coût par animal : <h:outputLabel value="#{troupeau.coutParAnimal}" /> &#8364;/jour</p>
@@ -62,21 +73,25 @@
 					</div>
 				</div>
 				<b:modal id="amodal${status.index}" title="Détail du troupeau : #{troupeau.nomTroupeau}" styleClass="modalPseudoClass${status.index}" backdrop="true" closable="true" close-on-escape="true">
+						<div class="imageTroupeau">
+							<img src="#{resource['assets/troupeauMouton.jpg']}" class="imageTroupeau"></img>
+						</div>
 						<p>Nom : <h:outputLabel value="#{troupeau.nomTroupeau}" /></p>
 						<p>Description : <h:outputLabel value="#{troupeau.description}" /></p>
-						<p>Coût par animal : <h:outputLabel value="#{troupeau.coutParAnimal}" /> €</p>
+						<p>Coût par animal : <h:outputLabel value="#{troupeau.coutParAnimal}" /> € par jour</p>
 						<p>Fréquence de visite : <h:outputLabel value="#{troupeau.frequenceVisite}" /> jour(s) par semaine</p>
 						<p>Composition du troupeau : </p>
 						<ul>
 							<ui:repeat var="race" value="#{troupeau.compositionTroupeau}">
-				                <li><h:outputLabel value="#{race.nbAnimaux}" /> de <h:outputLabel value="#{race.raceRef.libelleRace}" />, race : <h:outputLabel value="#{race.raceRef.especeRef.libelleEspece}" /></li>
+				                <li><h:outputLabel value="#{race.nbAnimaux}" />&nbsp;<h:outputLabel value="#{race.raceRef.libelleRace}" />, race : <h:outputLabel value="#{race.raceRef.especeRef.libelleEspece}" /></li>
 			            	</ui:repeat>
 						</ul>
-						(Ajout d'une condition du motif retrait si il existe)
-						<p>Motif retrait : <h:outputLabel value="#{troupeau.motifRetraitTroupeau.libelleMotifRetraitTroupeau}" /></p>
+						<h:panelGroup rendered="#{not empty troupeau.motifRetraitTroupeau.libelleMotifRetraitTroupeau}">
+						<p>Motif de retrait : <h:outputLabel value="#{troupeau.motifRetraitTroupeau.libelleMotifRetraitTroupeau}" /></p>
+						</h:panelGroup>
 					  <f:facet name="footer">
 					    <h:form>
-							<b:button value="Close" dismiss="modal" />
+							<b:button value="Fermer" dismiss="modal" />
 							<b:commandButton value="Rechercher une prestation" look="primary"
 								action="#{mbTroupeau.lancerRecherche(troupeau.idTroupeau)}" />
 							<b:button value="Supprimer le troupeau" look="primary"
@@ -86,6 +101,7 @@
 				</b:modal> 
 			</ui:repeat>
 		</div>
+		
 		
 
 	</ui:define>
