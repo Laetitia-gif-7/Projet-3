@@ -55,9 +55,7 @@ public class PrestationManagedBean implements Serializable {
 	private IncidentRef incidentRefSelectionne;
 	private int testId; 
 	private Date nouvelleDate = new Date();
-	
-	
-	
+
 
 	public Date getNouvelleDate() {
 		return nouvelleDate;
@@ -143,12 +141,6 @@ public class PrestationManagedBean implements Serializable {
 //        FacesMessage message = new FacesMessage( "Incident enregitré !" );
 //        FacesContext.getCurrentInstance().addMessage( null, message );
 //    }
-	
-	public void enregistrerUnIncident(Prestation prestation, IncidentRef incidentRef) {
-		incidentIBusiness.DeclarationIncident(prestation, utilisateurConnecte, incidentRef);
-		 
-		
-	}
 	
 	public List<Incident> getIncidents() {
 		return incidents;
