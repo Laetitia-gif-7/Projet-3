@@ -39,8 +39,6 @@ public class CherchePrestationDao extends GenericDao<Prestation> implements Cher
 
 		List<Object[]> temp_correspondances;
 
-
-
 		Query query = entityManager.createQuery(
 				"SELECT tr,  "
 						+ "CASE WHEN ( pd.debutPeriode > pd2.debutPeriode ) " 

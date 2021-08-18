@@ -67,15 +67,13 @@ public class CherchePrestationManagedBean implements Serializable {
     		terrain = terrainIBusiness.findByIdWithEquipement(idTerrain);
     		troupeauxCompatiblesAvecDates = cherchePrestationIBusiness.chercheTroupeauxCompatibles(idTerrain);
         }
-        if(idTroupeauString != null) {
+        
+        if ( idTroupeauString != null ) {
         	idTroupeau =Integer.parseInt(idTroupeauString);
     		troupeau = troupeauIBusiness.findTroupeauById(idTroupeau);
     		terrainsCompatiblesAvecDates = cherchePrestationIBusiness.chercheTerrainsCompatibles(idTroupeau);
         }
-        
         prestationsMemeDepartement = cherchePrestationIBusiness.cherchePrestationMemeDepartement(utilisateurConnecte);
-        System.out.println("toto");
-
 	}
 	
 	public String reservationBerger(int idPrestation) {

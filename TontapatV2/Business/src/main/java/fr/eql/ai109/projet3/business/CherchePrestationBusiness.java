@@ -89,11 +89,9 @@ public class CherchePrestationBusiness implements CherchePrestationIBusiness {
 				prestationIDao.prestationsEnCoursPourTroupeauId(troupeau.getIdTroupeau(), dateDebut, dateFin);
 		
 		int nbAnimauxOccupes = 0;
-		for(Prestation prestation : prestationsEnCours)
-			for(CompositionTroupeauPrestation cp : prestation.getCompositionTroupeauPrestations() )
-			nbAnimauxOccupes += cp.getNbAnimaux();
-
-		int directTotal = prestationIDao.nbAnimauxEnPrestationPourTroupeauId(troupeau.getIdTroupeau(), dateDebut, dateFin);
+		
+		if ( prestationsEnCours.size() > 0 )
+			nbAnimauxDansTroupeau = prestationIDao.nbAnimauxEnPrestationPourTroupeauId(troupeau.getIdTroupeau(), dateDebut, dateFin);
 		
 		return nbAnimauxDansTroupeau - nbAnimauxOccupes;
 	}
