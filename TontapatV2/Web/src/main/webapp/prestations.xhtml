@@ -42,10 +42,11 @@
 				</div>
 			</h:panelGroup>
 	
-		<b:tabView activeIndex="1" class="terrainsDivs">
+		<b:tabView activeIndex="0">
 			<b:tab title="En Cours">
 				<c:forEach var="prestaBU" items="#{mbPresta.prestations}">
 					<h:panelGroup rendered="#{prestaBU.value.stateString == 'ENCOURS'}">
+					<div  class="terrainsDivs">
 						<div class="terrainBigDiv">
 							<div class="terrainSmallDiv">
 								<ui:include src="#{'/WEB-INF/'.concat(prestaBU.value.templateXhtml)}" >
@@ -54,15 +55,16 @@
 								</ui:include>
 							</div>
 						</div>
+						</div>
 					</h:panelGroup>
 			  </c:forEach>
 		  </b:tab>
 		  <b:tab title="En Attentes">
-		  	<f:facet name="anchor"><b:iconAwesome name="cog" spin="true" /></f:facet>
 				<c:forEach var="prestaBU" items="#{mbPresta.prestations}">
 					<h:panelGroup rendered="#{prestaBU.value.stateString == 'ENATTENTE'}" >
 	<!-- 				 || prestaBU.value.stateString == 'RESERVEPARCLIENT' || prestaBU.value.stateString == 'CONFIRMEPARPARTENAIRE'  -->
 	<!-- 					|| prestaBU.value.stateString == 'VALIDATIONETATDESLIEUX' || prestaBU.value.stateString == 'SIGNATURECONTRAT' }"> -->
+						<div  class="terrainsDivs">
 						<div class="terrainBigDiv">
 							<div class="terrainSmallDiv">
 								<ui:include src="#{'/WEB-INF/'.concat(prestaBU.value.templateXhtml)}">
@@ -72,14 +74,15 @@
 								</ui:include>
 							</div>
 						</div>
+						</div>
 					</h:panelGroup>
 	    		</c:forEach>
 		  </b:tab>
 		  <b:tab title="Terminées">	  	
-			<div class="terrainsDivs">
 				<c:forEach var="prestaBU" items="#{mbPresta.prestations}" >
 					<h:panelGroup rendered="#{prestaBU.value.stateString == 'TERMINE'}">
-					<div class="terrainsBigDiv">
+					<div class="terrainsDivs">
+					<div class="terrainBigDiv">
 						<div class="terrainSmallDiv">
 							<ui:include src="#{'/WEB-INF/'.concat(prestaBU.value.templateXhtml)}">
 								<ui:param name="prestaBuByMain" value="#{prestaBU.value}" />
@@ -87,14 +90,14 @@
 							</ui:include>
 						</div>
 					</div>
+					</div>
 					</h:panelGroup>
 				</c:forEach>
-			</div>
 		</b:tab>		
 		<b:tab title="Annulées">
-			<div class="terrainsDivs">
 				<c:forEach var="prestaBU" items="#{mbPresta.prestations}" >
 					<h:panelGroup rendered="#{prestaBU.value.stateString == 'ANNULE'}">
+					<div class="terrainsDivs">
 						<div class="terrainBigDiv">
 							<div class="terrainSmallDiv">
 								<ui:include src="#{'/WEB-INF/'.concat(prestaBU.value.templateXhtml)}">
@@ -105,9 +108,9 @@
 								</ui:include>
 							</div>
 						</div>
+					</div>
 					</h:panelGroup>
 				</c:forEach>
-			</div>
 		 </b:tab>
 	</b:tabView>
 	  
