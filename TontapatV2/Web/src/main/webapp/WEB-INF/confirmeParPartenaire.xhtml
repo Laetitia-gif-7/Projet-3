@@ -24,18 +24,18 @@
 	<ui:fragment rendered="#{prestaBuByMain.prestation.idDerniereProposition.id !=  user.utilisateur.id}" >
 		Une nouvelle date pour l'état des lieux vous a été proposée : 
 		<p> <h:outputText value="#{prestaBuByMain.prestation.premiereVisitePropose}"/></p>
-		<b:commandButton value="Accepter cette date" action="#{mbPresta.valide(prestaBuByMain.prestation.idPrestation)}" />
+		<b:commandButton value="Accepter cette date" action="#{mbPresta.valideAvecUtilisateur(prestaBuByMain.prestation.idPrestation)}" />
 		<!-- datepicker to get nouvelleDate -->
 		<p>Proposer une nouvelle date</p>
 		<b:datepicker id="cdate1" mode="toggle-icon" showWeek="true"
 				firstDay="1" value="#{mbPresta.nouvelleDate}" required="true"
 				label="Choisir une nouvelle date:" label-col-sm="5" col-sm="6" />
-		<b:commandButton value="Proposer une nouvelle date" action="#{mbPresta.valideAvecDate(prestaBuByMain.prestation.idPrestation, nouvelleDate)}" />
+		<b:commandButton value="Proposer une nouvelle date" action="#{mbPresta.valideAvecDate(prestaBuByMain.prestation.idPrestation)}" />
 <!-- 		<b:commandButton value="Annuler" action="#{mbPresta.annule( prestaBuByMain.prestation.idPrestation )}"/>		 -->
 	</ui:fragment>
 	
 	<!-- Message si une votre derniere proposition est encore en attente -->
-	<ui:fragment rendered="#{id_derniere_proposition ==  user.utilisateur.id}" >
+	<ui:fragment rendered="#{prestaBuByMain.prestation.idDerniereProposition.id ==  user.utilisateur.id}" >
 		Votre dernière proposition de date d'états des lieux est en attente
 <!-- 		<b:commandButton value="Annuler" action="#{mbPresta.annule( prestaBuByMain.prestation.idPrestation )}"/> -->
 	</ui:fragment>
