@@ -36,7 +36,7 @@
 			</b:button>
 		</h:panelGroup>
 	
-<!-- <h:form> -->
+<h:form>
 		<b:tabView activeIndex="1" class="terrainsDivs">
 		<b:tab title="En Cours">
 			<c:forEach var="prestaBU" items="#{mbPresta.prestations}">
@@ -148,7 +148,6 @@
 			</div>
 	  </b:tab>
 	  </b:tabView>
-<!-- </h:form> -->
 	  <!-- Try, one modal for all -->
 	  <c:forEach var="prestaBU" items="#{mbPresta.prestations}">
 		<ui:include src="/WEB-INF/templateDetailPrestationModal.xhtml">
@@ -156,7 +155,6 @@
 			<ui:param name="prestaBuKey" value="#{prestaBU.key}" />
 		</ui:include>
 	  </c:forEach>
-	
 <!-- 						<p> -->
 <!-- 						Incidents en cours :<h:outputLabel value="#{mbPresta.incidentRefSelectionne.libelleIncident}"/>  -->
 <!-- 						</p> -->
@@ -183,7 +181,7 @@
 <!-- 						</h:form> -->
 <!-- 					</f:facet> -->
 <!-- 				</b:modal> -->
-<!-- </h:form> -->
+</h:form>
 <ui:debug hotkey="l" rendered="true"/>			
 </ui:define>
 </ui:composition>
