@@ -34,29 +34,29 @@ public class SignatureContrat implements StatePrestation {
 	public void setTemplateString(PrestationBU p) {
 		p.setTemplateXhtml("signatureContrat.xhtml");
 	}
-	/*
-	@Override
-	public void valideAvecDate(PrestationBU p, LocalDateTime date) {
-		// TODO Auto-generated method stub
-		
-	}*/
-
+	
 	@Override
 	public void valide(PrestationBU p, Utilisateur utilisateur) {
 		Prestation presta = p.getPrestation();
-		if( p.getClient() == utilisateur )
+		if( p.getClient().getId() == utilisateur.getId() )
 			presta.setContratClient(LocalDateTime.now());
 		
-		if( p.getEleveur() == utilisateur )
+		if( p.getEleveur().getId() == utilisateur.getId() )
 			presta.setContratEleveur(LocalDateTime.now());
 		
-		//if( p.getBerger() == utilisateur )
-		//	presta.setContratBerger(LocalDateTime.now());
+		if( presta.getBerger() != null && 
+			p.getBerger().getId() == utilisateur.getId() )
+			presta.setContratBerger(LocalDateTime.now());
 	}
 
 	@Override
 	public void valideAvecDate(PrestationBU p, Utilisateur utilisateur, LocalDateTime date) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
+	
+	/*
+	@Override
+	public void valideAvecDate(PrestationBU p, LocalDateTime date) {
+		// TODO Auto-generated method stub
+	}*/
 }
