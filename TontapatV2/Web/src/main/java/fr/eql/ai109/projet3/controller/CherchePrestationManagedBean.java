@@ -74,6 +74,7 @@ public class CherchePrestationManagedBean implements Serializable {
         }
         
         prestationsMemeDepartement = cherchePrestationIBusiness.cherchePrestationMemeDepartement(utilisateurConnecte);
+        System.out.println("toto");
 
 	}
 	

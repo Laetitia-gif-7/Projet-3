@@ -10,9 +10,13 @@ import javax.ejb.Startup;
 
 
 import fr.eql.ai109.projet3.entity.helpers.prestation.Annule;
-import fr.eql.ai109.projet3.entity.helpers.prestation.ConfirmeParEleveur;
+import fr.eql.ai109.projet3.entity.helpers.prestation.ConfirmeParPartenaire;
+import fr.eql.ai109.projet3.entity.helpers.prestation.AttenteBerger;
+
 import fr.eql.ai109.projet3.entity.helpers.prestation.ReserveParClient;
 import fr.eql.ai109.projet3.entity.helpers.prestation.ReserveParEleveur;
+import fr.eql.ai109.projet3.entity.helpers.prestation.SignatureContrat;
+import fr.eql.ai109.projet3.entity.helpers.prestation.ValidationEtatDesLieux;
 import fr.eql.ai109.projet3.entity.Prestation;
 import fr.eql.ai109.projet3.entity.PrestationBU;
 import fr.eql.ai109.projet3.entity.Utilisateur;
@@ -22,7 +26,7 @@ import fr.eql.ai109.projet3.entity.Utilisateur;
 // @ConcurrencyManagement(ConcurrencyManagementType.BEAN) 
 // @Startup
 @Singleton
-public class FactoryPrestrestationBU {
+public class FactoryPrestationBU {
 
 	@PostConstruct
     public void postConstruct() {
@@ -34,7 +38,7 @@ public class FactoryPrestrestationBU {
 		System.out.println("preDestroy Factory");
 	}
 	
-	// TODO Factory Class, ApplicatioScope              // Utilisateur not used yet
+	// Utilisateur not used yet
 	public PrestationBU createPrestationBU( Prestation prestation, Utilisateur utilisateur ) {
 		
 		PrestationBU proxy = new PrestationBU( prestation );
@@ -70,17 +74,42 @@ public class FactoryPrestrestationBU {
 			return proxy;
 		}
 		
+		// CONFIRME PAR PARTENAIRE
+		if(  prestation.getPremiereVisiteAccepte() == null) {
+			proxy.setState(ConfirmeParPartenaire.CONFIRMEPARPARTENAIRE);
+		}
+		
+		
 		// ACCEPTATION DATE d'état des lieux par l'éleveur
 		if( prestation.getPremiereVisiteAccepte() == null) {
 			
 			if( utilisateurInitiateurId == clientId ) {
-				proxy.setState( ConfirmeParEleveur.CONFIRMEPARELEVEUR );
+				proxy.setState( ConfirmeParPartenaire.CONFIRMEPARPARTENAIRE );
 			// TODO continue the logic
 			} else {
 				proxy.setState(null);
 			}
 			return proxy;
 		}
+		// Attente berger
+		if( prestation.isBesoinBerger() == true && prestation.getBerger() == null ) {
+			proxy.setState(AttenteBerger.ATTENTEBERGER);
+			return proxy;
+		}
+		
+		if( prestation.getEtatLieuClient() == null || prestation.getEtatLieuEleveur() == null || 
+			( prestation.isBesoinBerger() == true && prestation.getEtatLieuBerger()  == null)) {
+			proxy.setState(ValidationEtatDesLieux.VALIDATIONETATDESLIEUX);
+			return proxy;
+		}
+		
+		if( prestation.getContratClient() == null || prestation.getContratEleveur() == null || 
+			( prestation.isBesoinBerger() == true && prestation.getContratBerger()  == null)	)  {
+			proxy.setState(SignatureContrat.SIGNATURECONTRAT);
+			return proxy;
+		}
+		
+		// TODO en Cours
 		// return default should be an error
 		return proxy;
 	}

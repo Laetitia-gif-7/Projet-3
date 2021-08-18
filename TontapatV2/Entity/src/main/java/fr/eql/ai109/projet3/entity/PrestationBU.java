@@ -17,7 +17,7 @@ public class PrestationBU implements Serializable {
 	// extends entity attributes to ease treatment ? 
 	private Utilisateur client;
 	private Utilisateur eleveur;
-	//private Utilisateur berger;
+	private Utilisateur berger;
 	// private Utilisateur partenaire
 	
 	//default, should be overwritten by each state
@@ -83,6 +83,10 @@ public class PrestationBU implements Serializable {
 	// to implement  in each state
 	public void valide() {
 		state.valide(this);
+	}
+	
+	public void valide(Utilisateur utilisateur) {
+		state.valide(this, utilisateur);
 	}
 	/*
 	public void valideAvecDate(LocalDateTime date) {

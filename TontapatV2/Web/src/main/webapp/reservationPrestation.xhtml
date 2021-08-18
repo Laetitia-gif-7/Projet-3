@@ -5,8 +5,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:b="http://bootsfaces.net/ui"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" >
+<!-- 	xmlns:p="http://primefaces.org/ui" -->
 	
 
 <h:head>
@@ -30,7 +30,6 @@ Ajustez votre prestation !<br/>
 	Avec id Troupeau: <h:outputText value="#{mbReservation.idTroupeau}" />
 	<hr/>
 	Matériel enregistré sur votre terrain (gratuit):
->>>>>>> master
 	<ul>
 		<ui:repeat var="qe" value="#{mbReservation.prp.equipementSurTerrain}" >
 			<li><h:outputLabel value="#{qe.quantite}" /><h:outputLabel value="#{qe.equipement.uniteRef.libelleUnite}" /> de <h:outputLabel value="#{qe.equipement.libelleEquipement}" /></li>
@@ -98,7 +97,7 @@ Ajustez votre prestation !<br/>
 		<h:commandButton value="Mise à Jour" action="#{mbReservation.updateView}">
  			<f:ajax execute="@form" render="@form" />
  		</h:commandButton>
-		<h:commandButton value="Valider" action="#{mbReservation.validerPrestationParClient}"> -->
+		<h:commandButton value="Valider" action="#{mbReservation.validerPrestationParClient}">
   			<f:ajax execute="@form" render="@form" />
  		</h:commandButton>
  	</div>
