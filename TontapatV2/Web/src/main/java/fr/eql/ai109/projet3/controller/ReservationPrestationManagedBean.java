@@ -110,7 +110,7 @@ public class ReservationPrestationManagedBean implements Serializable {
 	
 	public String validerPrestationParClient() {
 		prestationIBusiness.createPrestationClient(utilisateurConnecte, prp, idTerrain, idTroupeau);
-		return "prestations.xhtml";
+		return "prestations.xhtml?faces-redirect=true";
 	}
 	// for tests with ajax, to move to another branch
 	/*

@@ -20,6 +20,7 @@ import fr.eql.ai109.projet3.entity.helpers.prestation.EnCours;
 import fr.eql.ai109.projet3.entity.helpers.prestation.ReserveParClient;
 import fr.eql.ai109.projet3.entity.helpers.prestation.ReserveParEleveur;
 import fr.eql.ai109.projet3.entity.helpers.prestation.SignatureContrat;
+import fr.eql.ai109.projet3.entity.helpers.prestation.Termine;
 import fr.eql.ai109.projet3.entity.helpers.prestation.ValidationEtatDesLieux;
 import fr.eql.ai109.projet3.entity.Prestation;
 import fr.eql.ai109.projet3.entity.PrestationBU;
@@ -115,7 +116,7 @@ public class FactoryPrestationBU {
 			( prestation.isBesoinBerger() == true && prestation.getContratBerger()  == null) ) {
 				proxy.setState(SignatureContrat.SIGNATURECONTRAT);
 				return proxy;
-			}
+		}
 		
 		LocalDateTime dtnow = LocalDateTime.now(); 
 		if( prestation.getDebutPrestation().compareTo(dtnow) > 0 ) {
@@ -129,7 +130,7 @@ public class FactoryPrestationBU {
 		}
 		
 		if( prestation.getFinPrestation().compareTo(dtnow) > 0 ) {
-			proxy.setState(EnCours.ENCOURS);
+			proxy.setState(Termine.TERMINE);
 			return proxy;
 		}
 		

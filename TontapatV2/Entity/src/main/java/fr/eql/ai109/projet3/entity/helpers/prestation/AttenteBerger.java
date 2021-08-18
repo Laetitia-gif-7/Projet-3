@@ -29,7 +29,7 @@ public class AttenteBerger implements StatePrestation {
 
 	@Override
 	public void setStateName(PrestationBU p) {
-		p.setStateString("ATTENTEBERGER");
+		p.setStateString("ENATTENTE");
 
 	}
 
