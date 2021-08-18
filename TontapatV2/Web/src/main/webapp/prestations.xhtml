@@ -25,22 +25,21 @@
 		</div>
 		<h:panelGroup rendered="#{empty mbCompte.utilisateur}">
 			<div class="userNotConnected">
-				<h1>Vous devez vous connecter pour accéder à vos troupeaux !</h1>
+				<h1>Vous devez vous connecter pour accéder à vos prestations !</h1>
 				<a class="troupeauxAjoutTroupeau" href="login.xhtml">
-					<p>Se connecter</p>
+<!-- 					<p>Se connecter</p> -->
 				</a>
 			</div>
 		</h:panelGroup>
 		<h:panelGroup rendered="#{not empty mbCompte.utilisateur}">
 			<b:button value="Rechercher une prestation/Devenir Berger" class="buttonRechercherPresta" href="rechercheBerger.xhtml" >
 			</b:button>
+		</h:panelGroup>
 	
-	
-
-	<h:form>
+<!-- <h:form> -->
 		<b:tabView activeIndex="0" class="terrainsDivs">
 		<b:tab title="En Cours">
-			<c:forEach var="prestaBU" items="#{mbPresta.prestations}" varStatus="status" class="terrainBigDiv">
+			<c:forEach var="prestaBU" items="#{mbPresta.prestations}">
 				<h:panelGroup rendered="#{prestaBU.value.stateString == 'ENCOURS'}">
 					<div class="terrainBigDiv">
 						<div class="terrainSmallDiv">
@@ -67,8 +66,8 @@
 		  </c:forEach>
 	  </b:tab>
 	  <b:tab title="En Attentes">
-	  	<f:facet name="anchor"><b:iconAwesome name="cog" spin="true" /></f:facet>
-			<c:forEach var="prestaBU" items="#{mbPresta.prestations}" varStatus="status" class="terrainBigDiv">
+<!-- 	  	<f:facet name="anchor"><b:iconAwesome name="cog" spin="true" /></f:facet> -->
+			<c:forEach var="prestaBU" items="#{mbPresta.prestations}">
 				<h:panelGroup rendered="#{prestaBU.value.stateString == 'ENATTENTE'}" >
 <!-- 				 || prestaBU.value.stateString == 'RESERVEPARCLIENT' || prestaBU.value.stateString == 'CONFIRMEPARPARTENAIRE'  -->
 <!-- 					|| prestaBU.value.stateString == 'VALIDATIONETATDESLIEUX' || prestaBU.value.stateString == 'SIGNATURECONTRAT' }"> -->
@@ -100,19 +99,19 @@
 							<ui:param name="prestaBuByMain" value="#{prestaBU.value}" />
 							<ui:param name="user" value="#{mbCompte}" />
 						</ui:include>
-					  <f:facet name="footer">
-					  	<h:form>
-					    	<b:button value="Close" dismiss="modal" />
-					    	<b:button value="Valider la prestation" look="primary" dismiss="modal" />
-					    	<b:button value="Annuler la prestation" look="primary" dismiss="modal" />
-					  	</h:form>
-					  </f:facet>
-				</div>
+<!-- 					  <f:facet name="footer"> -->
+<!-- 					  	<h:form> -->
+<!-- 					    	<b:button value="Close" dismiss="modal" /> -->
+<!-- 					    	<b:button value="Valider la prestation" look="primary" dismiss="modal" /> -->
+<!-- 					    	<b:button value="Annuler la prestation" look="primary" dismiss="modal" /> -->
+<!-- 					  	</h:form> -->
+<!-- 					  </f:facet> -->
+					</div>
 				</div>
 				</h:panelGroup>
-				</c:forEach>
-				</div>
-		  </b:tab>		
+			</c:forEach>
+		</div>
+	</b:tab>		
 	  <b:tab title="Annulées">
 <!-- 			<c:forEach var="prestaBU" items="#{mbPresta.prestations}" varStatus="status" class="terrainBigDiv"> -->
 			<div class="terrainsDivs">
@@ -156,7 +155,7 @@
 			<ui:param name="prestaBuByMain" value="#{prestaBU.value}" />
 			<ui:param name="prestaBuKey" value="#{prestaBU.key}" />
 		</ui:include>
-	</c:forEach>
+	  </c:forEach>
 	
 <!-- 						<p> -->
 <!-- 						Incidents en cours :<h:outputLabel value="#{mbPresta.incidentRefSelectionne.libelleIncident}"/>  -->
@@ -184,8 +183,7 @@
 <!-- 						</h:form> -->
 <!-- 					</f:facet> -->
 <!-- 				</b:modal> -->
-	</h:form>
-</h:panelGroup>
+<!-- </h:form> -->
 <ui:debug hotkey="l" rendered="true"/>
 						
 </ui:define>

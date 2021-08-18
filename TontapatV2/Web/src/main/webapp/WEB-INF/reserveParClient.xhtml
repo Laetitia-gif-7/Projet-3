@@ -18,10 +18,13 @@
 	<!--  Vue Eleveur -->
 	<ui:fragment rendered="#{prestaBuByMain.eleveur.id == user.utilisateur.id}">
 		<h:form>
-		<p>Vous avez reçu une demande de réservation, vous devez la confirmer ou l'annuler : </p>
-		<!-- mbPresta accessible -->
+		<p>Vous avez reçu une demande de réservationde la part de 
+		<h:outputLabel value="#{prestaBuByMain.client.nom}"/></p>
+		<p>Vous devez la confirmer ou l'annuler : </p>
 		<p>
-		<b:commandButton value="Confirmer" action="#{mbPresta.valide( prestaBuByMain.prestation.idPrestation )}" /> ou
+		<b:commandButton value="Confirmer" look="primary" action="#{mbPresta.valide( prestaBuByMain.prestation.idPrestation )}" /> ou
+<!-- 		<b:commandButton value="Valider" look="primary" -->
+<!-- 			 	action="#{mbPresta.valideAvecUtilisateur(prestaBuByMain.prestation.idPrestation)}" > -->
 		<b:commandButton value="Annuler" action="#{mbPresta.annule( prestaBuByMain.prestation.idPrestation ) }"/>
 		</p>
 <!-- 		<f:ajax listener="#{mbReservation.updateView()}" execute="@form" render="@form" /> -->

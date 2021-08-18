@@ -197,6 +197,11 @@ public class PrestationManagedBean implements Serializable {
 		prestations.put(updatedPbu.getPrestation().getIdPrestation(), updatedPbu);
 	}
 	
+//	public void validePourEleveur(int id) {
+//		System.out.println("ELEVEur !! " + id);
+//		
+//	}
+	
 	public void annule(int idPrestation) {
 		System.out.println("Annuler la prestation :" + idPrestation);
 	}
