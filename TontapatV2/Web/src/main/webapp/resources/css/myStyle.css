@@ -375,6 +375,13 @@ body {
   box-shadow: 5px 5px 5px #ffffff;
 }
 
+.prestationButtonDetail {
+	background-color: #006666!important;
+	transition: background-color 1s, transform 1s;
+}
+.prestationButtonDetail:hover {
+	background-color: #004040 !important;
+}
 
 /* ------------------ MES TERRAINS */
 

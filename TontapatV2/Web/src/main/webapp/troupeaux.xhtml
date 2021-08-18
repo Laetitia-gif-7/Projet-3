@@ -40,12 +40,23 @@
 					<div class="troupeauSmallDiv">
 						<p>Nom : <h:outputLabel value="#{troupeau.nomTroupeau}" /></p>
 						<p>Description : <h:outputLabel value="#{troupeau.description}" /></p>
-						<p>Coût par animal : <h:outputLabel value="#{troupeau.coutParAnimal}" /></p>
-						<p>Fréquence de visite : <h:outputLabel value="#{troupeau.frequenceVisite}" /></p>
+						<p>Coût par animal : <h:outputLabel value="#{troupeau.coutParAnimal}" /> &#8364;/jour</p>
+						<p>Fréquence de visite : <h:outputLabel value="#{troupeau.frequenceVisite}" />/semaine</p>
 						<ui:repeat var="pd" value="#{troupeau.periodeDisponibilites}">
-							<p>Date de Création : <h:outputLabel value="#{pd.creationDispo}" /></p>
-							<p>Date de Début : <h:outputLabel value="#{pd.debutPeriode}" /></p>
-							<p>Date de Fin : <h:outputLabel value="#{pd.finPeriode}" /></p>
+							<p>Date de Création : 
+								<h:outputLabel value="#{pd.creationDispo}">
+									<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+								</h:outputLabel></p>
+							<p>Début de disponibilité : 
+								<h:outputLabel value="#{pd.debutPeriode}" >
+									<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+								</h:outputLabel>
+							</p>
+							<p>Fin de disponibilité : 
+								<h:outputLabel value="#{pd.finPeriode}">
+									<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+								</h:outputLabel>
+							</p>
 						</ui:repeat>
 			            <b:button  class="troupeauButtonDetail" value="Voir le détail du troupeau" onclick="$('.modalPseudoClass${status.index}').modal()"/>						
 					</div>
