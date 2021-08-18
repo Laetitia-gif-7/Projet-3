@@ -6,9 +6,7 @@
 	xmlns:b="http://bootsfaces.net/ui" >
 	
 	<h:outputLabel value="#{prestaBuByMain.stateString}"/>
-	<p>La prestation a pris fin le :  <h:outputLabel value="#{prestaBuByMain.prestation.finPrestation}"/></p>
+	<p>La prestation a pris fin le : <h:outputLabel value="#{prestaBuByMain.prestation.finPrestation}"/></p>
 	<p>Fin prévue le : <h:outputLabel value="#{prestaBuByMain.prestation.finPrestation}"/></p>
-	
-	<b:button value="Déclarer un incident"  />
 	<b:button  class="PrestationButtonDetail" value="Voir le détail de la prestation" onclick="$('.modalPseudoClass${prestaBU.key}').modal()" />
 </ui:composition>

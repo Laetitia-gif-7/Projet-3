@@ -124,12 +124,12 @@ public class FactoryPrestationBU {
 			return proxy;
 		}
 		
-		if( prestation.getDebutPrestation().compareTo(dtnow) > 0  &&  prestation.getFinPrestation().compareTo(dtnow) < 0 ) {
+		if( prestation.getDebutPrestation().compareTo(dtnow) < 0  &&  prestation.getFinPrestation().compareTo(dtnow) > 0 ) {
 			proxy.setState(EnCours.ENCOURS);
 			return proxy;
 		}
 		
-		if( prestation.getFinPrestation().compareTo(dtnow) > 0 ) {
+		if( prestation.getFinPrestation().compareTo(dtnow) < 0 ) {
 			proxy.setState(Termine.TERMINE);
 			return proxy;
 		}
