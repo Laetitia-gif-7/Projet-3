@@ -9,9 +9,6 @@
 
 	<ui:define name="head">
 		<title>Recherche</title>
-		<!-- <f:metadata>
-			<f:event listener="#{mbAccount.disconnect()}" type="preRenderView"></f:event>
-		</f:metadata> -->
 	</ui:define>
 
 	<ui:define name="content">
@@ -47,9 +44,13 @@
 								</p>
 								<p>
 									A partir du :
-									<h:outputLabel value="#{troup.dateMin}" />
+									<h:outputLabel value="#{troup.dateMin}" >
+										<f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy" />
+									</h:outputLabel>
 									Jusqu'au :
-									<h:outputLabel value="#{troup.dateMax}" />
+									<h:outputLabel value="#{troup.dateMax}" >
+										<f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy" />
+									</h:outputLabel>
 								</p>
 								<p>
 									Race : 
