@@ -48,6 +48,7 @@ body {
 }
 .userNotConnected a {
 	margin: auto;
+	text-decoration:none;
 }
 .nothingRegister h1 {
 	margin : auto;
@@ -339,6 +340,7 @@ body {
 	flex-direction: row;
 	justify-content: space-between;
 	transition: background-color 1s, transform 1s;
+	text-decoration:none !important;
 }
 .troupeauxAjoutTroupeau:hover {
   background-color: #9bd9ac;
@@ -400,6 +402,9 @@ body {
 }
 .prestationButtonDetail:hover {
 	background-color: #004040 !important;
+}
+.prestationButtonIncident {
+	margin-bottom: 2rem !important;
 }
 
 /* ------------------ MES TERRAINS */

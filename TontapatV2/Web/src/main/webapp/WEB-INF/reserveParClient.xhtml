@@ -4,32 +4,36 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:b="http://bootsfaces.net/ui">
-	
-	Reserve par client.xhtml component<br/>
-	User connecté :<h:outputLabel value="#{user.utilisateur.id}"/> 
-	<hr/>
+		
 	<h:outputLabel value="#{prestaBuByMain.stateString}"/>
 	
 	<!-- Vue Client --> 
 	<ui:fragment rendered="#{prestaBuByMain.client.id == user.utilisateur.id}">
-		Votre demande de réservation est toujours en attente
+		<p>Numero de la prestation : <h:outputLabel value="#{prestaBuByMain.prestation.numeroPrestation}" /></p>
+		Votre demande de réservation est toujours en attente auprès de :
+		<h:outputLabel value="#{prestaBuByMain.eleveur.nom}"/>
+		<p>Date de création de la prestation :
+		<h:outputLabel value="#{prestaBuByMain.prestation.reservation}">
+			 <f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy"/>
+		</h:outputLabel></p>
 	</ui:fragment>
 	
 	<!--  Vue Eleveur -->
 	<ui:fragment rendered="#{prestaBuByMain.eleveur.id == user.utilisateur.id}">
-<!-- 		<h:form> -->
+ 	<h:form>
+ 		<p>Numero de la prestation : <h:outputLabel value="#{prestaBuByMain.prestation.numeroPrestation}" /></p>
 		<p>Vous avez reçu une demande de réservationde la part de 
 		<h:outputLabel value="#{prestaBuByMain.client.nom}"/></p>
-		<p>Vous devez : </p>
+		<p>Date de création de la demande :
+		<h:outputLabel value="#{prestaBuByMain.prestation.reservation}">
+			 <f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy"/>
+		</h:outputLabel></p>
+		<p>Choisissez de confirmer ou d'annuler cette demande : </p>
 		<p>
 		<b:commandButton value="Confirmer" look="primary" action="#{mbPresta.valide(prestaBuByMain.prestation.idPrestation)}" /> ou
 		<b:commandButton value="Annuler" action="#{mbPresta.annule( prestaBuByMain.prestation.idPrestation ) }"/>
 <!-- 		<b:commandButton value="Valider" look="primary" -->
 <!-- 			 	action="#{mbPresta.valideAvecUtilisateur(prestaBuByMain.prestation.idPrestation)}" > -->
-		 <br/>
-
-		
-		</p>
 <!-- 		<f:ajax listener="#{mbReservation.updateView()}" execute="@form" render="@form" /> -->
 <!-- 	</h:form> -->
 	<b:button  class="PrestationButtonDetail" value="Voir le détail de la prestation" onclick="$('.modalPseudoClass${prestaBU.key}').modal()"/>

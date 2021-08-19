@@ -26,9 +26,9 @@
 		<h:panelGroup rendered="#{empty mbCompte.utilisateur}">
 			<div class="userNotConnected">
 				<h1>Vous devez vous connecter pour accéder à vos prestations !</h1>
-				<a class="troupeauxAjoutTroupeau" href="login.xhtml">
- 					<p>Se connecter</p>
-				</a>
+				<p><a class="troupeauxAjoutTroupeau" href="login.xhtml">
+ 				Se connecter
+				</a></p>
 			</div>
 		</h:panelGroup>
 		<h:panelGroup rendered="#{not empty mbCompte.utilisateur}">
@@ -36,16 +36,18 @@
 				<b:button value="Rechercher une prestation/Devenir Berger" class="buttonRechercherPresta" href="rechercheBerger.xhtml" >
 				</b:button>
 			</h:form>
-			<h:panelGroup rendered="#{empty mbPresta.prestations}">
-				<div class="nothingRegister">
-					<h1>Vous n'avez actuellement aucune prestation !</h1>
-				</div>
-			</h:panelGroup>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{empty mbPresta.prestations}">
+			<div class="nothingRegister">
+				<h1>Vous n'avez actuellement aucune prestation !</h1>
+			</div>
+		</h:panelGroup>
 	
-		<b:tabView activeIndex="1" class="terrainsDivs">
+		<b:tabView activeIndex="0">
 			<b:tab title="En Cours">
 				<c:forEach var="prestaBU" items="#{mbPresta.prestations}">
 					<h:panelGroup rendered="#{prestaBU.value.stateString == 'ENCOURS'}">
+					<div  class="terrainsDivs">
 						<div class="terrainBigDiv">
 							<div class="terrainSmallDiv">
 								<ui:include src="#{'/WEB-INF/'.concat(prestaBU.value.templateXhtml)}" >
@@ -54,15 +56,16 @@
 								</ui:include>
 							</div>
 						</div>
+						</div>
 					</h:panelGroup>
 			  </c:forEach>
 		  </b:tab>
 		  <b:tab title="En Attentes">
-		  	<f:facet name="anchor"><b:iconAwesome name="cog" spin="true" /></f:facet>
 				<c:forEach var="prestaBU" items="#{mbPresta.prestations}">
 					<h:panelGroup rendered="#{prestaBU.value.stateString == 'ENATTENTE'}" >
 	<!-- 				 || prestaBU.value.stateString == 'RESERVEPARCLIENT' || prestaBU.value.stateString == 'CONFIRMEPARPARTENAIRE'  -->
 	<!-- 					|| prestaBU.value.stateString == 'VALIDATIONETATDESLIEUX' || prestaBU.value.stateString == 'SIGNATURECONTRAT' }"> -->
+						<div  class="terrainsDivs">
 						<div class="terrainBigDiv">
 							<div class="terrainSmallDiv">
 								<ui:include src="#{'/WEB-INF/'.concat(prestaBU.value.templateXhtml)}">
@@ -72,14 +75,15 @@
 								</ui:include>
 							</div>
 						</div>
+						</div>
 					</h:panelGroup>
 	    		</c:forEach>
 		  </b:tab>
 		  <b:tab title="Terminées">	  	
-			<div class="terrainsDivs">
 				<c:forEach var="prestaBU" items="#{mbPresta.prestations}" >
 					<h:panelGroup rendered="#{prestaBU.value.stateString == 'TERMINE'}">
-					<div class="terrainsBigDiv">
+					<div class="terrainsDivs">
+					<div class="terrainBigDiv">
 						<div class="terrainSmallDiv">
 							<ui:include src="#{'/WEB-INF/'.concat(prestaBU.value.templateXhtml)}">
 								<ui:param name="prestaBuByMain" value="#{prestaBU.value}" />
@@ -87,14 +91,14 @@
 							</ui:include>
 						</div>
 					</div>
+					</div>
 					</h:panelGroup>
 				</c:forEach>
-			</div>
 		</b:tab>		
 		<b:tab title="Annulées">
-			<div class="terrainsDivs">
 				<c:forEach var="prestaBU" items="#{mbPresta.prestations}" >
 					<h:panelGroup rendered="#{prestaBU.value.stateString == 'ANNULE'}">
+					<div class="terrainsDivs">
 						<div class="terrainBigDiv">
 							<div class="terrainSmallDiv">
 								<ui:include src="#{'/WEB-INF/'.concat(prestaBU.value.templateXhtml)}">
@@ -105,51 +109,20 @@
 								</ui:include>
 							</div>
 						</div>
+					</div>
 					</h:panelGroup>
 				</c:forEach>
-			</div>
 		 </b:tab>
 	</b:tabView>
-
-	  <!-- Try, one modal for all -->
-	  <c:forEach var="prestaBU" items="#{mbPresta.prestations}">
+	<!-- Try, one modal for all -->
+	<c:forEach var="prestaBU" items="#{mbPresta.prestations}">
 		<ui:include src="/WEB-INF/templateDetailPrestationModal.xhtml">
 			<ui:param name="prestaBuByMain" value="#{prestaBU.value}" />
 			<ui:param name="prestaBuKey" value="#{prestaBU.key}" />
 		</ui:include>
-	  </c:forEach>
-	</h:panelGroup>
-		
-	
-<!-- 						<p> -->
-<!-- 						Incidents en cours :<h:outputLabel value="#{mbPresta.incidentRefSelectionne.libelleIncident}"/>  -->
-<!-- 						</p> -->
-<!-- 						<b:button class="prestationButtonIncident" -->
-<!-- 							value="Déclarer un incident" -->
-<!-- 							onclick="$('.modalPseudoClass${status.index.incident}').modal()" /> -->						
-<!-- 						<b:modal id="amodal${status.index.incident}" -->
-<!-- 					title="Incidents" -->
-<!-- 					styleClass="modalPseudoClass${status.index.incident}" closable="false" -->
-<!-- 					close-on-escape="false" backdrop="false"> -->
+	 </c:forEach>
 
-<!-- 				<p>Selectionner un incident dans la liste ci-dessous :</p> -->
-<!-- 				<b:form method="post" action="prestations.xhtml"> -->
-<!--             <b:selectOneMenu id="idIncidentRefSelectionn" value="#{mbPresta.incidentRefSelectionne}" > -->
-<!--             	<f:selectItems var="inc" value="#{mbPresta.incidentRef}" itemValue="#{inc}" itemLabel="#{inc.libelleIncident}" /> -->
-<!--             </b:selectOneMenu> -->
-<!--             <br/> -->
-<!--             <input type="submit" value="Valider"/> -->
-           
-<!-- 				</b:form> -->
-<!-- 			<f:facet name="footer"> -->
-<!-- 						<h:form> -->
-<!-- 							<b:button value="Close" dismiss="modal" /> -->
-<!-- 						</h:form> -->
-<!-- 					</f:facet> -->
-<!-- 				</b:modal> -->
-						
-
-	<ui:debug hotkey="l" rendered="true"/>			
+<ui:debug hotkey="l" rendered="true"/>			
 </ui:define>
 </ui:composition>
 <!-- <ui:debug hotkey="k" rendered="true"/> -->

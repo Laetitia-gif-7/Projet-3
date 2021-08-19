@@ -29,6 +29,9 @@
 						varStatus="status">
 						<div class="troupeauBigDiv">
 							<div class="troupeauSmallDiv">
+								<p>Match : 
+									<h:outputLabel value="#{terr.pourcentageTotal}" />
+								</p>
 								<p>
 									Nom :
 									<h:outputLabel value="#{terr.terrain.nomTerrain}" />
@@ -79,6 +82,12 @@
 						<h:outputLabel value="#{terr.terrain.rue}" />
 						et rajouter ville
 					</p>
+					<h:panelGroup rendered="#{terrain.clos == true}">
+						<p>Terrain : <span class="terrainCloture">cloturé</span></p>
+					</h:panelGroup>
+					<h:panelGroup rendered="#{terrain.clos == false}">
+						<p>Terrain : <span class="terrainCloture">NON cloturé</span></p>
+					</h:panelGroup>
 					<p>
 						Terrain cloturé :
 						<h:outputLabel value="#{terr.terrain.clos}" />
