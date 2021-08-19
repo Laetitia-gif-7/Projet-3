@@ -17,57 +17,6 @@
 
 <ui:composition template="/arch.xhtml">
 <ui:define name="content">
-<<<<<<< HEAD
-	<br/>
-	<br/>
-	<h1>Ajustez votre prestation !</h1>
-	<p>
-	<br/>
-	Matériel enregistré sur votre terrain (gratuit):
-	</p>
-	<ul>
-		<ui:repeat var="qe" value="#{mbReservation.prp.equipementSurTerrain}" >
-			<li><h:outputLabel value="#{qe.quantite}" /><h:outputLabel value="#{qe.equipement.uniteRef.libelleUnite}" /> de <h:outputLabel value="#{qe.equipement.libelleEquipement}" /></li>
-		</ui:repeat>
-	</ul>
-	<hr/>
-	<h:form id="prpForm">
-	<p>Nb d'animaux du troupeau : <h:outputText value="#{mbReservation.prp.nbTotalAnimauxTroupeau}"/></p>
-	<p>Nb d'animaux du troupeau disponilbes à ces dates: <h:outputText value="#{mbReservation.prp.nbAnimauxTroupeauDispo}"/></p>
-		<b:panel style-class="cat-margin-top-3rem cat-margin-bottom-5rem 
-			col-sm-offset-1 col-md-offset-2 col-xs-12 col-sm-10 col-md-8">
-<!-- 			<b:row> -->
-<!-- 				<b:column> -->
-<!-- 					<b:dateTimePicker id="cdate1" mode="toggle-icon" showWeek="true" -->
-<!-- 						firstDay="1" value="#{mbReservation.prp.dateDebut}" required="true" -->
-<!-- 						label="Date Début:" label-col-sm="5" col-sm="6" onmouseout="#{mbReservation.updateView()}" process="prpForm" update="prpForm" /> -->
-<!-- 						<f:ajax listener="#{mbReservation.updateView()}" execute="@form" render="@form" /> -->
-<!-- 					</b:dateTimePicker> -->
-<!-- 				</b:column> -->
-<!-- 			</b:row> -->
-			<b:row>
-				<b:column>
-					<b:datepicker id="cdate1" mode="toggle-icon" showWeek="true"
-							firstDay="1" value="#{mbReservation.prp.dateDebut}" required="true"
-							label="Date de Début:" label-col-sm="5" col-sm="6" />
-				</b:column>
-			</b:row>
-			<b:row>
-				<b:column>
-					<b:datepicker id="cdate2" mode="toggle-icon" showWeek="true"
-							firstDay="1" value="#{mbReservation.prp.dateFin}" required="true"
-							label="Date de Fin:" label-col-sm="5" col-sm="6" />
-				</b:column>
-			</b:row>
-			<b:row>
-				<b:column>
-					<b:datepicker id="cdate3" mode="toggle-icon" showWeek="true"
-							firstDay="1" value="#{mbReservation.prp.premiereVisite}" required="true"
-							label="Date d'Etats des Lieux:" label-col-sm="5" col-sm="6" />
-				</b:column>
-			</b:row>
-		</b:panel>
-=======
 	<div class="ajustementPrestationClient">
 	<h1>Ajustez votre prestation !</h1>
 	<hr/>
@@ -101,7 +50,6 @@
 					label="Date d'Etats des Lieux:" label-col-sm="5" col-sm="6" />
 			</div>
 		</div>
->>>>>>> 3d1e437cdf5baf061aaff5892a25fe78a26d76e2
 		<hr/>
 	<div>
 		<p>Nombre d'animaux du troupeau disponilbes à ces dates: <h:outputText value="#{mbReservation.prp.nbAnimauxTroupeauDispo}"/></p>
