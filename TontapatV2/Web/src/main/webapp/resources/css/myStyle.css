@@ -440,8 +440,8 @@ body {
 }
 
 .terrainsDivs {
-	display: flex;
-	flex-direction : row;
+	display: flex !important;
+	flex-direction : row !important;
 	height: 100%;
 	width: 100%;
 }
@@ -535,4 +535,27 @@ body {
 	margin: auto;
 	font-size: 2rem;
 	padding-bottom:4rem ;	
+}
+
+.ajustementPrestationClient {
+	background-color: #9bd9ac;
+	border-radius: 10px;
+	width : 100%;
+	height: 90%;
+	margin: 2rem;
+	margin-top :10rem;
+	padding :5rem;
+	padding-top: 2rem;
+	color: #000000;
+	box-shadow: 5px 5px 5px #c0c0c0;
+	text-decoration: none;
+	transition:box-shadow 1s, background-color 1s, transform 1s;
+}
+.ajustementPrestationClient h1 {
+	text-align: center !important;
+	justify-content:center;
+}
+.buttonAjustementPrestation {
+	height: 4rem !important;
+	width : 15rem !important;
 }
