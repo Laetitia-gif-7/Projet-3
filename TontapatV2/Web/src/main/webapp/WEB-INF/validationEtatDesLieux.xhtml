@@ -7,13 +7,25 @@
 	
 	Validation etat des lieux component<br/>
 	<ui:fragment rendered="#{prestaBuByMain.prestation.etatLieuClient != null}">
-		<p>Le client a validé l'état des lieux le <h:outputText value="#{prestaBuByMain.prestation.etatLieuClient}" /></p>
+		<p>Le client a validé l'état des lieux le 
+			<h:outputText value="#{prestaBuByMain.prestation.etatLieuClient}">
+				<f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy"/>
+			</h:outputText>
+		</p>
 	</ui:fragment>
 	<ui:fragment rendered="#{prestaBuByMain.prestation.etatLieuEleveur != null}">
-		<p>L'éleveur a validé l'état des lieux le <h:outputText value="#{prestaBuByMain.prestation.etatLieuEleveur}" /></p>
+		<p>L'éleveur a validé l'état des lieux le 
+			<h:outputText value="#{prestaBuByMain.prestation.etatLieuEleveur}">
+				<f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy"/>
+			</h:outputText>
+		</p>
 	</ui:fragment>
 	<ui:fragment rendered="#{(prestaBuByMain.prestation.besoinBerger) and (prestaBuByMain.prestation.etatLieuBerger != null)}">
-		<p>Le berger a validé l'état des lieux le <h:outputText value="#{prestaBuByMain.prestation.etatLieuBerger}" /></p>
+		<p>Le berger a validé l'état des lieux le 
+			<h:outputText value="#{prestaBuByMain.prestation.etatLieuBerger}">
+				<f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy"/>
+			</h:outputText>	
+		</p>
 	</ui:fragment>
 
 	<ui:fragment rendered="#{(user.utilisateur.id == prestaBuByMain.client.id and prestaBuByMain.prestation.etatLieuClient == null) or

@@ -5,18 +5,11 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:b="http://bootsfaces.net/ui">
 	
-	confirmeParPartenaire.xhtml<br/>
-	User connecté :<h:outputLabel value="#{user.utilisateur.id}"/> 
-	<h:outputLabel value="#{prestaBuByMain.stateString}"/>
-	<hr/>
-	
 	<!-- Message pour l'initiateur seulement -->
 	<ui:fragment rendered="#{prestaBuByMain.prestation.initiateurPrestation.id == user.utilisateur.id}">
-		<!-- Test si eleveur ou client, au moins afficher le nom du partenaire (partenaire ? fausse bonne idée ?) -->
 		Votre demande de réservation a été confirmée 
-<!-- 		par <h:outputLabel value="#{prestaBuByMain.eleveur.nom}"/> -->
 	</ui:fragment>
-	<h:form>
+<h:form>
 	
 	<hr/>
 	<!-- Message si une nouvelle date a été proposée, poposer une date c'est écraser date etats_des_lieux_proposée dans la db -->
@@ -40,5 +33,5 @@
 <!-- 		<b:commandButton value="Annuler" action="#{mbPresta.annule( prestaBuByMain.prestation.idPrestation )}"/> -->
 	</ui:fragment>
 	<b:button  class="PrestationButtonDetail" value="Voir le détail de la prestation" onclick="$('.modalPseudoClass${prestaBU.key}').modal()"/>
-	</h:form>
+</h:form>
 </ui:composition>

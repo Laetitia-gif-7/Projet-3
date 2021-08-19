@@ -6,7 +6,14 @@
 	xmlns:b="http://bootsfaces.net/ui" >
 	
 	<h:outputLabel value="#{prestaBuByMain.stateString}"/>
-	<p>Plus que <h:outputLabel value="#{ mbPresta.nbDaysToLocalDatetime(prestaBuByMain.prestation.debutPrestation) }" /> jours !</p>
-	<p>La prestation débutera le : <h:outputLabel value="#{prestaBuByMain.prestation.debutPrestation}" /></p>
+	<p>Plus que  
+		<h:outputLabel value="#{ mbPresta.nbDaysToLocalDatetime(prestaBuByMain.prestation.debutPrestation) }" />
+		jours !
+	</p>
+	<p>La prestation débutera le : 
+	<h:outputLabel value="#{prestaBuByMain.prestation.debutPrestation}">
+		<f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy"/>
+	</h:outputLabel>
+	</p>
 	<b:button  class="PrestationButtonDetail" value="Voir le détail de la prestation" onclick="$('.modalPseudoClass${prestaBU.key}').modal()" />
 </ui:composition>

@@ -7,15 +7,27 @@
 	
 	Signature des contrats<br/>		
 	<ui:fragment rendered="#{prestaBuByMain.prestation.contratClient != null}">
-		<p>Le client a déjà signé le contrat et payé le : <h:outputText value="#{prestaBuByMain.prestation.contratClient}" /></p>
+		<p>Le client a déjà signé le contrat et payé le : 
+			<h:outputText value="#{prestaBuByMain.prestation.contratClient}">
+				<f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy"/>
+			</h:outputText>
+		</p>
 	</ui:fragment>
 	
 	<ui:fragment rendered="#{prestaBuByMain.prestation.contratEleveur != null}">
-		<p>L'éleveur a déjà signé le contrat le : <h:outputText value="#{prestaBuByMain.prestation.contratEleveur}" /></p>
+		<p>L'éleveur a déjà signé le contrat le : 
+			<h:outputText value="#{prestaBuByMain.prestation.contratEleveur}">
+				<f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy"/>
+			</h:outputText>	
+		</p>
 	</ui:fragment>
 	
 	<ui:fragment rendered="#{(prestaBuByMain.prestation.besoinBerger) and (prestaBuByMain.prestation.contratBerger != null)}">
-		<p>Le berger a déjà signé le contrat le : <h:outputText value="#{prestaBuByMain.prestation.contratBerger}" /></p>
+		<p>Le berger a déjà signé le contrat le : 
+		<h:outputText value="#{prestaBuByMain.prestation.contratBerger}">
+			<f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy"/>
+		</h:outputText>
+		</p>
 	</ui:fragment>
 
 	<!-- Client doit payer -->
