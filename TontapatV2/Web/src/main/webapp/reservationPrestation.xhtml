@@ -7,7 +7,6 @@
 	xmlns:b="http://bootsfaces.net/ui"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" >
 <!-- 	xmlns:p="http://primefaces.org/ui" -->
-	
 
 <h:head>
 	<ui:insert name="head">
@@ -18,17 +17,8 @@
 
 <ui:composition template="/arch.xhtml">
 <ui:define name="content">
-Ajustez votre prestation !<br/>
-	Avec Terrain:  <h:outputText value="#{mbReservation.terrain.nomTerrain}" />
-	Avec id Terrain: <h:outputText value="#{mbReservation.idTerrain}" />
-	Avec id Troupeau: <h:outputText value="#{mbReservation.idTroupeau}" />
-	<hr/>
-	Matériel enregistré sur votre terrain (gratuit):
+
 	Ajustez votre prestation !<br/>
-	Avec Terrain:  <h:outputText value="#{mbReservation.terrain.nomTerrain}" />
-	Avec id Terrain: <h:outputText value="#{mbReservation.idTerrain}" />
-	Avec id Troupeau: <h:outputText value="#{mbReservation.idTroupeau}" />
-	<hr/>
 	Matériel enregistré sur votre terrain (gratuit):
 	<ul>
 		<ui:repeat var="qe" value="#{mbReservation.prp.equipementSurTerrain}" >
@@ -37,8 +27,7 @@ Ajustez votre prestation !<br/>
 	</ul>
 	<hr/>
 	<p>Nb d'animaux du troupeau : <h:outputText value="#{mbReservation.prp.nbTotalAnimauxTroupeau}"/></p>
-	<p>On pourrait mettre ses dates de fin prestation ? bof bof, pour savoir quand plus d'animaux sont disponibles </p>
-	Variable<br/>
+	<p>Nb d'animaux du troupeau disponilbes à ces dates: <h:outputText value="#{mbReservation.prp.nbAnimauxTroupeauDispo}"/></p>
 	<h:form id="prpForm">
 		<b:panel style-class="cat-margin-top-3rem cat-margin-bottom-5rem 
 			col-sm-offset-1 col-md-offset-2 col-xs-12 col-sm-10 col-md-8">
@@ -74,11 +63,22 @@ Ajustez votre prestation !<br/>
 			</b:row>
 		</b:panel>
 		<hr/>
-	<div>
-		<p>Nb d'animaux du troupeau disponilbes à ces dates: <h:outputText value="#{mbReservation.prp.nbAnimauxTroupeauDispo}"/></p>
-		<p>Prix Total: <h:outputText value="#{mbReservation.prp.cout}" /></p>
-		<p>Qualité Tonte : <h:outputText value="#{mbReservation.prp.qualiteTonte}" /></p>
-		<p>Bien être animal : <h:outputText value="#{mbReservation.prp.bienEtreAnimal}" /></p>
+	<h:panelGroup>
+		<p>Prix Total: 
+			<h:outputText value="#{mbReservation.prp.cout}" >
+				<f:convertNumber maxFractionDigits = "2" />
+			</h:outputText>
+		</p>
+		<p>Qualité Tonte : 
+			<h:outputText value="#{mbReservation.prp.qualiteTonte}" >
+				<f:convertNumber maxFractionDigits = "2" />
+			</h:outputText>
+		</p>
+		<p>Bien être animal : 
+			<h:outputText value="#{mbReservation.prp.bienEtreAnimal}" >
+				<f:convertNumber maxFractionDigits = "2" />
+			</h:outputText>
+		</p>
 		<p>Nbre d'animaux : <h:outputText value="#{mbReservation.prp.nbAnimaux}" /></p>
 		<p>Nbre d'animaux recommandés: <h:outputText value="#{mbReservation.prp.nbAnimauxRecommande}" /></p>
 		<p>Longueur cloture: <h:outputText id="longueur" value="#{mbReservation.prp.longueurCloture}" /></p>
@@ -100,7 +100,7 @@ Ajustez votre prestation !<br/>
 		<h:commandButton value="Valider" action="#{mbReservation.validerPrestationParClient}">
   			<f:ajax execute="@form" render="@form" />
  		</h:commandButton>
- 	</div>
+ 	</h:panelGroup>
   	</h:form>
 <!--  test ajax on slider (ok), but not on datetimepicker -->
 <!-- 		<p:column> -->

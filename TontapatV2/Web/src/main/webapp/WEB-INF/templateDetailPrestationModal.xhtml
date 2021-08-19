@@ -7,10 +7,21 @@
 	
 	<b:modal id="bmodal${prestaBuKey}" title="Détail de la prestation : #{prestaBuByMain.prestation.numeroPrestation}"
 			 styleClass="modalPseudoClass${prestaBuKey}" backdrop="true" closable="true" close-on-escape="true">
-	template Modal <h:outputLabel value="#{prestaBuByMain.stateString}"/>
-	<p> date prévue de début de prestation : <h:outputLabel value="#{prestaBuByMain.prestation.debutPrestation}"/> </p>
-	<p> date de fin : <h:outputLabel value="#{prestaBuByMain.prestation.finPrestation}"/> </p>
-	<p> prestaBuKey : <h:outputLabel value="#{prestaBuKey}"/> </p>
+	<p>Numero de la prestation : <h:outputLabel value="#{prestaBuByMain.prestation.numeroPrestation}" /></p>
+	<p> date prévue de début de prestation :
+	<h:outputLabel value="#{prestaBuByMain.prestation.debutPrestation}">
+		<f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy"/>
+	</h:outputLabel></p>
+	<p>date de fin de la prestation:
+	<h:outputLabel value="#{prestaBuByMain.prestation.finPrestation}">
+		<f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy"/>
+	</h:outputLabel></p>
+	<h:panelGroup rendered="#{not empty prestaBuByMain.client.id}">
+	<p>Eleveur de la prestation : <h:outputLabel value="#{prestaBuByMain.eleveur.nom}"/></p>
+	</h:panelGroup>
+	<h:panelGroup rendered="#{not empty prestaBuByMain.eleveur.id}">
+	<p>Client de la prestation : <h:outputLabel value="#{prestaBuByMain.client.nom}"/></p>
+	</h:panelGroup>
 	<f:facet name="footer">
   		<h:form>
     		<b:button value="Close" dismiss="modal" />

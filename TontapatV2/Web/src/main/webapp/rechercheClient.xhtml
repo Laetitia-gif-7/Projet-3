@@ -9,9 +9,6 @@
 
 	<ui:define name="head">
 		<title>Recherche</title>
-		<!-- <f:metadata>
-			<f:event listener="#{mbAccount.disconnect()}" type="preRenderView"></f:event>
-		</f:metadata> -->
 	</ui:define>
 
 	<ui:define name="content">
@@ -46,10 +43,14 @@
 									<h:outputLabel value="#{troup.troupeau.description}" />
 								</p>
 								<p>
-									A partir du :
-									<h:outputLabel value="#{troup.dateMin}" />
-									Jusqu'au :
-									<h:outputLabel value="#{troup.dateMax}" />
+									Du
+									<h:outputLabel value="#{troup.dateMin}">
+										<f:convertDateTime type="DateTime" pattern="dd/MM/yyyy"/>
+									</h:outputLabel>
+									au
+									<h:outputLabel value="#{troup.dateMax}">
+										<f:convertDateTime type="DateTime" pattern="dd/MM/yyyy"/>
+									</h:outputLabel>
 								</p>
 								<p>
 									Race : 
@@ -90,32 +91,18 @@
 								</p>
 								<p>Composition du troupeau :</p>
 								<ul>
-									<ui:repeat var="race" value="#{troupeau.compositionTroupeau}">
-										<li><h:outputLabel value="#{race.nbAnimaux}" /> de <h:outputLabel
-												value="#{race.raceRef.libelleRace}" />, race : <h:outputLabel
+									<ui:repeat var="race" value="#{troup.troupeau.compositionTroupeau}">
+										<li><h:outputLabel value="#{race.nbAnimaux}" />&nbsp;<h:outputLabel
+												value="#{race.raceRef.libelleRace}" />, espece : <h:outputLabel
 												value="#{race.raceRef.especeRef.libelleEspece}" /></li>
 									</ui:repeat>
 								</ul>
-								<ui:repeat var="match"
-									value="#{troup.troupeau.compositionTroupeau}">
-									<p>
-										Race :
-										<h:outputLabel value="#{match.raceRef.libelleRace}" />
-									</p>
-									<ui:repeat var="matchMorpho"
-										value="#{match.raceRef.morphologieRefs}">
-										<p>
-											Morphologie :
-											<h:outputLabel value="#{matchMorpho.libelleMorphologie}" />
-										</p>
-									</ui:repeat>
-								</ui:repeat>
 								<p>
-									Match Morphologie :
+									Match au niveau de la morphologie du terrain :
 									<h:outputLabel value="#{troup.pourcentagePropoMorpho}" />
 								</p>
 								<p>
-									Match Végétation :
+									Match au niveau de la morphologie de la Végétation :
 									<h:outputLabel value="#{troup.pourcentagePropoVege}" />
 								</p>
 								<p>
