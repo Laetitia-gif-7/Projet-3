@@ -22,6 +22,26 @@
 	<h:panelGroup rendered="#{not empty prestaBuByMain.eleveur.id}">
 	<p>Client de la prestation : <h:outputLabel value="#{prestaBuByMain.client.nom}"/></p>
 	</h:panelGroup>
+<!-- 	<h:panelGroup rendered="#{not empty prestaBuByMain.prestation.id}"> -->
+	<h:panelGroup rendered="#{not empty prestaBuByMain.prestation.compositionTroupeauPrestations}" >
+	<p>Composition du troupeau : </p>
+	<ul>
+		<ui:repeat var="animaux" value="#{prestaBuByMain.prestation.compositionTroupeauPrestations}">
+			<li> <h:outputLabel value="#{animaux.raceRef.libelleRace}"/> : <h:outputLabel value="#{animaux.nbAnimaux}"/> </li>
+		</ui:repeat>
+	</ul>
+	</h:panelGroup>
+	
+	<h:panelGroup rendered="#{not empty prestaBuByMain.prestation.quantiteEquipementPrestations}" >
+	<p>Equipement supplémentaire : </p>
+	<ul>
+		<ui:repeat var="equip" value="#{prestaBuByMain.prestation.quantiteEquipementPrestations}">
+			<li> <h:outputLabel value="#{equip.equipement.libelleEquipement}"/> : <h:outputLabel value="#{equip.quantite}"/> 
+				<h:outputLabel value="#{equip.equipement.uniteRef.libelleUnite}" />
+			</li>
+		</ui:repeat>
+	</ul>
+	</h:panelGroup>
 	<f:facet name="footer">
   		<h:form>
     		<b:button value="Close" dismiss="modal" />
