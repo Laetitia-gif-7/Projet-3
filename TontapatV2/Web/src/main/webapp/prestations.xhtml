@@ -42,7 +42,7 @@
 			</b:button>
 		</h:form>
 	
-		<b:tabView activeIndex="0">
+		<b:tabView activeIndex="1">
 			<b:tab title="En Cours">
 				<c:forEach var="prestaBU" items="#{mbPresta.prestations}">
 					<h:panelGroup rendered="#{prestaBU.value.stateString == 'ENCOURS'}">

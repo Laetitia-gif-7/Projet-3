@@ -120,6 +120,7 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 				calculeBienEtreAnimal(nbAnimaux, longueurCloture, terrain.getSuperficie().intValue(),
 						terrain.isClos()));
 		
+		// erreur, le terrain etait cloturé
 		prp.setLongueurCloture( getLongueurCloture(equipSupplementaire));
 		System.out.println("longueur cloture suppl : " + prp.getLongueurCloture());
 		
@@ -184,6 +185,10 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 		prp.setBienEtreAnimal(
 				calculeBienEtreAnimal(prp.getNbAnimaux(), prp.getLongueurCloture() + clotureSurTerrain, terrain.getSuperficie().intValue(),
 						terrain.isClos()));
+		
+		// erreur, le terrain etait cloturé
+		prp.setLongueurCloture( getLongueurCloture(equipSupplementaire));
+		System.out.println("longueur cloture suppl : " + prp.getLongueurCloture());
 		
 		prp.setQualiteTonte( (double)prp.getNbAnimaux() / nbAnimauxRecommande );
 		return prp;
