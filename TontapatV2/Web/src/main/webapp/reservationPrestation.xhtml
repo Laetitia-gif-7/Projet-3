@@ -26,9 +26,9 @@
 		</ui:repeat>
 	</ul>
 	<hr/>
-	<p>Nb d'animaux du troupeau : <h:outputText value="#{mbReservation.prp.nbTotalAnimauxTroupeau}"/></p>
-	<p>Nb d'animaux du troupeau disponilbes à ces dates: <h:outputText value="#{mbReservation.prp.nbAnimauxTroupeauDispo}"/></p>
 	<h:form id="prpForm">
+		<p>Nb d'animaux du troupeau : <h:outputText value="#{mbReservation.prp.nbTotalAnimauxTroupeau}"/></p>
+		<p>Nb d'animaux du troupeau disponilbes à ces dates: <h:outputText value="#{mbReservation.prp.nbAnimauxTroupeauDispo}"/></p>
 		<b:panel style-class="cat-margin-top-3rem cat-margin-bottom-5rem 
 			col-sm-offset-1 col-md-offset-2 col-xs-12 col-sm-10 col-md-8">
 <!-- 			<b:row> -->
@@ -84,12 +84,12 @@
 		<p>Longueur cloture: <h:outputText id="longueur" value="#{mbReservation.prp.longueurCloture}" /></p>
 		<hr/>
   		<b:column>
-    		<b:slider2 id="slid1" ajax="true" mode="badge" min="1" max="200" span="10" value="#{mbReservation.prp.longueurCloture}" label="Longueur clôture" action="#{mbReservation.updateView()}">
+    		<b:slider2 id="slid1" ajax="true" mode="badge" min="0" max="200" span="10" value="#{mbReservation.prp.longueurCloture}" label="Longueur clôture" action="#{mbReservation.updateView()}">
 				<f:ajax listener="#{mbReservation.updateView()}" execute="@form" render="@form" />
     		</b:slider2>
   		</b:column>
   		<b:column>
-    		<b:slider2 id="slid2" ajax="true" mode="badge" min="5" maxValue="#{mbReservation.prp.nbTotalAnimauxTroupeau}" span="10" value="#{mbReservation.prp.nbAnimaux}" label="Nb. d'Animaux" action="#{mbReservation.updateView()}">
+    		<b:slider2 id="slid2" ajax="true" mode="badge" min="5" maxValue="#{mbReservation.prp.nbAnimauxTroupeauDispos}" span="10" value="#{mbReservation.prp.nbAnimaux}" label="Nb. d'Animaux" action="#{mbReservation.updateView()}">
 				<f:ajax listener="#{mbReservation.updateView()}" execute="@form" render="@form" />
     		</b:slider2>
   		</b:column>
