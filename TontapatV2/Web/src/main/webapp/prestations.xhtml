@@ -26,9 +26,14 @@
 		<h:panelGroup rendered="#{empty mbCompte.utilisateur}">
 			<div class="userNotConnected">
 				<h1>Vous devez vous connecter pour accéder à vos prestations !</h1>
-				<p><a class="troupeauxAjoutTroupeau" href="login.xhtml">
- 				Se connecter
-				</a></p>
+				<a class="troupeauxAjoutTroupeau" href="login.xhtml">
+ 				<p>Se connecter</p>
+				</a>
+			</div>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{empty mbPresta.prestations}">
+			<div class="nothingRegister">
+				<h1>Vous n'avez actuellement aucune prestation !</h1>
 			</div>
 		</h:panelGroup>
 		<h:panelGroup rendered="#{not empty mbCompte.utilisateur}">
@@ -36,12 +41,6 @@
 				<b:button value="Rechercher une prestation/Devenir Berger" class="buttonRechercherPresta" href="rechercheBerger.xhtml" >
 				</b:button>
 			</h:form>
-		</h:panelGroup>
-		<h:panelGroup rendered="#{empty mbPresta.prestations}">
-			<div class="nothingRegister">
-				<h1>Vous n'avez actuellement aucune prestation !</h1>
-			</div>
-		</h:panelGroup>
 	
 		<b:tabView activeIndex="0">
 			<b:tab title="En Cours">
@@ -121,6 +120,8 @@
 			<ui:param name="prestaBuKey" value="#{prestaBU.key}" />
 		</ui:include>
 	 </c:forEach>
+	 
+	 </h:panelGroup>
 
 <ui:debug hotkey="l" rendered="true"/>			
 </ui:define>

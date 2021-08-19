@@ -5,7 +5,13 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:b="http://bootsfaces.net/ui" >
 	
-	<h:outputLabel value="#{prestaBuByMain.stateString}"/>
+	<p>Numero de la prestation : <h:outputLabel value="#{prestaBuByMain.prestation.numeroPrestation}" /></p>
+	<h:panelGroup rendered="#{prestaBuByMain.client.id == user.utilisateur.id}">
+	<p>Autre partie : <h:outputLabel value="#{prestaBuByMain.eleveur.nom}"/></p>
+	</h:panelGroup>
+	<h:panelGroup rendered="#{prestaBuByMain.eleveur.id == user.utilisateur.id}">
+	<p>Autre partie : <h:outputLabel value="#{prestaBuByMain.client.nom}"/></p>
+	</h:panelGroup>
 	<p>Plus que  
 		<h:outputLabel value="#{ mbPresta.nbDaysToLocalDatetime(prestaBuByMain.prestation.debutPrestation) }" />
 		jours !
