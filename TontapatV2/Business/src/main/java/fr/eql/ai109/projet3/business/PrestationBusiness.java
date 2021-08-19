@@ -101,6 +101,7 @@ public class PrestationBusiness implements PrestationIBusiness {
 		prestation.setIdDerniereProposition(utilisateur);
 		prestation.setPremiereVisitePropose(utils.convertToLocalDateTimeViaInstant(prp.getPremiereVisite()));
 		
+		prestation.setBesoinBerger(true);
 		prestation = prestationIDao.add(prestation);
 		
 		List<QuantiteEquipementPrestation> equipementPrestationSupplementaires = new ArrayList<>();
@@ -148,7 +149,7 @@ public class PrestationBusiness implements PrestationIBusiness {
 		*/
 
 // Added for demo
-		prestation.setBesoinBerger(true);
+		
 	}
 
 	@Override
@@ -162,6 +163,7 @@ public class PrestationBusiness implements PrestationIBusiness {
 		prestation.setTerrain( terrainIDao.getById(idTerrain) );
 		UUID uuid = UUID.randomUUID();
 		prestation.setNumeroPrestation(uuid.toString());
+		prestation.setBesoinBerger(true);
 		
 		Troupeau troupeau = troupeauIDao.getById(idTroupeau);
 		CompositionTroupeauPrestation compoTroupeauPresta = new CompositionTroupeauPrestation();
@@ -175,7 +177,7 @@ public class PrestationBusiness implements PrestationIBusiness {
 		compositionTroupeauPrestationIDao.add(compoTroupeauPresta);
 		
 // Added for demo
-		prestation.setBesoinBerger(true);
+		
 	}
 	
 	public void ReservePrestationBerger(int idPrestation, Utilisateur berger) {
