@@ -41,19 +41,28 @@
 									<h:outputLabel value="#{terr.terrain.description}" />
 								</p>
 								<p>
-									A partir du :
-									<h:outputLabel value="#{terr.dateMin}" />
-									Jusqu'au :
-									<h:outputLabel value="#{terr.dateMax}" />
+									Du
+									<h:outputLabel value="#{terr.dateMin}">
+										<f:convertDateTime type="DateTime" pattern="dd/MM/yyyy"/>
+									</h:outputLabel>
+									au
+									<h:outputLabel value="#{terr.dateMax}">
+										<f:convertDateTime type="DateTime" pattern="dd/MM/yyyy"/>
+									</h:outputLabel>
 								</p>
-								Race :
-								<ul>
-									<ui:repeat var="pm" value="#{terr.terrain.proportionMorphologies}">
-										<ui:repeat var="match" value="#{pm.morphologieRef.raceRefs}">
-											<li><h:outputLabel value="#{match.libelleRace}" /></li>
-										</ui:repeat>
-									</ui:repeat>
-								</ul>
+								<p>
+								Superficie du terrain :
+								<h:outputLabel value="#{terr.terrain.superficie}" />
+								m²
+								</p>
+								<p>
+									Adresse :
+									<h:outputLabel value="#{terr.terrain.noRue}" />&nbsp;
+									<h:outputLabel value="#{terr.terrain.rue}" />&nbsp;,
+									<h:outputLabel value="#{terr.terrain.villeCp.ville}" />&nbsp;,
+									<h:outputLabel value="#{terr.terrain.villeCp.codePostal}" />&nbsp;
+									<h:outputLabel value="#{terr.terrain.villeCp.departement}" />
+								</p>
 								<b:button class="troupeauButtonDetail"
 									value="Voir le détail du terrain"
 									onclick="$('.modalPseudoClass${status.index}').modal()" />
@@ -74,13 +83,15 @@
 					<p>
 						Superficie du terrain :
 						<h:outputLabel value="#{terr.terrain.superficie}" />
-						m2
+						m²
 					</p>
 					<p>
 						Adresse :
-						<h:outputLabel value="#{terr.terrain.noRue}" />
-						<h:outputLabel value="#{terr.terrain.rue}" />
-						et rajouter ville
+						<h:outputLabel value="#{terr.terrain.noRue}" />&nbsp;
+						<h:outputLabel value="#{terr.terrain.rue}" />&nbsp;,
+						<h:outputLabel value="#{terr.terrain.villeCp.ville}" />&nbsp;,
+						<h:outputLabel value="#{terr.terrain.villeCp.codePostal}" />&nbsp;
+						<h:outputLabel value="#{terr.terrain.villeCp.departement}" />
 					</p>
 					<h:panelGroup rendered="#{terrain.clos == true}">
 						<p>Terrain : <span class="terrainCloture">cloturé</span></p>
@@ -88,40 +99,34 @@
 					<h:panelGroup rendered="#{terrain.clos == false}">
 						<p>Terrain : <span class="terrainCloture">NON cloturé</span></p>
 					</h:panelGroup>
-					<p>
-						Terrain cloturé :
-						<h:outputLabel value="#{terr.terrain.clos}" />
-					</p>
-
 					<p>Equipement :</p>
 					<ul>
-						<ui:repeat class="terrainsBigDiv" var="qe"
+						<ui:repeat class="terrainBigDiv" var="qe"
 							value="#{terr.terrain.quantiteEquipement}">
-							<li><h:outputLabel value="#{qe.quantite}" />
+							<li><h:outputLabel value="#{qe.equipement.libelleEquipement}" /> : 
+								<h:outputLabel value="#{qe.quantite}" />
 								<h:outputLabel value="#{qe.equipement.uniteRef.libelleUnite}" />
-								de <h:outputLabel value="#{qe.equipement.libelleEquipement}" /></li>
+							</li>
 						</ui:repeat>
 					</ul>
-
-					<p>Race compatible pour le type de végétation :</p>
-					<ui:repeat class="terrainsBigDiv" var="pv"
+					<p>Race(s) compatible(s) pour le(s) type(s) de végétation :</p>
+					<ui:repeat class="terrainBigDiv" var="pv"
 						value="#{terr.terrain.proportionVegetations}">
 						<ul>
-							<h:outputLabel value="#{pv.vegetationRef.libelleVegetation}" />
-							<ui:repeat class="terrainsBigDiv" var="vr"
+							Type de Végétation : <h:outputLabel value="#{pv.vegetationRef.libelleVegetation}" style="text-transform: capitalize"/>
+							<ui:repeat class="terrainBigDiv" var="vr"
 								value="#{pv.vegetationRef.raceRefs}">
-								<li><h:outputLabel value="#{vr.libelleRace}" /> pour <h:outputLabel
-										value="#{pv.proportionVege}" /> %</li>
+								<li><h:outputLabel value="#{vr.libelleRace}" /> compatible à <h:outputLabel
+										value="#{pv.proportionVege}" />%</li>
 							</ui:repeat>
 						</ul>
 					</ui:repeat>
-
 					<p>Type de morphologie :</p>
 					<ul>
-						<ui:repeat class="terrainsBigDiv" var="pm"
+						<ui:repeat class="terrainBigDiv" var="pm"
 							value="#{terr.terrain.proportionMorphologies}">
 							<li><h:outputLabel
-									value="#{pm.morphologieRef.libelleMorphologie}" /> pour <h:outputLabel
+									value="#{pm.morphologieRef.libelleMorphologie}" /> à <h:outputLabel
 									value="#{pm.proportionMorphologie}" /> %</li>
 						</ui:repeat>
 					</ul>

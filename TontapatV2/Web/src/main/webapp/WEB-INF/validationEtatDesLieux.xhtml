@@ -5,7 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:b="http://bootsfaces.net/ui">
 	
-	Validation etat des lieux component<br/>
+	<p>Numero de la prestation : <h:outputLabel value="#{prestaBuByMain.prestation.numeroPrestation}" /></p>
 	<ui:fragment rendered="#{prestaBuByMain.prestation.etatLieuClient != null}">
 		<p>Le client a validé l'état des lieux le 
 			<h:outputText value="#{prestaBuByMain.prestation.etatLieuClient}">
