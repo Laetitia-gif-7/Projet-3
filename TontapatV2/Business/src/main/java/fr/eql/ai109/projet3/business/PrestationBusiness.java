@@ -141,6 +141,9 @@ public class PrestationBusiness implements PrestationIBusiness {
 		// delete previous periode cannot here ?? cannot remove a detached object ??
 		periodeDisponibiliteIDao.splitPeriode( periodeDispoTerrain.getDispoId(), listDispos );
 		*/
+
+// Added for demo
+		prestation.setBesoinBerger(true);
 	}
 
 	@Override
@@ -165,6 +168,9 @@ public class PrestationBusiness implements PrestationIBusiness {
 		compoTroupeauPresta.setNbAnimaux(0);
 		compoTroupeauPresta.setTroupeau( troupeau );
 		compositionTroupeauPrestationIDao.add(compoTroupeauPresta);
+		
+// Added for demo
+		prestation.setBesoinBerger(true);
 	}
 	
 	public void ReservePrestationBerger(int idPrestation, Utilisateur berger) {
