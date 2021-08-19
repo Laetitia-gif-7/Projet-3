@@ -17,6 +17,7 @@
 
 <ui:composition template="/arch.xhtml">
 <ui:define name="content">
+<<<<<<< HEAD
 	<br/>
 	<br/>
 	<h1>Ajustez votre prestation !</h1>
@@ -66,12 +67,48 @@
 				</b:column>
 			</b:row>
 		</b:panel>
+=======
+	<div class="ajustementPrestationClient">
+	<h1>Ajustez votre prestation !</h1>
+	<hr/>
+	<p>Terrain:  <strong><h:outputText value="#{mbReservation.terrain.nomTerrain}" /></strong></p>
+	<h:panelGroup rendered="#{not empty mbReservation.prp.equipementSurTerrain}">
+		<p>Matériel enregistré sur votre terrain (gratuit):
+		<ul>
+			<ui:repeat var="qe" value="#{mbReservation.prp.equipementSurTerrain}" >
+				<li><h:outputLabel value="#{qe.quantite}" /><h:outputLabel value="#{qe.equipement.uniteRef.libelleUnite}" /> de <h:outputLabel value="#{qe.equipement.libelleEquipement}" /></li>
+			</ui:repeat>
+		</ul>
+	</p>
+	</h:panelGroup>
+	<p>Nombre d'animaux dans le troupeau selectionné: <strong><h:outputText value="#{mbReservation.prp.nbTotalAnimauxTroupeau}"/></strong></p>
+	<hr/>
+	<h:form id="prpForm">
+		<div style="display:flex; flex-direction :column">
+			<div style="display:flex; flex-direction :column">
+			<b:datepicker id="cdate1" mode="toggle-icon" showWeek="true"
+					firstDay="1" value="#{mbReservation.prp.dateDebut}" required="true"
+					label="Date de Début:" label-col-sm="5" col-sm="6" />
+			</div>
+			<div style="display:flex; flex-direction :column">
+			<b:datepicker id="cdate2" mode="toggle-icon" showWeek="true"
+					firstDay="1" value="#{mbReservation.prp.dateFin}" required="true"
+					label="Date de Fin:" label-col-sm="5" col-sm="6" />
+			</div>
+			<div style="display:flex; flex-direction :column">
+			<b:datepicker id="cdate3" mode="toggle-icon" showWeek="true"
+					firstDay="1" value="#{mbReservation.prp.premiereVisite}" required="true"
+					label="Date d'Etats des Lieux:" label-col-sm="5" col-sm="6" />
+			</div>
+		</div>
+>>>>>>> 3d1e437cdf5baf061aaff5892a25fe78a26d76e2
 		<hr/>
-	<h:panelGroup>
+	<div>
+		<p>Nombre d'animaux du troupeau disponilbes à ces dates: <h:outputText value="#{mbReservation.prp.nbAnimauxTroupeauDispo}"/></p>
 		<p>Prix Total: 
 			<h:outputText value="#{mbReservation.prp.cout}" >
 				<f:convertNumber maxFractionDigits = "2" />
-			</h:outputText>
+			</h:outputText> &#8364;
 		</p>
 		<p>Qualité Tonte : 
 			<h:outputText value="#{mbReservation.prp.qualiteTonte}" >
@@ -83,10 +120,11 @@
 				<f:convertNumber maxFractionDigits = "2" />
 			</h:outputText>
 		</p>
-		<p>Nbre d'animaux : <h:outputText value="#{mbReservation.prp.nbAnimaux}" /></p>
-		<p>Nbre d'animaux recommandés: <h:outputText value="#{mbReservation.prp.nbAnimauxRecommande}" /></p>
-		<p>Longueur cloture: <h:outputText id="longueur" value="#{mbReservation.prp.longueurCloture}" /></p>
+		<p>Nombre d'animaux de la prestation : <h:outputText value="#{mbReservation.prp.nbAnimaux}" /></p>
+		<p>Nombre d'animaux recommandés pour la prestation: <h:outputText value="#{mbReservation.prp.nbAnimauxRecommande}" /></p>
+		<p>Longueur de la clôture: <h:outputText id="longueur" value="#{mbReservation.prp.longueurCloture}" /></p>
 		<hr/>
+		<p><strong>Choisir la longueur de clôture et le nombre d'animaux :</strong></p>
   		<b:column>
     		<b:slider2 id="slid1" ajax="true" mode="badge" min="0" max="200" span="10" value="#{mbReservation.prp.longueurCloture}" label="Longueur clôture" action="#{mbReservation.updateView()}">
 				<f:ajax listener="#{mbReservation.updateView()}" execute="@form" render="@form" />
@@ -98,14 +136,17 @@
     		</b:slider2>
   		</b:column>
 
-		<h:commandButton value="Mise à Jour" action="#{mbReservation.updateView}">
+		<hr/>
+		<div>
+		<h:commandButton value="Mise à Jour" action="#{mbReservation.updateView}" style="buttonAjustementPrestation">
  			<f:ajax execute="@form" render="@form" />
  		</h:commandButton>
-		<h:commandButton value="Valider" action="#{mbReservation.validerPrestationParClient}">
+		<h:commandButton value="Valider" action="#{mbReservation.validerPrestationParClient}" style="buttonAjustementPrestation">
   			<f:ajax execute="@form" render="@form" />
  		</h:commandButton>
- 	</h:panelGroup>
-  	</h:form>
+ 		</div>
+ 	</div>
+ 	</h:form>
 <!--  test ajax on slider (ok), but not on datetimepicker -->
 <!-- 		<p:column> -->
 <!-- 			<p>Nbre d'animaux : <h:outputText id="textNbAnimaux" value="#{mbReservation.prp.nbAnimaux}" /></p> -->
@@ -129,6 +170,8 @@
 <!--     				actionListener="#{mbReservation.testUpdateAjax()}" > -->
 <!--     		</b:slider2> -->
 <!--   		</b:column> -->
+	</div>
+	
 
 </ui:define>
 </ui:composition>
