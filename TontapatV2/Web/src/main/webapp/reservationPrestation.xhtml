@@ -17,18 +17,23 @@
 
 <ui:composition template="/arch.xhtml">
 <ui:define name="content">
-
-	Ajustez votre prestation !<br/>
+	<br/>
+	<br/>
+	<h1>Ajustez votre prestation !</h1>
+	<p>
+	<br/>
 	Matériel enregistré sur votre terrain (gratuit):
+	</p>
 	<ul>
 		<ui:repeat var="qe" value="#{mbReservation.prp.equipementSurTerrain}" >
 			<li><h:outputLabel value="#{qe.quantite}" /><h:outputLabel value="#{qe.equipement.uniteRef.libelleUnite}" /> de <h:outputLabel value="#{qe.equipement.libelleEquipement}" /></li>
 		</ui:repeat>
 	</ul>
 	<hr/>
+	<h:form id="prpForm">
 	<p>Nb d'animaux du troupeau : <h:outputText value="#{mbReservation.prp.nbTotalAnimauxTroupeau}"/></p>
 	<p>Nb d'animaux du troupeau disponilbes à ces dates: <h:outputText value="#{mbReservation.prp.nbAnimauxTroupeauDispo}"/></p>
-	<h:form id="prpForm">
+	
 		<b:panel style-class="cat-margin-top-3rem cat-margin-bottom-5rem 
 			col-sm-offset-1 col-md-offset-2 col-xs-12 col-sm-10 col-md-8">
 <!-- 			<b:row> -->

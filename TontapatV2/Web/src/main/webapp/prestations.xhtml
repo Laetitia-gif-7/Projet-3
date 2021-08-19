@@ -31,16 +31,16 @@
 				</a>
 			</div>
 		</h:panelGroup>
+		<h:panelGroup rendered="#{not empty mbCompte.utilisateur}">
 		<h:panelGroup rendered="#{empty mbPresta.prestations}">
 			<div class="nothingRegister">
 				<h1>Vous n'avez actuellement aucune prestation !</h1>
 			</div>
 		</h:panelGroup>
-		<h:panelGroup rendered="#{not empty mbCompte.utilisateur}">
-			<h:form>
-				<b:button value="Rechercher une prestation/Devenir Berger" class="buttonRechercherPresta" href="rechercheBerger.xhtml" >
-				</b:button>
-			</h:form>
+		<h:form>
+			<b:button value="Rechercher une prestation/Devenir Berger" class="buttonRechercherPresta" href="rechercheBerger.xhtml" >
+			</b:button>
+		</h:form>
 	
 		<b:tabView activeIndex="0">
 			<b:tab title="En Cours">

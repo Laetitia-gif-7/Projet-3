@@ -4,8 +4,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:b="http://bootsfaces.net/ui">
-		
-	<h:outputLabel value="#{prestaBuByMain.stateString}"/>
+
 	
 	<!-- Vue Client --> 
 	<ui:fragment rendered="#{prestaBuByMain.client.id == user.utilisateur.id}">
@@ -36,9 +35,9 @@
 <!-- 			 	action="#{mbPresta.valideAvecUtilisateur(prestaBuByMain.prestation.idPrestation)}" > -->
 <!-- 		<f:ajax listener="#{mbReservation.updateView()}" execute="@form" render="@form" /> -->
 	</h:form> 
-	<b:button  class="PrestationButtonDetail" value="Voir le détail de la prestation" onclick="$('.modalPseudoClass${prestaBU.key}').modal()"/>
+	
 
 
 	</ui:fragment>
-	
+	<b:button  class="PrestationButtonDetail" value="Voir le détail de la prestation" onclick="$('.modalPseudoClass${prestaBU.key}').modal()"/>
 </ui:composition>
