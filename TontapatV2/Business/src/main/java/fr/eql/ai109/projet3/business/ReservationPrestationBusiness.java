@@ -30,7 +30,7 @@ import fr.eql.ai109.projet3.idao.TerrainIDao;
 import fr.eql.ai109.projet3.idao.TroupeauIDao;
 
 @Remote(ReservationPrestationIBusiness.class)
-@Stateless // if data are send by the web everytime. Statefull may store more infos in business
+@Stateless
 public class ReservationPrestationBusiness implements ReservationPrestationIBusiness {
 
 	@EJB
@@ -96,7 +96,6 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 		
 		// materiel à payer equipNecessaire - equipSurTerrain
 		List<QuantiteEquipement> equipSupplementaire = soustraitEquipement(equipNecessaire, equipSurTerrain);
-		
 		prp.setEquipementSupplementaire(equipSupplementaire);
 		// cloture supplémentaire here
 		//int longueurTmp = prp.getLongueurClotureSupplementaire();
@@ -120,6 +119,10 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 		prp.setBienEtreAnimal(
 				calculeBienEtreAnimal(nbAnimaux, longueurCloture, terrain.getSuperficie().intValue(),
 						terrain.isClos()));
+		
+		// erreur, le terrain etait cloturé
+		prp.setLongueurCloture( getLongueurCloture(equipSupplementaire));
+		System.out.println("longueur cloture suppl : " + prp.getLongueurCloture());
 		
 		prp.setQualiteTonte( (double)nbAnimaux / nbAnimauxRecommande );
 		return prp;
@@ -182,6 +185,10 @@ public class ReservationPrestationBusiness implements ReservationPrestationIBusi
 		prp.setBienEtreAnimal(
 				calculeBienEtreAnimal(prp.getNbAnimaux(), prp.getLongueurCloture() + clotureSurTerrain, terrain.getSuperficie().intValue(),
 						terrain.isClos()));
+		
+		// erreur, le terrain etait cloturé
+		prp.setLongueurCloture( getLongueurCloture(equipSupplementaire));
+		System.out.println("longueur cloture suppl : " + prp.getLongueurCloture());
 		
 		prp.setQualiteTonte( (double)prp.getNbAnimaux() / nbAnimauxRecommande );
 		return prp;

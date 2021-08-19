@@ -7,7 +7,6 @@
 	xmlns:b="http://bootsfaces.net/ui"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" >
 <!-- 	xmlns:p="http://primefaces.org/ui" -->
-	
 
 <h:head>
 	<ui:insert name="head">
@@ -53,28 +52,40 @@
 		</div>
 		<hr/>
 	<div>
-		<p>Nb d'animaux du troupeau disponilbes à ces dates: <h:outputText value="#{mbReservation.prp.nbAnimauxTroupeauDispo}"/></p>
-		<p>Prix Total: <h:outputText value="#{mbReservation.prp.cout}" /> &#8364;</p>
-		<p>Qualité Tonte : <h:outputText value="#{mbReservation.prp.qualiteTonte}" /></p>
-		<p>Bien être animal : <h:outputText value="#{mbReservation.prp.bienEtreAnimal}" /></p>
+		<p>Nombre d'animaux du troupeau disponilbes à ces dates: <h:outputText value="#{mbReservation.prp.nbAnimauxTroupeauDispo}"/></p>
+		<p>Prix Total: 
+			<h:outputText value="#{mbReservation.prp.cout}" >
+				<f:convertNumber maxFractionDigits = "2" />
+			</h:outputText> &#8364;
+		</p>
+		<p>Qualité Tonte : 
+			<h:outputText value="#{mbReservation.prp.qualiteTonte}" >
+				<f:convertNumber maxFractionDigits = "2" />
+			</h:outputText>
+		</p>
+		<p>Bien être animal : 
+			<h:outputText value="#{mbReservation.prp.bienEtreAnimal}" >
+				<f:convertNumber maxFractionDigits = "2" />
+			</h:outputText>
+		</p>
 		<p>Nombre d'animaux de la prestation : <h:outputText value="#{mbReservation.prp.nbAnimaux}" /></p>
 		<p>Nombre d'animaux recommandés pour la prestation: <h:outputText value="#{mbReservation.prp.nbAnimauxRecommande}" /></p>
-		<p>Longueur de la clôture: <h:outputText id="longueur" value="#{mbReservation.prp.longueurCloture}" /> m</p>
+		<p>Longueur de la clôture: <h:outputText id="longueur" value="#{mbReservation.prp.longueurCloture}" /></p>
 		<hr/>
 		<p><strong>Choisir la longueur de clôture et le nombre d'animaux :</strong></p>
   		<b:column>
-    		<b:slider2 id="slid1" ajax="true" mode="badge" min="1" max="200" span="10" value="#{mbReservation.prp.longueurCloture}" label="Longueur clôture" action="#{mbReservation.updateView()}">
+    		<b:slider2 id="slid1" ajax="true" mode="badge" min="0" max="200" span="10" value="#{mbReservation.prp.longueurCloture}" label="Longueur clôture" action="#{mbReservation.updateView()}">
 				<f:ajax listener="#{mbReservation.updateView()}" execute="@form" render="@form" />
     		</b:slider2>
   		</b:column>
   		<b:column>
-    		<b:slider2 id="slid2" ajax="true" mode="badge" min="5" maxValue="#{mbReservation.prp.nbTotalAnimauxTroupeau}" span="10" value="#{mbReservation.prp.nbAnimaux}" label="Nb. d'Animaux" action="#{mbReservation.updateView()}">
+    		<b:slider2 id="slid2" ajax="true" mode="badge" min="5" maxValue="#{mbReservation.prp.nbAnimauxTroupeauDispos}" span="10" value="#{mbReservation.prp.nbAnimaux}" label="Nb. d'Animaux" action="#{mbReservation.updateView()}">
 				<f:ajax listener="#{mbReservation.updateView()}" execute="@form" render="@form" />
     		</b:slider2>
   		</b:column>
 
 		<hr/>
-		<div style="display:flex; flex-direction: row;">
+		<div>
 		<h:commandButton value="Mise à Jour" action="#{mbReservation.updateView}" style="buttonAjustementPrestation">
  			<f:ajax execute="@form" render="@form" />
  		</h:commandButton>
@@ -83,7 +94,7 @@
  		</h:commandButton>
  		</div>
  	</div>
-  	</h:form>
+ 	</h:form>
 <!--  test ajax on slider (ok), but not on datetimepicker -->
 <!-- 		<p:column> -->
 <!-- 			<p>Nbre d'animaux : <h:outputText id="textNbAnimaux" value="#{mbReservation.prp.nbAnimaux}" /></p> -->

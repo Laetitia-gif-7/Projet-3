@@ -53,10 +53,9 @@ public class PrestationManagedBean implements Serializable {
 	private List<SelectItem> listSelectIncident;
 	private List<Incident> incidents;
 	private IncidentRef incidentRefSelectionne;
-	private int testId; 
+
 	private Date nouvelleDate = new Date();
-	
-	
+
 
 	public Date getNouvelleDate() {
 		return nouvelleDate;
@@ -64,14 +63,6 @@ public class PrestationManagedBean implements Serializable {
 
 	public void setNouvelleDate(Date nouvelleDate) {
 		this.nouvelleDate = nouvelleDate;
-	}
-
-	public int getTestId() {
-		return testId;
-	}
-
-	public void setTestId(int testId) {
-		this.testId = testId;
 	}
 
 	public IncidentRef getIncidentRefSelectionne() {
@@ -100,7 +91,6 @@ public class PrestationManagedBean implements Serializable {
 	private IncidentIBusiness incidentIBusiness;
 	
 	
-	
 	@PostConstruct
 	public void init() {
 		prestations = prestaIBusiness.findPrestationsByUtilisateur(utilisateurConnecte);
@@ -110,6 +100,7 @@ public class PrestationManagedBean implements Serializable {
 			System.out.println("prestExt :" + prestations.get(prestationKey).getPrestation().getDebutPrestation());
 			System.out.println("state string :"+ prestations.get(prestationKey).getStateString());
 		}
+
 		//incidentRef = incidentIBusiness.findAllIncidentRef();
 //		listSelectIncident = new ArrayList<SelectItem>();
 //		for (IncidentRef incidentRef2 : incidentRef) {
@@ -141,7 +132,21 @@ public class PrestationManagedBean implements Serializable {
 //        FacesContext.getCurrentInstance().addMessage( null, message );
 //    }
 	
+
+//	public void enregistrerUnIncident(Prestation prestation, IncidentRef incidentRef) {
+//		incidentIBusiness.DeclarationIncident(prestation, utilisateurConnecte, incidentRef);
+//		 
+//		
+//	}
 	
+//	public List<Incident> getIncidents() {
+//		return incidents;
+//	}
+//
+//	public void setIncidents(List<Incident> incidents) {
+//		this.incidents = incidents;
+//	}
+
 	public List<Incident> getIncidents() {
 		return incidents;
 	}
@@ -159,6 +164,7 @@ public class PrestationManagedBean implements Serializable {
 	public void setIncidents(List<Incident> incidents) {
 		this.incidents = incidents;
 	}
+
 
 	public void setListSelectIncident(List<SelectItem> listSelectIncident) {
 		this.listSelectIncident = listSelectIncident;
@@ -233,16 +239,16 @@ public class PrestationManagedBean implements Serializable {
 	}
 	
 	public String declarerIncident(int idPrestation) {
-		return "incidents.xhtml?faces-redirect=false&id=" + Integer.toString(idPrestation);
+		return "incidents.xhtml?faces-redirect=true&id=" + Integer.toString(idPrestation);
 	}
-	
+//	
 
-	public List<IncidentRef> getIncidentRef() {
-		return incidentRef;
-	}
-
-	public void setIncidentRef(List<IncidentRef> incidentRef) {
-		this.incidentRef = incidentRef;
-	}
+//	public list<incidentref> getincidentref() {
+//		return incidentref;
+//	}
+//
+//	public void setincidentref(list<incidentref> incidentref) {
+//		this.incidentref = incidentref;
+//	}
 
 }

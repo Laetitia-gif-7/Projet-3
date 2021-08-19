@@ -18,6 +18,7 @@ import javax.ejb.Stateless;
 import fr.eql.ai109.projet3.entity.CompositionTroupeau;
 import fr.eql.ai109.projet3.entity.CompositionTroupeauPrestation;
 import fr.eql.ai109.projet3.entity.Equipement;
+import fr.eql.ai109.projet3.entity.Incident;
 import fr.eql.ai109.projet3.entity.PeriodeDisponibilite;
 import fr.eql.ai109.projet3.entity.Prestation;
 import fr.eql.ai109.projet3.entity.PrestationBU;
@@ -34,6 +35,7 @@ import fr.eql.ai109.projet3.business.factories.FactoryPrestationBU;
 import fr.eql.ai109.projet3.business.utils.utils;
 import fr.eql.ai109.projet3.ibusiness.PrestationIBusiness;
 import fr.eql.ai109.projet3.idao.CompositionTroupeauPrestationIDao;
+import fr.eql.ai109.projet3.idao.IncidentIDao;
 import fr.eql.ai109.projet3.idao.PeriodeDisponibiliteIDao;
 import fr.eql.ai109.projet3.idao.PrestationIDao;
 import fr.eql.ai109.projet3.idao.RaceRefIDao;
@@ -67,6 +69,9 @@ public class PrestationBusiness implements PrestationIBusiness {
 	@EJB
 	PeriodeDisponibiliteIDao periodeDisponibiliteIDao;
 	
+	@EJB
+	IncidentIDao incidentIDao; 
+	
 	
 	@PostConstruct
 	void init() {
@@ -96,6 +101,7 @@ public class PrestationBusiness implements PrestationIBusiness {
 		prestation.setIdDerniereProposition(utilisateur);
 		prestation.setPremiereVisitePropose(utils.convertToLocalDateTimeViaInstant(prp.getPremiereVisite()));
 		
+		prestation.setBesoinBerger(true);
 		prestation = prestationIDao.add(prestation);
 		
 		List<QuantiteEquipementPrestation> equipementPrestationSupplementaires = new ArrayList<>();
@@ -141,6 +147,9 @@ public class PrestationBusiness implements PrestationIBusiness {
 		// delete previous periode cannot here ?? cannot remove a detached object ??
 		periodeDisponibiliteIDao.splitPeriode( periodeDispoTerrain.getDispoId(), listDispos );
 		*/
+
+// Added for demo
+		
 	}
 
 	@Override
@@ -154,6 +163,7 @@ public class PrestationBusiness implements PrestationIBusiness {
 		prestation.setTerrain( terrainIDao.getById(idTerrain) );
 		UUID uuid = UUID.randomUUID();
 		prestation.setNumeroPrestation(uuid.toString());
+		prestation.setBesoinBerger(true);
 		
 		Troupeau troupeau = troupeauIDao.getById(idTroupeau);
 		CompositionTroupeauPrestation compoTroupeauPresta = new CompositionTroupeauPrestation();
@@ -165,6 +175,9 @@ public class PrestationBusiness implements PrestationIBusiness {
 		compoTroupeauPresta.setNbAnimaux(0);
 		compoTroupeauPresta.setTroupeau( troupeau );
 		compositionTroupeauPrestationIDao.add(compoTroupeauPresta);
+		
+// Added for demo
+		
 	}
 	
 	public void ReservePrestationBerger(int idPrestation, Utilisateur berger) {
@@ -226,6 +239,8 @@ public class PrestationBusiness implements PrestationIBusiness {
 		// jamais execute
 		return compotroupoPrestas;
 	}
+	
+	
 
 	private Map<Integer, Integer> nbAnimauxParRaceDisponibles(Troupeau troupeau, Date debut, Date fin) {
 		
